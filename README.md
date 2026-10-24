@@ -17,6 +17,7 @@ It is a plain static site: HTML, one stylesheet, one small JavaScript file. No f
 | `our-psalter/` | How to follow along in the choir book |
 | `meditations/` | The library of "phone calls" with the Psalms |
 | `meditations/tips/` | All the meditation tips on one page (the same tips appear after each meditation) |
+| `quotes/` | Quotes about prayer from the saints and the Catechism (each also appears somewhere on the site) |
 | `oblates/` | Becoming an oblate |
 | `about/` | Who we are, how the site was made, privacy, sources, picture credits |
 | `assets/css/site.css` | All styling, including the three color themes |
@@ -27,10 +28,10 @@ It is a plain static site: HTML, one stylesheet, one small JavaScript file. No f
 
 ## When you change the stylesheet or script
 
-Every page loads `site.css?v=6` and `site.js?v=6`. Phones keep old copies of these files, so after any change to `assets/css/site.css` or `assets/js/site.js`, raise the number on every page (for example to `?v=7`). From the repository folder:
+Every page loads `site.css?v=7` and `site.js?v=7`. Phones keep old copies of these files, so after any change to `assets/css/site.css` or `assets/js/site.js`, raise the number on every page (for example to `?v=8`). From the repository folder:
 
 ```sh
-find . -name '*.html' -exec sed -i 's/?v=6"/?v=7"/g' {} +
+find . -name '*.html' -exec sed -i 's/?v=7"/?v=8"/g' {} +
 ```
 
 ## Three themes

@@ -11,7 +11,6 @@
 
 .pickers { margin: 1.4rem 0 1.6rem; }
 .picker { margin: 0 0 1.1rem; transition: opacity .15s ease; }
-.picker.dim { opacity: .45; }
 .picker-head { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; margin-bottom: .4rem; }
 .picker-head h2 { font-size: 1.05rem; margin: 0; font-family: "Cinzel", serif; letter-spacing: .08em; color: var(--text); }
 .picker-note { font-size: .85rem; color: var(--muted); }

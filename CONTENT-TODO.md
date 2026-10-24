@@ -30,8 +30,8 @@ Last updated: Oct 24, 2026 (first draft of the site).
 |---|---|---|
 | P1 | **Grail permission** (1963 edition) | Needed before showing book pages or quoting more than short excerpts. Until then, every psalm quotation is from the World English Bible. Each one is marked in the HTML: `TODO: replace with Grail if permission is granted`. |
 | P2 | **Photos of our choir book** | Placeholders on `our-psalter/` (book closed and open; how the days are arranged). |
-| P3 | **Photo of the choir** | Placeholder on `our-psalter/`. Avoid faces of individual monks, or get their consent. |
-| P4 | **Abbey photos used** | Taken from stbernardabbey.com: church interior (home, Times, and Our book heroes), aerial view (About), Ave Maria Grotto (Oblates hero). Confirm with whoever manages the abbey's photos. Photos showing individual monks were deliberately not used. |
+| P3 | **Photo of the choir** | Placeholder on `our-psalter/`. Photos of the monks are fine to use (Br. Augustine, Oct 24). |
+| P4 | **Abbey photos used** | Taken from stbernardabbey.com: church interior (home, Times, and Our book heroes), aerial view (About), Ave Maria Grotto (Oblates hero). Confirm with whoever manages the abbey's photos. Since Br. Augustine's OK for photos of monks, the abbey's photo of a monk-priest praying at Mass is now on `visit/`. |
 | P5 | **Abbey crest** | From stbernardabbey.com, with the white background removed. Confirm it is the current official crest. |
 | P6 | **Abbot's approval** | Of the whole site, before removing `noindex`. |
 
@@ -39,16 +39,17 @@ Last updated: Oct 24, 2026 (first draft of the site).
 
 ### Checked against the official text (Oct 24, 2026)
 
-Catechism (vatican.va, English): CCC 11, 28, 30 (Augustine, *Confessions* 1.1), 80, 108, 122, 124, 129, 133, 149, 156, 818, 819, 838, 882, 891 (paraphrased), 956, 971, 1175, 1178, 1366, 1367, 1441, 1996, 2010, 2011 (St. Thérèse), 2132, 2585.
+Catechism: every quotation on the site was rechecked word for word against the Catechism text in the **Lumina** repository (`munkachy/lumina`), as well as vatican.va. CCC 11, 28, 30 (Augustine, *Confessions* 1.1), 80, 108, 122, 124, 129, 133, 149, 156, 818, 819, 838, 882, 891 (paraphrased), 956, 971, 1175, 1178, 1366, 1367, 1441, 1996, 2010, 2011 (St. Thérèse), 2132, 2585, and (new) 169, 1670, 1671.
 
 **Corrections found while checking:**
 
 - CCC 818 says the Church "**accepts** them with respect and affection as brothers," not "accepted." (The handoff file had "accepted.") The site quotes the second sentence of 818, which is the clearest: "they therefore have a right to be called Christians, and with good reason are accepted as brothers in the Lord by the children of the Catholic Church."
+- CCC 108: the current (second-edition) text in Lumina reads “not a written and mute word, but **the Word which is** incarnate and living.” The older vatican.va text lacks “the Word which is.” The site now uses the newer wording.
 - CCC 108 doesn't name St. Bernard in the text itself. The quoted words come from him, as the Catechism's footnote shows (*S. missus est hom.* 4, 11).
 
 Other documents (official text):
 
-- *Sacrosanctum Concilium* 83 and 84; *Dei Verbum* 21; *Lumen Gentium* 8: vatican.va.
+- *Sacrosanctum Concilium* 51, 83 and 84; *Dei Verbum* 21; *Lumen Gentium* 8: vatican.va.
 - GILH 12: checked against the text published by the Liturgy Office of England and Wales. **Note:** the US (ICEL) translation words it slightly differently ("the praise and thanksgiving, the memorial of the mysteries of salvation, the petitions, and the foretaste of heavenly glory"). If you'd rather quote the US text, I need a copy of it to check against.
 - Benedict XVI, General Audience, June 22, 2011 (the Psalms as "the book of prayer"): vatican.va.
 - Leo XIV, *Magnifica Humanitas* 9 and 114 (May 15, 2026): vatican.va.
@@ -68,6 +69,8 @@ Other documents (official text):
 | St. Teresa, *Life* ch. 8 | Catholic door | Paraphrase. |
 | St. Ignatius, *Spiritual Exercises* 54: "as one friend speaks to another" | Catholic door | Short quotation. |
 | Edith Stein biography | `seekers/bracketing/` | Facts checked against the Vatican's canonization biography and Britannica. Sources differ on whether she called herself an atheist or an agnostic as a teenager. |
+| The arms-crossed sign for a blessing at Communion | Christian question "May I come to Mass?", seekers page, `visit/` | You confirmed that anyone may come forward for a blessing. Is crossing the arms the sign used here? |
+| Revised Common Lectionary grew out of the 1969 Roman Lectionary | Christian question "Do Catholics read the Bible?" | Widely documented; worth one more look. |
 | Founding year 1891 | `about/` | From osb.org (July 2026: "135-year history"). |
 
 ## 4. Things I decided (easy to change)
@@ -76,8 +79,10 @@ Other documents (official text):
 - **Your heard replies, adjusted to the WEB wording.** Psalm 116:13: "Take the cup of salvation, and call on my name" (it was "Bring me a wine offering"). Psalm 92:3: "ten-stringed lute … harp" (it was "lyre … murmuring harp"). Psalm 38: the verse numbers follow the WEB (5–9; your Grail book counts them as 6–10).
 - **No new heard replies were invented.** Where the book had only commentary (Psalms 32 and 42), the site keeps only the commentary.
 - **Numbering:** Hebrew number first, then the older number: "Psalm 92 (91)." The `our-psalter/` page explains both and has a conversion table.
-- **Common questions (11):** Are Catholics Christians? · Do Catholics worship Mary? · Why pray to the saints? · Why all the statues? · Do Catholics read the Bible? · Earning heaven? · Is Jesus sacrificed again at Mass? · Why confess to a priest? · What about the Pope? · May I receive Communion? · Do I have to become Catholic to come? "What is the Catechism?" is explained once, at the top of the section.
+- **Common questions (12):** Are Catholics Christians? · Do Catholics worship Mary? · Why pray to the saints? · Why all the statues? · Do Catholics read the Bible? · Earning heaven? · Is Jesus sacrificed again at Mass? · Why confess to a priest? · What about the Pope? · May I come to Mass? · May I receive Communion? · Do I have to become Catholic to come? "What is the Catechism?" is explained once, at the top of the section.
 - **Bracketing** now lives on its own optional page. The main seekers page only says "Leave the big questions open for now," with a link.
+- **"Do Catholics read the Bible?"** now explains the readings in the Office and the Mass lectionary (three-year Sunday cycle, two-year weekday cycle, quoting SC 51). One correction from your note: the lectionary doesn't read the *entire* Bible at Mass. It covers a wide, deliberate sweep of it (Vatican II asked for “a more representative portion” over a set number of years). So the site says “a wide sweep of the Bible,” not “the whole Bible.”
+- **New common question:** "May I come to Mass if I'm not Catholic?" (yes; come forward for a blessing or stay in the pew). Blessings are described with CCC 1670: sacramentals “prepare us to receive grace and dispose us to cooperate with it.” That is the Church's own wording; the site doesn't say a blessing gives grace the way a sacrament does. The same invitation is now on the seekers page and on `visit/`.
 - **Schedule** lives in one place (`visit/`). Every other page links to it, so times only need updating once.
 - **Pictures:** each door has its own art. Seekers: Sainte-Chapelle and Caravaggio's *Doubting Thomas*. Christians: Cologne Cathedral and Honthorst's *King David*. Catholics: St. Peter's Basilica, Michelangelo's *Pietà*, and Sassoferrato's *Virgin in Prayer*. Credits and licenses are on the About page.
 

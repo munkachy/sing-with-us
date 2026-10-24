@@ -594,3 +594,8 @@ figure.art.portrait img { max-height: 70vh; width: auto; margin: 0 auto; }
 .quote-who { color: var(--text); font-weight: 500; }
 .quote-more { text-align: right; font-size: .98rem; margin: .5rem 0 .4rem; }
 .quote:target { box-shadow: 0 0 0 3px var(--accent); }
+
+/* Excerpts from our choir book (black print on white paper, in every theme) */
+.book-scan { margin: 1.4rem 0; }
+.book-scan img { display: block; width: 100%; max-width: 30rem; height: auto; margin: 0 auto; background: #fff; padding: .8rem; border-radius: 6px; box-shadow: var(--card-shadow); }
+.book-scan figcaption { text-align: center; font-size: .9rem; color: var(--muted); margin-top: .45rem; }

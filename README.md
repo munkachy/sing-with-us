@@ -24,6 +24,14 @@ It is a plain static site: HTML, one stylesheet, one small JavaScript file. No f
 | `assets/fonts/` | EB Garamond and Cinzel (SIL Open Font License) |
 | `CONTENT-TODO.md` | Every placeholder, open decision, and quotation still to check |
 
+## When you change the stylesheet or script
+
+Every page loads `site.css?v=4` and `site.js?v=4`. Phones keep old copies of these files, so after any change to `assets/css/site.css` or `assets/js/site.js`, raise the number on every page (for example to `?v=5`). From the repository folder:
+
+```sh
+find . -name '*.html' -exec sed -i 's/?v=4"/?v=5"/g' {} +
+```
+
 ## Three themes
 
 Visitors can switch themes with the three round buttons in the header:

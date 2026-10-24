@@ -10,7 +10,7 @@ Last updated: Oct 24, 2026 (second round: home page, Grail in the meditations).
 
 | # | Question | Where it shows | Notes |
 |---|---|---|---|
-| D1 | **May guests sing along, or only listen?** | Seekers welcome; "What to expect" on every door; `visit/` | The draft says "Sing along, or simply listen." Change if guests should only listen. |
+| D1 | ~~May guests sing along, or only listen?~~ | everywhere | **Settled Oct 24: guests are invited to sing along.** The Times page has a "How do I sing along?" tip (follow the monks, sing softer than they do, pause where they pause), and "Our book" Step 5 points to it. |
 | D2 | **Compline time: 7:10 pm or 7:15 pm?** | `visit/` | You said 7:10. The abbey website's Liturgy Schedule says 7:15. The site uses 7:10. |
 | D3 | **Weekend Sext and Mass times** | `visit/` | You gave Sext as 11:55. The abbey website says Sext is 10:45 on Saturday and 10:00 on Sunday. Mass times (weekdays 5:00 pm, Saturday 11:00 am, Sunday 10:30 am) come only from the website. Please confirm all of these. |
 | D4 | **"Most days" for 6:00 am Matins and Lauds** | `visit/` | Besides Sunday (7:00 am), are there other exceptions? |
@@ -92,6 +92,7 @@ Other documents (official text):
 - **New tip, "What if I'm really tired?"** (after Psalm 131): one short word, from *The Cloud of Unknowing*. A "Tired" mood box now leads there too.
 - **Stained glass theme uses the abbey's own glass (Oct 24):** the strip under the header and over the footer is two of the narrow mosaic windows, photographed and laid on their side. Page mastheads show the big abstract window behind the title, and quote boxes sit on the rough glass blocks. The round theme button is a piece of the same glass. Only visitors who choose that theme download these pictures.
 - **New name (Oct 24): "We're Here, Praying for You."** Chosen so the first thing a visitor reads is a gift, not a request. Under it: "Nothing to join. Nothing to pay. Nothing you have to believe first." The doors now sit under "Here's how you can join in," with two buttons below them: "Pray a psalm now" and "Come to a prayer time." In running text, "sing with us" became "pray with us." The web address still says `sing-with-us`; change it (or buy a domain) before printing QR signs.
+- **Home page top (Oct 24, later):** "It's a song that has never stopped. You can sing along, or just sit and listen." Then "No membership. No fees. No strings. Nothing you have to believe first." and Matthew 10:8, "Freely you received, so freely give" (WEB, checked in Lumina). The doors heading is now "Would you like to join in?"
 - **Home page layout (Oct 24):** a short opening line, then the three doors, then the church photo, then the welcome and a boxed "How it works." On phones the doors become compact rows so all three show on the first screen.
 - **No new heard replies were invented.** Where the book had only commentary (Psalms 32 and 42), the site keeps only the commentary.
 - **Numbering:** Hebrew number first, then the older number: "Psalm 92 (91)." The `our-psalter/` page explains both and has a conversion table.

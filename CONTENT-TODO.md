@@ -62,6 +62,8 @@ Other documents (official text):
 
 | Quote | Where | Note |
 |---|---|---|
+| 1 Corinthians 13:12 (WEB), in the "What if I get stuck?" tip | `meditations/`, `meditations/tips/` | Matches the WEB British edition in Lumina; confirm against the Catholic edition. The Catechism draws on this verse in CCC 164 ("faith is often lived in darkness"), if you ever want to cite it on the Catholic door. |
+| "In choir there's a short pause in the middle of every verse" | "What about the quiet in between?" tip | Standard in monastic chant; confirm it's how our choir sings. |
 | St. Athanasius, *Letter to Marcellinus* 2: the Psalter is "like a garden" and "sets them to music" | all three doors, "What is a psalm?" | Wording varies by translation. Confirm against a published translation. |
 | Rule of St. Benedict ch. 16 (builds the day on Ps 119:164) | seekers primer | Paraphrase. |
 | Rule of St. Benedict ch. 19: "our mind may be in harmony with our voice" | Catholic primer | Translation varies. |
@@ -83,6 +85,7 @@ Other documents (official text):
 - **Who is speaking:** a small round portrait beside each line. "I hear God say": the 6th-century Christ Pantocrator icon from Saint Catherine's Monastery, Sinai. "I pray": Memling's Saint Benedict (1487), a Benedictine in a black habit with his book.
 - **Meditations page (Oct 24, round 3):** a mood picker at the top ("What kind of mood are you in right now?") with eleven boxes, each jumping to its call. Each verse and its reply now share one box. The numbering explanation moved to `our-psalter/#numbering`, with a one-line pointer left on the meditations page.
 - **One verse, one voice (Oct 24, round 5):** every meditation now alternates the soul ("I pray") and God ("I hear God say"), one voice per verse, and the replies put things in fresh words instead of repeating the psalm. Psalms 38, 42, 91, 46, 32, 131, 116, and 27 were reworked; 102 and 92 were left as Br. Augustine approved them (102:3 still has two voices on one verse). The door-page examples match.
+- **Tips (Oct 24):** eleven short tips, "For Dummies" style, one after each meditation, all gathered on `meditations/tips/`. The first, "What if I get stuck?", is Br. Augustine's "static on the line" idea. The rest are mine; edit freely.
 - **Home page layout (Oct 24):** a short opening line, then the three doors, then the church photo, then the welcome and a boxed "How it works." On phones the doors become compact rows so all three show on the first screen.
 - **No new heard replies were invented.** Where the book had only commentary (Psalms 32 and 42), the site keeps only the commentary.
 - **Numbering:** Hebrew number first, then the older number: "Psalm 92 (91)." The `our-psalter/` page explains both and has a conversion table.

@@ -44,6 +44,13 @@
     btn.setAttribute("aria-expanded", "false");
     btn.innerHTML = '<span class="reveal-open">Tap for the meditation</span><span class="reveal-close">Hide the meditation</span>';
     ex.insertBefore(btn, ex.firstChild);
+    // On the meditations page, the first two boxes of each call start open,
+    // so the pattern (one voice, then the other) shows before anyone taps.
+    var call = ex.closest(".call");
+    if (call && Array.prototype.indexOf.call(call.querySelectorAll(".exchange"), ex) < 2) {
+      ex.classList.add("open");
+      btn.setAttribute("aria-expanded", "true");
+    }
     function toggle() {
       var open = ex.classList.toggle("open");
       btn.setAttribute("aria-expanded", open ? "true" : "false");

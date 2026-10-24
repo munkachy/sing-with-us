@@ -480,6 +480,20 @@ figure.art.portrait img { max-height: 70vh; width: auto; margin: 0 auto; }
 [data-theme="glass"] .site-header::after { bottom: -16px; }
 [data-theme="glass"] .site-footer::before { top: -16px; }
 [data-theme="glass"] .site-footer { margin-top: calc(2rem + 16px); }
+/* Picture headers get the same glass along their bottom edge */
+[data-theme="glass"] .hero { margin-bottom: 1.1rem; }
+[data-theme="glass"] .hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 16px; z-index: 1;
+  background: #0d1330 url("../img/glass-strip.jpg") repeat-x left center / auto 100%;
+  box-shadow: 0 0 14px rgba(240, 180, 41, .25);
+}
+[data-theme="glass"] .hero .wrap { padding-bottom: calc(2.2rem + 16px); }
+[data-theme="glass"] .hero .credit { bottom: 22px; }
+/* Phones: long picture credits can take two lines, so leave room under the subtitle */
+@media (max-width: 40rem) {
+  .hero .wrap { padding-bottom: 3.4rem; }
+  [data-theme="glass"] .hero .wrap { padding-bottom: calc(3.4rem + 16px); }
+}
 /* The top box gets the same glass along its bottom edge, in place of the thin line */
 [data-theme="glass"] .masthead { border-bottom: 0; margin-bottom: calc(16px + 1.1rem); position: relative; }
 [data-theme="glass"] .masthead::after {

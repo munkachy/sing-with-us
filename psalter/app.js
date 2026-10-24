@@ -318,6 +318,20 @@
   });
   document.querySelectorAll("[data-ref]").forEach(function (a) { a.href = viewUrl(IDS[a.dataset.ref]); });
 
+  // Floating X: shown while the pages (or the Beta text) fill the screen and the pickers are out of sight.
+  var backUp = $("#back-up");
+  if ("IntersectionObserver" in window) {
+    var seen = { viewer: false, beta: false, card: true };
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { seen[e.target.dataset.watch] = e.isIntersecting; });
+      backUp.hidden = seen.card || !(seen.viewer || seen.beta);
+    });
+    [["viewer", "#viewer"], ["beta", "#beta-view"], ["card", ".now-card"]].forEach(function (w) {
+      var el = $(w[1]); el.dataset.watch = w[0]; io.observe(el);
+    });
+  }
+  backUp.addEventListener("click", function () { $(".pickers").scrollIntoView({ behavior: "smooth", block: "start" }); });
+
   render();
   window.PSALTER = { calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey, IDS: IDS };
 })();

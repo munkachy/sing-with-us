@@ -82,3 +82,12 @@
 .lp { font-style: italic; display: block; color: var(--muted); }
 .beta-view .intro { color: var(--muted); }
 .fine { font-size: .85rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: .8rem; margin-top: 2rem; }
+
+/* On a phone the pages fill the screen and swallow scrolling: a floating X brings you back up */
+.back-up {
+  position: fixed; z-index: 50; bottom: max(16px, env(safe-area-inset-bottom)); right: max(16px, env(safe-area-inset-right));
+  width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--rule); cursor: pointer;
+  background: var(--accent); color: var(--accent-ink); font-size: 1.35rem; line-height: 1;
+  box-shadow: 0 4px 14px rgba(0,0,0,.3); display: grid; place-items: center;
+}
+.back-up:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }

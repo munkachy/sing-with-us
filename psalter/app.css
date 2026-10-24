@@ -1,0 +1,40 @@
+/* Monastic Psalter page: builds on site.css (themes, header, buttons) */
+[hidden] { display: none !important; }
+.now-card {
+  margin: 1.6rem 0 1.2rem; padding: 1.3rem 1.3rem 1rem; border-radius: 14px;
+  background: var(--surface); border: 1px solid var(--rule); border-top: 4px solid var(--accent); box-shadow: var(--card-shadow);
+}
+.now-label { font-family: "Cinzel", serif; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin: 0 0 .3rem; }
+.now-card h1 { font-size: clamp(1.6rem, 6vw, 2.3rem); margin: 0 0 .4rem; }
+.season-note { margin: .2rem 0 .6rem; padding: .55rem .75rem; border-radius: 8px; background: var(--bg-2); font-size: 1rem; }
+.now-card .btn-row { margin: .8rem 0 .2rem; }
+
+.pickers { margin: 1.4rem 0 1.6rem; }
+.picker { margin: 0 0 1.1rem; transition: opacity .15s ease; }
+.picker.dim { opacity: .45; }
+.picker-head { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; margin-bottom: .4rem; }
+.picker-head h2 { font-size: 1.05rem; margin: 0; font-family: "Cinzel", serif; letter-spacing: .08em; color: var(--text); }
+.picker-note { font-size: .85rem; color: var(--muted); }
+.seg { display: grid; gap: .35rem; }
+.seg-4 { grid-template-columns: repeat(4, 1fr); }
+.seg-5 { grid-template-columns: repeat(5, 1fr); }
+.seg-7 { grid-template-columns: repeat(7, 1fr); }
+.seg button {
+  font: inherit; font-size: 1rem; min-height: 46px; padding: .3rem .2rem; cursor: pointer; border-radius: 9px;
+  background: var(--surface); color: var(--text); border: 1px solid var(--rule); transition: background .12s ease, border-color .12s ease;
+}
+.seg button:hover:not(:disabled) { border-color: var(--accent); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+.seg button:disabled { cursor: default; }
+@media (max-width: 30rem) { .seg-5 button { font-size: .86rem; } .seg-7 button { font-size: .9rem; } }
+.reset { margin: .2rem 0 0; text-align: right; }
+.linkish { font: inherit; font-size: .95rem; background: none; border: 0; padding: 0; color: var(--link); text-decoration: underline; cursor: pointer; }
+
+.viewer { margin: 0 0 1.6rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--rule); box-shadow: var(--card-shadow); background: #fff; }
+.viewer iframe { display: block; width: 100%; height: 82vh; border: 0; }
+
+.ref h2 { font-size: 1.3rem; }
+.ref-list { list-style: none; padding: 0; margin: .6rem 0 1.6rem; display: grid; gap: .45rem; }
+.ref-list a { display: block; padding: .65rem .9rem; border-radius: 8px; background: var(--surface); border: 1px solid var(--rule); text-decoration: none; color: var(--text); }
+.ref-list a:hover { border-color: var(--accent); }
+.ref-list a::after { content: "  ↗"; color: var(--muted); }

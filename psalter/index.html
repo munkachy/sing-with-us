@@ -8,10 +8,10 @@
 <title>Monastic Psalter · Saint Bernard Abbey</title>
 <link rel="icon" type="image/png" href="../assets/img/crest-icon.png">
 <link rel="stylesheet" href="../assets/css/site.css?v=15">
-<link rel="stylesheet" href="app.css?v=5">
+<link rel="stylesheet" href="app.css?v=6">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=15" defer></script>
-<script src="app.js?v=5" defer></script>
+<script src="app.js?v=6" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the psalter</a>
@@ -30,37 +30,30 @@
   </div>
 </header>
 <main id="main">
-  <div class="wrap">
-    <section class="pickers" aria-label="Choose the hour">
-      <div class="picker" id="week-group">
-        <div class="picker-head"><h2>Which week is the choir on?</h2></div>
-        <div class="seg seg-4" role="group" aria-label="Week"><button type="button" data-week="0" aria-pressed="false">I</button><button type="button" data-week="1" aria-pressed="false">II</button><button type="button" data-week="2" aria-pressed="false">III</button><button type="button" data-week="3" aria-pressed="false">IV</button></div>
-        <p id="week-auto" class="picker-note"></p>
+  <nav class="pickbar" aria-label="Choose the week, day and hour">
+    <div class="pickbar-in">
+      <div class="seg seg-4" role="group" aria-label="Week"><button type="button" data-week="0" aria-pressed="false" aria-label="Week I">I</button><button type="button" data-week="1" aria-pressed="false" aria-label="Week II">II</button><button type="button" data-week="2" aria-pressed="false" aria-label="Week III">III</button><button type="button" data-week="3" aria-pressed="false" aria-label="Week IV">IV</button></div>
+      <div class="seg seg-7" role="group" aria-label="Day"><button type="button" data-day="0" aria-pressed="false" aria-label="Sunday">Su</button><button type="button" data-day="1" aria-pressed="false" aria-label="Monday">Mo</button><button type="button" data-day="2" aria-pressed="false" aria-label="Tuesday">Tu</button><button type="button" data-day="3" aria-pressed="false" aria-label="Wednesday">We</button><button type="button" data-day="4" aria-pressed="false" aria-label="Thursday">Th</button><button type="button" data-day="5" aria-pressed="false" aria-label="Friday">Fr</button><button type="button" data-day="6" aria-pressed="false" aria-label="Saturday">Sa</button></div>
+      <div class="seg seg-5" role="group" aria-label="Hour"><button type="button" data-hour="0" aria-pressed="false">Matins</button><button type="button" data-hour="1" aria-pressed="false">Lauds</button><button type="button" data-hour="2" aria-pressed="false">Sext</button><button type="button" data-hour="3" aria-pressed="false">Vespers</button><button type="button" data-hour="4" aria-pressed="false">Compline</button></div>
+      <div class="bar-tools">
+        <button id="reset-btn" type="button" class="tool" title="Back to now, and the calendar's week">Now</button>
+        <label class="beta-switch"><input type="checkbox" id="beta-toggle"> <span>Beta</span></label>
       </div>
-      <div class="picker">
-        <div class="picker-head"><h2>Day</h2></div>
-        <div class="seg seg-7" role="group" aria-label="Day"><button type="button" data-day="0" aria-pressed="false">Sun</button><button type="button" data-day="1" aria-pressed="false">Mon</button><button type="button" data-day="2" aria-pressed="false">Tue</button><button type="button" data-day="3" aria-pressed="false">Wed</button><button type="button" data-day="4" aria-pressed="false">Thu</button><button type="button" data-day="5" aria-pressed="false">Fri</button><button type="button" data-day="6" aria-pressed="false">Sat</button></div>
-      </div>
-      <div class="picker">
-        <div class="picker-head"><h2>Hour</h2></div>
-        <div class="seg seg-5" role="group" aria-label="Hour"><button type="button" data-hour="0" aria-pressed="false">Matins</button><button type="button" data-hour="1" aria-pressed="false">Lauds</button><button type="button" data-hour="2" aria-pressed="false">Sext</button><button type="button" data-hour="3" aria-pressed="false">Vespers</button><button type="button" data-hour="4" aria-pressed="false">Compline</button></div>
-      </div>
-      <p class="reset"><button id="reset-btn" type="button" class="linkish">Back to now (and the calendar's week)</button></p>
-    </section>
+    </div>
+  </nav>
 
+  <div class="wrap">
     <section class="now-card" aria-labelledby="now-title">
       <h1 id="now-title">Loading…</h1>
+      <p id="week-auto" class="picker-note"></p>
       <p id="season-note" class="season-note" hidden></p>
       <p id="readings" class="readings" hidden><span id="readings-text"></span> <a id="readings-link" href="https://divineoffice.org/" target="_blank" rel="noopener">DivineOffice.org ↗</a></p>
-      <div class="beta-bar">
-        <label class="beta-switch"><input type="checkbox" id="beta-toggle"> <span><b>Beta</b> · psalms as text, chant as printed</span></label>
-        <p id="beta-note" class="picker-note" hidden></p>
-      </div>
+      <p id="beta-note" class="picker-note" hidden></p>
     </section>
 
     <section id="beta-view" class="beta-view" aria-label="Beta version of this hour" hidden>
       <form id="beta-lock" class="beta-lock" hidden>
-        <label for="beta-pw">The Beta is for the community. Enter the password once; this phone will remember it.</label>
+        <label for="beta-pw">The Beta (psalms as text, chant as printed) is for the community. Enter the password once; this phone will remember it.</label>
         <div class="beta-row"><input id="beta-pw" type="password" autocomplete="current-password" required><button type="submit" class="btn">Unlock</button></div>
         <p id="beta-msg" class="picker-note" role="status"></p>
       </form>
@@ -79,8 +72,8 @@
   </div>
 
   <div class="wrap">
-    <section class="ref" aria-labelledby="ref-h">
-      <h2 id="ref-h">Ordinary, chants and reference</h2>
+    <details class="ref">
+      <summary>Ordinary, chants and reference</summary>
       <ul class="ref-list">
         <li><a data-ref="Ordinary, chants and reference/01 Title, dedication and Foreword.pdf" target="_blank" rel="noopener">Title, dedication and Foreword</a></li>
         <li><a data-ref="Ordinary, chants and reference/02 Ordinary at Sext.pdf" target="_blank" rel="noopener">Ordinary at Sext</a></li>
@@ -96,15 +89,14 @@
         <li><a data-ref="Ordinary, chants and reference/12 Additions (Tuesday before Ash Wednesday, Week XXXIV).pdf" target="_blank" rel="noopener">Additions (Tuesday before Ash Wednesday, Week XXXIV)</a></li>
         <li><a data-ref="Ordinary, chants and reference/13 Antiphonae in cantu.pdf" target="_blank" rel="noopener">Antiphonae in cantu</a></li>
       </ul>
-    </section>
+    </details>
 
     <aside class="callout small">
       <p><strong>Signed in?</strong> The pages open from the abbey's private Google Drive folder. If you see “You need access,” sign in with the Google account the psalter was shared with, or ask Br. Augustine to share it with you.</p>
-      <p>Tap the week the choir is on. This phone remembers it and moves on to the next week every Sunday. Until you choose, the page guesses from the calendar (Week I begins after Christmastide and again at Easter).</p>
+      <p>Tap the week the choir is on (I–IV in the bar). This phone remembers it and moves on to the next week every Sunday. Until you choose, the page guesses from the calendar (Week I begins after Christmastide and again at Easter). <b>Now</b> goes back to today, this hour, and the calendar’s week.</p>
       <p class="muted">This book was “printed not published,” for the monks, oblates, students and guests of Saint Bernard Abbey, “for private distribution only.” Please don't share the files outside the community.</p>
     </aside>
   </div>
-  <button id="back-up" class="back-up" type="button" hidden aria-label="Close the pages and go back to week, day and hour"><span aria-hidden="true">✕</span></button>
 </main>
 <footer class="site-footer">
   <div class="wrap">

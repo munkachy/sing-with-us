@@ -170,7 +170,7 @@ section { scroll-margin-top: 1rem; }
 .theme-btn[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
 .theme-btn[data-set="cloister"] { --sw: linear-gradient(135deg, #f3ede1 50%, #9b1c1c 50%); }
 .theme-btn[data-set="habit"]    { --sw: linear-gradient(135deg, #0a0a0a 55%, #c8a45a 55%); }
-.theme-btn[data-set="glass"]    { --sw: conic-gradient(#d7263d 0 25%, #2b59c3 0 50%, #1f9d63 0 75%, #f0b429 0); }
+.theme-btn[data-set="glass"]    { --sw: url("../img/glass-swatch.jpg") center / cover; }
 .no-js .themes { display: none; }
 @media (max-width: 51.99rem) {
   .themes .label { display: none; }
@@ -461,12 +461,30 @@ figure.art.portrait img { max-height: 70vh; width: auto; margin: 0 auto; }
 [data-theme="glass"] .site-header {
   background: linear-gradient(180deg, #0d1330, #111a44);
 }
+/* The strip is real glass: two narrow windows of the abbey, photographed and laid on their side */
 [data-theme="glass"] .site-header::after,
 [data-theme="glass"] .site-footer::before {
-  height: 8px;
+  height: 16px;
+  background: #0d1330 url("../img/glass-strip.jpg") repeat-x left center / auto 100%;
+  box-shadow: 0 0 14px rgba(240, 180, 41, .25);
+}
+[data-theme="glass"] .site-header { margin-bottom: 16px; }
+[data-theme="glass"] .site-header::after { bottom: -16px; }
+[data-theme="glass"] .site-footer::before { top: -16px; }
+[data-theme="glass"] .site-footer { margin-top: calc(2rem + 16px); }
+/* Mastheads glow with the abbey's big window behind them */
+[data-theme="glass"] .masthead {
   background:
-    repeating-linear-gradient(90deg, #d7263d 0 22px, #0d1330 22px 24px, #2b59c3 24px 46px, #0d1330 46px 48px,
-      #1f9d63 48px 70px, #0d1330 70px 72px, #f0b429 72px 94px, #0d1330 94px 96px, #8e44ad 96px 118px, #0d1330 118px 120px);
+    linear-gradient(180deg, rgba(10, 14, 40, .62), rgba(10, 14, 40, .78)),
+    #0d1330 url("../img/glass-window.jpg") center 40% / cover no-repeat;
+  border-bottom: 0;
+}
+[data-theme="glass"] .masthead h1, [data-theme="glass"] .masthead .lede { text-shadow: 0 2px 12px rgba(0, 0, 0, .7); }
+/* Quotes sit on light falling through rough glass */
+[data-theme="glass"] .quote {
+  background:
+    linear-gradient(135deg, rgba(13, 19, 48, .84), rgba(13, 19, 48, .9)),
+    #0d1330 url("../img/glass-ceiling.jpg") center / cover no-repeat;
 }
 [data-theme="glass"] h2 { color: var(--accent); }
 [data-theme="glass"] section:nth-of-type(3n+1) h2 { color: #ff7b8e; }
@@ -555,4 +573,3 @@ figure.art.portrait img { max-height: 70vh; width: auto; margin: 0 auto; }
 .quote-who { color: var(--text); font-weight: 500; }
 .quote-more { text-align: right; font-size: .98rem; margin: .5rem 0 .4rem; }
 .quote:target { box-shadow: 0 0 0 3px var(--accent); }
-[data-theme="glass"] .quote { background: linear-gradient(135deg, rgba(240,180,41,.14), rgba(215,38,61,.10)); }

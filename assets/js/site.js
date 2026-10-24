@@ -34,6 +34,27 @@
   });
   markTheme();
 
+  /* ---- Meditations: on phones, tap a psalm box to reveal the reply ---- */
+  document.querySelectorAll(".exchange").forEach(function (ex) {
+    var heard = ex.querySelector(".heard");
+    if (!heard) return;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "reveal";
+    btn.setAttribute("aria-expanded", "false");
+    btn.innerHTML = '<span class="reveal-open">Tap for the meditation</span><span class="reveal-close">Hide the meditation</span>';
+    ex.insertBefore(btn, ex.firstChild);
+    function toggle() {
+      var open = ex.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    btn.addEventListener("click", toggle);
+    var verse = ex.querySelector(".psalm");
+    if (verse) verse.addEventListener("click", function (e) {
+      if (window.matchMedia("(max-width: 43.99rem)").matches && !e.target.closest("a")) toggle();
+    });
+  });
+
   /* ---- 3. Review mode ---- */
   var q = window.location.search;
   if (/[?&]review=off\b/.test(q)) store("session", "swu-review", null);

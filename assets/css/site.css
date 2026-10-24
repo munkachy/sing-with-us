@@ -370,14 +370,35 @@ figure.art.portrait img { max-height: 70vh; width: auto; margin: 0 auto; }
 .back-to-moods a { color: var(--muted); }
 .call:target { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent), var(--card-shadow); }
 
-/* One box per exchange: the psalm verse, and beside it what is prayed or heard.
-   Phones: verse on top, reply underneath. Wider screens: side by side. */
+/* One box per exchange: the psalm verse on the left, who is speaking in the middle
+   (the portrait sits on the dividing line), and the reply on the right.
+   Phones: the reply is folded away under the verse; tap the box to open it. */
 .exchange { background: var(--bg-2); border-radius: 8px; margin: 1.2rem 0; overflow: hidden; }
 .exchange .psalm { margin: 0; background: transparent; border-radius: 0; }
-.exchange .heard { margin: 0; padding: .4rem 1.1rem .7rem; border-left: 0; border-top: 1px dashed var(--rule); }
+.exchange .heard { margin: 0; padding: .5rem 1.1rem .8rem; border-left: 0; border-top: 1px dashed var(--rule); }
+.exchange .heard .voice-img { flex-basis: 3.4rem; width: 3.4rem; height: 3.4rem; }
+.reveal { display: none; }
+@media (max-width: 43.99rem) {
+  .js .exchange .reveal {
+    display: flex; width: 100%; align-items: center; justify-content: center; gap: .5rem;
+    font: inherit; font-size: .95rem; color: var(--link); background: transparent; cursor: pointer;
+    border: 0; border-bottom: 1px dashed var(--rule); padding: .55rem 1rem; min-height: 44px;
+  }
+  .js .exchange .reveal::before { content: "▸"; transition: transform .15s ease; }
+  .js .exchange.open .reveal::before { transform: rotate(90deg); }
+  .js .exchange .reveal-close, .js .exchange.open .reveal-open { display: none; }
+  .js .exchange.open .reveal-close { display: inline; }
+  .js .exchange .psalm { cursor: pointer; }
+  .js .exchange:not(.open) .heard { display: none; }
+}
 @media (min-width: 44rem) {
-  .exchange { display: grid; grid-template-columns: 1fr 1fr; }
-  .exchange .heard { border-top: 0; border-left: 1px dashed var(--rule); padding: .6rem 1.1rem; align-self: stretch; }
+  .exchange { display: grid; grid-template-columns: 1fr 1.15fr; align-items: stretch; }
+  .exchange .heard {
+    border-top: 0; border-left: 1px dashed var(--accent);
+    padding: .8rem 1.1rem .8rem 0; display: flex; flex-direction: column; justify-content: center;
+  }
+  /* pull each portrait left so it sits on the dividing line, in the middle of the box */
+  .exchange .heard p.voice { margin-left: -1.7rem; }
 }
 @media (min-width: 62rem) { .call { margin-left: -5rem; margin-right: -5rem; } }
 [data-theme="glass"] .exchange { background: linear-gradient(135deg, rgba(43,89,195,.25), rgba(31,157,99,.12)); border: 1px solid rgba(255,255,255,.08); }

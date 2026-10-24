@@ -508,3 +508,28 @@ figure.art.portrait img { max-height: 70vh; width: auto; margin: 0 auto; }
 [data-theme="glass"] .call .mood.trust { color: #6fe3a8; }
 [data-theme="glass"] .call .mood.mercy { color: #ff8fa0; }
 
+
+/* ---------- Tips (meditations and meditations/tips/) ---------- */
+.tip {
+  position: relative; margin: 2rem 0 1.2rem; padding: 1.5rem 1.2rem .6rem 1.2rem;
+  background: var(--surface); border: 2px solid var(--accent); border-radius: 12px;
+}
+.tip-badge {
+  position: absolute; top: -1.05rem; left: 1rem; display: inline-flex; align-items: center; gap: .35rem;
+  font-family: "Cinzel", serif; font-weight: 600; font-size: .85rem; letter-spacing: .14em; text-transform: uppercase;
+  background: var(--accent); color: var(--accent-ink); padding: .3rem .8rem .3rem .45rem; border-radius: 999px;
+  box-shadow: var(--card-shadow);
+}
+.tip-badge::before {
+  content: "✚"; display: inline-grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%;
+  background: var(--accent-ink); color: var(--accent); font-size: .8rem; letter-spacing: 0;
+}
+.tip-q { margin: .2rem 0 .5rem; font-size: 1.3rem; color: var(--text); }
+.tip p { font-size: 1.05rem; }
+.tip blockquote { margin: .8rem 0; }
+.tip-more { text-align: right; font-size: .98rem; margin: .4rem 0 .6rem; }
+.tip-index ol { padding-left: 1.3rem; margin: 1.6rem 0 2.4rem; }
+.tip-index li { margin: .3rem 0; }
+.tip-index a { font-size: 1.1rem; }
+.tip:target { box-shadow: 0 0 0 3px var(--accent); }
+.call .tip { margin-top: 1.8rem; }

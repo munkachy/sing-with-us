@@ -366,9 +366,38 @@ figure.art.portrait img { max-height: 70vh; width: auto; margin: 0 auto; }
 .call .mood.mercy { color: var(--jewel-1); }
 [data-theme="habit"] .call .mood { color: var(--accent); }
 .call .setting { color: var(--muted); font-size: 1.02rem; }
-.call-index { columns: 1; padding-left: 1.2rem; }
-@media (min-width: 40rem) { .call-index { columns: 2; } }
-.call-index li { margin: .2rem 0; break-inside: avoid; }
+.back-to-moods { font-size: .95rem; margin: .8rem 0 .6rem; text-align: right; }
+.back-to-moods a { color: var(--muted); }
+.call:target { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent), var(--card-shadow); }
+
+/* One box per exchange: the psalm verse, and beside it what is prayed or heard.
+   Phones: verse on top, reply underneath. Wider screens: side by side. */
+.exchange { background: var(--bg-2); border-radius: 8px; margin: 1.2rem 0; overflow: hidden; }
+.exchange .psalm { margin: 0; background: transparent; border-radius: 0; }
+.exchange .heard { margin: 0; padding: .4rem 1.1rem .7rem; border-left: 0; border-top: 1px dashed var(--rule); }
+@media (min-width: 44rem) {
+  .exchange { display: grid; grid-template-columns: 1fr 1fr; }
+  .exchange .heard { border-top: 0; border-left: 1px dashed var(--rule); padding: .6rem 1.1rem; align-self: stretch; }
+}
+@media (min-width: 62rem) { .call { margin-left: -5rem; margin-right: -5rem; } }
+[data-theme="glass"] .exchange { background: linear-gradient(135deg, rgba(43,89,195,.25), rgba(31,157,99,.12)); border: 1px solid rgba(255,255,255,.08); }
+[data-theme="glass"] .exchange .psalm { background: transparent; border: 0; }
+
+/* Mood picker */
+.mood-picker { margin: 1.6rem 0; }
+.mood-picker h2 { margin: 0 0 .3rem; }
+.mood-picker p { margin: 0 0 1rem; }
+.mood-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; }
+@media (min-width: 36rem) { .mood-grid { grid-template-columns: repeat(3, 1fr); } }
+.mood-chip {
+  display: flex; flex-direction: column; justify-content: center; gap: .1rem; min-height: 4.2rem;
+  padding: .7rem .9rem; border-radius: 8px; text-decoration: none; color: var(--text);
+  background: var(--surface); border: 1px solid var(--rule); border-left: 4px solid var(--accent);
+  box-shadow: var(--card-shadow); transition: transform .12s ease, border-color .12s ease;
+}
+.mood-chip:hover, .mood-chip:focus-visible { transform: translateY(-2px); border-color: var(--accent); text-decoration: none; }
+.mood-chip .mood-word { font-size: 1.12rem; line-height: 1.25; font-weight: 500; }
+.mood-chip .mood-ps { font-size: .85rem; color: var(--muted); }
 .label-meditation { display: inline-block; font-size: .85rem; color: var(--muted); border: 1px solid var(--rule); border-radius: 999px; padding: .1rem .7rem; margin-bottom: .6rem; }
 
 /* ---------- Schedule ---------- */

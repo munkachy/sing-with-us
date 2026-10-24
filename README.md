@@ -1,4 +1,6 @@
-# Sing With Us
+# We're Here, Praying for You
+
+(The site's working name was "Sing With Us"; the repository and web address keep that name for now.)
 
 A small website from the Benedictine monks of Saint Bernard Abbey (Cullman, Alabama), inviting visitors to pray the Psalms with the community. Visitors reach it through QR codes in the abbey church.
 
@@ -28,10 +30,10 @@ It is a plain static site: HTML, one stylesheet, one small JavaScript file. No f
 
 ## When you change the stylesheet or script
 
-Every page loads `site.css?v=9` and `site.js?v=9`. Phones keep old copies of these files, so after any change to `assets/css/site.css` or `assets/js/site.js`, raise the number on every page (for example to `?v=10`). From the repository folder:
+Every page loads `site.css?v=10` and `site.js?v=10`. Phones keep old copies of these files, so after any change to `assets/css/site.css` or `assets/js/site.js`, raise the number on every page (for example to `?v=11`). From the repository folder:
 
 ```sh
-find . -name '*.html' -exec sed -i 's/?v=9"/?v=10"/g' {} +
+find . -name '*.html' -exec sed -i 's/?v=10"/?v=11"/g' {} +
 ```
 
 ## Three themes

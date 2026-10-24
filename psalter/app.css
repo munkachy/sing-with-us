@@ -83,11 +83,50 @@
 .beta-view .intro { color: var(--muted); }
 .fine { font-size: .85rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: .8rem; margin-top: 2rem; }
 
-/* On a phone the pages fill the screen and swallow scrolling: a floating X brings you back up */
-.back-up {
-  position: fixed; z-index: 50; bottom: max(16px, env(safe-area-inset-bottom)); right: max(16px, env(safe-area-inset-right));
-  width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--rule); cursor: pointer;
-  background: var(--accent); color: var(--accent-ink); font-size: 1.35rem; line-height: 1;
-  box-shadow: 0 4px 14px rgba(0,0,0,.3); display: grid; place-items: center;
+/* Sticky bar: week, day and hour buttons, Now, and the Beta box */
+.pickbar { position: sticky; top: 0; z-index: 40; background: var(--bg); border-bottom: 1px solid var(--rule); box-shadow: 0 2px 10px rgba(0,0,0,.10); }
+.pickbar-in {
+  max-width: 68rem; margin: 0 auto; padding: 6px 10px 7px;
+  display: grid; gap: 5px 8px; grid-template-columns: 1fr auto;
+  grid-template-areas: "week tools" "day day" "hour hour";
 }
-.back-up:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+.pickbar .seg-4 { grid-area: week; }
+.pickbar .seg-7 { grid-area: day; }
+.pickbar .seg-5 { grid-area: hour; }
+.bar-tools { grid-area: tools; display: flex; gap: 6px; align-items: stretch; }
+.pickbar .seg { gap: 4px; }
+.pickbar .seg button { min-height: 36px; font-size: .95rem; padding: .1rem .1rem; border-radius: 7px; }
+@media (max-width: 30rem) { .pickbar .seg-5 button { font-size: .84rem; } }
+@media (min-width: 62rem) {
+  .pickbar-in { grid-template-columns: 11rem 17rem 1fr auto; grid-template-areas: "week day hour tools"; }
+}
+.tool, .beta-switch {
+  font: inherit; font-size: .92rem; min-height: 36px; padding: 0 .65rem; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--rule); background: var(--surface); color: var(--text);
+}
+.tool:hover, .beta-switch:hover { border-color: var(--accent); }
+.beta-switch { display: inline-flex; align-items: center; gap: .4rem; }
+.beta-switch input { width: 1.1rem; height: 1.1rem; margin: 0; accent-color: var(--accent); }
+.beta-switch:has(input:checked) { border-color: var(--accent); }
+
+.now-card { margin: .8rem 0 .9rem; padding: .75rem 1rem .55rem; }
+.now-card h1 { font-size: clamp(1.35rem, 5.2vw, 1.9rem); margin: 0 0 .15rem; }
+#week-auto { margin: 0 0 .25rem; }
+#beta-note { margin: .3rem 0 0; }
+.viewer iframe { height: calc(100vh - 150px); height: calc(100dvh - 150px); }
+
+/* Reference documents, folded away */
+details.ref { margin: .4rem 0 1.4rem; border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); }
+details.ref > summary { padding: .8rem 1rem; cursor: pointer; font-family: "Cinzel", serif; letter-spacing: .05em; font-size: 1.05rem; }
+details.ref[open] > summary { border-bottom: 1px solid var(--rule); }
+details.ref .ref-list { margin: .7rem .8rem 1rem; }
+
+/* Beta: parts to choose (Compline hymn and Marian antiphon) */
+.beta-view details.pick { margin: .45rem 0; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); }
+.beta-view details.pick > summary { padding: .55rem .85rem; cursor: pointer; font-weight: 600; font-size: 1rem; }
+.beta-view details.pick.today > summary::after { content: "today"; margin-left: .5rem; font-size: .75rem; font-weight: 600; padding: .05rem .45rem; border-radius: 99px; background: var(--accent); color: var(--accent-ink); vertical-align: middle; }
+.beta-view details.pick .when { display: block; font-weight: 400; font-size: .85rem; color: var(--muted); }
+.beta-view details.pick .chant { margin: .5rem .4rem; }
+.beta-view .tone { font-style: italic; color: var(--muted); margin: .7rem .85rem 0; font-size: .95rem; }
+.division { text-align: center; font-family: "Cinzel", serif; letter-spacing: .08em; color: var(--accent); margin: .5rem 0 .6rem; }
+.ps-text p.sung { color: var(--muted); font-style: italic; }

@@ -1,8 +1,15 @@
 {
  "v": 1,
- "salt": "sPp4YDwAO5ni9S4v3/T0tg==",
+ "salt": "Zn082h0K5gcfCp06elVkKA==",
  "iter": 600000,
  "hours": {
-  "Vespers (same every week)/2 Monday at Vespers.pdf": "vespers-2-monday.bin"
+  "Vespers (same every week)/1 Sunday at Vespers.pdf": "vespers-1-sunday.bin",
+  "Vespers (same every week)/2 Monday at Vespers.pdf": "vespers-2-monday.bin",
+  "Vespers (same every week)/3 Tuesday at Vespers.pdf": "vespers-3-tuesday.bin",
+  "Vespers (same every week)/4 Wednesday at Vespers.pdf": "vespers-4-wednesday.bin",
+  "Vespers (same every week)/5 Thursday at Vespers.pdf": "vespers-5-thursday.bin",
+  "Vespers (same every week)/6 Friday at Vespers.pdf": "vespers-6-friday.bin",
+  "Vespers (same every week)/7 Saturday at Vespers.pdf": "vespers-7-saturday.bin",
+  "Compline (every night).pdf": "compline.bin"
  }
 }

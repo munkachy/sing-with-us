@@ -262,6 +262,45 @@
       $("#beta-lock").hidden = false;
     });
   }
+  // Compline: which hymn and which antiphon of Our Lady fit a date.
+  // Memorials, feasts and solemnities of the saints are left for the monk to choose.
+  function same(a, b) { return daysBetween(a, b) === 0; }
+  function compline(date) {
+    var d = midnight(date), y = d.getFullYear(), m = d.getMonth(), dd = d.getDate();
+    var e = easter(y), adv = firstAdventSunday(y), bapt = endOfChristmastide(y);
+    var ash = addDays(e, -46), asc = addDays(e, 39), pent = addDays(e, 49);
+    var hymn = (d.getDay() === 0 || d.getDay() === 6) ? "satsun" : "ferial";
+    if (m === 7 && dd === 6) hymn = "transfig";
+    if (same(d, addDays(adv, -7))) hymn = "king";
+    if (d >= adv && d < new Date(y, 11, 25)) hymn = "advent";
+    else if (m === 11 && dd >= 25) hymn = "nativity";
+    else if (m === 0 && d < bapt) hymn = dd < 6 ? "nativity" : "epiphany";
+    else if (same(d, bapt)) hymn = "baptism";
+    else if (d >= ash && d < e) hymn = "lent";
+    else if (d >= e && d < asc) hymn = "easterA";
+    else if (d >= asc && d < pent) hymn = "ascA";
+    else if (same(d, pent)) hymn = "pentecost";
+    else if (same(d, addDays(pent, 14))) hymn = "nativity";      // Corpus Christi
+    else if (same(d, addDays(pent, 19))) hymn = "heart";
+    var marian = null;
+    if (d >= addDays(adv, -1) || m === 0 || (m === 1 && dd <= 2)) marian = "alma";
+    else if (d < addDays(e, -3)) marian = "ave";                    // until Wednesday of Holy Week
+    else if (d < e) marian = null;                                  // the Triduum
+    else if (d <= pent) marian = "regina";
+    else marian = "salve";
+    return { hymn: hymn, marian: marian };
+  }
+  function openPicks(root) {
+    var t = addDays(midnight(now), state.day - now.getDay()), pick = compline(t);
+    root.querySelectorAll("details.pick").forEach(function (dt) {
+      var mine = dt.dataset.hymn ? dt.dataset.hymn === pick.hymn : dt.dataset.marian === pick.marian;
+      dt.classList.toggle("today", mine);
+      if (dt.dataset.picked !== pickKey(t)) dt.open = mine;
+      dt.dataset.picked = pickKey(t);
+    });
+  }
+  function pickKey(t) { return t.toDateString(); }
+
   // Returns true when the Beta version is shown instead of the PDF.
   function renderBeta(pageKey) {
     var view = $("#beta-view"), note = $("#beta-note");
@@ -286,6 +325,7 @@
     if (beta.pages[pageKey]) {
       lock.hidden = true;
       if (content.dataset.page !== pageKey) { content.innerHTML = beta.pages[pageKey]; content.dataset.page = pageKey; }
+      openPicks(content);
       return true;
     }
     content.innerHTML = ""; content.dataset.page = "";
@@ -318,20 +358,7 @@
   });
   document.querySelectorAll("[data-ref]").forEach(function (a) { a.href = viewUrl(IDS[a.dataset.ref]); });
 
-  // Floating X: shown while the pages (or the Beta text) fill the screen and the pickers are out of sight.
-  var backUp = $("#back-up");
-  if ("IntersectionObserver" in window) {
-    var seen = { viewer: false, beta: false, card: true };
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { seen[e.target.dataset.watch] = e.isIntersecting; });
-      backUp.hidden = seen.card || !(seen.viewer || seen.beta);
-    });
-    [["viewer", "#viewer"], ["beta", "#beta-view"], ["card", ".now-card"]].forEach(function (w) {
-      var el = $(w[1]); el.dataset.watch = w[0]; io.observe(el);
-    });
-  }
-  backUp.addEventListener("click", function () { $(".pickers").scrollIntoView({ behavior: "smooth", block: "start" }); });
 
   render();
-  window.PSALTER = { calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey, IDS: IDS };
+  window.PSALTER = { compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey, IDS: IDS };
 })();

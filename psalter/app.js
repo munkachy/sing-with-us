@@ -167,7 +167,8 @@
   function viewUrl(id) { return "https://drive.google.com/file/d/" + id + "/view"; }
   function previewUrl(id) { return "https://drive.google.com/file/d/" + id + "/preview"; }
 
-  // A chosen week is remembered until the next Sunday.
+  // The week the monk picks is an anchor: it moves on by itself every Sunday.
+  function sundayOf(d) { return addDays(midnight(d), -d.getDay()); }
   function store(key, val) {
     try {
       if (val === undefined) return JSON.parse(localStorage.getItem(key));
@@ -175,9 +176,10 @@
     } catch (e) { return null; }
   }
   function weekOverride(now) {
-    var o = store("psalter-week");
-    if (o && o.until && now < new Date(o.until)) return o.week;
-    return null;
+    var o = store("psalter-anchor");
+    if (!o || typeof o.week !== "number" || !o.sunday) return null;
+    var weeks = Math.floor(daysBetween(new Date(o.sunday), sundayOf(now)) / 7);
+    return (((o.week + weeks) % 4) + 4) % 4;
   }
 
   var now = new Date();
@@ -194,41 +196,42 @@
     $("#now-title").textContent = DAYS[state.day] + (weekly ? " · Week " + ROMAN[state.week] : "") + " · " + HOURS[state.hour];
     var open = $("#open-btn");
     open.href = viewUrl(id);
-    open.textContent = "Open " + HOURS[state.hour];
+    open.textContent = "Open in Google Drive";
     var note = "";
     if (cal.volume && state.day === now.getDay()) note = "Today falls in " + (cal.volume === "Lent" ? "Lent" : "Advent or Christmastide") + ": the choir uses the " + cal.volume + " volume. You can still browse the four-week psalter below.";
     $("#season-note").textContent = note;
     $("#season-note").hidden = !note;
-    $("#week-auto").textContent = state.autoWeek ? "From the calendar" : "Chosen by you (until Sunday)";
+    $("#week-auto").textContent = state.autoWeek ? "Guessed from the calendar. Tap the right one if it's off." : "Set by you. Moves on every Sunday. (Calendar says Week " + ROMAN[cal.week] + ")";
     document.querySelectorAll("[data-week]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.week === state.week)); b.disabled = !weekly; });
     $("#week-group").classList.toggle("dim", !weekly);
     document.querySelectorAll("[data-day]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.day === state.day)); });
     document.querySelectorAll("[data-hour]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.hour === state.hour)); });
     var lauds = $("#then-lauds");
     lauds.hidden = state.hour !== 0;
-    if (state.hour === 0) lauds.href = viewUrl(IDS[fileKey(state.week, state.day, 1)]);
-    var viewer = $("#viewer");
-    if (!viewer.hidden) $("#viewer iframe").src = previewUrl(id);
+    if (state.hour === 0) lauds.onclick = function (e) { e.preventDefault(); state.hour = 1; render(); };
+    var frame = $("#viewer iframe"), src = previewUrl(id);
+    if (frame.getAttribute("src") !== src) frame.setAttribute("src", src);
+    // 3. readings: the long Matins readings are not printed in our book
+    var rd = $("#readings");
+    rd.hidden = state.hour !== 0;
+    if (state.hour === 0) {
+      var t = addDays(midnight(now), state.day - now.getDay());
+      var ymd = t.getFullYear() + String(t.getMonth() + 1).padStart(2, "0") + String(t.getDate()).padStart(2, "0");
+      $("#readings-link").href = "https://divineoffice.org/?date=" + ymd;
+    }
   }
 
   document.querySelectorAll("[data-week]").forEach(function (b) {
     b.addEventListener("click", function () {
       state.week = +b.dataset.week; state.autoWeek = false;
-      var sunday = addDays(midnight(now), 7 - now.getDay());
-      store("psalter-week", { week: state.week, until: sunday.toISOString() });
+      store("psalter-anchor", { week: state.week, sunday: sundayOf(now).toISOString() });
       render();
     });
   });
   document.querySelectorAll("[data-day]").forEach(function (b) { b.addEventListener("click", function () { state.day = +b.dataset.day; render(); }); });
   document.querySelectorAll("[data-hour]").forEach(function (b) { b.addEventListener("click", function () { state.hour = +b.dataset.hour; render(); }); });
-  $("#show-btn").addEventListener("click", function () {
-    var v = $("#viewer"); v.hidden = !v.hidden;
-    $("#show-btn").textContent = v.hidden ? "Show it here" : "Hide";
-    render();
-    if (!v.hidden) v.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
   $("#reset-btn").addEventListener("click", function () {
-    store("psalter-week", null);
+    store("psalter-anchor", null);
     now = new Date(); cal = calendar(now);
     state = { week: cal.week, day: now.getDay(), hour: hourFor(now), autoWeek: true };
     render();

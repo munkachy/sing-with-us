@@ -8,10 +8,10 @@
 <title>Monastic Psalter · Saint Bernard Abbey</title>
 <link rel="icon" type="image/png" href="../assets/img/crest-icon.png">
 <link rel="stylesheet" href="../assets/css/site.css?v=15">
-<link rel="stylesheet" href="app.css?v=3">
+<link rel="stylesheet" href="app.css?v=4">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=15" defer></script>
-<script src="app.js?v=3" defer></script>
+<script src="app.js?v=4" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the psalter</a>
@@ -52,6 +52,19 @@
       <h1 id="now-title">Loading…</h1>
       <p id="season-note" class="season-note" hidden></p>
       <p id="readings" class="readings" hidden><span id="readings-text"></span> <a id="readings-link" href="https://divineoffice.org/" target="_blank" rel="noopener">DivineOffice.org ↗</a></p>
+      <div class="beta-bar">
+        <label class="beta-switch"><input type="checkbox" id="beta-toggle"> <span><b>Beta</b> · psalms as text, chant as printed</span></label>
+        <p id="beta-note" class="picker-note" hidden></p>
+      </div>
+    </section>
+
+    <section id="beta-view" class="beta-view" aria-label="Beta version of this hour" hidden>
+      <form id="beta-lock" class="beta-lock" hidden>
+        <label for="beta-pw">The Beta is for the community. Enter the password once; this phone will remember it.</label>
+        <div class="beta-row"><input id="beta-pw" type="password" autocomplete="current-password" required><button type="submit" class="btn">Unlock</button></div>
+        <p id="beta-msg" class="picker-note" role="status"></p>
+      </form>
+      <div id="beta-content"></div>
     </section>
   </div>
 

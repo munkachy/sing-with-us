@@ -208,8 +208,10 @@
     var lauds = $("#then-lauds");
     lauds.hidden = state.hour !== 0;
     if (state.hour === 0) lauds.onclick = function (e) { e.preventDefault(); state.hour = 1; render(); };
+    var inBeta = renderBeta(key);
+    $("#viewer").hidden = inBeta;
     var frame = $("#viewer iframe"), src = previewUrl(id);
-    if (frame.getAttribute("src") !== src) frame.setAttribute("src", src);
+    if (!inBeta && frame.getAttribute("src") !== src) frame.setAttribute("src", src);
     // Readings not printed in our book: the long ones at Matins, the short one at Vespers
     var rd = $("#readings");
     rd.hidden = state.hour !== 0 && state.hour !== 3;
@@ -221,6 +223,83 @@
       $("#readings-link").textContent = (state.hour === 0 ? "That day's Office of Readings" : "That day's Evening Prayer") + " at DivineOffice.org ↗";
     }
   }
+
+  // Beta (option C): psalms as text, chant as printed. The files are sealed
+  // with the community password and opened here on the phone.
+  var beta = { on: store("psalter-beta") === true, idx: null, loading: false, key: null, pages: {}, busy: null };
+  function bytes(s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); }
+  function betaLabel(k) {
+    var parts = k.replace(/\.pdf$/, "").split("/");
+    return parts.map(function (p) { return p.replace(/^\d+ /, ""); }).filter(function (p) { return !/same every week/.test(p); }).join(", ");
+  }
+  function makeKey(pw) {
+    return crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]).then(function (base) {
+      return crypto.subtle.deriveKey({ name: "PBKDF2", salt: bytes(beta.idx.salt), iterations: beta.idx.iter, hash: "SHA-256" },
+        base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    });
+  }
+  function openPage(file, key) {
+    return fetch("beta/" + file).then(function (r) { if (!r.ok) throw new Error("fetch"); return r.arrayBuffer(); }).then(function (buf) {
+      return crypto.subtle.decrypt({ name: "AES-GCM", iv: new Uint8Array(buf, 0, 12) }, key, new Uint8Array(buf, 12));
+    }).then(function (plain) { return new TextDecoder().decode(plain); });
+  }
+  function unlock(pageKey, pw, quiet) {
+    var file = beta.idx.hours[pageKey], msg = $("#beta-msg");
+    msg.textContent = "Opening…";
+    var token = beta.busy = {};
+    var keyP = beta.key ? Promise.resolve(beta.key) : makeKey(pw);
+    keyP.then(function (key) {
+      return openPage(file, key).then(function (html) {
+        beta.key = key; beta.pages[pageKey] = html;
+        if (pw) store("psalter-beta-pw", pw);
+      });
+    }).then(function () {
+      if (beta.busy === token) { msg.textContent = ""; render(); }
+    }).catch(function (e) {
+      if (beta.busy !== token) return;
+      beta.key = null; store("psalter-beta-pw", null);
+      msg.textContent = e && e.message === "fetch" ? "Couldn't load this hour. Check the connection and try again." : (quiet ? "" : "That isn't the password.");
+      $("#beta-lock").hidden = false;
+    });
+  }
+  // Returns true when the Beta version is shown instead of the PDF.
+  function renderBeta(pageKey) {
+    var view = $("#beta-view"), note = $("#beta-note");
+    $("#beta-toggle").checked = beta.on;
+    note.hidden = true;
+    if (!beta.on) { view.hidden = true; return false; }
+    if (!beta.idx) {
+      if (!beta.loading) {
+        beta.loading = true;
+        fetch("beta/index.json", { cache: "no-cache" }).then(function (r) { return r.json(); })
+          .then(function (idx) { beta.idx = idx; render(); })
+          .catch(function () { beta.loading = false; note.textContent = "Couldn't load the Beta just now."; note.hidden = false; });
+      }
+      view.hidden = true; return false;
+    }
+    if (!beta.idx.hours[pageKey]) {
+      note.textContent = "This hour isn't in the Beta yet, so here is the book. In the Beta so far: " + Object.keys(beta.idx.hours).map(betaLabel).join("; ") + ".";
+      note.hidden = false; view.hidden = true; return false;
+    }
+    view.hidden = false;
+    var content = $("#beta-content"), lock = $("#beta-lock");
+    if (beta.pages[pageKey]) {
+      lock.hidden = true;
+      if (content.dataset.page !== pageKey) { content.innerHTML = beta.pages[pageKey]; content.dataset.page = pageKey; }
+      return true;
+    }
+    content.innerHTML = ""; content.dataset.page = "";
+    var saved = store("psalter-beta-pw");
+    if (beta.key || saved) { lock.hidden = true; unlock(pageKey, beta.key ? null : saved, true); }
+    else { lock.hidden = false; }
+    return true;
+  }
+  $("#beta-toggle").addEventListener("change", function (e) { beta.on = e.target.checked; store("psalter-beta", beta.on || null); render(); });
+  $("#beta-lock").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var pw = $("#beta-pw").value;
+    if (pw) unlock(fileKey(state.week, state.day, state.hour), pw, false);
+  });
 
   document.querySelectorAll("[data-week]").forEach(function (b) {
     b.addEventListener("click", function () {

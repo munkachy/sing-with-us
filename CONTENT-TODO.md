@@ -105,6 +105,7 @@ Other documents (official text):
 - **New common question:** "May I come to Mass if I'm not Catholic?" (yes; come forward for a blessing or stay in the pew). Blessings are described with CCC 1670: sacramentals “prepare us to receive grace and dispose us to cooperate with it.” That is the Church's own wording; the site doesn't say a blessing gives grace the way a sacrament does. The same invitation is now on the seekers page and on `visit/`.
 - **Schedule** lives in one place (`visit/`). Every other page links to it, so times only need updating once.
 - **Pictures:** each door has its own art. Seekers: Sainte-Chapelle and Caravaggio's *Doubting Thomas*. Christians: Cologne Cathedral and Honthorst's *King David*. Catholics: St. Peter's Basilica, Michelangelo's *Pietà*, and Sassoferrato's *Virgin in Prayer*. Credits and licenses are on the About page.
+- **Psalter Beta (option C), Oct 24:** behind a community password Br. Augustine chose (not written in this repo). The text and chant are sealed on the server and opened on the phone, so search engines and visitors without the password see only scrambled data. It is a lock against casual eyes, not a vault: a short password can be guessed by someone determined. Only Monday Vespers so far; the hours are built in the private `munkachy/psalter` repo (`beta/`). To change the password, run that build again with the new one.
 
 ## 5. Not built yet
 

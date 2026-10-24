@@ -28,10 +28,10 @@ It is a plain static site: HTML, one stylesheet, one small JavaScript file. No f
 
 ## When you change the stylesheet or script
 
-Every page loads `site.css?v=7` and `site.js?v=7`. Phones keep old copies of these files, so after any change to `assets/css/site.css` or `assets/js/site.js`, raise the number on every page (for example to `?v=8`). From the repository folder:
+Every page loads `site.css?v=8` and `site.js?v=8`. Phones keep old copies of these files, so after any change to `assets/css/site.css` or `assets/js/site.js`, raise the number on every page (for example to `?v=9`). From the repository folder:
 
 ```sh
-find . -name '*.html' -exec sed -i 's/?v=7"/?v=8"/g' {} +
+find . -name '*.html' -exec sed -i 's/?v=8"/?v=9"/g' {} +
 ```
 
 ## Three themes

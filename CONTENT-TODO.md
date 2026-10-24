@@ -2,7 +2,7 @@
 
 Everything on the site that still needs a decision, a fact, a photo, or a check. Open any page with `?review` added to its address to see these marked in place (red = decision, yellow = check, green = checked).
 
-Last updated: Oct 24, 2026 (first draft of the site).
+Last updated: Oct 24, 2026 (second round: home page, Grail in the meditations).
 
 ---
 
@@ -23,12 +23,14 @@ Last updated: Oct 24, 2026 (first draft of the site).
 | D11 | **Your personal line on the seekers page** | `seekers/` | "When I was young, I was sure Christianity was for weak or naïve people." Keep or cut. |
 | D12 | **Personal details in the Psalm 92 meditation** | `meditations/#ps-92` | It mentions "the music program you're building" and "the looper." Fine to publish? |
 | D13 | **Theme names and the default theme** | every page | Habit / Cloister / Stained glass. Right now, with no choice saved, the site follows the phone's light or dark setting. |
+| D14 | **Are *all* prayer times open to the public?** | home page; `visit/`; door pages | On Oct 24 you said Compline is prayed privately on Wednesdays and Sundays, so `visit/` and the door pages say "almost every." The new home page avoids the question ("Whenever you need prayer, come and pray with us") and links to the times. If every hour is in fact public, change "almost every" on `visit/`, `christians/`, and `catholics/`. |
+| D15 | **"My son" in God's replies** | `meditations/` (Psalms 102, 38, 91, 116) and `catholics/` | Added at your request, in four places only, so it stays tender instead of becoming a habit. Add or remove as you like. |
 
 ## 2. Photos and permissions
 
 | # | Item | Status |
 |---|---|---|
-| P1 | **Grail permission** (1963 edition) | Needed before showing book pages or quoting more than short excerpts. Until then, every psalm quotation is from the World English Bible. Each one is marked in the HTML: `TODO: replace with Grail if permission is granted`. |
+| P1 | **Grail permission** (1963 edition) | The meditations page and the three short examples on the door pages now quote the Grail, copied by script from your Grail text file, a verse or two at a time, with the © 1963 The Grail (England) notice. This leans on short quotation being allowed. GIA Publications handles the rights in the US; asking them for permission is still the safe course, and it is required before showing photos of book pages or quoting longer passages. Other psalm quotations on the site are still from the World English Bible. |
 | P2 | **Photos of our choir book** | Placeholders on `our-psalter/` (book closed and open; how the days are arranged). |
 | P3 | **Photo of the choir** | Placeholder on `our-psalter/`. Photos of the monks are fine to use (Br. Augustine, Oct 24). |
 | P4 | **Abbey photos used** | Taken from stbernardabbey.com: church interior (home, Times, and Our book heroes), aerial view (About), Ave Maria Grotto (Oblates hero). Confirm with whoever manages the abbey's photos. Since Br. Augustine's OK for photos of monks, the abbey's photo of a monk-priest praying at Mass is now on `visit/`. |
@@ -76,7 +78,10 @@ Other documents (official text):
 ## 4. Things I decided (easy to change)
 
 - **Translation:** World English Bible, **Catholic edition** (eBible.org). It prints "the LORD," not "Yahweh," in line with the Church's 2008 instruction not to use the divine name in worship. It is public domain.
-- **Your heard replies, adjusted to the WEB wording.** Psalm 116:13: "Take the cup of salvation, and call on my name" (it was "Bring me a wine offering"). Psalm 92:3: "ten-stringed lute … harp" (it was "lyre … murmuring harp"). Psalm 38: the verse numbers follow the WEB (5–9; your Grail book counts them as 6–10).
+- **Your heard replies now follow the Grail wording again** (Oct 24): "ten-stringed lyre … murmuring harp" (Ps 92), "spent and crushed" (Ps 38), "raise the cup of salvation" (Ps 116), "I am with you" (Ps 91), and so on. Verse numbers in the meditations follow the Grail book (older numbering, titles counted).
+- **Psalm 27 (26):8 in the Grail** has the heart repeat "Seek his face" rather than God saying "Seek my face." The commentary on `meditations/` and `seekers/` was reworded to fit, with a note that many Bibles put the words in God's mouth.
+- **Who is speaking:** a small round portrait beside each line. "I hear God say": the 6th-century Christ Pantocrator icon from Saint Catherine's Monastery, Sinai. "I pray": Memling's Saint Benedict (1487), a Benedictine in a black habit with his book.
+- **Home page layout (Oct 24):** a short opening line, then the three doors, then the church photo, then the welcome and a boxed "How it works." On phones the doors become compact rows so all three show on the first screen.
 - **No new heard replies were invented.** Where the book had only commentary (Psalms 32 and 42), the site keeps only the commentary.
 - **Numbering:** Hebrew number first, then the older number: "Psalm 92 (91)." The `our-psalter/` page explains both and has a conversion table.
 - **Common questions (12):** Are Catholics Christians? · Do Catholics worship Mary? · Why pray to the saints? · Why all the statues? · Do Catholics read the Bible? · Earning heaven? · Is Jesus sacrificed again at Mass? · Why confess to a priest? · What about the Pope? · May I come to Mass? · May I receive Communion? · Do I have to become Catholic to come? "What is the Catechism?" is explained once, at the top of the section.

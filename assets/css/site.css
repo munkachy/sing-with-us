@@ -232,6 +232,12 @@ blockquote footer::before { content: "— "; }
 .heard p { margin: .55rem 0; color: var(--heard); }
 .heard .who { font-family: "Cinzel", serif; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); display: block; font-style: normal; font-weight: 600; }
 .heard i, .heard em { font-style: italic; }
+/* Who is speaking: a small portrait beside each line (Christ for God's voice, a monk for the one praying) */
+.heard p.voice { display: flex; gap: .8rem; align-items: flex-start; }
+.heard .voice-img { flex: 0 0 3rem; width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
+.heard p.voice .said { flex: 1; min-width: 0; }
+.heard p.voice.god .who { color: var(--accent); }
+.heard p.voice.god i { font-size: 1.08em; }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -264,6 +270,30 @@ blockquote footer::before { content: "— "; }
 .door .desc { color: var(--muted); font-size: 1.05rem; display: block; }
 .door .go { display: inline-block; margin-top: .6rem; color: var(--link); font-size: 1rem; }
 @media (min-width: 52rem) { .door { grid-template-rows: 13rem auto; } }
+/* On phones the doors are compact rows, so all three fit above the fold */
+@media (max-width: 51.99rem) {
+  .doors { gap: .7rem; margin: .8rem 0 1rem; }
+  .door { grid-template-rows: none; grid-template-columns: 6.2rem 1fr; }
+  .door::before { top: 0; bottom: 0; right: auto; width: 5px; height: auto; }
+  .door .body { padding: .75rem .9rem .8rem; }
+  .door .label { font-size: 1.12rem; margin-bottom: .1rem; }
+  .door .desc { font-size: .98rem; line-height: 1.35; }
+  .door .go { display: none; }
+}
+
+/* ---------- Landing page ---------- */
+.masthead { background: var(--bg-2); border-bottom: 1px solid var(--rule); padding: 1.2rem 0 1rem; text-align: center; }
+.masthead h1 { margin-bottom: .35rem; }
+.masthead .lede { font-size: 1.15rem; line-height: 1.45; margin: 0 auto; max-width: 34rem; }
+[data-theme="glass"] .masthead { background: linear-gradient(120deg, rgba(215,38,61,.22), rgba(43,89,195,.2) 45%, rgba(240,180,41,.14)); }
+.doors-title { margin: 1rem 0 0; text-align: center; font-size: clamp(1.3rem, 4vw, 1.8rem); }
+.doors-note { text-align: center; margin: 0 0 1.6rem; }
+.church-photo { margin: 0 0 2rem; }
+.church-photo img { width: 100%; height: auto; border-radius: 10px; box-shadow: var(--card-shadow); }
+.church-photo figcaption { font-size: .78rem; color: var(--muted); margin-top: .35rem; text-align: right; }
+.church-photo figcaption a { color: inherit; }
+.how-it-works { border-left-width: 6px; padding: 1.3rem 1.4rem; }
+.how-it-works h2 { margin: 0 0 .5rem; font-size: 1.5rem; }
 
 .side-links { display: grid; gap: .7rem; margin: 1.5rem 0; }
 .side-links a { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .9rem 1.1rem;

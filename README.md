@@ -82,7 +82,7 @@ Also remove the sentence "Until it's approved, it asks search engines not to lis
 
 ## Content rules (short version)
 
-- Never change psalm text. Quotations come from the World English Bible (Catholic edition, public domain) until the Grail rights holder grants permission.
+- Never change psalm text. The meditations quote short excerpts of the Grail (the translation our choir sings), copied exactly; other quotations come from the World English Bible (Catholic edition, public domain).
 - Heard replies are clearly marked meditations, credited only to "a Benedictine monk."
 - Every Church-document quotation gives its source and was checked against the official text (see `CONTENT-TODO.md`).
 - Name no individual monks or local people.

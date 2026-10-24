@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- For the monks only. Not linked from the public site; search engines asked not to list it. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Monastic Psalter · Saint Bernard Abbey</title>
+<link rel="icon" type="image/png" href="../assets/img/crest-icon.png">
+<link rel="stylesheet" href="../assets/css/site.css?v=15">
+<link rel="stylesheet" href="app.css?v=1">
+<script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
+<script src="../assets/js/site.js?v=15" defer></script>
+<script src="app.js?v=1" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the psalter</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="./">
+      <img src="../assets/img/crest-small.png" alt="" width="30" height="54">
+      <span><span class="name">Monastic Psalter</span><span class="sub">Saint Bernard Abbey · for the monks</span></span>
+    </a>
+    <div class="themes" role="group" aria-label="Color theme">
+      <span class="label" aria-hidden="true">Theme</span>
+      <button type="button" class="theme-btn" data-set="habit" aria-pressed="false" title="Habit: black, like our habits"><span class="visually-hidden">Habit theme (black)</span></button>
+      <button type="button" class="theme-btn" data-set="cloister" aria-pressed="false" title="Cloister: parchment and red"><span class="visually-hidden">Cloister theme (parchment)</span></button>
+      <button type="button" class="theme-btn" data-set="glass" aria-pressed="false" title="Stained glass: bright colors"><span class="visually-hidden">Stained glass theme (colorful)</span></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <div class="wrap">
+    <section class="now-card" aria-labelledby="now-title">
+      <p class="now-label">Right now</p>
+      <h1 id="now-title">Loading…</h1>
+      <p id="season-note" class="season-note" hidden></p>
+      <div class="btn-row">
+        <a id="open-btn" class="btn" href="#" target="_blank" rel="noopener">Open</a>
+        <button id="show-btn" type="button" class="btn ghost">Show it here</button>
+        <a id="then-lauds" class="btn ghost" href="#" target="_blank" rel="noopener" hidden>Then Lauds</a>
+      </div>
+    </section>
+
+    <section class="pickers" aria-label="Choose the hour">
+      <div class="picker" id="week-group">
+        <div class="picker-head"><h2>Week</h2><span id="week-auto" class="picker-note"></span></div>
+        <div class="seg seg-4" role="group" aria-label="Week"><button type="button" data-week="0" aria-pressed="false">I</button><button type="button" data-week="1" aria-pressed="false">II</button><button type="button" data-week="2" aria-pressed="false">III</button><button type="button" data-week="3" aria-pressed="false">IV</button></div>
+      </div>
+      <div class="picker">
+        <div class="picker-head"><h2>Day</h2></div>
+        <div class="seg seg-7" role="group" aria-label="Day"><button type="button" data-day="0" aria-pressed="false">Sun</button><button type="button" data-day="1" aria-pressed="false">Mon</button><button type="button" data-day="2" aria-pressed="false">Tue</button><button type="button" data-day="3" aria-pressed="false">Wed</button><button type="button" data-day="4" aria-pressed="false">Thu</button><button type="button" data-day="5" aria-pressed="false">Fri</button><button type="button" data-day="6" aria-pressed="false">Sat</button></div>
+      </div>
+      <div class="picker">
+        <div class="picker-head"><h2>Hour</h2></div>
+        <div class="seg seg-5" role="group" aria-label="Hour"><button type="button" data-hour="0" aria-pressed="false">Matins</button><button type="button" data-hour="1" aria-pressed="false">Lauds</button><button type="button" data-hour="2" aria-pressed="false">Sext</button><button type="button" data-hour="3" aria-pressed="false">Vespers</button><button type="button" data-hour="4" aria-pressed="false">Compline</button></div>
+      </div>
+      <p class="reset"><button id="reset-btn" type="button" class="linkish">Back to now</button></p>
+    </section>
+  </div>
+
+  <div class="wrap-wide">
+    <div id="viewer" class="viewer" hidden>
+      <iframe title="The pages for this hour" allow="autoplay" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="ref" aria-labelledby="ref-h">
+      <h2 id="ref-h">Ordinary, chants and reference</h2>
+      <ul class="ref-list">
+        <li><a data-ref="Ordinary, chants and reference/01 Title, dedication and Foreword.pdf" target="_blank" rel="noopener">Title, dedication and Foreword</a></li>
+        <li><a data-ref="Ordinary, chants and reference/02 Ordinary at Sext.pdf" target="_blank" rel="noopener">Ordinary at Sext</a></li>
+        <li><a data-ref="Ordinary, chants and reference/03 Ordinary (opening verses, chanting the psalms, Our Father, Benedicamus).pdf" target="_blank" rel="noopener">Ordinary (opening verses, chanting the psalms, Our Father, Benedicamus)</a></li>
+        <li><a data-ref="Ordinary, chants and reference/04 Invitatory (Psalms 94 and 99, all tones).pdf" target="_blank" rel="noopener">Invitatory (Psalms 94 and 99, all tones)</a></li>
+        <li><a data-ref="Ordinary, chants and reference/05 Gospel canticles, Te Deum and Te Decet Laus.pdf" target="_blank" rel="noopener">Gospel canticles, Te Deum and Te Decet Laus</a></li>
+        <li><a data-ref="Ordinary, chants and reference/06 Capitula in cantu.pdf" target="_blank" rel="noopener">Capitula in cantu</a></li>
+        <li><a data-ref="Ordinary, chants and reference/07 Blessings and prayers, Benediction, Laudes Hincmari.pdf" target="_blank" rel="noopener">Blessings and prayers, Benediction, Laudes Hincmari</a></li>
+        <li><a data-ref="Ordinary, chants and reference/08 Magnificat and Benedictus tones.pdf" target="_blank" rel="noopener">Magnificat and Benedictus tones</a></li>
+        <li><a data-ref="Ordinary, chants and reference/09 Prayers.pdf" target="_blank" rel="noopener">Prayers</a></li>
+        <li><a data-ref="Ordinary, chants and reference/10 Order of Service and Distribution of the Psalms.pdf" target="_blank" rel="noopener">Order of Service and Distribution of the Psalms</a></li>
+        <li><a data-ref="Ordinary, chants and reference/11 Index and Acknowledgments.pdf" target="_blank" rel="noopener">Index and Acknowledgments</a></li>
+        <li><a data-ref="Ordinary, chants and reference/12 Additions (Tuesday before Ash Wednesday, Week XXXIV).pdf" target="_blank" rel="noopener">Additions (Tuesday before Ash Wednesday, Week XXXIV)</a></li>
+        <li><a data-ref="Ordinary, chants and reference/13 Antiphonae in cantu.pdf" target="_blank" rel="noopener">Antiphonae in cantu</a></li>
+      </ul>
+    </section>
+
+    <aside class="callout small">
+      <p><strong>Signed in?</strong> The pages open from the abbey's private Google Drive folder. If you see “You need access,” sign in with the Google account the psalter was shared with, or ask Br. Augustine to share it with you.</p>
+      <p>The week is worked out from the calendar: Week I begins after Christmastide and again at Easter. If the choir is using a different week, tap it above; this phone will remember it until Sunday.</p>
+      <p class="muted">This book was “printed not published,” for the monks, oblates, students and guests of Saint Bernard Abbey, “for private distribution only.” Please don't share the files outside the community.</p>
+    </aside>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <img class="crest" src="../assets/img/crest-small.png" alt="Crest of Saint Bernard Abbey" width="44" height="80">
+    <p><strong>Saint Bernard Abbey</strong> · Benedictine monks · Cullman, Alabama</p>
+    <p class="small">Monastic Psalter (2007): layout and chant settings by Samuel F. Weber, O.S.B., © 2007 Saint Meinrad Archabbey; psalm texts © 1963 The Grail (England); other rights as listed in the book's Acknowledgments.</p>
+  </div>
+</footer>
+</body>
+</html>

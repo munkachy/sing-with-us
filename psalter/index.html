@@ -8,10 +8,10 @@
 <title>Monastic Psalter · Saint Bernard Abbey</title>
 <link rel="icon" type="image/png" href="../assets/img/crest-icon.png">
 <link rel="stylesheet" href="../assets/css/site.css?v=16">
-<link rel="stylesheet" href="app.css?v=15">
+<link rel="stylesheet" href="app.css?v=16">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=16" defer></script>
-<script src="app.js?v=13" defer></script>
+<script src="app.js?v=14" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the psalter</a>
@@ -55,6 +55,8 @@
     <h1 id="now-title" class="visually-hidden">Monastic Psalter</h1>
     <p id="season-note" class="slim-note" hidden></p>
     <p id="today-note" class="slim-note" hidden></p>
+    <p id="asm-note" class="slim-note" hidden><span id="asm-note-text"></span> <a href="#" id="asm-plain">Show the book pages instead</a></p>
+    <p id="plain-note" class="slim-note" hidden>Showing the psalter's own pages. <a href="#" id="asm-back">Paste in the Sunday's antiphon again</a></p>
     <p id="beta-note" class="slim-note" hidden></p>
 
     <p id="ref-note" class="slim-note" hidden>Showing <b id="ref-name"></b> · <a href="#" id="ref-back">Back to the hour</a></p>
@@ -100,7 +102,7 @@
 
     <aside class="callout small">
       <p><strong>Locked for the community.</strong> Every page of the book on this site is sealed and opens only with the community password. Enter it once on each phone; ask Br. Augustine if you don't have it.</p>
-      <p>The four buttons at the top choose the book: the <b>Psalter</b>, or the seasonal books for <b>Advent</b> and Christmas, <b>Lent</b> and Easter (with the feasts after Pentecost and the Sundays through the year), and the <b>Saints</b>. In a seasonal book, choose the section, then “Go to” an hour. The <b>p.</b> button opens any page by the number printed in the book you're in (the faint number in the corner shows the page you're reading). On a day with its own proper, the line above the pages links straight to it.</p>
+      <p>The four buttons at the top choose the book: the <b>Psalter</b>, or the seasonal books for <b>Advent</b> and Christmas, <b>Lent</b> and Easter (with the feasts after Pentecost and the Sundays through the year), and the <b>Saints</b>. In a seasonal book, choose the section, then “Go to” an hour. On Saturday and Sunday evenings through the year, Vespers is pasted together for you: the Psalter, with the Sunday's own Magnificat antiphon (by year) and the Magnificat in its first alternate tone. The <b>p.</b> button opens any page by the number printed in the book you're in (the faint number in the corner shows the page you're reading). On a day with its own proper, the line above the pages links straight to it.</p>
       <p>Tap the week the choir is on (I–IV in the bar). This phone remembers it and moves on to the next week every Sunday. Until you choose, the page guesses from the calendar (Week I begins after Christmastide and again at Easter). Turn the phone sideways to hide the bar and see the page full width.</p>
       <p class="muted">This book was “printed not published,” for the monks, oblates, students and guests of Saint Bernard Abbey, “for private distribution only.” Please don't share the password or the pages outside the community.</p>
     </aside>

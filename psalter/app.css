@@ -231,3 +231,7 @@ p.then { margin: .2rem 0 1.4rem; }
   font-size: .85rem; padding: .15rem .5rem; border-radius: 6px;
   background: rgba(243, 237, 225, .95); color: #2b241d; border: 1px solid rgba(43, 36, 29, .15);
 }
+
+/* Pasted-together hours: a thin label between the strips */
+.asm-head { margin: 14px 0 8px; padding: 4px 10px; font-size: .9rem; color: #6b5d4f; border-left: 3px solid #9b1c1c; background: rgba(155, 28, 28, .05); border-radius: 0 6px 6px 0; }
+#pdf-pages canvas.strip { margin-bottom: 0; }

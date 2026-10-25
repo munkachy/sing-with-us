@@ -226,6 +226,77 @@
     });
   }
 
+  // ---- Cut and paste (assembly.json): strips of pages already in the vault, drawn one under another ----
+  // Sunday Vespers through the year (Br. Augustine): the psalter's Saturday (I) or Sunday (II) Vespers, but the
+  // Magnificat antiphon is the Sunday's own (Year I/II at I Vespers, Year A/B/C at II Vespers), sung in the
+  // first alternate tone the antiphon names, then the antiphon again and the psalter's Conclusion.
+  var asm = null, plain = false;
+  function dayDate() { return addDays(midnight(now), state.day - now.getDay()); }
+  function sundayRecipe() {
+    if (!asm || plain || state.ref || state.book !== "psalter" || state.hour !== 3 || (state.day !== 0 && state.day !== 6)) return null;
+    var sun = state.day === 6 ? addDays(dayDate(), 1) : dayDate();
+    var ot = tagsFor(sun).tags.filter(function (t) { return typeof t === "object" && "n" in t; })[0];
+    if (!ot) return null;
+    var first = state.day === 6, y = sun.getFullYear();
+    var year = first ? (y % 2 ? "I" : "II") : ["C", "A", "B"][y % 3];
+    var a = ((asm.ot[ot.early ? "early" : "late"] || {})[ROMANS[ot.n]] || {})[first ? "I" : "II"];
+    a = a && a[year];
+    if (!a) return null;
+    var tone = asm.tones[a.book][String(a.tone)];
+    var ps = asm.psalter[first ? "sat" : "sun"], src = books[a.book].label;
+    var name = "Sunday " + ROMANS[ot.n] + " through the Year, " + (first ? "I Vespers" : "II Vespers") + ", Year " + year;
+    var items = ps.head.concat([{ h: "Antiphon at the Magnificat: " + name + " (" + src + ", p. " + a.strips[0][4] + ")" }], a.strips,
+      [{ h: "Magnificat, first alternate tone (" + src + ", p. " + a.tone + ")" }], tone || [],
+      [{ h: "The antiphon is repeated" }], a.strips, [{ h: "Conclusion (Psalter)" }], ps.tail);
+    return { key: "sun:" + name, items: items,
+      note: "Pasted together: " + name + ". The Magnificat antiphon comes from the " + src + " book and the Magnificat is in its first alternate tone." };
+  }
+  function lentRecipe(sec) {
+    if (!asm || !sec.recipe) return null;
+    var items = [];
+    asm.lent.forEach(function (x) {
+      items.push({ h: x.section + (x.day && x.section.indexOf(x.day) < 0 ? " · " + x.day : "") + " · " + x.hour +
+        (x.year !== "ABC" ? " · Year " + x.year : "") + (x.tone ? " (alternate tone p. " + x.tone + ")" : "") });
+      items = items.concat(x.strips);
+    });
+    return { key: "lent-antiphons", items: items, note: "" };
+  }
+  var docs = {};
+  function getDoc(path, idx, key) {
+    if (!docs[path]) docs[path] = open(idx.pdfs[path], key).then(function (plainBuf) {
+      return pdfjs().then(function (lib) { return lib.getDocument({ data: new Uint8Array(plainBuf.slice(0)) }).promise; });
+    }, function (e) { delete docs[path]; throw e; });
+    return docs[path];
+  }
+  function drawRecipe(items, idx, key, token) {
+    var box = $("#pdf-pages"); box.innerHTML = "";
+    if (pager) pager.stop();
+    var width = box.clientWidth || window.innerWidth;
+    var ratio = Math.min(window.devicePixelRatio || 1, 2.5, 2000 / width);
+    var paths = []; items.forEach(function (it) { if (Array.isArray(it) && paths.indexOf(it[0]) < 0) paths.push(it[0]); });
+    return Promise.all(paths.map(function (p) { return getDoc(p, idx, key); })).then(function (ds) {
+      var byPath = {}; paths.forEach(function (p, i) { byPath[p] = ds[i]; });
+      return Promise.all(items.map(function (it) { return Array.isArray(it) ? byPath[it[0]].getPage(it[1] + 1) : null; }));
+    }).then(function (pages) {
+      if (vault.token !== token) return;
+      var jobs = [];
+      items.forEach(function (it, i) {
+        if (!Array.isArray(it)) { var h = document.createElement("p"); h.className = "asm-head"; h.textContent = it.h; box.appendChild(h); return; }
+        var page = pages[i], vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
+        var top = it[2] * vp.height, hgt = Math.max(1, (it[3] - it[2]) * vp.height);
+        var cv = document.createElement("canvas"); cv.className = "strip";
+        cv.width = Math.floor(vp.width); cv.height = Math.floor(hgt); cv.dataset.p = it[4];
+        cv.style.aspectRatio = cv.width + " / " + cv.height; cv.setAttribute("aria-label", "From page " + it[4]);
+        box.appendChild(cv);
+        jobs.push(function () { return page.render({ canvasContext: cv.getContext("2d"), viewport: vp, transform: [1, 0, 0, 1, 0, -top] }).promise; });
+      });
+      var f = parseFloat(box.dataset.restore); box.dataset.restore = "";
+      if (f > 0) scrollTo(0, box.getBoundingClientRect().top + scrollY + f * box.getBoundingClientRect().height);
+      pageLabel();
+      return jobs.reduce(function (c, j) { return c.then(function () { if (vault.token === token) return j(); }); }, Promise.resolve());
+    });
+  }
+
   // ---- Page numbers: printed page = PDF page - the book's offset ----
   var current = null;   // the section on screen: { offset, start }
   function bookKey() { return state.book === "psalter" ? "Psalter" : state.book; }
@@ -239,11 +310,12 @@
   }
   function pageLabel() {
     var el = $("#page-label"), view = $("#pdf-view");
-    if (!current || view.hidden) { el.hidden = true; return; }
     var cvs = $("#pdf-pages").querySelectorAll("canvas"), at = -1, line = window.innerHeight * 0.4;
+    var strips = cvs.length && cvs[0].dataset.p;
+    if ((!current && !strips) || view.hidden) { el.hidden = true; return; }
     for (var i = 0; i < cvs.length; i++) { if (cvs[i].getBoundingClientRect().top <= line) at = i; else break; }
     if (at < 0) at = 0;
-    var n = current.start + at - current.offset;
+    var n = strips ? +cvs[at].dataset.p : current.start + at - current.offset;
     el.textContent = "p. " + n; el.hidden = !cvs.length || n < 1;
   }
   window.addEventListener("scroll", pageLabel, { passive: true });
@@ -305,11 +377,21 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
+      var recipe = inBook ? lentRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe();
+      $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
+      $("#plain-note").hidden = !plain || !!state.ref || state.hour !== 3 || (state.day !== 0 && state.day !== 6);
       var keyP = vault.key ? Promise.resolve(vault.key) : savedKey();
       if (!keyP) { $("#lock").hidden = false; $("#beta-view").hidden = true; $("#pdf-view").hidden = true; return; }
       $("#lock").hidden = true;
       return keyP.then(function (key) {
         vault.key = key;
+        if (recipe) {
+          $("#beta-view").hidden = true; $("#pdf-view").hidden = false; msg("");
+          if ($("#pdf-pages").dataset.file === recipe.key) { goJump(); return; }
+          $("#pdf-pages").dataset.file = recipe.key; current = null;
+          msg("Opening…");
+          return drawRecipe(recipe.items, idx, key, token).then(function () { if (vault.token === token) msg(""); });
+        }
         var isBeta = !!hourFile, cached = !!vault.cache[file];
         if (!cached) msg("Opening…");
         return open(file, key).then(function (plain) {
@@ -528,6 +610,13 @@
   });
 
   render();
-  fetch("books.json").then(function (r) { return r.json(); }).then(function (b) { books = b; todayNote(); }, function () {});
+  fetch("books.json").then(function (r) { return r.json(); }).then(function (b) {
+    books = b;
+    books.Lent.sections.splice(books.Lent.sections.findIndex(function (s) { return s.group === "Reference"; }), 0,
+      { title: "Magnificat antiphons of Lent, cut out (all)", group: "Reference", tag: "", recipe: "lent", jumps: [], pages: 0, start: 0 });
+    return fetch("assembly.json").then(function (r) { return r.json(); }).then(function (a) { asm = a; });
+  }).then(function () { todayNote(); if (state.hour === 3 && (state.day === 0 || state.day === 6)) render(); }, function () {});
+  $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
+  $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });
   window.PSALTER = { tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
 })();

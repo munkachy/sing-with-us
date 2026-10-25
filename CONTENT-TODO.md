@@ -111,6 +111,8 @@ Other documents (official text):
 - **To ask the choir:** on Saturday Vespers our book prints the text of Psalm 146 under the heading and antiphon of Psalm 145, and Psalm 145 under 146. The Beta shows it as printed, with a note.
 - **Psalter Beta (option C), Oct 24:** behind a community password Br. Augustine chose (not written in this repo). The text and chant are sealed on the server and opened on the phone, so search engines and visitors without the password see only scrambled data. It is a lock against casual eyes, not a vault: a short password can be guessed by someone determined. Only Monday Vespers so far; the hours are built in the private `munkachy/psalter` repo (`beta/`). To change the password, run that build again with the new one.
 
+- **Poetry sections (Oct 25)** on the three door pages, each with one question (“Do you like poetry?” / “Have you noticed how much of the Bible is poetry?” / “Do you notice the Psalm at Mass?”). Still to check (yellow in review mode): C. S. Lewis on parallelism; Whitman, Ginsberg and the Bible's long line; the Hallel at the Last Supper (a tradition, not stated in the Gospel); Luther's “little Bible”; the exact English wording of GIRM 61.
+
 ## 5. Not built yet
 
 - The printable 11x17 sign with QR codes (waiting until the pages are approved, so it can match their style). **Wording settled Oct 25:** “How do monks pray? Scan to find out.” with *The Oldest Conversation* as the name beneath.

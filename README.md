@@ -31,10 +31,10 @@ It is a plain static site: HTML, one stylesheet, one small JavaScript file. No f
 
 ## When you change the stylesheet or script
 
-Every page loads `site.css?v=15` and `site.js?v=15`. Phones keep old copies of these files, so after any change to `assets/css/site.css` or `assets/js/site.js`, raise the number on every page (for example to `?v=16`). From the repository folder:
+Every page loads `site.css?v=16` and `site.js?v=16`. Phones keep old copies of these files, so after any change to `assets/css/site.css` or `assets/js/site.js`, raise the number on every page (for example to `?v=17`). From the repository folder:
 
 ```sh
-find . -name '*.html' -exec sed -i 's/?v=15"/?v=16"/g' {} +
+find . -name '*.html' -exec sed -i 's/?v=16"/?v=17"/g' {} +
 ```
 
 ## Three themes

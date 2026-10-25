@@ -194,6 +194,7 @@
     var key = fileKey(state.week, state.day, state.hour), id = IDS[key];
     var weekly = state.hour <= 2;
     $("#now-title").textContent = DAYS[state.day] + (weekly ? " · Week " + ROMAN[state.week] : "") + " · " + HOURS[state.hour];
+    document.title = $("#now-title").textContent + " · Monastic Psalter";
     var open = $("#open-btn");
     open.href = viewUrl(id);
     open.textContent = "Open in Google Drive";
@@ -201,7 +202,6 @@
     if (cal.volume && state.day === now.getDay()) note = "Today falls in " + (cal.volume === "Lent" ? "Lent" : "Advent or Christmastide") + ": the choir uses the " + cal.volume + " volume. You can still browse the four-week psalter below.";
     $("#season-note").textContent = note;
     $("#season-note").hidden = !note;
-    $("#week-auto").textContent = (state.autoWeek ? "Guessed from the calendar. Tap the right one if it's off." : "Set by you. Moves on every Sunday. (Calendar says Week " + ROMAN[cal.week] + ")") + (weekly ? "" : " Vespers and Compline are the same every week.");
     document.querySelectorAll("[data-week]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.week === state.week)); });
     document.querySelectorAll("[data-day]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.day === state.day)); });
     document.querySelectorAll("[data-hour]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.hour === state.hour)); });

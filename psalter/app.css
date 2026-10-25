@@ -171,3 +171,9 @@ details.ref .ref-list { margin: .7rem .8rem 1rem; }
 #beta-content .tone { font-size: .78em; }
 #beta-content details.pick > summary { font-size: .82em; }
 #beta-content details.pick .when { font-size: .7em; }
+
+/* No title box: the bar says which hour it is. Short notes only when they matter; readings link at the bottom. */
+.slim-note { margin: .6rem 0 .2rem; padding: .45rem .7rem; border-left: 3px solid var(--accent); background: var(--surface); font-size: .95rem; border-radius: 0 8px 8px 0; }
+.wrap > .readings { margin: 0 0 1.2rem; padding: .7rem .9rem; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); }
+.beta-view { margin-top: 0; }
+.textsize { margin-top: .2rem; }

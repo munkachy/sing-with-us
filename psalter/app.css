@@ -185,3 +185,11 @@ details.ref .ref-list { margin: .7rem .8rem 1rem; }
 #lock { margin: 1rem 0; }
 #vault-msg { margin: .8rem 0; text-align: center; }
 p.then { margin: .2rem 0 1.4rem; }
+
+/* Phone turned sideways: hide the header and the bar, and let the pages fill the width */
+@media (orientation: landscape) and (max-height: 540px) {
+  .site-header, .pickbar { display: none; }
+  main .wrap { max-width: none; }
+  .beta-view { margin-left: -16px; margin-right: -16px; border-radius: 0; box-shadow: none; padding-left: 16px; padding-right: 16px; }
+  #pdf-pages canvas { width: calc(100% + 24px); margin: 0 -12px 10px; }
+}

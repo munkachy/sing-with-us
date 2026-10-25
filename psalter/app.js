@@ -84,7 +84,7 @@
 
   // ---- The vault: sealed files, one password for all of them ----
   var vault = { idx: null, key: null, cache: {}, token: null };
-  var betaOn = store("psalter-beta") === true;
+  var betaOn = false;   // the typed Beta hours stay in the vault, unused for now (Br. Augustine: the book pages are enough)
   function bytes(s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); }
   function b64(buf) { return btoa(String.fromCharCode.apply(null, new Uint8Array(buf))); }
   function index() {
@@ -125,21 +125,29 @@
   function drawPdf(data, token) {
     var box = $("#pdf-pages"); box.innerHTML = "";
     return pdfjs().then(function (lib) { return lib.getDocument({ data: new Uint8Array(data.slice(0)) }).promise; }).then(function (doc) {
-      var width = box.clientWidth || window.innerWidth, ratio = Math.min(window.devicePixelRatio || 1, 2.5);
-      var chain = Promise.resolve();
-      for (var n = 1; n <= doc.numPages; n++) (function (n) {
-        chain = chain.then(function () {
-          if (vault.token !== token) return;
-          return doc.getPage(n).then(function (page) {
-            var vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
-            var cv = document.createElement("canvas"); cv.width = Math.floor(vp.width); cv.height = Math.floor(vp.height);
-            cv.setAttribute("aria-label", "Page " + n); box.appendChild(cv);
-            return page.render({ canvasContext: cv.getContext("2d"), viewport: vp }).promise;
+      var width = box.clientWidth || window.innerWidth;
+      var ratio = Math.min(window.devicePixelRatio || 1, 2.5, 2000 / width);
+      var pages = [];
+      for (var n = 1; n <= doc.numPages; n++) pages.push(doc.getPage(n));
+      return Promise.all(pages).then(function (pages) {
+        // Lay out every page at its final size first, so a turned phone can go straight back to its place
+        var items = pages.map(function (page, i) {
+          var vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
+          var cv = document.createElement("canvas"); cv.width = Math.floor(vp.width); cv.height = Math.floor(vp.height);
+          cv.setAttribute("aria-label", "Page " + (i + 1)); box.appendChild(cv);
+          return { page: page, vp: vp, cv: cv };
+        });
+        var f = parseFloat(box.dataset.restore); box.dataset.restore = "";
+        if (f > 0) scrollTo(0, box.getBoundingClientRect().top + scrollY + f * box.getBoundingClientRect().height);
+        var chain = Promise.resolve();
+        items.forEach(function (it) {
+          chain = chain.then(function () {
+            if (vault.token !== token) return;
+            return it.page.render({ canvasContext: it.cv.getContext("2d"), viewport: it.vp }).promise;
           });
         });
-      })(n);
-      box.dataset.width = width;
-      return chain;
+        return chain;
+      });
     });
   }
 
@@ -255,7 +263,6 @@
     document.querySelectorAll("[data-week]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.week === state.week)); });
     document.querySelectorAll("[data-day]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.day === state.day)); });
     document.querySelectorAll("[data-hour]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.hour === state.hour)); });
-    $("#beta-toggle").checked = betaOn;
     $("#ref-note").hidden = !state.ref;
     if (state.ref) $("#ref-name").textContent = label(state.ref);
     var lauds = $("#then-lauds");
@@ -273,20 +280,6 @@
     }
     show();
   }
-
-  // Text size for the Beta words only (the chant is a picture of the page and keeps its width).
-  var SIZES = [0.85, 1, 1.15, 1.3, 1.5, 1.75, 2];
-  var fsStep = SIZES.indexOf(store("psalter-fs")); if (fsStep < 0) fsStep = 1;
-  function applySize() {
-    $("#beta-view").style.setProperty("--fs", SIZES[fsStep]);
-    $("#fs-down").disabled = fsStep === 0; $("#fs-up").disabled = fsStep === SIZES.length - 1;
-    store("psalter-fs", SIZES[fsStep] === 1 ? null : SIZES[fsStep]);
-  }
-  $("#fs-down").addEventListener("click", function () { if (fsStep > 0) { fsStep--; applySize(); } });
-  $("#fs-up").addEventListener("click", function () { if (fsStep < SIZES.length - 1) { fsStep++; applySize(); } });
-  applySize();
-
-  $("#beta-toggle").addEventListener("change", function (e) { betaOn = e.target.checked; store("psalter-beta", betaOn || null); render(); });
 
   function pick(fn) { return function () { state.ref = null; fn(this); render(); }; }
   document.querySelectorAll("[data-week]").forEach(function (b) {
@@ -309,10 +302,18 @@
   });
   $("#ref-back").addEventListener("click", function (e) { e.preventDefault(); state.ref = null; render(); });
   // Redraw the PDF at the new width when the phone turns
-  var lastW = window.innerWidth;
+  var lastW = window.innerWidth, turnT = null, readFrac = 0;
+  window.addEventListener("scroll", function () {
+    var r = $("#pdf-pages").getBoundingClientRect();
+    if (r.height && window.innerWidth === lastW) readFrac = Math.max(0, -r.top) / r.height;
+  }, { passive: true });
   window.addEventListener("resize", function () {
     if (Math.abs(window.innerWidth - lastW) < 40) return; lastW = window.innerWidth;
-    $("#pdf-pages").dataset.file = ""; show();
+    var box = $("#pdf-pages"), frac = readFrac;   // where we were reading before the turn
+    clearTimeout(turnT);
+    turnT = setTimeout(function () {
+      box.dataset.file = ""; box.dataset.restore = frac; show();
+    }, 150);
   });
 
   render();

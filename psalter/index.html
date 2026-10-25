@@ -8,10 +8,10 @@
 <title>Monastic Psalter · Saint Bernard Abbey</title>
 <link rel="icon" type="image/png" href="../assets/img/crest-icon.png">
 <link rel="stylesheet" href="../assets/css/site.css?v=15">
-<link rel="stylesheet" href="app.css?v=11">
+<link rel="stylesheet" href="app.css?v=12">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=15" defer></script>
-<script src="app.js?v=9" defer></script>
+<script src="app.js?v=10" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the psalter</a>
@@ -37,7 +37,6 @@
       <div class="seg seg-5" role="group" aria-label="Hour"><button type="button" data-hour="0" aria-pressed="false">Matins</button><button type="button" data-hour="1" aria-pressed="false">Lauds</button><button type="button" data-hour="2" aria-pressed="false">Sext</button><button type="button" data-hour="3" aria-pressed="false">Vespers</button><button type="button" data-hour="4" aria-pressed="false">Compline</button></div>
       <div class="bar-tools">
         <button id="reset-btn" type="button" class="tool" title="Back to now, and the calendar's week">Now</button>
-        <label class="beta-switch"><input type="checkbox" id="beta-toggle"> <span>Beta</span></label>
       </div>
     </div>
   </nav>
@@ -57,11 +56,6 @@
     <p id="vault-msg" class="picker-note" role="status" hidden></p>
 
     <section id="beta-view" class="beta-view" aria-label="Beta version of this hour" hidden>
-      <div class="textsize" role="group" aria-label="Text size">
-        <span class="textsize-label">Text size</span>
-        <button type="button" id="fs-down" aria-label="Smaller text">A−</button>
-        <button type="button" id="fs-up" aria-label="Larger text">A+</button>
-      </div>
       <div id="beta-content"></div>
     </section>
 
@@ -95,7 +89,7 @@
 
     <aside class="callout small">
       <p><strong>Locked for the community.</strong> Every page of the book on this site is sealed and opens only with the community password. Enter it once on each phone; ask Br. Augustine if you don't have it.</p>
-      <p>Tap the week the choir is on (I–IV in the bar). This phone remembers it and moves on to the next week every Sunday. Until you choose, the page guesses from the calendar (Week I begins after Christmastide and again at Easter). <b>Now</b> goes back to today, this hour, and the calendar’s week. <b>Beta</b> shows the hours we have rebuilt as psalm text with the chant as printed.</p>
+      <p>Tap the week the choir is on (I–IV in the bar). This phone remembers it and moves on to the next week every Sunday. Until you choose, the page guesses from the calendar (Week I begins after Christmastide and again at Easter). <b>Now</b> goes back to today, this hour, and the calendar’s week. Turn the phone sideways to hide the bar and see the page full width.</p>
       <p class="muted">This book was “printed not published,” for the monks, oblates, students and guests of Saint Bernard Abbey, “for private distribution only.” Please don't share the password or the pages outside the community.</p>
     </aside>
   </div>

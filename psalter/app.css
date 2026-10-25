@@ -139,3 +139,16 @@ details.ref .ref-list { margin: .7rem .8rem 1rem; }
   .beta-view details.pick .chant { margin: .5rem 4px; }
   .beta-view .tone { margin-left: 16px; }
 }
+
+/* The Beta text and chant always sit on the cream page of the cloister theme, whatever theme is chosen;
+   the card above keeps the theme's own colors. */
+.beta-view {
+  --bg: #f3ede1; --bg-2: #ebe3d3; --surface: #fbf8f2; --text: #2b241d; --muted: #6a5f52; --rule: #d6cab4;
+  --accent: #9b1c1c; --accent-2: #8a6a26; --accent-ink: #fff8ee; --link: #8a1a1a;
+  color-scheme: light; background: var(--bg); color: var(--text);
+  margin: 0 -16px 1.4rem; padding: .3rem 16px 1rem;
+}
+.beta-view .chant img { filter: none !important; mix-blend-mode: multiply !important; }
+@media (min-width: 42.01rem) {
+  .beta-view { margin: 0 0 1.6rem; padding: .6rem 1.4rem 1.2rem; border-radius: 14px; box-shadow: 0 6px 22px rgba(0,0,0,.18); }
+}

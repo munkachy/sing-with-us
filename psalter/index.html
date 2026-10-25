@@ -8,10 +8,10 @@
 <title>Monastic Psalter · Saint Bernard Abbey</title>
 <link rel="icon" type="image/png" href="../assets/img/crest-icon.png">
 <link rel="stylesheet" href="../assets/css/site.css?v=15">
-<link rel="stylesheet" href="app.css?v=9">
+<link rel="stylesheet" href="app.css?v=10">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=15" defer></script>
-<script src="app.js?v=7" defer></script>
+<script src="app.js?v=8" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the psalter</a>
@@ -43,13 +43,9 @@
   </nav>
 
   <div class="wrap">
-    <section class="now-card" aria-labelledby="now-title">
-      <h1 id="now-title">Loading…</h1>
-      <p id="week-auto" class="picker-note"></p>
-      <p id="season-note" class="season-note" hidden></p>
-      <p id="readings" class="readings" hidden><span id="readings-text"></span> <a id="readings-link" href="https://divineoffice.org/" target="_blank" rel="noopener">DivineOffice.org ↗</a></p>
-      <p id="beta-note" class="picker-note" hidden></p>
-    </section>
+    <h1 id="now-title" class="visually-hidden">Monastic Psalter</h1>
+    <p id="season-note" class="slim-note" hidden></p>
+    <p id="beta-note" class="slim-note" hidden></p>
 
     <section id="beta-view" class="beta-view" aria-label="Beta version of this hour" hidden>
       <div class="textsize" role="group" aria-label="Text size">
@@ -77,6 +73,8 @@
   </div>
 
   <div class="wrap">
+    <p id="readings" class="readings" hidden><span id="readings-text"></span> <a id="readings-link" href="https://divineoffice.org/" target="_blank" rel="noopener">DivineOffice.org ↗</a></p>
+
     <details class="ref">
       <summary>Ordinary, chants and reference</summary>
       <ul class="ref-list">

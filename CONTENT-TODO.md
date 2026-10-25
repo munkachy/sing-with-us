@@ -113,5 +113,5 @@ Other documents (official text):
 
 ## 5. Not built yet
 
-- The printable 11x17 sign with QR codes (waiting until the pages are approved, so it can match their style).
+- The printable 11x17 sign with QR codes (waiting until the pages are approved, so it can match their style). **Wording settled Oct 25:** “How do monks pray? Scan to find out.” with *The Oldest Conversation* as the name beneath.
 - A custom domain.

@@ -2,7 +2,7 @@
 
 Everything on the site that still needs a decision, a fact, a photo, or a check. Open any page with `?review` added to its address to see these marked in place (red = decision, yellow = check, green = checked).
 
-Last updated: Oct 24, 2026 (second round: home page, Grail in the meditations).
+Last updated: Oct 25, 2026 (schedule from the abbey website; Psalm 147 praise meditation).
 
 ---
 
@@ -11,10 +11,10 @@ Last updated: Oct 24, 2026 (second round: home page, Grail in the meditations).
 | # | Question | Where it shows | Notes |
 |---|---|---|---|
 | D1 | ~~May guests sing along, or only listen?~~ | everywhere | **Settled Oct 24: guests are invited to sing along.** The Times page has a "How do I sing along?" tip (follow the monks, sing softer than they do, pause where they pause), and "Our book" Step 5 points to it. |
-| D2 | **Compline time: 7:10 pm or 7:15 pm?** | `visit/` | You said 7:10. The abbey website's Liturgy Schedule says 7:15. The site uses 7:10. |
-| D3 | **Weekend Sext and Mass times** | `visit/` | You gave Sext as 11:55. The abbey website says Sext is 10:45 on Saturday and 10:00 on Sunday. Mass times (weekdays 5:00 pm, Saturday 11:00 am, Sunday 10:30 am) come only from the website. Please confirm all of these. |
+| D2 | ~~Compline time~~ | `visit/` | **Settled Oct 25: 7:15 pm, from the abbey website** (Br. Augustine asked to follow it). |
+| D3 | ~~Weekend Sext and Mass times~~ | `visit/` | **Settled Oct 25: the abbey website's times** (Sat Sext 10:45, Mass 11:00; Sun Sext 10:00, Mass 10:30; weekday Mass 5:00 pm). |
 | D4 | **"Most days" for 6:00 am Matins and Lauds** | `visit/` | Besides Sunday (7:00 am), are there other exceptions? |
-| D5 | **Feast days** | `visit/` | When Vespers moves to 7:10 pm on feast days, what happens to Compline? |
+| D5 | ~~Feast days~~ | `visit/` | **Settled Oct 25:** the page now says only what the abbey website says: times can change on major feast days and school occasions. The “Vespers at 7:10 on feasts” line is gone. |
 | D6 | **Eucharistic adoration on first Sundays** | `oblates/` | For oblates only, or open to everyone? What time? |
 | D7 | **Oblate formation** | `oblates/` | The draft says the year of formation comes "before making a promise as an oblate." Please confirm the wording. |
 | D8 | **Antiphons, the Glory Be, and bowing** | `our-psalter/` | Are antiphons sung before and after each psalm? Does each psalm end with the Glory Be? Is there anything about standing, sitting, or bowing that guests should know? |
@@ -23,7 +23,7 @@ Last updated: Oct 24, 2026 (second round: home page, Grail in the meditations).
 | D11 | **Your personal line on the seekers page** | `seekers/` | "When I was young, I was sure Christianity was for weak or naïve people." Keep or cut. |
 | D12 | ~~Personal details in the Psalm 92 meditation~~ | `meditations/#ps-92` | Settled Oct 24: kept, but made general. God now encourages a love of music; the program and the looper are no longer mentioned. |
 | D13 | **Theme names and the default theme** | every page | Habit / Cloister / Stained glass. Right now, with no choice saved, the site follows the phone's light or dark setting. |
-| D14 | **Are *all* prayer times open to the public?** | home page; `visit/`; door pages | On Oct 24 you said Compline is prayed privately on Wednesdays and Sundays, so `visit/` and the door pages say "almost every." The new home page avoids the question ("Whenever you need prayer, come and pray with us") and links to the times. If every hour is in fact public, change "almost every" on `visit/`, `christians/`, and `catholics/`. |
+| D14 | ~~Are *all* prayer times open to the public?~~ | home, `visit/`, doors | **Set aside Oct 25.** No page claims “almost every” any more; they invite people to come and link to the times. The schedule shows the abbey website's own short notes (Compline “not public on Wednesdays”; Sunday Compline “not public”), with no explanation. |
 | D15 | **"My son" in God's replies** | `meditations/` (Psalms 102, 38, 91, 116) and `catholics/` | Added at your request, in four places only, so it stays tender instead of becoming a habit. Add or remove as you like. |
 
 ## 2. Photos and permissions

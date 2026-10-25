@@ -177,3 +177,11 @@ details.ref .ref-list { margin: .7rem .8rem 1rem; }
 .wrap > .readings { margin: 0 0 1.2rem; padding: .7rem .9rem; border: 1px solid var(--rule); border-radius: 10px; background: var(--surface); }
 .beta-view { margin-top: 0; }
 .textsize { margin-top: .2rem; }
+
+/* PDFs drawn on the page (PDF.js), on the same cream page as the Beta */
+.pdf-view { padding-top: .6rem; }
+#pdf-pages canvas { display: block; width: calc(100% + 24px); margin: 0 -12px 10px; height: auto; mix-blend-mode: multiply; }
+@media (min-width: 42.01rem) { #pdf-pages canvas { width: 100%; margin: 0 0 12px; } }
+#lock { margin: 1rem 0; }
+#vault-msg { margin: .8rem 0; text-align: center; }
+p.then { margin: .2rem 0 1.4rem; }

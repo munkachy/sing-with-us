@@ -8,10 +8,10 @@
 <title>Monastic Psalter · Saint Bernard Abbey</title>
 <link rel="icon" type="image/png" href="../assets/img/crest-icon.png">
 <link rel="stylesheet" href="../assets/css/site.css?v=16">
-<link rel="stylesheet" href="app.css?v=13">
+<link rel="stylesheet" href="app.css?v=14">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=16" defer></script>
-<script src="app.js?v=11" defer></script>
+<script src="app.js?v=12" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the psalter</a>
@@ -30,8 +30,13 @@
   </div>
 </header>
 <main id="main">
-  <nav class="pickbar" aria-label="Choose the week, day and hour">
+  <nav class="pickbar" aria-label="Choose the book, then the week, day and hour or the section">
     <div class="pickbar-in">
+      <div class="seg seg-books" role="group" aria-label="Book"><button type="button" data-book="psalter" aria-pressed="true" title="Monastic Psalter: the four-week psalter">Psalter</button><button type="button" data-book="Advent-Christmas" aria-pressed="false" title="Advent, Christmas and Epiphany">Advent</button><button type="button" data-book="Lent" aria-pressed="false" title="Lent, Easter, and the feasts after Pentecost">Lent</button><button type="button" data-book="Sanctoral" aria-pressed="false" title="Proper of the Saints">Saints</button></div>
+      <div class="book-picks" hidden>
+        <select id="sec" aria-label="Section of this book"></select>
+        <select id="jump" aria-label="Go to an hour in this section"></select>
+      </div>
       <div class="seg seg-4" role="group" aria-label="Week"><button type="button" data-week="0" aria-pressed="false" aria-label="Week I">I</button><button type="button" data-week="1" aria-pressed="false" aria-label="Week II">II</button><button type="button" data-week="2" aria-pressed="false" aria-label="Week III">III</button><button type="button" data-week="3" aria-pressed="false" aria-label="Week IV">IV</button></div>
       <div class="seg seg-7" role="group" aria-label="Day"><button type="button" data-day="0" aria-pressed="false" aria-label="Sunday">Su</button><button type="button" data-day="1" aria-pressed="false" aria-label="Monday">Mo</button><button type="button" data-day="2" aria-pressed="false" aria-label="Tuesday">Tu</button><button type="button" data-day="3" aria-pressed="false" aria-label="Wednesday">We</button><button type="button" data-day="4" aria-pressed="false" aria-label="Thursday">Th</button><button type="button" data-day="5" aria-pressed="false" aria-label="Friday">Fr</button><button type="button" data-day="6" aria-pressed="false" aria-label="Saturday">Sa</button></div>
       <div class="seg seg-5" role="group" aria-label="Hour"><button type="button" data-hour="0" aria-pressed="false">Matins</button><button type="button" data-hour="1" aria-pressed="false">Lauds</button><button type="button" data-hour="2" aria-pressed="false">Sext</button><button type="button" data-hour="3" aria-pressed="false">Vespers</button><button type="button" data-hour="4" aria-pressed="false">Compline</button></div>
@@ -41,6 +46,7 @@
   <div class="wrap">
     <h1 id="now-title" class="visually-hidden">Monastic Psalter</h1>
     <p id="season-note" class="slim-note" hidden></p>
+    <p id="today-note" class="slim-note" hidden></p>
     <p id="beta-note" class="slim-note" hidden></p>
 
     <p id="ref-note" class="slim-note" hidden>Showing <b id="ref-name"></b> · <a href="#" id="ref-back">Back to the hour</a></p>
@@ -86,6 +92,7 @@
 
     <aside class="callout small">
       <p><strong>Locked for the community.</strong> Every page of the book on this site is sealed and opens only with the community password. Enter it once on each phone; ask Br. Augustine if you don't have it.</p>
+      <p>The four buttons at the top choose the book: the <b>Psalter</b>, or the seasonal books for <b>Advent</b> and Christmas, <b>Lent</b> and Easter (with the feasts after Pentecost and the Sundays through the year), and the <b>Saints</b>. In a seasonal book, choose the section, then “Go to” an hour. On a day with its own proper, the line above the pages links straight to it.</p>
       <p>Tap the week the choir is on (I–IV in the bar). This phone remembers it and moves on to the next week every Sunday. Until you choose, the page guesses from the calendar (Week I begins after Christmastide and again at Easter). Turn the phone sideways to hide the bar and see the page full width.</p>
       <p class="muted">This book was “printed not published,” for the monks, oblates, students and guests of Saint Bernard Abbey, “for private distribution only.” Please don't share the password or the pages outside the community.</p>
     </aside>

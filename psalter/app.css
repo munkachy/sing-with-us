@@ -180,7 +180,7 @@ details.ref .ref-list { margin: .7rem .8rem 1rem; }
 
 /* PDFs drawn on the page (PDF.js), on the same cream page as the Beta */
 .pdf-view { padding-top: .6rem; }
-#pdf-pages canvas { display: block; width: calc(100% + 24px); margin: 0 -12px 10px; height: auto; mix-blend-mode: multiply; }
+#pdf-pages canvas { display: block; width: calc(100% + 24px); margin: 0 -12px 10px; height: auto; mix-blend-mode: multiply; background: #fff; }
 @media (min-width: 42.01rem) { #pdf-pages canvas { width: 100%; margin: 0 0 12px; } }
 #lock { margin: 1rem 0; }
 #vault-msg { margin: .8rem 0; text-align: center; }
@@ -197,3 +197,21 @@ p.then { margin: .2rem 0 1.4rem; }
 /* No Now button: the bar is just week, day and hour */
 .pickbar-in { grid-template-columns: 1fr; grid-template-areas: "week" "day" "hour"; }
 @media (min-width: 62rem) { .pickbar-in { grid-template-columns: 11rem 17rem 1fr; grid-template-areas: "week day hour"; } }
+
+/* The book row, and the section and hour lists of the seasonal books */
+.pickbar .seg-books { grid-area: book; grid-template-columns: repeat(4, 1fr); }
+.book-picks { grid-area: picks; display: grid; grid-template-columns: 1fr; gap: 5px; }
+.book-picks select {
+  font: inherit; font-size: .95rem; min-height: 38px; width: 100%; padding: 0 .5rem; border-radius: 7px;
+  border: 1px solid var(--rule); background: var(--surface); color: var(--text);
+}
+.book-picks select:focus { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.pickbar-in { grid-template-areas: "book" "week" "day" "hour"; }
+.pickbar.in-book .pickbar-in { grid-template-areas: "book" "picks"; }
+.pickbar.in-book .seg-4, .pickbar.in-book .seg-7, .pickbar.in-book .seg-5 { display: none; }
+@media (min-width: 62rem) {
+  .pickbar-in { grid-template-columns: 18rem 11rem 17rem 1fr; grid-template-areas: "book week day hour"; }
+  .pickbar.in-book .pickbar-in { grid-template-columns: 18rem 1fr; grid-template-areas: "book picks"; }
+  .book-picks { grid-template-columns: 1.4fr 1fr; }
+}
+#today-note a { font-weight: 600; }

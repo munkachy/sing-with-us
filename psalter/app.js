@@ -74,9 +74,65 @@
     return (((o.week + weeks) % 4) + 4) % 4;
   }
 
+  // ---- The seasonal books (Advent-Christmas, Lent, Sanctoral): sections and their calendar tags (books.json) ----
+  var ROMANS = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII",
+    "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV"];
+  // Which tags fit a date, best first. Also the weekday or Sunday to look for among a section's hours.
+  function tagsFor(date) {
+    var d = midnight(date), y = d.getFullYear(), m = d.getMonth(), dd = d.getDate(), wd = d.getDay();
+    var e = easter(y), adv = firstAdventSunday(y), bapt = endOfChristmastide(y), ash = addDays(e, -46);
+    var mmdd = String(m + 1).padStart(2, "0") + "-" + String(dd).padStart(2, "0");
+    var tags = [], day = DAYS[wd];
+    var dated = "d:" + mmdd;
+    if (d >= adv && d < new Date(y, 11, 25)) {
+      var n = Math.floor(daysBetween(adv, d) / 7) + 1;
+      if (wd === 0) tags.push("adv:" + n, dated); else tags.push(dated, "advw:" + n);
+    } else tags.push(dated);
+    var hf = new Date(y, 11, 26 + ((7 - new Date(y, 11, 26).getDay()) % 7));   // the Sunday after Christmas
+    if (same(d, hf.getMonth() === 11 ? hf : new Date(y, 11, 30))) tags.unshift("xmas:holyfamily");
+    if (m === 0 && dd >= 2 && dd <= 5 && wd === 0) tags.unshift("xmas:sun2");
+    if (same(d, bapt)) tags.unshift("xmas:baptism");
+    tags.push({ e: daysBetween(e, d) });
+    var ck = addDays(adv, -7);
+    if (same(d, ck)) tags.unshift("ck");
+    var ot = null;
+    if (d > bapt && d < ash) ot = { early: true, n: Math.floor(daysBetween(bapt, sundayOf(d)) / 7) + 1 };
+    else if (d > addDays(e, 49) && d < ck) ot = { early: false, n: 34 - Math.round(daysBetween(sundayOf(d), ck) / 7) };
+    if (ot && wd === 0) { tags.push(ot); day = "Sunday " + ROMANS[ot.n]; }   // weekdays through the year: the psalter alone
+    return { tags: tags, day: day };
+  }
+  function tagFits(tag, t) {
+    return tag.split(" ").some(function (one) {
+      if (typeof t === "string") return one === t;
+      var m;
+      if ("e" in t && (m = one.match(/^e:(-?\d+)(?:-(-?\d+))?$/))) return t.e >= +m[1] && t.e <= +(m[2] === undefined ? m[1] : m[2]);
+      if ("n" in t && (m = one.match(/^ot:(\d+)-(\d+)$/))) return t.n >= +m[1] && t.n <= +m[2] && (+m[1] < 6) === t.early;
+      return false;
+    });
+  }
+  // Today's section in one book, or -1
+  function todayIn(book, date) {
+    var secs = books[book].sections, ft = tagsFor(date);
+    for (var i = 0; i < ft.tags.length; i++)
+      for (var k = 0; k < secs.length; k++) if (secs[k].tag && tagFits(secs[k].tag, ft.tags[i])) return k;
+    return -1;
+  }
+  // The best hour to open in a section: the right day if the section has several, then the hour by the clock
+  function jumpFor(sec, date) {
+    var day = tagsFor(date).day, j = sec.jumps;
+    var mine = j.filter(function (x) { return x[0].indexOf(day + " · ") === 0; });
+    if (!mine.length) mine = j.filter(function (x) { return x[0].indexOf(" · ") < 0; });
+    if (!mine.length) return -1;
+    var want = [["Matins"], ["Lauds"], ["Sext"], ["II Vespers", "Vespers", "I Vespers"], ["II Vespers", "Vespers", "I Vespers"]][hourFor(date)];
+    for (var w = 0; w < want.length; w++)
+      for (var i = 0; i < mine.length; i++) if (mine[i][0].replace(/^.* · /, "") === want[w]) return j.indexOf(mine[i]);
+    return j.indexOf(mine[0]);
+  }
+
   var now = new Date();
   var cal = calendar(now);
-  var state = { week: cal.week, day: now.getDay(), hour: hourFor(now), autoWeek: true, ref: null };
+  var books = null;
+  var state = { week: cal.week, day: now.getDay(), hour: hourFor(now), autoWeek: true, ref: null, book: "psalter", sec: {} };
   var saved = weekOverride(now);
   if (saved !== null) { state.week = saved; state.autoWeek = false; }
 
@@ -122,33 +178,65 @@
     });
     return pdfjsP;
   }
+  // Pages are laid out at full size at once, but drawn only near where the monk is reading,
+  // and let go again when far away: a long section (80 pages) would not fit in a phone's memory.
+  var pager = null;
   function drawPdf(data, token) {
     var box = $("#pdf-pages"); box.innerHTML = "";
+    if (pager) pager.stop();
     return pdfjs().then(function (lib) { return lib.getDocument({ data: new Uint8Array(data.slice(0)) }).promise; }).then(function (doc) {
       var width = box.clientWidth || window.innerWidth;
       var ratio = Math.min(window.devicePixelRatio || 1, 2.5, 2000 / width);
       var pages = [];
       for (var n = 1; n <= doc.numPages; n++) pages.push(doc.getPage(n));
       return Promise.all(pages).then(function (pages) {
-        // Lay out every page at its final size first, so a turned phone can go straight back to its place
+        if (vault.token !== token) return;
         var items = pages.map(function (page, i) {
           var vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
-          var cv = document.createElement("canvas"); cv.width = Math.floor(vp.width); cv.height = Math.floor(vp.height);
+          var cv = document.createElement("canvas");
+          cv.style.aspectRatio = Math.floor(vp.width) + " / " + Math.floor(vp.height);
           cv.setAttribute("aria-label", "Page " + (i + 1)); box.appendChild(cv);
-          return { page: page, vp: vp, cv: cv };
+          return { page: page, vp: vp, cv: cv, drawn: false };
         });
+        var busy = false, stopped = false;
+        function dist(it) {   // how far a page is from the screen, in screen heights
+          var r = it.cv.getBoundingClientRect(), h = window.innerHeight;
+          return r.bottom < 0 ? -r.bottom / h : r.top > h ? (r.top - h) / h : 0;
+        }
+        function next() {
+          if (stopped || busy || vault.token !== token) return;
+          items.forEach(function (it) { if (it.drawn && dist(it) > 4) { it.cv.width = it.cv.height = 0; it.drawn = false; } });
+          var todo = items.filter(function (it) { return !it.drawn && dist(it) <= 1.5; })
+            .sort(function (a, b) { return dist(a) - dist(b); })[0];
+          if (!todo) return;
+          busy = true;
+          todo.cv.width = Math.floor(todo.vp.width); todo.cv.height = Math.floor(todo.vp.height);
+          todo.page.render({ canvasContext: todo.cv.getContext("2d"), viewport: todo.vp }).promise.then(function () {
+            todo.drawn = true; busy = false; next();
+          }, function () { busy = false; });
+        }
+        var onScroll = function () { next(); };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        pager = { stop: function () { stopped = true; window.removeEventListener("scroll", onScroll); }, next: next };
         var f = parseFloat(box.dataset.restore); box.dataset.restore = "";
         if (f > 0) scrollTo(0, box.getBoundingClientRect().top + scrollY + f * box.getBoundingClientRect().height);
-        var chain = Promise.resolve();
-        items.forEach(function (it) {
-          chain = chain.then(function () {
-            if (vault.token !== token) return;
-            return it.page.render({ canvasContext: it.cv.getContext("2d"), viewport: it.vp }).promise;
-          });
-        });
-        return chain;
+        else goJump();
+        next();
       });
     });
+  }
+
+  // Scroll to the hour chosen in "Go to", once its page is laid out
+  var pendingJump = null;
+  function goJump() {
+    if (!pendingJump) return;
+    var cv = $("#pdf-pages").querySelectorAll("canvas")[pendingJump[1]];
+    if (!cv) return;
+    var r = cv.getBoundingClientRect(), bar = document.querySelector(".pickbar").getBoundingClientRect();
+    var barH = getComputedStyle(document.querySelector(".pickbar")).display === "none" ? 0 : bar.height;
+    scrollTo(0, Math.max(0, r.top + scrollY + Math.max(0, pendingJump[2] - 0.03) * r.height - barH - 6));
+    pendingJump = null;
+    if (pager) pager.next();
   }
 
   function label(k) {
@@ -160,10 +248,11 @@
   // Show the current hour (or reference section): the Beta text if chosen and ready, else the PDF.
   function show() {
     var token = vault.token = {};
-    var path = state.ref || fileKey(state.week, state.day, state.hour);
+    var inBook = state.book !== "psalter" && books;
+    var path = state.ref || (inBook ? books[state.book].sections[state.sec[state.book]].path : fileKey(state.week, state.day, state.hour));
     index().then(function (idx) {
       if (vault.token !== token) return;
-      var hourFile = !state.ref && betaOn && idx.hours[path];
+      var hourFile = !state.ref && !inBook && betaOn && idx.hours[path];
       var note = "";
       if (betaOn && !state.ref && !hourFile) note = "This hour isn't in the Beta yet, so here is the book. In the Beta so far: " + Object.keys(idx.hours).map(label).join("; ") + ".";
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
@@ -186,7 +275,7 @@
           } else if ($("#pdf-pages").dataset.file !== file) {
             $("#pdf-pages").dataset.file = file;
             return drawPdf(plain, token);
-          }
+          } else goJump();
         });
       });
     }).catch(function (e) {
@@ -253,12 +342,37 @@
   function pickKey(t) { return t.toDateString(); }
 
 
+  function fillBook() {
+    var b = books[state.book], secSel = $("#sec"), jumpSel = $("#jump"), k = state.sec[state.book];
+    if (secSel.dataset.book !== state.book) {
+      secSel.innerHTML = ""; var group = null, og = null;
+      b.sections.forEach(function (s, i) {
+        if (s.group !== group) { group = s.group; og = document.createElement("optgroup"); og.label = group; secSel.appendChild(og); }
+        var o = document.createElement("option"); o.value = i; o.textContent = s.title; og.appendChild(o);
+      });
+      secSel.dataset.book = state.book;
+    }
+    secSel.value = k;
+    var sec = b.sections[k];
+    jumpSel.innerHTML = "";
+    var o0 = document.createElement("option"); o0.value = ""; o0.textContent = sec.jumps.length ? "Go to…" : "(one piece: no hours to jump to)"; jumpSel.appendChild(o0);
+    sec.jumps.forEach(function (j, i) { var o = document.createElement("option"); o.value = i; o.textContent = j[0]; jumpSel.appendChild(o); });
+    jumpSel.disabled = !sec.jumps.length;
+  }
+
   function render() {
+    var inBook = state.book !== "psalter" && books;
+    document.querySelector(".pickbar").classList.toggle("in-book", !!inBook);
+    $(".book-picks").hidden = !inBook;
+    document.querySelectorAll("[data-book]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.book === state.book)); });
+    if (inBook) fillBook();
+    todayNote();
     var weekly = state.hour <= 2;
     $("#now-title").textContent = DAYS[state.day] + (weekly ? " · Week " + ROMAN[state.week] : "") + " · " + HOURS[state.hour];
+    if (inBook) $("#now-title").textContent = books[state.book].label + " · " + books[state.book].sections[state.sec[state.book]].title;
     document.title = (state.ref ? label(state.ref) : $("#now-title").textContent) + " · Monastic Psalter";
     var note = "";
-    if (cal.volume && state.day === now.getDay()) note = "Today falls in " + (cal.volume === "Lent" ? "Lent" : "Advent or Christmastide") + ": the choir uses the " + cal.volume + " volume. You can still use the four-week psalter here.";
+    if (cal.volume && state.day === now.getDay() && !inBook) note = "Today falls in " + (cal.volume === "Lent" ? "Lent" : "Advent or Christmastide") + ": the choir uses the " + cal.volume + " volume. You can still use the four-week psalter here.";
     $("#season-note").textContent = note; $("#season-note").hidden = !note;
     document.querySelectorAll("[data-week]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.week === state.week)); });
     document.querySelectorAll("[data-day]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.day === state.day)); });
@@ -266,11 +380,11 @@
     $("#ref-note").hidden = !state.ref;
     if (state.ref) $("#ref-name").textContent = label(state.ref);
     var lauds = $("#then-lauds");
-    lauds.hidden = state.hour !== 0 || !!state.ref;
+    lauds.hidden = state.hour !== 0 || !!state.ref || !!inBook;
     if (state.hour === 0) lauds.onclick = function (e) { e.preventDefault(); state.hour = 1; render(); scrollTo(0, 0); };
     // Readings not printed in our book: the long ones at Matins, the short one at Vespers
     var rd = $("#readings");
-    rd.hidden = (state.hour !== 0 && state.hour !== 3) || !!state.ref;
+    rd.hidden = (state.hour !== 0 && state.hour !== 3) || !!state.ref || !!inBook;
     if (!rd.hidden) {
       var t = addDays(midnight(now), state.day - now.getDay());
       var ymd = t.getFullYear() + String(t.getMonth() + 1).padStart(2, "0") + String(t.getDate()).padStart(2, "0");
@@ -281,7 +395,53 @@
     show();
   }
 
+  // "Today in the books": the sections whose calendar tag fits today, as links
+  function todayNote() {
+    var n = $("#today-note");
+    if (!books) { n.hidden = true; return; }
+    n.innerHTML = "";
+    var hits = Object.keys(books).map(function (b) { return [b, todayIn(b, now)]; }).filter(function (h) { return h[1] >= 0; });
+    hits.sort(function (a, b) { return (a[0] === "Sanctoral" ? 0 : 1) - (b[0] === "Sanctoral" ? 0 : 1); });
+    hits = hits.filter(function (h) { return !(h[0] === state.book && state.sec[h[0]] === h[1]); });
+    if (!hits.length) { n.hidden = true; return; }
+    n.appendChild(document.createTextNode("Today in the books: "));
+    hits.forEach(function (h, i) {
+      if (i) n.appendChild(document.createTextNode(" · "));
+      var a = document.createElement("a"); a.href = "#";
+      a.textContent = books[h[0]].sections[h[1]].title + " (" + books[h[0]].label + ")";
+      a.addEventListener("click", function (e) { e.preventDefault(); openSection(h[0], h[1], true); });
+      n.appendChild(a);
+    });
+    n.hidden = false;
+  }
+  function openSection(book, k, toNow) {
+    state.ref = null; state.book = book; state.sec[book] = k;
+    var sec = books[book].sections[k], j = toNow ? jumpFor(sec, now) : -1;
+    pendingJump = j >= 0 ? sec.jumps[j] : null;
+    if (!pendingJump) scrollTo(0, 0);
+    render();
+    if (j >= 0) $("#jump").value = j;
+  }
+
   function pick(fn) { return function () { state.ref = null; fn(this); render(); }; }
+  document.querySelectorAll("[data-book]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var book = b.dataset.book;
+      if (book === "psalter" || !books) { state.ref = null; state.book = "psalter"; render(); return; }
+      if (state.sec[book] === undefined) {   // first time in this book: today's section, else the first one
+        var t = todayIn(book, now);
+        if (t >= 0) return openSection(book, t, true);
+        state.sec[book] = 0;
+      }
+      openSection(book, state.sec[book], false);
+    });
+  });
+  $("#sec").addEventListener("change", function () { openSection(state.book, +this.value, false); });
+  $("#jump").addEventListener("change", function () {
+    if (this.value === "") return;
+    pendingJump = books[state.book].sections[state.sec[state.book]].jumps[+this.value];
+    goJump();
+  });
   document.querySelectorAll("[data-week]").forEach(function (b) {
     b.addEventListener("click", pick(function (b) {
       state.week = +b.dataset.week; state.autoWeek = false;
@@ -311,5 +471,6 @@
   });
 
   render();
-  window.PSALTER = { compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
+  fetch("books.json").then(function (r) { return r.json(); }).then(function (b) { books = b; todayNote(); }, function () {});
+  window.PSALTER = { tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
 })();

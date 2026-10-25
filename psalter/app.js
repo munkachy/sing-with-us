@@ -290,12 +290,6 @@
   });
   document.querySelectorAll("[data-day]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.day = +b.dataset.day; })); });
   document.querySelectorAll("[data-hour]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.hour = +b.dataset.hour; })); });
-  $("#reset-btn").addEventListener("click", function () {
-    store("psalter-anchor", null);
-    now = new Date(); cal = calendar(now);
-    state = { week: cal.week, day: now.getDay(), hour: hourFor(now), autoWeek: true, ref: null };
-    render();
-  });
   document.querySelectorAll("[data-ref]").forEach(function (a) {
     a.href = "#"; a.removeAttribute("target");
     a.addEventListener("click", function (e) { e.preventDefault(); state.ref = a.dataset.ref; render(); scrollTo(0, 0); });

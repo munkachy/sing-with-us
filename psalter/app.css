@@ -193,3 +193,7 @@ p.then { margin: .2rem 0 1.4rem; }
   .beta-view { margin-left: -16px; margin-right: -16px; border-radius: 0; box-shadow: none; padding-left: 16px; padding-right: 16px; }
   #pdf-pages canvas { width: calc(100% + 24px); margin: 0 -12px 10px; }
 }
+
+/* No Now button: the bar is just week, day and hour */
+.pickbar-in { grid-template-columns: 1fr; grid-template-areas: "week" "day" "hour"; }
+@media (min-width: 62rem) { .pickbar-in { grid-template-columns: 11rem 17rem 1fr; grid-template-areas: "week day hour"; } }

@@ -1,0 +1,5479 @@
+{
+ "Advent-Christmas": {
+  "label": "Advent & Christmas",
+  "sections": [
+   {
+    "title": "Ordinary during Advent",
+    "group": "Advent",
+    "tag": "",
+    "path": "Advent-Christmas/01 Ordinary during Advent.pdf",
+    "pages": 15,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.143
+     ],
+     [
+      "Compline",
+      5,
+      0.038
+     ],
+     [
+      "Matins",
+      6,
+      0.042
+     ],
+     [
+      "Lauds",
+      9,
+      0.045
+     ],
+     [
+      "Sext",
+      13,
+      0.034
+     ]
+    ]
+   },
+   {
+    "title": "Sunday I of Advent",
+    "group": "Advent",
+    "tag": "adv:1",
+    "path": "Advent-Christmas/02 Sunday I of Advent.pdf",
+    "pages": 8,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.0
+     ],
+     [
+      "II Vespers",
+      1,
+      0.476
+     ],
+     [
+      "Matins",
+      2,
+      0.619
+     ],
+     [
+      "Lauds",
+      5,
+      0.591
+     ],
+     [
+      "Sext",
+      7,
+      0.5
+     ]
+    ]
+   },
+   {
+    "title": "Week I of Advent",
+    "group": "Advent",
+    "tag": "advw:1",
+    "path": "Advent-Christmas/03 Week I of Advent.pdf",
+    "pages": 12,
+    "jumps": [
+     [
+      "Monday · Matins",
+      1,
+      0.087
+     ],
+     [
+      "Monday · Lauds",
+      2,
+      0.056
+     ],
+     [
+      "Monday · Vespers",
+      2,
+      0.389
+     ],
+     [
+      "Tuesday · Matins",
+      3,
+      0.091
+     ],
+     [
+      "Tuesday · Lauds",
+      4,
+      0.15
+     ],
+     [
+      "Tuesday · Vespers",
+      4,
+      0.65
+     ],
+     [
+      "Wednesday · Matins",
+      5,
+      0.083
+     ],
+     [
+      "Wednesday · Lauds",
+      6,
+      0.071
+     ],
+     [
+      "Wednesday · Vespers",
+      6,
+      0.5
+     ],
+     [
+      "Thursday · Matins",
+      7,
+      0.091
+     ],
+     [
+      "Thursday · Lauds",
+      8,
+      0.077
+     ],
+     [
+      "Thursday · Vespers",
+      8,
+      0.462
+     ],
+     [
+      "Friday · Matins",
+      9,
+      0.1
+     ],
+     [
+      "Friday · Lauds",
+      10,
+      0.067
+     ],
+     [
+      "Friday · Vespers",
+      10,
+      0.467
+     ],
+     [
+      "Saturday · Matins",
+      11,
+      0.125
+     ]
+    ]
+   },
+   {
+    "title": "Sunday II of Advent",
+    "group": "Advent",
+    "tag": "adv:2",
+    "path": "Advent-Christmas/04 Sunday II of Advent.pdf",
+    "pages": 8,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.409
+     ],
+     [
+      "II Vespers",
+      2,
+      0.042
+     ],
+     [
+      "Matins",
+      3,
+      0.05
+     ],
+     [
+      "Lauds",
+      4,
+      0.19
+     ],
+     [
+      "Sext",
+      6,
+      0.714
+     ]
+    ]
+   },
+   {
+    "title": "Week II of Advent",
+    "group": "Advent",
+    "tag": "advw:2",
+    "path": "Advent-Christmas/05 Week II of Advent.pdf",
+    "pages": 11,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.111
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.059
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.471
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.105
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.154
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.615
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.083
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.083
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.5
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.095
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.067
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.533
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.077
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.077
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.462
+     ],
+     [
+      "Saturday · Matins",
+      10,
+      0.111
+     ]
+    ]
+   },
+   {
+    "title": "Sunday III of Advent",
+    "group": "Advent",
+    "tag": "adv:3",
+    "path": "Advent-Christmas/06 Sunday III of Advent.pdf",
+    "pages": 8,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.333
+     ],
+     [
+      "II Vespers",
+      2,
+      0.053
+     ],
+     [
+      "Matins",
+      3,
+      0.412
+     ],
+     [
+      "Lauds",
+      4,
+      0.524
+     ],
+     [
+      "Sext",
+      7,
+      0.179
+     ]
+    ]
+   },
+   {
+    "title": "Week III of Advent",
+    "group": "Advent",
+    "tag": "advw:3",
+    "path": "Advent-Christmas/07 Week III of Advent.pdf",
+    "pages": 10,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.13
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.059
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.471
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.091
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.105
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.474
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.111
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.077
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.538
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.143
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.071
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.429
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.125
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.048
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.429
+     ]
+    ]
+   },
+   {
+    "title": "Sunday IV of Advent",
+    "group": "Advent",
+    "tag": "adv:4",
+    "path": "Advent-Christmas/08 Sunday IV of Advent.pdf",
+    "pages": 7,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.1
+     ],
+     [
+      "Matins",
+      1,
+      0.556
+     ],
+     [
+      "Lauds",
+      2,
+      0.5
+     ],
+     [
+      "Sext",
+      5,
+      0.714
+     ]
+    ]
+   },
+   {
+    "title": "17 to 23 December: antiphons at Lauds and Vespers",
+    "group": "Advent",
+    "tag": "",
+    "path": "Advent-Christmas/09 17 to 23 December - antiphons at Lauds and Vespers.pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "Monday · Lauds",
+      0,
+      0.457
+     ],
+     [
+      "Monday · Sext",
+      1,
+      0.538
+     ],
+     [
+      "Monday · Vespers",
+      2,
+      0.25
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.458
+     ],
+     [
+      "Tuesday · Sext",
+      4,
+      0.517
+     ],
+     [
+      "Tuesday · Vespers",
+      5,
+      0.24
+     ],
+     [
+      "Wednesday · Lauds",
+      6,
+      0.538
+     ],
+     [
+      "Wednesday · Sext",
+      7,
+      0.696
+     ],
+     [
+      "Wednesday · Vespers",
+      8,
+      0.308
+     ],
+     [
+      "Thursday · Lauds",
+      9,
+      0.346
+     ],
+     [
+      "Thursday · Sext",
+      10,
+      0.56
+     ],
+     [
+      "Thursday · Vespers",
+      11,
+      0.04
+     ],
+     [
+      "Friday · Lauds",
+      12,
+      0.105
+     ],
+     [
+      "Friday · Sext",
+      13,
+      0.04
+     ],
+     [
+      "Friday · Vespers",
+      13,
+      0.6
+     ],
+     [
+      "Saturday · Lauds",
+      14,
+      0.739
+     ],
+     [
+      "Saturday · Sext",
+      16,
+      0.056
+     ]
+    ]
+   },
+   {
+    "title": "17 December",
+    "group": "Advent",
+    "tag": "d:12-17",
+    "path": "Advent-Christmas/10 17 December.pdf",
+    "pages": 2,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.1
+     ],
+     [
+      "Lauds",
+      1,
+      0.053
+     ],
+     [
+      "Vespers",
+      1,
+      0.316
+     ]
+    ]
+   },
+   {
+    "title": "18 December",
+    "group": "Advent",
+    "tag": "d:12-18",
+    "path": "Advent-Christmas/11 18 December.pdf",
+    "pages": 3,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.435
+     ],
+     [
+      "Lauds",
+      1,
+      0.333
+     ],
+     [
+      "Vespers",
+      1,
+      0.6
+     ]
+    ]
+   },
+   {
+    "title": "19 December",
+    "group": "Advent",
+    "tag": "d:12-19",
+    "path": "Advent-Christmas/12 19 December.pdf",
+    "pages": 2,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.118
+     ],
+     [
+      "Lauds",
+      1,
+      0.042
+     ],
+     [
+      "Vespers",
+      1,
+      0.5
+     ]
+    ]
+   },
+   {
+    "title": "20 December",
+    "group": "Advent",
+    "tag": "d:12-20",
+    "path": "Advent-Christmas/13 20 December.pdf",
+    "pages": 3,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.545
+     ],
+     [
+      "Lauds",
+      1,
+      0.647
+     ],
+     [
+      "Vespers",
+      2,
+      0.048
+     ]
+    ]
+   },
+   {
+    "title": "21 December",
+    "group": "Advent",
+    "tag": "d:12-21",
+    "path": "Advent-Christmas/14 21 December.pdf",
+    "pages": 2,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.15
+     ],
+     [
+      "Lauds",
+      1,
+      0.065
+     ],
+     [
+      "Vespers",
+      1,
+      0.387
+     ]
+    ]
+   },
+   {
+    "title": "22 December",
+    "group": "Advent",
+    "tag": "d:12-22",
+    "path": "Advent-Christmas/15 22 December.pdf",
+    "pages": 2,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.368
+     ],
+     [
+      "Lauds",
+      1,
+      0.219
+     ],
+     [
+      "Vespers",
+      1,
+      0.594
+     ]
+    ]
+   },
+   {
+    "title": "23 December",
+    "group": "Advent",
+    "tag": "d:12-23",
+    "path": "Advent-Christmas/16 23 December.pdf",
+    "pages": 3,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.52
+     ],
+     [
+      "Lauds",
+      1,
+      0.556
+     ],
+     [
+      "Vespers",
+      2,
+      0.045
+     ]
+    ]
+   },
+   {
+    "title": "24 December: Vigil of the Nativity",
+    "group": "Advent",
+    "tag": "d:12-24",
+    "path": "Advent-Christmas/17 24 December - Vigil of the Nativity.pdf",
+    "pages": 25,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.211
+     ],
+     [
+      "Lauds",
+      8,
+      0.25
+     ],
+     [
+      "Sext",
+      12,
+      0.318
+     ],
+     [
+      "Matins",
+      13,
+      0.194
+     ],
+     [
+      "Lauds",
+      19,
+      0.64
+     ],
+     [
+      "Sext",
+      23,
+      0.65
+     ]
+    ]
+   },
+   {
+    "title": "The Nativity of Our Lord",
+    "group": "Christmas",
+    "tag": "d:12-25",
+    "path": "Advent-Christmas/18 The Nativity of Our Lord.pdf",
+    "pages": 45,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.125
+     ],
+     [
+      "Matins",
+      8,
+      0.333
+     ],
+     [
+      "Lauds",
+      18,
+      0.36
+     ],
+     [
+      "Sext",
+      24,
+      0.042
+     ],
+     [
+      "II Vespers",
+      28,
+      0.032
+     ]
+    ]
+   },
+   {
+    "title": "Saint Stephen, Protomartyr (26 Dec)",
+    "group": "Christmas",
+    "tag": "d:12-26",
+    "path": "Advent-Christmas/19 Saint Stephen, Protomartyr (26 Dec).pdf",
+    "pages": 14,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.174
+     ],
+     [
+      "Lauds",
+      6,
+      0.25
+     ],
+     [
+      "Sext",
+      10,
+      0.333
+     ]
+    ]
+   },
+   {
+    "title": "Saint John, Apostle and Evangelist (27 Dec)",
+    "group": "Christmas",
+    "tag": "d:12-27",
+    "path": "Advent-Christmas/20 Saint John, Apostle and Evangelist (27 Dec).pdf",
+    "pages": 15,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.182
+     ],
+     [
+      "Lauds",
+      6,
+      0.476
+     ],
+     [
+      "Sext",
+      11,
+      0.043
+     ]
+    ]
+   },
+   {
+    "title": "The Holy Innocents (28 Dec)",
+    "group": "Christmas",
+    "tag": "d:12-28",
+    "path": "Advent-Christmas/21 The Holy Innocents (28 Dec).pdf",
+    "pages": 13,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.148
+     ],
+     [
+      "Lauds",
+      7,
+      0.034
+     ],
+     [
+      "Sext",
+      11,
+      0.02
+     ]
+    ]
+   },
+   {
+    "title": "The Holy Family",
+    "group": "Christmas",
+    "tag": "xmas:holyfamily",
+    "path": "Advent-Christmas/22 The Holy Family.pdf",
+    "pages": 22,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.368
+     ],
+     [
+      "Matins",
+      5,
+      0.611
+     ],
+     [
+      "Lauds",
+      11,
+      0.526
+     ],
+     [
+      "Sext",
+      15,
+      0.346
+     ],
+     [
+      "II Vespers",
+      17,
+      0.5
+     ]
+    ]
+   },
+   {
+    "title": "29 December",
+    "group": "Christmas",
+    "tag": "d:12-29",
+    "path": "Advent-Christmas/23 29 December.pdf",
+    "pages": 8,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.316
+     ],
+     [
+      "Sext",
+      5,
+      0.025
+     ]
+    ]
+   },
+   {
+    "title": "30 December",
+    "group": "Christmas",
+    "tag": "d:12-30",
+    "path": "Advent-Christmas/24 30 December.pdf",
+    "pages": 7,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.077
+     ],
+     [
+      "Sext",
+      4,
+      0.188
+     ]
+    ]
+   },
+   {
+    "title": "31 December",
+    "group": "Christmas",
+    "tag": "d:12-31",
+    "path": "Advent-Christmas/25 31 December.pdf",
+    "pages": 6,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.093
+     ],
+     [
+      "Sext",
+      3,
+      0.636
+     ]
+    ]
+   },
+   {
+    "title": "1 January: Octave Day of the Nativity",
+    "group": "Christmas",
+    "tag": "d:01-01",
+    "path": "Advent-Christmas/26 1 January - Octave Day of the Nativity.pdf",
+    "pages": 21,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.182
+     ],
+     [
+      "Matins",
+      6,
+      0.125
+     ],
+     [
+      "Lauds",
+      12,
+      0.333
+     ],
+     [
+      "Sext",
+      16,
+      0.615
+     ],
+     [
+      "II Vespers",
+      20,
+      0.333
+     ]
+    ]
+   },
+   {
+    "title": "Ordinary during Christmastide",
+    "group": "Christmas",
+    "tag": "",
+    "path": "Advent-Christmas/27 Ordinary during Christmastide.pdf",
+    "pages": 13,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.2
+     ],
+     [
+      "Compline",
+      5,
+      0.045
+     ],
+     [
+      "Matins",
+      6,
+      0.043
+     ],
+     [
+      "Lauds",
+      8,
+      0.037
+     ],
+     [
+      "Sext",
+      11,
+      0.185
+     ]
+    ]
+   },
+   {
+    "title": "Second Sunday after the Nativity",
+    "group": "Christmas",
+    "tag": "xmas:sun2",
+    "path": "Advent-Christmas/28 Second Sunday after the Nativity.pdf",
+    "pages": 9,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.136
+     ],
+     [
+      "Matins",
+      2,
+      0.056
+     ],
+     [
+      "Lauds",
+      3,
+      0.095
+     ],
+     [
+      "Sext",
+      4,
+      0.565
+     ],
+     [
+      "II Vespers",
+      7,
+      0.042
+     ]
+    ]
+   },
+   {
+    "title": "2 January to the Epiphany",
+    "group": "Christmas",
+    "tag": "d:01-02 d:01-03 d:01-04 d:01-05",
+    "path": "Advent-Christmas/29 2 January to the Epiphany.pdf",
+    "pages": 19,
+    "jumps": [
+     [
+      "2 January · Matins",
+      0,
+      0.158
+     ],
+     [
+      "2 January · Lauds",
+      1,
+      0.059
+     ],
+     [
+      "2 January · Vespers",
+      1,
+      0.412
+     ],
+     [
+      "3 January · Matins",
+      2,
+      0.188
+     ],
+     [
+      "3 January · Lauds",
+      3,
+      0.067
+     ],
+     [
+      "3 January · Vespers",
+      3,
+      0.533
+     ],
+     [
+      "3 January · Matins",
+      4,
+      0.19
+     ],
+     [
+      "3 January · Lauds",
+      7,
+      0.033
+     ],
+     [
+      "3 January · Vespers",
+      9,
+      0.036
+     ],
+     [
+      "4 January · Matins",
+      11,
+      0.143
+     ],
+     [
+      "4 January · Lauds",
+      12,
+      0.056
+     ],
+     [
+      "4 January · Vespers",
+      12,
+      0.5
+     ],
+     [
+      "5 January · Matins",
+      13,
+      0.167
+     ],
+     [
+      "5 January · Lauds",
+      14,
+      0.042
+     ],
+     [
+      "5 January · Vespers",
+      14,
+      0.583
+     ],
+     [
+      "6 January · Matins",
+      15,
+      0.1
+     ],
+     [
+      "6 January · Lauds",
+      16,
+      0.071
+     ],
+     [
+      "6 January · Vespers",
+      16,
+      0.429
+     ],
+     [
+      "7 January · Matins",
+      17,
+      0.154
+     ],
+     [
+      "7 January · Lauds",
+      18,
+      0.077
+     ]
+    ]
+   },
+   {
+    "title": "The Epiphany of the Lord",
+    "group": "Christmas",
+    "tag": "d:01-06",
+    "path": "Advent-Christmas/30 The Epiphany of the Lord.pdf",
+    "pages": 21,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.105
+     ],
+     [
+      "Matins",
+      5,
+      0.125
+     ],
+     [
+      "Lauds",
+      11,
+      0.565
+     ],
+     [
+      "Sext",
+      16,
+      0.318
+     ],
+     [
+      "II Vespers",
+      19,
+      0.8
+     ]
+    ]
+   },
+   {
+    "title": "Ordinary during Epiphanytide",
+    "group": "Christmas",
+    "tag": "",
+    "path": "Advent-Christmas/31 Ordinary during Epiphanytide.pdf",
+    "pages": 12,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.188
+     ],
+     [
+      "Compline",
+      2,
+      0.607
+     ],
+     [
+      "Matins",
+      3,
+      0.684
+     ],
+     [
+      "Lauds",
+      5,
+      0.68
+     ],
+     [
+      "Sext",
+      10,
+      0.286
+     ]
+    ]
+   },
+   {
+    "title": "Weekdays after the Epiphany",
+    "group": "Christmas",
+    "tag": "d:01-07 d:01-08 d:01-09 d:01-10 d:01-11 d:01-12",
+    "path": "Advent-Christmas/32 Weekdays after the Epiphany.pdf",
+    "pages": 12,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.217
+     ],
+     [
+      "Lauds",
+      1,
+      0.056
+     ],
+     [
+      "Vespers",
+      1,
+      0.556
+     ],
+     [
+      "Matins",
+      2,
+      0.25
+     ],
+     [
+      "Lauds",
+      3,
+      0.136
+     ],
+     [
+      "Vespers",
+      3,
+      0.545
+     ],
+     [
+      "Matins",
+      4,
+      0.25
+     ],
+     [
+      "Lauds",
+      5,
+      0.05
+     ],
+     [
+      "Vespers",
+      5,
+      0.4
+     ],
+     [
+      "Matins",
+      6,
+      0.2
+     ],
+     [
+      "Lauds",
+      7,
+      0.154
+     ],
+     [
+      "Vespers",
+      7,
+      0.5
+     ],
+     [
+      "Matins",
+      8,
+      0.25
+     ],
+     [
+      "Lauds",
+      9,
+      0.059
+     ],
+     [
+      "Vespers",
+      9,
+      0.471
+     ],
+     [
+      "Matins",
+      10,
+      0.227
+     ],
+     [
+      "Lauds",
+      11,
+      0.211
+     ]
+    ]
+   },
+   {
+    "title": "The Baptism of the Lord",
+    "group": "Christmas",
+    "tag": "xmas:baptism",
+    "path": "Advent-Christmas/33 The Baptism of the Lord.pdf",
+    "pages": 20,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.083
+     ],
+     [
+      "Matins",
+      4,
+      0.565
+     ],
+     [
+      "Lauds",
+      11,
+      0.167
+     ],
+     [
+      "Sext",
+      15,
+      0.739
+     ],
+     [
+      "II Vespers",
+      19,
+      0.35
+     ]
+    ]
+   },
+   {
+    "title": "Sundays through the Year (early)",
+    "group": "Through the Year",
+    "tag": "ot:2-9",
+    "path": "Advent-Christmas/34 Sundays through the Year (early).pdf",
+    "pages": 26,
+    "jumps": [
+     [
+      "Sunday II · I Vespers",
+      0,
+      0.333
+     ],
+     [
+      "Sunday II · Lauds",
+      1,
+      0.381
+     ],
+     [
+      "Sunday II · II Vespers",
+      2,
+      0.333
+     ],
+     [
+      "Sunday III · I Vespers",
+      3,
+      0.588
+     ],
+     [
+      "Sunday III · Lauds",
+      4,
+      0.381
+     ],
+     [
+      "Sunday III · II Vespers",
+      5,
+      0.188
+     ],
+     [
+      "Sunday IV · I Vespers",
+      6,
+      0.118
+     ],
+     [
+      "Sunday IV · Lauds",
+      7,
+      0.3
+     ],
+     [
+      "Sunday IV · II Vespers",
+      8,
+      0.5
+     ],
+     [
+      "Sunday V · I Vespers",
+      9,
+      0.773
+     ],
+     [
+      "Sunday V · Lauds",
+      10,
+      0.577
+     ],
+     [
+      "Sunday V · II Vespers",
+      11,
+      0.478
+     ],
+     [
+      "Sunday VI · I Vespers",
+      12,
+      0.815
+     ],
+     [
+      "Sunday VI · Lauds",
+      13,
+      0.364
+     ],
+     [
+      "Sunday VI · II Vespers",
+      14,
+      0.65
+     ],
+     [
+      "Sunday VII · I Vespers",
+      16,
+      0.158
+     ],
+     [
+      "Sunday VII · II Vespers",
+      18,
+      0.136
+     ],
+     [
+      "Sunday VIII · I Vespers",
+      19,
+      0.4
+     ],
+     [
+      "Sunday VIII · Lauds",
+      20,
+      0.048
+     ],
+     [
+      "Sunday VIII · II Vespers",
+      21,
+      0.312
+     ],
+     [
+      "Sunday IX · I Vespers",
+      22,
+      0.333
+     ],
+     [
+      "Sunday IX · Lauds",
+      23,
+      0.267
+     ],
+     [
+      "Sunday IX · II Vespers",
+      24,
+      0.222
+     ]
+    ]
+   },
+   {
+    "title": "Ordinary",
+    "group": "Reference",
+    "tag": "",
+    "path": "Advent-Christmas/35 Ordinary.pdf",
+    "pages": 21,
+    "jumps": []
+   },
+   {
+    "title": "Invitatory",
+    "group": "Reference",
+    "tag": "",
+    "path": "Advent-Christmas/36 Invitatory.pdf",
+    "pages": 52,
+    "jumps": []
+   },
+   {
+    "title": "Proper psalms (Lauds, Sext, Vespers)",
+    "group": "Reference",
+    "tag": "",
+    "path": "Advent-Christmas/37 Proper psalms (Lauds, Sext, Vespers).pdf",
+    "pages": 51,
+    "jumps": []
+   },
+   {
+    "title": "Gospel canticles",
+    "group": "Reference",
+    "tag": "",
+    "path": "Advent-Christmas/38 Gospel canticles.pdf",
+    "pages": 27,
+    "jumps": [
+     [
+      "Vespers",
+      0,
+      0.0
+     ],
+     [
+      "Lauds",
+      1,
+      0.031
+     ]
+    ]
+   },
+   {
+    "title": "Te Deum",
+    "group": "Reference",
+    "tag": "",
+    "path": "Advent-Christmas/39 Te Deum.pdf",
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Additions: hymns, Magnificat, Benedictus",
+    "group": "Reference",
+    "tag": "",
+    "path": "Advent-Christmas/40 Additions - hymns, Magnificat, Benedictus.pdf",
+    "pages": 16,
+    "jumps": [
+     [
+      "Vespers",
+      3,
+      0.071
+     ],
+     [
+      "Vespers",
+      4,
+      0.114
+     ]
+    ]
+   },
+   {
+    "title": "Benediction; Laudes ab Hincmaro",
+    "group": "Reference",
+    "tag": "",
+    "path": "Advent-Christmas/41 Benediction; Laudes ab Hincmaro.pdf",
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Order of Service; prayers",
+    "group": "Reference",
+    "tag": "",
+    "path": "Advent-Christmas/42 Order of Service; prayers.pdf",
+    "pages": 12,
+    "jumps": []
+   },
+   {
+    "title": "Index",
+    "group": "Reference",
+    "tag": "",
+    "path": "Advent-Christmas/43 Index.pdf",
+    "pages": 8,
+    "jumps": []
+   }
+  ]
+ },
+ "Lent": {
+  "label": "Lent & Easter",
+  "sections": [
+   {
+    "title": "Ordinary during Lent",
+    "group": "Lent",
+    "tag": "",
+    "path": "Lent/01 Ordinary during Lent.pdf",
+    "pages": 20,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.125
+     ],
+     [
+      "Compline",
+      7,
+      0.435
+     ],
+     [
+      "Matins",
+      8,
+      0.45
+     ],
+     [
+      "Lauds",
+      13,
+      0.455
+     ],
+     [
+      "Sext",
+      18,
+      0.037
+     ]
+    ]
+   },
+   {
+    "title": "Ash Wednesday",
+    "group": "Lent",
+    "tag": "e:-46",
+    "path": "Lent/02 Ash Wednesday.pdf",
+    "pages": 2,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.133
+     ],
+     [
+      "Lauds",
+      1,
+      0.071
+     ],
+     [
+      "Vespers",
+      1,
+      0.429
+     ]
+    ]
+   },
+   {
+    "title": "Thursday after Ash Wednesday",
+    "group": "Lent",
+    "tag": "e:-45",
+    "path": "Lent/03 Thursday after Ash Wednesday.pdf",
+    "pages": 2,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.091
+     ],
+     [
+      "Lauds",
+      1,
+      0.133
+     ],
+     [
+      "Vespers",
+      1,
+      0.467
+     ]
+    ]
+   },
+   {
+    "title": "Friday after Ash Wednesday",
+    "group": "Lent",
+    "tag": "e:-44",
+    "path": "Lent/04 Friday after Ash Wednesday.pdf",
+    "pages": 2,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.095
+     ],
+     [
+      "Lauds",
+      1,
+      0.034
+     ],
+     [
+      "Vespers",
+      1,
+      0.552
+     ]
+    ]
+   },
+   {
+    "title": "Saturday after Ash Wednesday",
+    "group": "Lent",
+    "tag": "e:-43",
+    "path": "Lent/05 Saturday after Ash Wednesday.pdf",
+    "pages": 1,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.105
+     ]
+    ]
+   },
+   {
+    "title": "Sunday I of Lent",
+    "group": "Lent",
+    "tag": "e:-42",
+    "path": "Lent/06 Sunday I of Lent.pdf",
+    "pages": 3,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.471
+     ],
+     [
+      "Matins",
+      1,
+      0.059
+     ],
+     [
+      "Lauds",
+      2,
+      0.13
+     ],
+     [
+      "II Vespers",
+      2,
+      0.435
+     ]
+    ]
+   },
+   {
+    "title": "Week I of Lent",
+    "group": "Lent",
+    "tag": "e:-41--36",
+    "path": "Lent/07 Week I of Lent.pdf",
+    "pages": 11,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.111
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.059
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.529
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.105
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.059
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.529
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.1
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.067
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.4
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.083
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.059
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.529
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.1
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.042
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.375
+     ],
+     [
+      "Saturday · Matins",
+      10,
+      0.125
+     ]
+    ]
+   },
+   {
+    "title": "Sunday II of Lent",
+    "group": "Lent",
+    "tag": "e:-35",
+    "path": "Lent/08 Sunday II of Lent.pdf",
+    "pages": 3,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.429
+     ],
+     [
+      "Matins",
+      1,
+      0.053
+     ],
+     [
+      "Lauds",
+      2,
+      0.176
+     ],
+     [
+      "II Vespers",
+      2,
+      0.588
+     ]
+    ]
+   },
+   {
+    "title": "Week II of Lent",
+    "group": "Lent",
+    "tag": "e:-34--29",
+    "path": "Lent/09 Week II of Lent.pdf",
+    "pages": 11,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.111
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.062
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.5
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.095
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.067
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.4
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.105
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.056
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.444
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.074
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.062
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.5
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.125
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.1
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.5
+     ],
+     [
+      "Saturday · Matins",
+      10,
+      0.071
+     ]
+    ]
+   },
+   {
+    "title": "Sunday III of Lent",
+    "group": "Lent",
+    "tag": "e:-28",
+    "path": "Lent/10 Sunday III of Lent.pdf",
+    "pages": 4,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.5
+     ],
+     [
+      "Matins",
+      1,
+      0.048
+     ],
+     [
+      "Lauds",
+      2,
+      0.05
+     ],
+     [
+      "II Vespers",
+      3,
+      0.053
+     ]
+    ]
+   },
+   {
+    "title": "Week III of Lent",
+    "group": "Lent",
+    "tag": "e:-27--22",
+    "path": "Lent/11 Week III of Lent.pdf",
+    "pages": 11,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.167
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.286
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.667
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.1
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.045
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.5
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.083
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.059
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.529
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.095
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.053
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.474
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.1
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.056
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.556
+     ],
+     [
+      "Saturday · Matins",
+      10,
+      0.125
+     ]
+    ]
+   },
+   {
+    "title": "Sunday IV of Lent",
+    "group": "Lent",
+    "tag": "e:-21",
+    "path": "Lent/12 Sunday IV of Lent.pdf",
+    "pages": 5,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.444
+     ],
+     [
+      "Matins",
+      1,
+      0.053
+     ],
+     [
+      "Lauds",
+      2,
+      0.059
+     ],
+     [
+      "II Vespers",
+      3,
+      0.16
+     ]
+    ]
+   },
+   {
+    "title": "Week IV of Lent",
+    "group": "Lent",
+    "tag": "e:-20--15",
+    "path": "Lent/13 Week IV of Lent.pdf",
+    "pages": 12,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.111
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.038
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.5
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.091
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.071
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.643
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.111
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.062
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.5
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.1
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.059
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.588
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.125
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.062
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.562
+     ],
+     [
+      "Saturday · Matins",
+      10,
+      0.111
+     ],
+     [
+      "Saturday · Lauds",
+      11,
+      0.1
+     ]
+    ]
+   },
+   {
+    "title": "Ordinary during Passiontide",
+    "group": "Passiontide",
+    "tag": "",
+    "path": "Lent/14 Ordinary during Passiontide.pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.167
+     ],
+     [
+      "Compline",
+      5,
+      0.417
+     ],
+     [
+      "Matins",
+      6,
+      0.5
+     ],
+     [
+      "Lauds",
+      10,
+      0.545
+     ],
+     [
+      "Sext",
+      15,
+      0.462
+     ]
+    ]
+   },
+   {
+    "title": "Sunday V of Lent",
+    "group": "Passiontide",
+    "tag": "e:-14",
+    "path": "Lent/15 Sunday V of Lent.pdf",
+    "pages": 4,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.1
+     ],
+     [
+      "Matins",
+      0,
+      0.5
+     ],
+     [
+      "Lauds",
+      1,
+      0.5
+     ],
+     [
+      "II Vespers",
+      2,
+      0.65
+     ]
+    ]
+   },
+   {
+    "title": "Week V of Lent",
+    "group": "Passiontide",
+    "tag": "e:-13--8",
+    "path": "Lent/16 Week V of Lent.pdf",
+    "pages": 11,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.105
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.077
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.462
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.095
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.067
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.4
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.095
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.118
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.588
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.091
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.071
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.5
+     ],
+     [
+      "Thursday · Lauds",
+      9,
+      0.261
+     ],
+     [
+      "Thursday · Vespers",
+      9,
+      0.565
+     ],
+     [
+      "Friday · Matins",
+      10,
+      0.105
+     ]
+    ]
+   },
+   {
+    "title": "Palm Sunday",
+    "group": "Passiontide",
+    "tag": "e:-7",
+    "path": "Lent/17 Palm Sunday.pdf",
+    "pages": 6,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.429
+     ],
+     [
+      "Matins",
+      2,
+      0.2
+     ],
+     [
+      "Lauds",
+      3,
+      0.7
+     ],
+     [
+      "II Vespers",
+      4,
+      0.238
+     ]
+    ]
+   },
+   {
+    "title": "Monday of Holy Week",
+    "group": "Passiontide",
+    "tag": "e:-6",
+    "path": "Lent/18 Monday of Holy Week.pdf",
+    "pages": 3,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.105
+     ],
+     [
+      "Lauds",
+      1,
+      0.031
+     ],
+     [
+      "Vespers",
+      1,
+      0.25
+     ]
+    ]
+   },
+   {
+    "title": "Tuesday of Holy Week",
+    "group": "Passiontide",
+    "tag": "e:-5",
+    "path": "Lent/19 Tuesday of Holy Week.pdf",
+    "pages": 3,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.08
+     ],
+     [
+      "Lauds",
+      1,
+      0.04
+     ],
+     [
+      "Vespers",
+      1,
+      0.32
+     ]
+    ]
+   },
+   {
+    "title": "Wednesday of Holy Week",
+    "group": "Passiontide",
+    "tag": "e:-4",
+    "path": "Lent/20 Wednesday of Holy Week.pdf",
+    "pages": 3,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.091
+     ],
+     [
+      "Lauds",
+      1,
+      0.15
+     ],
+     [
+      "Vespers",
+      1,
+      0.65
+     ]
+    ]
+   },
+   {
+    "title": "Thursday of Holy Week",
+    "group": "Passiontide",
+    "tag": "e:-3",
+    "path": "Lent/21 Thursday of Holy Week.pdf",
+    "pages": 2,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.261
+     ],
+     [
+      "Lauds",
+      1,
+      0.231
+     ]
+    ]
+   },
+   {
+    "title": "Ordinary during Paschaltide",
+    "group": "Easter",
+    "tag": "",
+    "path": "Lent/22 Ordinary during Paschaltide.pdf",
+    "pages": 20,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.188
+     ],
+     [
+      "Compline",
+      7,
+      0.522
+     ],
+     [
+      "Matins",
+      9,
+      0.4
+     ],
+     [
+      "Lauds",
+      12,
+      0.789
+     ],
+     [
+      "Sext",
+      17,
+      0.227
+     ]
+    ]
+   },
+   {
+    "title": "Easter Sunday",
+    "group": "Easter",
+    "tag": "e:0",
+    "path": "Lent/23 Easter Sunday.pdf",
+    "pages": 10,
+    "jumps": [
+     [
+      "Sext",
+      0,
+      0.0
+     ],
+     [
+      "II Vespers",
+      2,
+      0.45
+     ]
+    ]
+   },
+   {
+    "title": "Within the Octave of Easter",
+    "group": "Easter",
+    "tag": "e:1-6",
+    "path": "Lent/24 Within the Octave of Easter.pdf",
+    "pages": 61,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.033
+     ],
+     [
+      "Monday · Lauds",
+      4,
+      0.452
+     ],
+     [
+      "Monday · Sext",
+      6,
+      0.471
+     ],
+     [
+      "Monday · Vespers",
+      9,
+      0.042
+     ],
+     [
+      "Tuesday · Matins",
+      17,
+      0.028
+     ],
+     [
+      "Tuesday · Lauds",
+      21,
+      0.522
+     ],
+     [
+      "Tuesday · Sext",
+      23,
+      0.694
+     ],
+     [
+      "Tuesday · Vespers",
+      26,
+      0.059
+     ],
+     [
+      "Wednesday · Matins",
+      34,
+      0.061
+     ],
+     [
+      "Wednesday · Lauds",
+      37,
+      0.357
+     ],
+     [
+      "Wednesday · Sext",
+      38,
+      0.029
+     ],
+     [
+      "Wednesday · Vespers",
+      40,
+      0.111
+     ],
+     [
+      "Thursday · Matins",
+      41,
+      0.029
+     ],
+     [
+      "Thursday · Lauds",
+      44,
+      0.029
+     ],
+     [
+      "Thursday · Sext",
+      44,
+      0.286
+     ],
+     [
+      "Thursday · Vespers",
+      46,
+      0.353
+     ],
+     [
+      "Friday · Matins",
+      47,
+      0.059
+     ],
+     [
+      "Friday · Lauds",
+      50,
+      0.588
+     ],
+     [
+      "Friday · Sext",
+      51,
+      0.02
+     ],
+     [
+      "Friday · Vespers",
+      53,
+      0.64
+     ],
+     [
+      "Saturday · Matins",
+      54,
+      0.031
+     ],
+     [
+      "Saturday · Lauds",
+      57,
+      0.421
+     ],
+     [
+      "Saturday · Sext",
+      58,
+      0.02
+     ]
+    ]
+   },
+   {
+    "title": "Low Sunday (Sunday II of Easter)",
+    "group": "Easter",
+    "tag": "e:7",
+    "path": "Lent/25 Low Sunday (Sunday II of Easter).pdf",
+    "pages": 2,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.2
+     ],
+     [
+      "Matins",
+      0,
+      0.7
+     ],
+     [
+      "Lauds",
+      0,
+      0.75
+     ],
+     [
+      "Sext",
+      1,
+      0.368
+     ],
+     [
+      "II Vespers",
+      1,
+      0.474
+     ]
+    ]
+   },
+   {
+    "title": "Week II of Easter",
+    "group": "Easter",
+    "tag": "e:8-13",
+    "path": "Lent/26 Week II of Easter.pdf",
+    "pages": 11,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.158
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.182
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.545
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.091
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.056
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.444
+     ],
+     [
+      "Tuesday · Lauds",
+      5,
+      0.059
+     ],
+     [
+      "Tuesday · Vespers",
+      5,
+      0.529
+     ],
+     [
+      "Wednesday · Matins",
+      6,
+      0.118
+     ],
+     [
+      "Wednesday · Lauds",
+      7,
+      0.067
+     ],
+     [
+      "Wednesday · Vespers",
+      7,
+      0.533
+     ],
+     [
+      "Thursday · Matins",
+      8,
+      0.091
+     ],
+     [
+      "Thursday · Lauds",
+      9,
+      0.059
+     ],
+     [
+      "Thursday · Vespers",
+      9,
+      0.412
+     ],
+     [
+      "Friday · Matins",
+      10,
+      0.087
+     ]
+    ]
+   },
+   {
+    "title": "Sunday III of Easter",
+    "group": "Easter",
+    "tag": "e:14",
+    "path": "Lent/27 Sunday III of Easter.pdf",
+    "pages": 4,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.429
+     ],
+     [
+      "Matins",
+      0,
+      0.762
+     ],
+     [
+      "Lauds",
+      2,
+      0.053
+     ],
+     [
+      "II Vespers",
+      3,
+      0.158
+     ]
+    ]
+   },
+   {
+    "title": "Week III of Easter",
+    "group": "Easter",
+    "tag": "e:15-20",
+    "path": "Lent/28 Week III of Easter.pdf",
+    "pages": 11,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.286
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.273
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.591
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.091
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.043
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.522
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.08
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.048
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.619
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.133
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.059
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.471
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.087
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.083
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.5
+     ],
+     [
+      "Saturday · Matins",
+      10,
+      0.1
+     ]
+    ]
+   },
+   {
+    "title": "Sunday IV of Easter",
+    "group": "Easter",
+    "tag": "e:21",
+    "path": "Lent/29 Sunday IV of Easter.pdf",
+    "pages": 4,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.577
+     ],
+     [
+      "Matins",
+      1,
+      0.043
+     ],
+     [
+      "Lauds",
+      2,
+      0.043
+     ],
+     [
+      "II Vespers",
+      3,
+      0.045
+     ]
+    ]
+   },
+   {
+    "title": "Week IV of Easter",
+    "group": "Easter",
+    "tag": "e:22-27",
+    "path": "Lent/30 Week IV of Easter.pdf",
+    "pages": 11,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.118
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.067
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.467
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.08
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.071
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.429
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.105
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.059
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.412
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.125
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.05
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.55
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.095
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.062
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.562
+     ],
+     [
+      "Saturday · Matins",
+      10,
+      0.071
+     ]
+    ]
+   },
+   {
+    "title": "Sunday V of Easter",
+    "group": "Easter",
+    "tag": "e:28",
+    "path": "Lent/31 Sunday V of Easter.pdf",
+    "pages": 4,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.364
+     ],
+     [
+      "Matins",
+      0,
+      0.727
+     ],
+     [
+      "Lauds",
+      1,
+      0.714
+     ],
+     [
+      "II Vespers",
+      3,
+      0.056
+     ]
+    ]
+   },
+   {
+    "title": "Week V of Easter",
+    "group": "Easter",
+    "tag": "e:29-34",
+    "path": "Lent/32 Week V of Easter.pdf",
+    "pages": 11,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.238
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.235
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.588
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.083
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.048
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.429
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.091
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.059
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.529
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.118
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.059
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.471
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.1
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.071
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.429
+     ],
+     [
+      "Saturday · Matins",
+      10,
+      0.111
+     ]
+    ]
+   },
+   {
+    "title": "Sunday VI of Easter",
+    "group": "Easter",
+    "tag": "e:35",
+    "path": "Lent/33 Sunday VI of Easter.pdf",
+    "pages": 5,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.545
+     ],
+     [
+      "Matins",
+      1,
+      0.05
+     ],
+     [
+      "Lauds",
+      2,
+      0.048
+     ],
+     [
+      "II Vespers",
+      3,
+      0.059
+     ]
+    ]
+   },
+   {
+    "title": "Week VI of Easter",
+    "group": "Easter",
+    "tag": "e:36-38",
+    "path": "Lent/34 Week VI of Easter.pdf",
+    "pages": 6,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.133
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.045
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.682
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.105
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.056
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.444
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.087
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.05
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.5
+     ]
+    ]
+   },
+   {
+    "title": "Ordinary from the Ascension to Pentecost",
+    "group": "Easter",
+    "tag": "",
+    "path": "Lent/35 Ordinary from the Ascension to Pentecost.pdf",
+    "pages": 20,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.2
+     ],
+     [
+      "Compline",
+      7,
+      0.52
+     ],
+     [
+      "Matins",
+      9,
+      0.5
+     ],
+     [
+      "Lauds",
+      13,
+      0.692
+     ],
+     [
+      "Sext",
+      17,
+      0.036
+     ]
+    ]
+   },
+   {
+    "title": "The Ascension of the Lord",
+    "group": "Easter",
+    "tag": "e:39",
+    "path": "Lent/36 The Ascension of the Lord.pdf",
+    "pages": 16,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.071
+     ],
+     [
+      "Matins",
+      5,
+      0.625
+     ],
+     [
+      "Lauds",
+      10,
+      0.44
+     ],
+     [
+      "Sext",
+      13,
+      0.02
+     ],
+     [
+      "II Vespers",
+      15,
+      0.381
+     ]
+    ]
+   },
+   {
+    "title": "After the Ascension",
+    "group": "Easter",
+    "tag": "e:40-41",
+    "path": "Lent/37 After the Ascension.pdf",
+    "pages": 10,
+    "jumps": [
+     [
+      "Thursday · Matins",
+      0,
+      0.182
+     ],
+     [
+      "Thursday · Lauds",
+      1,
+      0.05
+     ],
+     [
+      "Thursday · Vespers",
+      1,
+      0.6
+     ],
+     [
+      "Friday · Matins",
+      2,
+      0.105
+     ],
+     [
+      "Friday · Lauds",
+      3,
+      0.062
+     ],
+     [
+      "Friday · Vespers",
+      3,
+      0.5
+     ],
+     [
+      "Friday · Matins",
+      4,
+      0.188
+     ],
+     [
+      "Friday · Lauds",
+      5,
+      0.05
+     ],
+     [
+      "Friday · Vespers",
+      5,
+      0.45
+     ],
+     [
+      "Saturday · Matins",
+      6,
+      0.095
+     ],
+     [
+      "Saturday · Lauds",
+      7,
+      0.1
+     ],
+     [
+      "Saturday · Matins",
+      8,
+      0.2
+     ],
+     [
+      "Saturday · Lauds",
+      9,
+      0.067
+     ]
+    ]
+   },
+   {
+    "title": "Sunday VII of Easter",
+    "group": "Easter",
+    "tag": "e:42",
+    "path": "Lent/38 Sunday VII of Easter.pdf",
+    "pages": 4,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.125
+     ],
+     [
+      "Matins",
+      0,
+      0.583
+     ],
+     [
+      "Lauds",
+      1,
+      0.529
+     ],
+     [
+      "II Vespers",
+      2,
+      0.579
+     ]
+    ]
+   },
+   {
+    "title": "Week VII of Easter",
+    "group": "Easter",
+    "tag": "e:43-48",
+    "path": "Lent/39 Week VII of Easter.pdf",
+    "pages": 12,
+    "jumps": [
+     [
+      "Monday · Matins",
+      0,
+      0.087
+     ],
+     [
+      "Monday · Lauds",
+      1,
+      0.062
+     ],
+     [
+      "Monday · Vespers",
+      1,
+      0.5
+     ],
+     [
+      "Tuesday · Matins",
+      2,
+      0.08
+     ],
+     [
+      "Tuesday · Lauds",
+      3,
+      0.059
+     ],
+     [
+      "Tuesday · Vespers",
+      3,
+      0.471
+     ],
+     [
+      "Wednesday · Matins",
+      4,
+      0.1
+     ],
+     [
+      "Wednesday · Lauds",
+      5,
+      0.125
+     ],
+     [
+      "Wednesday · Vespers",
+      5,
+      0.5
+     ],
+     [
+      "Thursday · Matins",
+      6,
+      0.111
+     ],
+     [
+      "Thursday · Lauds",
+      7,
+      0.05
+     ],
+     [
+      "Thursday · Vespers",
+      7,
+      0.5
+     ],
+     [
+      "Friday · Matins",
+      8,
+      0.105
+     ],
+     [
+      "Friday · Lauds",
+      9,
+      0.053
+     ],
+     [
+      "Friday · Vespers",
+      9,
+      0.526
+     ],
+     [
+      "Saturday · Matins",
+      10,
+      0.111
+     ],
+     [
+      "Saturday · Lauds",
+      11,
+      0.375
+     ]
+    ]
+   },
+   {
+    "title": "Pentecost",
+    "group": "Easter",
+    "tag": "e:49",
+    "path": "Lent/40 Pentecost.pdf",
+    "pages": 22,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.062
+     ],
+     [
+      "Compline",
+      6,
+      0.194
+     ],
+     [
+      "Matins",
+      7,
+      0.357
+     ],
+     [
+      "Lauds",
+      13,
+      0.458
+     ],
+     [
+      "Sext",
+      18,
+      0.028
+     ],
+     [
+      "II Vespers",
+      20,
+      0.708
+     ]
+    ]
+   },
+   {
+    "title": "Trinity Sunday",
+    "group": "After Pentecost",
+    "tag": "e:56",
+    "path": "Lent/41 Trinity Sunday.pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.3
+     ],
+     [
+      "Matins",
+      4,
+      0.421
+     ],
+     [
+      "Lauds",
+      9,
+      0.783
+     ],
+     [
+      "Sext",
+      13,
+      0.192
+     ],
+     [
+      "II Vespers",
+      16,
+      0.261
+     ]
+    ]
+   },
+   {
+    "title": "Corpus Christi",
+    "group": "After Pentecost",
+    "tag": "e:60 e:63",
+    "path": "Lent/42 Corpus Christi.pdf",
+    "pages": 32,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.143
+     ],
+     [
+      "Compline",
+      10,
+      0.391
+     ],
+     [
+      "Matins",
+      11,
+      0.364
+     ],
+     [
+      "Lauds",
+      19,
+      0.609
+     ],
+     [
+      "Sext",
+      23,
+      0.68
+     ],
+     [
+      "II Vespers",
+      27,
+      0.462
+     ]
+    ]
+   },
+   {
+    "title": "The Most Sacred Heart of Jesus",
+    "group": "After Pentecost",
+    "tag": "e:68",
+    "path": "Lent/43 The Most Sacred Heart of Jesus.pdf",
+    "pages": 27,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.0
+     ],
+     [
+      "Compline",
+      7,
+      0.593
+     ],
+     [
+      "Matins",
+      8,
+      0.48
+     ],
+     [
+      "Lauds",
+      14,
+      0.038
+     ],
+     [
+      "Sext",
+      17,
+      0.435
+     ],
+     [
+      "II Vespers",
+      21,
+      0.158
+     ]
+    ]
+   },
+   {
+    "title": "Sundays through the Year",
+    "group": "After Pentecost",
+    "tag": "ot:6-33",
+    "path": "Lent/44 Sundays through the Year.pdf",
+    "pages": 86,
+    "jumps": [
+     [
+      "Sunday VI · I Vespers",
+      0,
+      0.304
+     ],
+     [
+      "Sunday VI · Lauds",
+      1,
+      0.056
+     ],
+     [
+      "Sunday VI · II Vespers",
+      2,
+      0.318
+     ],
+     [
+      "Sunday VII · I Vespers",
+      4,
+      0.111
+     ],
+     [
+      "Sunday VII · Lauds",
+      5,
+      0.034
+     ],
+     [
+      "Sunday VII · II Vespers",
+      6,
+      0.136
+     ],
+     [
+      "Sunday VIII · I Vespers",
+      7,
+      0.294
+     ],
+     [
+      "Sunday VIII · Lauds",
+      8,
+      0.053
+     ],
+     [
+      "Sunday VIII · II Vespers",
+      9,
+      0.227
+     ],
+     [
+      "Sunday IX · I Vespers",
+      10,
+      0.346
+     ],
+     [
+      "Sunday IX · Lauds",
+      11,
+      0.227
+     ],
+     [
+      "Sunday IX · II Vespers",
+      12,
+      0.368
+     ],
+     [
+      "Sunday X · I Vespers",
+      13,
+      0.35
+     ],
+     [
+      "Sunday X · Lauds",
+      14,
+      0.25
+     ],
+     [
+      "Sunday X · II Vespers",
+      15,
+      0.174
+     ],
+     [
+      "Sunday XI · I Vespers",
+      16,
+      0.111
+     ],
+     [
+      "Sunday XI · Lauds",
+      17,
+      0.053
+     ],
+     [
+      "Sunday XI · II Vespers",
+      18,
+      0.261
+     ],
+     [
+      "Sunday XII · I Vespers",
+      19,
+      0.455
+     ],
+     [
+      "Sunday XII · Lauds",
+      20,
+      0.091
+     ],
+     [
+      "Sunday XII · Vespers",
+      21,
+      0.304
+     ],
+     [
+      "Sunday XIII · I Vespers",
+      22,
+      0.294
+     ],
+     [
+      "Sunday XIII · I Vespers",
+      24,
+      0.048
+     ],
+     [
+      "Sunday XIV · I Vespers",
+      25,
+      0.083
+     ],
+     [
+      "Sunday XIV · Lauds",
+      25,
+      0.708
+     ],
+     [
+      "Sunday XIV · Vespers",
+      26,
+      0.783
+     ],
+     [
+      "Sunday XV · I Vespers",
+      27,
+      0.778
+     ],
+     [
+      "Sunday XV · Lauds",
+      29,
+      0.042
+     ],
+     [
+      "Sunday XV · II Vespers",
+      30,
+      0.222
+     ],
+     [
+      "Sunday XVI · I Vespers",
+      31,
+      0.619
+     ],
+     [
+      "Sunday XVI · Lauds",
+      32,
+      0.609
+     ],
+     [
+      "Sunday XVI · II Vespers",
+      33,
+      0.611
+     ],
+     [
+      "Sunday XVII · I Vespers",
+      34,
+      0.615
+     ],
+     [
+      "Sunday XVII · Lauds",
+      35,
+      0.55
+     ],
+     [
+      "Sunday XVII · II Vespers",
+      36,
+      0.722
+     ],
+     [
+      "Sunday XVIII · I Vespers",
+      38,
+      0.077
+     ],
+     [
+      "Sunday XVIII · Lauds",
+      38,
+      0.731
+     ],
+     [
+      "Sunday XVIII · II Vespers",
+      39,
+      0.684
+     ],
+     [
+      "Sunday XIX · I Vespers",
+      41,
+      0.182
+     ],
+     [
+      "Sunday XIX · Lauds",
+      42,
+      0.05
+     ],
+     [
+      "Sunday XIX · II Vespers",
+      43,
+      0.048
+     ],
+     [
+      "Sunday XX · I Vespers",
+      44,
+      0.304
+     ],
+     [
+      "Sunday XX · Lauds",
+      45,
+      0.111
+     ],
+     [
+      "Sunday XX · Vespers",
+      46,
+      0.393
+     ],
+     [
+      "Sunday XXI · I Vespers",
+      47,
+      0.353
+     ],
+     [
+      "Sunday XXI · Lauds",
+      48,
+      0.045
+     ],
+     [
+      "Sunday XXI · II Vespers",
+      49,
+      0.048
+     ],
+     [
+      "Sunday XXII · I Vespers",
+      50,
+      0.158
+     ],
+     [
+      "Sunday XXII · Lauds",
+      50,
+      0.789
+     ],
+     [
+      "Sunday XXII · II Vespers",
+      51,
+      0.75
+     ],
+     [
+      "Sunday XXIII · I Vespers",
+      53,
+      0.095
+     ],
+     [
+      "Sunday XXIII · Lauds",
+      53,
+      0.762
+     ],
+     [
+      "Sunday XXIII · II Vespers",
+      54,
+      0.727
+     ],
+     [
+      "Sunday XXIV · I Vespers",
+      55,
+      0.615
+     ],
+     [
+      "Sunday XXIV · Lauds",
+      56,
+      0.4
+     ],
+     [
+      "Sunday XXIV · II Vespers",
+      57,
+      0.5
+     ],
+     [
+      "Sunday XXV · I Vespers",
+      58,
+      0.7
+     ],
+     [
+      "Sunday XXV · Lauds",
+      59,
+      0.526
+     ],
+     [
+      "Sunday XXV · I Vespers",
+      60,
+      0.56
+     ],
+     [
+      "Sunday XXVI · I Vespers",
+      61,
+      0.4
+     ],
+     [
+      "Sunday XXVI · Lauds",
+      62,
+      0.192
+     ],
+     [
+      "Sunday XXVI · II Vespers",
+      63,
+      0.444
+     ],
+     [
+      "Sunday XXVII · I Vespers",
+      64,
+      0.348
+     ],
+     [
+      "Sunday XXVII · Lauds",
+      65,
+      0.045
+     ],
+     [
+      "Sunday XXVII · II Vespers",
+      66,
+      0.167
+     ],
+     [
+      "Sunday XXVIII · I Vespers",
+      67,
+      0.312
+     ],
+     [
+      "Sunday XXVIII · Lauds",
+      68,
+      0.2
+     ],
+     [
+      "Sunday XXVIII · II Vespers",
+      69,
+      0.308
+     ],
+     [
+      "Sunday XXIX · I Vespers",
+      70,
+      0.524
+     ],
+     [
+      "Sunday XXIX · Lauds",
+      71,
+      0.25
+     ],
+     [
+      "Sunday XXIX · II Vespers",
+      72,
+      0.286
+     ],
+     [
+      "Sunday XXX · I Vespers",
+      73,
+      0.4
+     ],
+     [
+      "Sunday XXX · Lauds",
+      74,
+      0.158
+     ],
+     [
+      "Sunday XXX · II Vespers",
+      75,
+      0.263
+     ],
+     [
+      "Sunday XXXI · I Vespers",
+      76,
+      0.357
+     ],
+     [
+      "Sunday XXXI · Lauds",
+      77,
+      0.364
+     ],
+     [
+      "Sunday XXXI · II Vespers",
+      78,
+      0.417
+     ],
+     [
+      "Sunday XXXII · I Vespers",
+      79,
+      0.444
+     ],
+     [
+      "Sunday XXXII · Lauds",
+      80,
+      0.417
+     ],
+     [
+      "Sunday XXXII · II Vespers",
+      81,
+      0.6
+     ],
+     [
+      "Sunday XXXIII · I Vespers",
+      82,
+      0.593
+     ],
+     [
+      "Sunday XXXIII · Lauds",
+      83,
+      0.45
+     ],
+     [
+      "Sunday XXXIII · II Vespers",
+      84,
+      0.636
+     ]
+    ]
+   },
+   {
+    "title": "Christ the King",
+    "group": "After Pentecost",
+    "tag": "ck",
+    "path": "Lent/45 Christ the King.pdf",
+    "pages": 20,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.158
+     ],
+     [
+      "Compline",
+      5,
+      0.333
+     ],
+     [
+      "Matins",
+      6,
+      0.029
+     ],
+     [
+      "Lauds",
+      11,
+      0.571
+     ],
+     [
+      "Sext",
+      16,
+      0.028
+     ],
+     [
+      "II Vespers",
+      18,
+      0.45
+     ]
+    ]
+   },
+   {
+    "title": "Ordinary",
+    "group": "Reference",
+    "tag": "",
+    "path": "Lent/46 Ordinary.pdf",
+    "pages": 20,
+    "jumps": []
+   },
+   {
+    "title": "Invitatory",
+    "group": "Reference",
+    "tag": "",
+    "path": "Lent/47 Invitatory.pdf",
+    "pages": 48,
+    "jumps": []
+   },
+   {
+    "title": "Proper psalms at Vespers",
+    "group": "Reference",
+    "tag": "",
+    "path": "Lent/48 Proper psalms at Vespers.pdf",
+    "pages": 18,
+    "jumps": []
+   },
+   {
+    "title": "Magnificat",
+    "group": "Reference",
+    "tag": "",
+    "path": "Lent/49 Magnificat.pdf",
+    "pages": 26,
+    "jumps": [
+     [
+      "Lauds",
+      0,
+      0.0
+     ],
+     [
+      "Vespers",
+      1,
+      0.038
+     ]
+    ]
+   },
+   {
+    "title": "Te Deum",
+    "group": "Reference",
+    "tag": "",
+    "path": "Lent/50 Te Deum.pdf",
+    "pages": 12,
+    "jumps": []
+   },
+   {
+    "title": "Index",
+    "group": "Reference",
+    "tag": "",
+    "path": "Lent/51 Index.pdf",
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Benedictus and Magnificat tones",
+    "group": "Reference",
+    "tag": "",
+    "path": "Lent/52 Benedictus and Magnificat tones.pdf",
+    "pages": 12,
+    "jumps": []
+   },
+   {
+    "title": "Antiphonae in cantu",
+    "group": "Reference",
+    "tag": "",
+    "path": "Lent/53 Antiphonae in cantu.pdf",
+    "pages": 16,
+    "jumps": []
+   },
+   {
+    "title": "Blessings, prayers and Benediction",
+    "group": "Reference",
+    "tag": "",
+    "path": "Lent/54 Blessings, prayers and Benediction.pdf",
+    "pages": 18,
+    "jumps": []
+   }
+  ]
+ },
+ "Sanctoral": {
+  "label": "Saints",
+  "sections": [
+   {
+    "title": "Saint Andrew, Apostle (30 Nov)",
+    "group": "November–December",
+    "tag": "d:11-30",
+    "path": "Sanctoral/01 Saint Andrew, Apostle (30 Nov).pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.143
+     ],
+     [
+      "Lauds",
+      7,
+      0.043
+     ],
+     [
+      "Sext",
+      11,
+      0.045
+     ],
+     [
+      "Vespers",
+      11,
+      0.773
+     ]
+    ]
+   },
+   {
+    "title": "The Immaculate Conception (8 Dec)",
+    "group": "November–December",
+    "tag": "d:12-08",
+    "path": "Sanctoral/02 The Immaculate Conception (8 Dec).pdf",
+    "pages": 18,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.286
+     ],
+     [
+      "Matins",
+      5,
+      0.167
+     ],
+     [
+      "Lauds",
+      12,
+      0.042
+     ],
+     [
+      "Sext",
+      16,
+      0.042
+     ],
+     [
+      "II Vespers",
+      16,
+      0.583
+     ]
+    ]
+   },
+   {
+    "title": "Saints Maurus and Placid (15 Jan)",
+    "group": "January–March",
+    "tag": "d:01-15",
+    "path": "Sanctoral/03 Saints Maurus and Placid (15 Jan).pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.19
+     ],
+     [
+      "Lauds",
+      6,
+      0.435
+     ],
+     [
+      "Sext",
+      11,
+      0.062
+     ],
+     [
+      "Vespers",
+      12,
+      0.043
+     ]
+    ]
+   },
+   {
+    "title": "Conversion of Saint Paul (25 Jan)",
+    "group": "January–March",
+    "tag": "d:01-25",
+    "path": "Sanctoral/04 Conversion of Saint Paul (25 Jan).pdf",
+    "pages": 15,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.222
+     ],
+     [
+      "Lauds",
+      6,
+      0.391
+     ],
+     [
+      "Sext",
+      10,
+      0.036
+     ],
+     [
+      "Vespers",
+      10,
+      0.607
+     ]
+    ]
+   },
+   {
+    "title": "The Presentation of the Lord (2 Feb)",
+    "group": "January–March",
+    "tag": "d:02-02",
+    "path": "Sanctoral/05 The Presentation of the Lord (2 Feb).pdf",
+    "pages": 21,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.25
+     ],
+     [
+      "Matins",
+      5,
+      0.609
+     ],
+     [
+      "Lauds",
+      11,
+      0.125
+     ],
+     [
+      "Sext",
+      15,
+      0.095
+     ],
+     [
+      "II Vespers",
+      15,
+      0.762
+     ]
+    ]
+   },
+   {
+    "title": "Saint Scholastica (10 Feb)",
+    "group": "January–March",
+    "tag": "d:02-10",
+    "path": "Sanctoral/06 Saint Scholastica (10 Feb).pdf",
+    "pages": 18,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.167
+     ],
+     [
+      "Lauds",
+      7,
+      0.2
+     ],
+     [
+      "Sext",
+      11,
+      0.636
+     ],
+     [
+      "Vespers",
+      12,
+      0.32
+     ]
+    ]
+   },
+   {
+    "title": "The Chair of Saint Peter (22 Feb)",
+    "group": "January–March",
+    "tag": "d:02-22",
+    "path": "Sanctoral/07 The Chair of Saint Peter (22 Feb).pdf",
+    "pages": 14,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.19
+     ],
+     [
+      "Lauds",
+      5,
+      0.44
+     ],
+     [
+      "Sext",
+      9,
+      0.042
+     ],
+     [
+      "II Vespers",
+      9,
+      0.583
+     ]
+    ]
+   },
+   {
+    "title": "Saint Joseph (19 Mar)",
+    "group": "January–March",
+    "tag": "d:03-19",
+    "path": "Sanctoral/08 Saint Joseph (19 Mar).pdf",
+    "pages": 35,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.312
+     ],
+     [
+      "Matins",
+      5,
+      0.556
+     ],
+     [
+      "Lauds",
+      12,
+      0.048
+     ],
+     [
+      "Sext",
+      16,
+      0.227
+     ],
+     [
+      "II Vespers",
+      17,
+      0.133
+     ],
+     [
+      "II Vespers",
+      20,
+      0.375
+     ],
+     [
+      "Matins",
+      24,
+      0.028
+     ],
+     [
+      "Lauds",
+      28,
+      0.714
+     ],
+     [
+      "Sext",
+      31,
+      0.619
+     ],
+     [
+      "II Vespers",
+      32,
+      0.765
+     ]
+    ]
+   },
+   {
+    "title": "The Passing of Our Holy Father Benedict (21 Mar)",
+    "group": "January–March",
+    "tag": "d:03-21",
+    "path": "Sanctoral/09 The Passing of Our Holy Father Benedict (21 Mar).pdf",
+    "pages": 35,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.294
+     ],
+     [
+      "Matins",
+      6,
+      0.045
+     ],
+     [
+      "Lauds",
+      12,
+      0.409
+     ],
+     [
+      "Sext",
+      17,
+      0.045
+     ],
+     [
+      "II Vespers",
+      18,
+      0.062
+     ],
+     [
+      "II Vespers",
+      20,
+      0.545
+     ],
+     [
+      "Matins",
+      24,
+      0.2
+     ],
+     [
+      "Lauds",
+      28,
+      0.682
+     ],
+     [
+      "Sext",
+      32,
+      0.027
+     ],
+     [
+      "II Vespers",
+      33,
+      0.043
+     ]
+    ]
+   },
+   {
+    "title": "The Annunciation (25 Mar), during Lent",
+    "group": "January–March",
+    "tag": "d:03-25",
+    "path": "Sanctoral/10 The Annunciation (25 Mar), during Lent.pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.188
+     ],
+     [
+      "Matins",
+      4,
+      0.03
+     ],
+     [
+      "Lauds",
+      9,
+      0.455
+     ],
+     [
+      "Sext",
+      13,
+      0.217
+     ],
+     [
+      "II Vespers",
+      14,
+      0.037
+     ]
+    ]
+   },
+   {
+    "title": "The Annunciation, during Paschaltide",
+    "group": "January–March",
+    "tag": "",
+    "path": "Sanctoral/11 The Annunciation, during Paschaltide.pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.267
+     ],
+     [
+      "Matins",
+      4,
+      0.333
+     ],
+     [
+      "Lauds",
+      10,
+      0.143
+     ],
+     [
+      "Sext",
+      12,
+      0.19
+     ],
+     [
+      "II Vespers",
+      13,
+      0.038
+     ]
+    ]
+   },
+   {
+    "title": "Saint Mark, Evangelist (25 Apr)",
+    "group": "April–June",
+    "tag": "d:04-25",
+    "path": "Sanctoral/12 Saint Mark, Evangelist (25 Apr).pdf",
+    "pages": 14,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.136
+     ],
+     [
+      "Lauds",
+      6,
+      0.455
+     ],
+     [
+      "Sext",
+      10,
+      0.636
+     ],
+     [
+      "Vespers",
+      11,
+      0.556
+     ]
+    ]
+   },
+   {
+    "title": "Saints Philip and James (3 May)",
+    "group": "April–June",
+    "tag": "d:05-03",
+    "path": "Sanctoral/13 Saints Philip and James (3 May).pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.19
+     ],
+     [
+      "Lauds",
+      7,
+      0.176
+     ],
+     [
+      "Sext",
+      12,
+      0.043
+     ],
+     [
+      "Vespers",
+      12,
+      0.739
+     ]
+    ]
+   },
+   {
+    "title": "Saint Matthias (14 May)",
+    "group": "April–June",
+    "tag": "d:05-14",
+    "path": "Sanctoral/14 Saint Matthias (14 May).pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.174
+     ],
+     [
+      "Lauds",
+      7,
+      0.16
+     ],
+     [
+      "Sext",
+      12,
+      0.043
+     ],
+     [
+      "Vespers",
+      12,
+      0.696
+     ]
+    ]
+   },
+   {
+    "title": "The Visitation (31 May)",
+    "group": "April–June",
+    "tag": "d:05-31",
+    "path": "Sanctoral/15 The Visitation (31 May).pdf",
+    "pages": 16,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.2
+     ],
+     [
+      "Lauds",
+      7,
+      0.032
+     ],
+     [
+      "Sext",
+      11,
+      0.031
+     ],
+     [
+      "II Vespers",
+      11,
+      0.875
+     ]
+    ]
+   },
+   {
+    "title": "Nativity of Saint John the Baptist (24 Jun)",
+    "group": "April–June",
+    "tag": "d:06-24",
+    "path": "Sanctoral/16 Nativity of Saint John the Baptist (24 Jun).pdf",
+    "pages": 19,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.333
+     ],
+     [
+      "Matins",
+      5,
+      0.042
+     ],
+     [
+      "Lauds",
+      11,
+      0.381
+     ],
+     [
+      "Sext",
+      15,
+      0.548
+     ],
+     [
+      "II Vespers",
+      16,
+      0.2
+     ]
+    ]
+   },
+   {
+    "title": "Saints Peter and Paul (29 Jun)",
+    "group": "April–June",
+    "tag": "d:06-29",
+    "path": "Sanctoral/17 Saints Peter and Paul (29 Jun).pdf",
+    "pages": 18,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.15
+     ],
+     [
+      "Matins",
+      5,
+      0.038
+     ],
+     [
+      "Lauds",
+      11,
+      0.053
+     ],
+     [
+      "Sext",
+      15,
+      0.391
+     ],
+     [
+      "II Vespers",
+      16,
+      0.158
+     ]
+    ]
+   },
+   {
+    "title": "Saint Thomas, Apostle (3 Jul)",
+    "group": "July–September",
+    "tag": "d:07-03",
+    "path": "Sanctoral/18 Saint Thomas, Apostle (3 Jul).pdf",
+    "pages": 16,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.143
+     ],
+     [
+      "Lauds",
+      6,
+      0.478
+     ],
+     [
+      "Sext",
+      10,
+      0.824
+     ],
+     [
+      "Vespers",
+      11,
+      0.577
+     ]
+    ]
+   },
+   {
+    "title": "Our Most Holy Father Benedict (11 Jul)",
+    "group": "July–September",
+    "tag": "d:07-11",
+    "path": "Sanctoral/19 Our Most Holy Father Benedict (11 Jul).pdf",
+    "pages": 20,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.316
+     ],
+     [
+      "Matins",
+      5,
+      0.043
+     ],
+     [
+      "Lauds",
+      11,
+      0.625
+     ],
+     [
+      "Sext",
+      16,
+      0.048
+     ],
+     [
+      "II Vespers",
+      17,
+      0.042
+     ],
+     [
+      "Matins",
+      19,
+      0.13
+     ]
+    ]
+   },
+   {
+    "title": "Saint James, Apostle (25 Jul)",
+    "group": "July–September",
+    "tag": "d:07-25",
+    "path": "Sanctoral/20 Saint James, Apostle (25 Jul).pdf",
+    "pages": 16,
+    "jumps": [
+     [
+      "Lauds",
+      5,
+      0.417
+     ],
+     [
+      "Sext",
+      9,
+      0.4
+     ],
+     [
+      "Vespers",
+      10,
+      0.167
+     ],
+     [
+      "I Vespers",
+      15,
+      0.174
+     ]
+    ]
+   },
+   {
+    "title": "The Transfiguration (6 Aug)",
+    "group": "July–September",
+    "tag": "d:08-06",
+    "path": "Sanctoral/21 The Transfiguration (6 Aug).pdf",
+    "pages": 14,
+    "jumps": [
+     [
+      "Matins",
+      3,
+      0.214
+     ],
+     [
+      "Lauds",
+      9,
+      0.265
+     ],
+     [
+      "Sext",
+      12,
+      0.423
+     ],
+     [
+      "II Vespers",
+      13,
+      0.045
+     ]
+    ]
+   },
+   {
+    "title": "Saint Laurence (10 Aug)",
+    "group": "July–September",
+    "tag": "d:08-10",
+    "path": "Sanctoral/22 Saint Laurence (10 Aug).pdf",
+    "pages": 14,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.16
+     ],
+     [
+      "Lauds",
+      6,
+      0.364
+     ],
+     [
+      "Sext",
+      10,
+      0.5
+     ],
+     [
+      "Vespers",
+      11,
+      0.107
+     ]
+    ]
+   },
+   {
+    "title": "The Assumption (15 Aug)",
+    "group": "July–September",
+    "tag": "d:08-15",
+    "path": "Sanctoral/23 The Assumption (15 Aug).pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.211
+     ],
+     [
+      "Matins",
+      4,
+      0.682
+     ],
+     [
+      "Lauds",
+      11,
+      0.478
+     ],
+     [
+      "Sext",
+      15,
+      0.517
+     ],
+     [
+      "II Vespers",
+      16,
+      0.333
+     ]
+    ]
+   },
+   {
+    "title": "Saint Bernard (20 Aug)",
+    "group": "July–September",
+    "tag": "d:08-20",
+    "path": "Sanctoral/24 Saint Bernard (20 Aug).pdf",
+    "pages": 15,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.429
+     ],
+     [
+      "Matins",
+      5,
+      0.148
+     ],
+     [
+      "Lauds",
+      10,
+      0.731
+     ],
+     [
+      "Sext",
+      13,
+      0.15
+     ],
+     [
+      "II Vespers",
+      14,
+      0.04
+     ]
+    ]
+   },
+   {
+    "title": "Saint Bartholomew (24 Aug)",
+    "group": "July–September",
+    "tag": "d:08-24",
+    "path": "Sanctoral/25 Saint Bartholomew (24 Aug).pdf",
+    "pages": 16,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.143
+     ],
+     [
+      "Lauds",
+      6,
+      0.385
+     ],
+     [
+      "Sext",
+      10,
+      0.417
+     ],
+     [
+      "Vespers",
+      11,
+      0.05
+     ]
+    ]
+   },
+   {
+    "title": "Saint Gregory the Great (3 Sep)",
+    "group": "July–September",
+    "tag": "d:09-03",
+    "path": "Sanctoral/26 Saint Gregory the Great (3 Sep).pdf",
+    "pages": 14,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.231
+     ],
+     [
+      "Lauds",
+      6,
+      0.429
+     ],
+     [
+      "Sext",
+      10,
+      0.65
+     ],
+     [
+      "Vespers",
+      11,
+      0.391
+     ]
+    ]
+   },
+   {
+    "title": "Nativity of the Blessed Virgin Mary (8 Sep)",
+    "group": "July–September",
+    "tag": "d:09-08",
+    "path": "Sanctoral/27 Nativity of the Blessed Virgin Mary (8 Sep).pdf",
+    "pages": 16,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.2
+     ],
+     [
+      "Lauds",
+      7,
+      0.043
+     ],
+     [
+      "Sext",
+      11,
+      0.043
+     ],
+     [
+      "Vespers",
+      11,
+      0.696
+     ]
+    ]
+   },
+   {
+    "title": "Exaltation of the Holy Cross (14 Sep)",
+    "group": "July–September",
+    "tag": "d:09-14",
+    "path": "Sanctoral/28 Exaltation of the Holy Cross (14 Sep).pdf",
+    "pages": 23,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.2
+     ],
+     [
+      "Matins",
+      7,
+      0.048
+     ],
+     [
+      "Lauds",
+      15,
+      0.56
+     ],
+     [
+      "Sext",
+      21,
+      0.44
+     ],
+     [
+      "II Vespers",
+      22,
+      0.045
+     ]
+    ]
+   },
+   {
+    "title": "Saint Matthew (21 Sep)",
+    "group": "July–September",
+    "tag": "d:09-21",
+    "path": "Sanctoral/29 Saint Matthew (21 Sep).pdf",
+    "pages": 15,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.19
+     ],
+     [
+      "Lauds",
+      6,
+      0.417
+     ],
+     [
+      "Sext",
+      10,
+      0.227
+     ],
+     [
+      "Vespers",
+      10,
+      0.727
+     ]
+    ]
+   },
+   {
+    "title": "Saints Michael, Gabriel and Raphael (29 Sep)",
+    "group": "July–September",
+    "tag": "d:09-29",
+    "path": "Sanctoral/30 Saints Michael, Gabriel and Raphael (29 Sep).pdf",
+    "pages": 17,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.182
+     ],
+     [
+      "Lauds",
+      7,
+      0.056
+     ],
+     [
+      "Sext",
+      11,
+      0.28
+     ],
+     [
+      "Vespers",
+      12,
+      0.045
+     ]
+    ]
+   },
+   {
+    "title": "The Holy Guardian Angels (2 Oct)",
+    "group": "October–November",
+    "tag": "d:10-02",
+    "path": "Sanctoral/31 The Holy Guardian Angels (2 Oct).pdf",
+    "pages": 15,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.185
+     ],
+     [
+      "Lauds",
+      6,
+      0.684
+     ],
+     [
+      "Sext",
+      11,
+      0.043
+     ],
+     [
+      "Vespers",
+      11,
+      0.565
+     ]
+    ]
+   },
+   {
+    "title": "Saint Luke, Evangelist (18 Oct)",
+    "group": "October–November",
+    "tag": "d:10-18",
+    "path": "Sanctoral/32 Saint Luke, Evangelist (18 Oct).pdf",
+    "pages": 14,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.12
+     ],
+     [
+      "Lauds",
+      6,
+      0.44
+     ],
+     [
+      "Sext",
+      10,
+      0.485
+     ],
+     [
+      "Vespers",
+      11,
+      0.333
+     ]
+    ]
+   },
+   {
+    "title": "Saints Simon and Jude (28 Oct)",
+    "group": "October–November",
+    "tag": "d:10-28",
+    "path": "Sanctoral/33 Saints Simon and Jude (28 Oct).pdf",
+    "pages": 15,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.19
+     ],
+     [
+      "Lauds",
+      6,
+      0.333
+     ],
+     [
+      "Sext",
+      10,
+      0.045
+     ],
+     [
+      "Vespers",
+      10,
+      0.591
+     ]
+    ]
+   },
+   {
+    "title": "All Saints (1 Nov)",
+    "group": "October–November",
+    "tag": "d:11-01",
+    "path": "Sanctoral/34 All Saints (1 Nov).pdf",
+    "pages": 22,
+    "jumps": [
+     [
+      "I Vespers",
+      2,
+      0.118
+     ],
+     [
+      "Matins",
+      8,
+      0.318
+     ],
+     [
+      "Sext",
+      19,
+      0.7
+     ],
+     [
+      "II Vespers",
+      20,
+      0.423
+     ]
+    ]
+   },
+   {
+    "title": "All the Faithful Departed (2 Nov)",
+    "group": "October–November",
+    "tag": "d:11-02",
+    "path": "Sanctoral/35 All the Faithful Departed (2 Nov).pdf",
+    "pages": 33,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.2
+     ],
+     [
+      "Lauds",
+      9,
+      0.024
+     ],
+     [
+      "Sext",
+      18,
+      0.487
+     ],
+     [
+      "Vespers",
+      22,
+      0.036
+     ],
+     [
+      "Compline",
+      30,
+      0.021
+     ]
+    ]
+   },
+   {
+    "title": "Dedication of the Lateran Basilica (9 Nov)",
+    "group": "October–November",
+    "tag": "d:11-09",
+    "path": "Sanctoral/36 Dedication of the Lateran Basilica (9 Nov).pdf",
+    "pages": 13,
+    "jumps": [
+     [
+      "I Vespers",
+      0,
+      0.25
+     ],
+     [
+      "Matins",
+      5,
+      0.56
+     ],
+     [
+      "Lauds",
+      10,
+      0.217
+     ]
+    ]
+   },
+   {
+    "title": "Common of the Dedication of a Church",
+    "group": "October–November",
+    "tag": "",
+    "path": "Sanctoral/37 Common of the Dedication of a Church.pdf",
+    "pages": 22,
+    "jumps": [
+     [
+      "Sext",
+      1,
+      0.5
+     ],
+     [
+      "II Vespers",
+      2,
+      0.059
+     ],
+     [
+      "I Vespers",
+      3,
+      0.333
+     ],
+     [
+      "Matins",
+      8,
+      0.64
+     ],
+     [
+      "Lauds",
+      13,
+      0.2
+     ],
+     [
+      "Sext",
+      17,
+      0.474
+     ],
+     [
+      "II Vespers",
+      18,
+      0.05
+     ],
+     [
+      "Matins",
+      19,
+      0.087
+     ],
+     [
+      "Lauds",
+      20,
+      0.727
+     ]
+    ]
+   },
+   {
+    "title": "Saint Martin (11 Nov)",
+    "group": "October–November",
+    "tag": "d:11-11",
+    "path": "Sanctoral/38 Saint Martin (11 Nov).pdf",
+    "pages": 16,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.2
+     ],
+     [
+      "Lauds",
+      6,
+      0.105
+     ],
+     [
+      "Sext",
+      10,
+      0.6
+     ],
+     [
+      "Vespers",
+      11,
+      0.435
+     ]
+    ]
+   },
+   {
+    "title": "All Saints of Our Order (13 Nov)",
+    "group": "October–November",
+    "tag": "d:11-13",
+    "path": "Sanctoral/39 All Saints of Our Order (13 Nov).pdf",
+    "pages": 16,
+    "jumps": [
+     [
+      "Matins",
+      0,
+      0.353
+     ],
+     [
+      "Lauds",
+      6,
+      0.55
+     ],
+     [
+      "Sext",
+      10,
+      0.194
+     ],
+     [
+      "Vespers",
+      10,
+      0.861
+     ]
+    ]
+   },
+   {
+    "title": "All the Departed of Our Order (14 Nov)",
+    "group": "October–November",
+    "tag": "d:11-14",
+    "path": "Sanctoral/40 All the Departed of Our Order (14 Nov).pdf",
+    "pages": 2,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary",
+    "group": "Reference",
+    "tag": "",
+    "path": "Sanctoral/41 Ordinary.pdf",
+    "pages": 20,
+    "jumps": []
+   },
+   {
+    "title": "Invitatory",
+    "group": "Reference",
+    "tag": "",
+    "path": "Sanctoral/42 Invitatory.pdf",
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Proper psalms",
+    "group": "Reference",
+    "tag": "",
+    "path": "Sanctoral/43 Proper psalms.pdf",
+    "pages": 14,
+    "jumps": []
+   },
+   {
+    "title": "Gospel canticles; Te Deum",
+    "group": "Reference",
+    "tag": "",
+    "path": "Sanctoral/44 Gospel canticles; Te Deum.pdf",
+    "pages": 28,
+    "jumps": [
+     [
+      "Vespers",
+      0,
+      0.0
+     ],
+     [
+      "Lauds",
+      1,
+      0.029
+     ]
+    ]
+   },
+   {
+    "title": "Hymn at Sext",
+    "group": "Reference",
+    "tag": "",
+    "path": "Sanctoral/45 Hymn at Sext.pdf",
+    "pages": 6,
+    "jumps": []
+   },
+   {
+    "title": "Benediction; Laudes ab Hincmaro",
+    "group": "Reference",
+    "tag": "",
+    "path": "Sanctoral/46 Benediction; Laudes ab Hincmaro.pdf",
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Order of Service; prayers",
+    "group": "Reference",
+    "tag": "",
+    "path": "Sanctoral/47 Order of Service; prayers.pdf",
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Index",
+    "group": "Reference",
+    "tag": "",
+    "path": "Sanctoral/48 Index.pdf",
+    "pages": 6,
+    "jumps": []
+   }
+  ]
+ }
+}

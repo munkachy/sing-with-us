@@ -334,6 +334,18 @@
     else { lock.hidden = false; }
     return true;
   }
+  // Text size for the Beta words only (the chant is a picture of the page and keeps its width).
+  var SIZES = [0.85, 1, 1.15, 1.3, 1.5, 1.75, 2];
+  var fsStep = SIZES.indexOf(store("psalter-fs")); if (fsStep < 0) fsStep = 1;
+  function applySize() {
+    $("#beta-view").style.setProperty("--fs", SIZES[fsStep]);
+    $("#fs-down").disabled = fsStep === 0; $("#fs-up").disabled = fsStep === SIZES.length - 1;
+    store("psalter-fs", SIZES[fsStep] === 1 ? null : SIZES[fsStep]);
+  }
+  $("#fs-down").addEventListener("click", function () { if (fsStep > 0) { fsStep--; applySize(); } });
+  $("#fs-up").addEventListener("click", function () { if (fsStep < SIZES.length - 1) { fsStep++; applySize(); } });
+  applySize();
+
   $("#beta-toggle").addEventListener("change", function (e) { beta.on = e.target.checked; store("psalter-beta", beta.on || null); render(); });
   $("#beta-lock").addEventListener("submit", function (e) {
     e.preventDefault();

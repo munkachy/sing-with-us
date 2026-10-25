@@ -152,3 +152,22 @@ details.ref .ref-list { margin: .7rem .8rem 1rem; }
 @media (min-width: 42.01rem) {
   .beta-view { margin: 0 0 1.6rem; padding: .6rem 1.4rem 1.2rem; border-radius: 14px; box-shadow: 0 6px 22px rgba(0,0,0,.18); }
 }
+
+/* Text size (A− A+): scales the Beta words only */
+.textsize { display: flex; justify-content: flex-end; align-items: center; gap: 6px; margin: .4rem 0 .2rem; }
+.textsize-label { font-size: .85rem; color: var(--muted); margin-right: 2px; }
+.textsize button { font: inherit; font-size: .95rem; min-width: 44px; min-height: 36px; border-radius: 7px; border: 1px solid var(--rule); background: var(--surface); color: var(--text); cursor: pointer; }
+.textsize button:disabled { opacity: .4; cursor: default; }
+#beta-content { font-size: calc(var(--fs, 1) * 1.22rem); }
+#beta-content .ps-num { font-size: .9em; }
+#beta-content .ps-heb { font-size: .74em; }
+#beta-content .ps-cap { font-size: .82em; }
+#beta-content .ps-text p { font-size: .967em; }
+#beta-content .rub { font-size: .8em; }
+#beta-content .season { font-size: .78em; }
+#beta-content .part { font-size: 1.07em; }
+#beta-content .pray { font-size: .92em; }
+#beta-content .fine { font-size: .7em; }
+#beta-content .tone { font-size: .78em; }
+#beta-content details.pick > summary { font-size: .82em; }
+#beta-content details.pick .when { font-size: .7em; }

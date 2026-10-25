@@ -199,7 +199,7 @@ p.then { margin: .2rem 0 1.4rem; }
 @media (min-width: 62rem) { .pickbar-in { grid-template-columns: 11rem 17rem 1fr; grid-template-areas: "week day hour"; } }
 
 /* The book row, and the section and hour lists of the seasonal books */
-.pickbar .seg-books { grid-area: book; grid-template-columns: repeat(4, 1fr); }
+.pickbar .seg-books { grid-area: book; grid-template-columns: repeat(4, 1fr) 2.6rem; }
 .book-picks { grid-area: picks; display: grid; grid-template-columns: 1fr; gap: 5px; }
 .book-picks select {
   font: inherit; font-size: .95rem; min-height: 38px; width: 100%; padding: 0 .5rem; border-radius: 7px;
@@ -215,3 +215,19 @@ p.then { margin: .2rem 0 1.4rem; }
   .book-picks { grid-template-columns: 1.4fr 1fr; }
 }
 #today-note a { font-weight: 600; }
+
+/* Page picker: a number box under the bar, and the page you're reading in the corner */
+.pagebox { max-width: 68rem; margin: 0 auto; padding: 0 10px 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.pagebox label { font-size: .95rem; }
+.pagebox input { font: inherit; width: 5.5rem; min-height: 38px; padding: 0 .5rem; border-radius: 7px; border: 1px solid var(--rule); background: var(--surface); color: var(--text); }
+.pagebox input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.pagebox .btn { min-height: 38px; padding: 0 1rem; }
+.page-x { font: inherit; min-height: 38px; min-width: 38px; border-radius: 7px; border: 1px solid var(--rule); background: var(--surface); color: var(--text); cursor: pointer; }
+.page-msg { flex-basis: 100%; font-size: .9rem; color: var(--muted); }
+.page-msg:empty { display: none; }
+#page-btn[aria-expanded="true"] { border-color: var(--accent); font-weight: 600; }
+.page-label {
+  position: fixed; left: 10px; bottom: 10px; z-index: 30; pointer-events: none;
+  font-size: .85rem; padding: .15rem .5rem; border-radius: 6px;
+  background: rgba(243, 237, 225, .95); color: #2b241d; border: 1px solid rgba(43, 36, 29, .15);
+}

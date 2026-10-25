@@ -1,12 +1,14 @@
 {
  "Advent-Christmas": {
   "label": "Advent & Christmas",
+  "offset": 9,
   "sections": [
    {
     "title": "Ordinary during Advent",
     "group": "Advent",
     "tag": "",
     "path": "Advent-Christmas/01 Ordinary during Advent.pdf",
+    "start": 10,
     "pages": 15,
     "jumps": [
      [
@@ -41,6 +43,7 @@
     "group": "Advent",
     "tag": "adv:1",
     "path": "Advent-Christmas/02 Sunday I of Advent.pdf",
+    "start": 25,
     "pages": 8,
     "jumps": [
      [
@@ -75,6 +78,7 @@
     "group": "Advent",
     "tag": "advw:1",
     "path": "Advent-Christmas/03 Week I of Advent.pdf",
+    "start": 33,
     "pages": 12,
     "jumps": [
      [
@@ -164,6 +168,7 @@
     "group": "Advent",
     "tag": "adv:2",
     "path": "Advent-Christmas/04 Sunday II of Advent.pdf",
+    "start": 45,
     "pages": 8,
     "jumps": [
      [
@@ -198,6 +203,7 @@
     "group": "Advent",
     "tag": "advw:2",
     "path": "Advent-Christmas/05 Week II of Advent.pdf",
+    "start": 53,
     "pages": 11,
     "jumps": [
      [
@@ -287,6 +293,7 @@
     "group": "Advent",
     "tag": "adv:3",
     "path": "Advent-Christmas/06 Sunday III of Advent.pdf",
+    "start": 64,
     "pages": 8,
     "jumps": [
      [
@@ -321,6 +328,7 @@
     "group": "Advent",
     "tag": "advw:3",
     "path": "Advent-Christmas/07 Week III of Advent.pdf",
+    "start": 72,
     "pages": 10,
     "jumps": [
      [
@@ -405,6 +413,7 @@
     "group": "Advent",
     "tag": "adv:4",
     "path": "Advent-Christmas/08 Sunday IV of Advent.pdf",
+    "start": 82,
     "pages": 7,
     "jumps": [
      [
@@ -434,6 +443,7 @@
     "group": "Advent",
     "tag": "",
     "path": "Advent-Christmas/09 17 to 23 December - antiphons at Lauds and Vespers.pdf",
+    "start": 89,
     "pages": 17,
     "jumps": [
      [
@@ -528,6 +538,7 @@
     "group": "Advent",
     "tag": "d:12-17",
     "path": "Advent-Christmas/10 17 December.pdf",
+    "start": 106,
     "pages": 2,
     "jumps": [
      [
@@ -552,6 +563,7 @@
     "group": "Advent",
     "tag": "d:12-18",
     "path": "Advent-Christmas/11 18 December.pdf",
+    "start": 108,
     "pages": 3,
     "jumps": [
      [
@@ -576,6 +588,7 @@
     "group": "Advent",
     "tag": "d:12-19",
     "path": "Advent-Christmas/12 19 December.pdf",
+    "start": 111,
     "pages": 2,
     "jumps": [
      [
@@ -600,6 +613,7 @@
     "group": "Advent",
     "tag": "d:12-20",
     "path": "Advent-Christmas/13 20 December.pdf",
+    "start": 113,
     "pages": 3,
     "jumps": [
      [
@@ -624,6 +638,7 @@
     "group": "Advent",
     "tag": "d:12-21",
     "path": "Advent-Christmas/14 21 December.pdf",
+    "start": 116,
     "pages": 2,
     "jumps": [
      [
@@ -648,6 +663,7 @@
     "group": "Advent",
     "tag": "d:12-22",
     "path": "Advent-Christmas/15 22 December.pdf",
+    "start": 118,
     "pages": 2,
     "jumps": [
      [
@@ -672,6 +688,7 @@
     "group": "Advent",
     "tag": "d:12-23",
     "path": "Advent-Christmas/16 23 December.pdf",
+    "start": 120,
     "pages": 3,
     "jumps": [
      [
@@ -696,6 +713,7 @@
     "group": "Advent",
     "tag": "d:12-24",
     "path": "Advent-Christmas/17 24 December - Vigil of the Nativity.pdf",
+    "start": 123,
     "pages": 25,
     "jumps": [
      [
@@ -735,6 +753,7 @@
     "group": "Christmas",
     "tag": "d:12-25",
     "path": "Advent-Christmas/18 The Nativity of Our Lord.pdf",
+    "start": 148,
     "pages": 45,
     "jumps": [
      [
@@ -769,6 +788,7 @@
     "group": "Christmas",
     "tag": "d:12-26",
     "path": "Advent-Christmas/19 Saint Stephen, Protomartyr (26 Dec).pdf",
+    "start": 193,
     "pages": 14,
     "jumps": [
      [
@@ -793,6 +813,7 @@
     "group": "Christmas",
     "tag": "d:12-27",
     "path": "Advent-Christmas/20 Saint John, Apostle and Evangelist (27 Dec).pdf",
+    "start": 207,
     "pages": 15,
     "jumps": [
      [
@@ -817,6 +838,7 @@
     "group": "Christmas",
     "tag": "d:12-28",
     "path": "Advent-Christmas/21 The Holy Innocents (28 Dec).pdf",
+    "start": 222,
     "pages": 13,
     "jumps": [
      [
@@ -841,6 +863,7 @@
     "group": "Christmas",
     "tag": "xmas:holyfamily",
     "path": "Advent-Christmas/22 The Holy Family.pdf",
+    "start": 235,
     "pages": 22,
     "jumps": [
      [
@@ -875,6 +898,7 @@
     "group": "Christmas",
     "tag": "d:12-29",
     "path": "Advent-Christmas/23 29 December.pdf",
+    "start": 257,
     "pages": 8,
     "jumps": [
      [
@@ -894,6 +918,7 @@
     "group": "Christmas",
     "tag": "d:12-30",
     "path": "Advent-Christmas/24 30 December.pdf",
+    "start": 265,
     "pages": 7,
     "jumps": [
      [
@@ -913,6 +938,7 @@
     "group": "Christmas",
     "tag": "d:12-31",
     "path": "Advent-Christmas/25 31 December.pdf",
+    "start": 272,
     "pages": 6,
     "jumps": [
      [
@@ -932,6 +958,7 @@
     "group": "Christmas",
     "tag": "d:01-01",
     "path": "Advent-Christmas/26 1 January - Octave Day of the Nativity.pdf",
+    "start": 278,
     "pages": 21,
     "jumps": [
      [
@@ -966,6 +993,7 @@
     "group": "Christmas",
     "tag": "",
     "path": "Advent-Christmas/27 Ordinary during Christmastide.pdf",
+    "start": 299,
     "pages": 13,
     "jumps": [
      [
@@ -1000,6 +1028,7 @@
     "group": "Christmas",
     "tag": "xmas:sun2",
     "path": "Advent-Christmas/28 Second Sunday after the Nativity.pdf",
+    "start": 312,
     "pages": 9,
     "jumps": [
      [
@@ -1034,6 +1063,7 @@
     "group": "Christmas",
     "tag": "d:01-02 d:01-03 d:01-04 d:01-05",
     "path": "Advent-Christmas/29 2 January to the Epiphany.pdf",
+    "start": 321,
     "pages": 19,
     "jumps": [
      [
@@ -1143,6 +1173,7 @@
     "group": "Christmas",
     "tag": "d:01-06",
     "path": "Advent-Christmas/30 The Epiphany of the Lord.pdf",
+    "start": 340,
     "pages": 21,
     "jumps": [
      [
@@ -1177,6 +1208,7 @@
     "group": "Christmas",
     "tag": "",
     "path": "Advent-Christmas/31 Ordinary during Epiphanytide.pdf",
+    "start": 361,
     "pages": 12,
     "jumps": [
      [
@@ -1211,6 +1243,7 @@
     "group": "Christmas",
     "tag": "d:01-07 d:01-08 d:01-09 d:01-10 d:01-11 d:01-12",
     "path": "Advent-Christmas/32 Weekdays after the Epiphany.pdf",
+    "start": 373,
     "pages": 12,
     "jumps": [
      [
@@ -1305,6 +1338,7 @@
     "group": "Christmas",
     "tag": "xmas:baptism",
     "path": "Advent-Christmas/33 The Baptism of the Lord.pdf",
+    "start": 385,
     "pages": 20,
     "jumps": [
      [
@@ -1339,6 +1373,7 @@
     "group": "Through the Year",
     "tag": "ot:2-9",
     "path": "Advent-Christmas/34 Sundays through the Year (early).pdf",
+    "start": 405,
     "pages": 26,
     "jumps": [
      [
@@ -1463,6 +1498,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Advent-Christmas/35 Ordinary.pdf",
+    "start": 431,
     "pages": 21,
     "jumps": []
    },
@@ -1471,6 +1507,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Advent-Christmas/36 Invitatory.pdf",
+    "start": 452,
     "pages": 52,
     "jumps": []
    },
@@ -1479,6 +1516,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Advent-Christmas/37 Proper psalms (Lauds, Sext, Vespers).pdf",
+    "start": 504,
     "pages": 51,
     "jumps": []
    },
@@ -1487,6 +1525,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Advent-Christmas/38 Gospel canticles.pdf",
+    "start": 555,
     "pages": 27,
     "jumps": [
      [
@@ -1506,6 +1545,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Advent-Christmas/39 Te Deum.pdf",
+    "start": 582,
     "pages": 9,
     "jumps": []
    },
@@ -1514,6 +1554,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Advent-Christmas/40 Additions - hymns, Magnificat, Benedictus.pdf",
+    "start": 591,
     "pages": 16,
     "jumps": [
      [
@@ -1533,6 +1574,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Advent-Christmas/41 Benediction; Laudes ab Hincmaro.pdf",
+    "start": 607,
     "pages": 11,
     "jumps": []
    },
@@ -1541,6 +1583,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Advent-Christmas/42 Order of Service; prayers.pdf",
+    "start": 618,
     "pages": 12,
     "jumps": []
    },
@@ -1549,6 +1592,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Advent-Christmas/43 Index.pdf",
+    "start": 630,
     "pages": 8,
     "jumps": []
    }
@@ -1556,12 +1600,14 @@
  },
  "Lent": {
   "label": "Lent & Easter",
+  "offset": 12,
   "sections": [
    {
     "title": "Ordinary during Lent",
     "group": "Lent",
     "tag": "",
     "path": "Lent/01 Ordinary during Lent.pdf",
+    "start": 13,
     "pages": 20,
     "jumps": [
      [
@@ -1596,6 +1642,7 @@
     "group": "Lent",
     "tag": "e:-46",
     "path": "Lent/02 Ash Wednesday.pdf",
+    "start": 33,
     "pages": 2,
     "jumps": [
      [
@@ -1620,6 +1667,7 @@
     "group": "Lent",
     "tag": "e:-45",
     "path": "Lent/03 Thursday after Ash Wednesday.pdf",
+    "start": 35,
     "pages": 2,
     "jumps": [
      [
@@ -1644,6 +1692,7 @@
     "group": "Lent",
     "tag": "e:-44",
     "path": "Lent/04 Friday after Ash Wednesday.pdf",
+    "start": 37,
     "pages": 2,
     "jumps": [
      [
@@ -1668,6 +1717,7 @@
     "group": "Lent",
     "tag": "e:-43",
     "path": "Lent/05 Saturday after Ash Wednesday.pdf",
+    "start": 39,
     "pages": 1,
     "jumps": [
      [
@@ -1682,6 +1732,7 @@
     "group": "Lent",
     "tag": "e:-42",
     "path": "Lent/06 Sunday I of Lent.pdf",
+    "start": 40,
     "pages": 3,
     "jumps": [
      [
@@ -1711,6 +1762,7 @@
     "group": "Lent",
     "tag": "e:-41--36",
     "path": "Lent/07 Week I of Lent.pdf",
+    "start": 43,
     "pages": 11,
     "jumps": [
      [
@@ -1800,6 +1852,7 @@
     "group": "Lent",
     "tag": "e:-35",
     "path": "Lent/08 Sunday II of Lent.pdf",
+    "start": 54,
     "pages": 3,
     "jumps": [
      [
@@ -1829,6 +1882,7 @@
     "group": "Lent",
     "tag": "e:-34--29",
     "path": "Lent/09 Week II of Lent.pdf",
+    "start": 57,
     "pages": 11,
     "jumps": [
      [
@@ -1918,6 +1972,7 @@
     "group": "Lent",
     "tag": "e:-28",
     "path": "Lent/10 Sunday III of Lent.pdf",
+    "start": 68,
     "pages": 4,
     "jumps": [
      [
@@ -1947,6 +2002,7 @@
     "group": "Lent",
     "tag": "e:-27--22",
     "path": "Lent/11 Week III of Lent.pdf",
+    "start": 72,
     "pages": 11,
     "jumps": [
      [
@@ -2036,6 +2092,7 @@
     "group": "Lent",
     "tag": "e:-21",
     "path": "Lent/12 Sunday IV of Lent.pdf",
+    "start": 83,
     "pages": 5,
     "jumps": [
      [
@@ -2065,6 +2122,7 @@
     "group": "Lent",
     "tag": "e:-20--15",
     "path": "Lent/13 Week IV of Lent.pdf",
+    "start": 88,
     "pages": 12,
     "jumps": [
      [
@@ -2159,6 +2217,7 @@
     "group": "Passiontide",
     "tag": "",
     "path": "Lent/14 Ordinary during Passiontide.pdf",
+    "start": 100,
     "pages": 17,
     "jumps": [
      [
@@ -2193,6 +2252,7 @@
     "group": "Passiontide",
     "tag": "e:-14",
     "path": "Lent/15 Sunday V of Lent.pdf",
+    "start": 117,
     "pages": 4,
     "jumps": [
      [
@@ -2222,6 +2282,7 @@
     "group": "Passiontide",
     "tag": "e:-13--8",
     "path": "Lent/16 Week V of Lent.pdf",
+    "start": 121,
     "pages": 11,
     "jumps": [
      [
@@ -2306,6 +2367,7 @@
     "group": "Passiontide",
     "tag": "e:-7",
     "path": "Lent/17 Palm Sunday.pdf",
+    "start": 132,
     "pages": 6,
     "jumps": [
      [
@@ -2335,6 +2397,7 @@
     "group": "Passiontide",
     "tag": "e:-6",
     "path": "Lent/18 Monday of Holy Week.pdf",
+    "start": 138,
     "pages": 3,
     "jumps": [
      [
@@ -2359,6 +2422,7 @@
     "group": "Passiontide",
     "tag": "e:-5",
     "path": "Lent/19 Tuesday of Holy Week.pdf",
+    "start": 141,
     "pages": 3,
     "jumps": [
      [
@@ -2383,6 +2447,7 @@
     "group": "Passiontide",
     "tag": "e:-4",
     "path": "Lent/20 Wednesday of Holy Week.pdf",
+    "start": 144,
     "pages": 3,
     "jumps": [
      [
@@ -2407,6 +2472,7 @@
     "group": "Passiontide",
     "tag": "e:-3",
     "path": "Lent/21 Thursday of Holy Week.pdf",
+    "start": 147,
     "pages": 2,
     "jumps": [
      [
@@ -2426,6 +2492,7 @@
     "group": "Easter",
     "tag": "",
     "path": "Lent/22 Ordinary during Paschaltide.pdf",
+    "start": 149,
     "pages": 20,
     "jumps": [
      [
@@ -2460,6 +2527,7 @@
     "group": "Easter",
     "tag": "e:0",
     "path": "Lent/23 Easter Sunday.pdf",
+    "start": 169,
     "pages": 10,
     "jumps": [
      [
@@ -2479,6 +2547,7 @@
     "group": "Easter",
     "tag": "e:1-6",
     "path": "Lent/24 Within the Octave of Easter.pdf",
+    "start": 179,
     "pages": 61,
     "jumps": [
      [
@@ -2603,6 +2672,7 @@
     "group": "Easter",
     "tag": "e:7",
     "path": "Lent/25 Low Sunday (Sunday II of Easter).pdf",
+    "start": 240,
     "pages": 2,
     "jumps": [
      [
@@ -2637,6 +2707,7 @@
     "group": "Easter",
     "tag": "e:8-13",
     "path": "Lent/26 Week II of Easter.pdf",
+    "start": 242,
     "pages": 11,
     "jumps": [
      [
@@ -2721,6 +2792,7 @@
     "group": "Easter",
     "tag": "e:14",
     "path": "Lent/27 Sunday III of Easter.pdf",
+    "start": 253,
     "pages": 4,
     "jumps": [
      [
@@ -2750,6 +2822,7 @@
     "group": "Easter",
     "tag": "e:15-20",
     "path": "Lent/28 Week III of Easter.pdf",
+    "start": 257,
     "pages": 11,
     "jumps": [
      [
@@ -2839,6 +2912,7 @@
     "group": "Easter",
     "tag": "e:21",
     "path": "Lent/29 Sunday IV of Easter.pdf",
+    "start": 268,
     "pages": 4,
     "jumps": [
      [
@@ -2868,6 +2942,7 @@
     "group": "Easter",
     "tag": "e:22-27",
     "path": "Lent/30 Week IV of Easter.pdf",
+    "start": 272,
     "pages": 11,
     "jumps": [
      [
@@ -2957,6 +3032,7 @@
     "group": "Easter",
     "tag": "e:28",
     "path": "Lent/31 Sunday V of Easter.pdf",
+    "start": 283,
     "pages": 4,
     "jumps": [
      [
@@ -2986,6 +3062,7 @@
     "group": "Easter",
     "tag": "e:29-34",
     "path": "Lent/32 Week V of Easter.pdf",
+    "start": 287,
     "pages": 11,
     "jumps": [
      [
@@ -3075,6 +3152,7 @@
     "group": "Easter",
     "tag": "e:35",
     "path": "Lent/33 Sunday VI of Easter.pdf",
+    "start": 298,
     "pages": 5,
     "jumps": [
      [
@@ -3104,6 +3182,7 @@
     "group": "Easter",
     "tag": "e:36-38",
     "path": "Lent/34 Week VI of Easter.pdf",
+    "start": 303,
     "pages": 6,
     "jumps": [
      [
@@ -3158,6 +3237,7 @@
     "group": "Easter",
     "tag": "",
     "path": "Lent/35 Ordinary from the Ascension to Pentecost.pdf",
+    "start": 309,
     "pages": 20,
     "jumps": [
      [
@@ -3192,6 +3272,7 @@
     "group": "Easter",
     "tag": "e:39",
     "path": "Lent/36 The Ascension of the Lord.pdf",
+    "start": 329,
     "pages": 16,
     "jumps": [
      [
@@ -3226,6 +3307,7 @@
     "group": "Easter",
     "tag": "e:40-41",
     "path": "Lent/37 After the Ascension.pdf",
+    "start": 345,
     "pages": 10,
     "jumps": [
      [
@@ -3300,6 +3382,7 @@
     "group": "Easter",
     "tag": "e:42",
     "path": "Lent/38 Sunday VII of Easter.pdf",
+    "start": 355,
     "pages": 4,
     "jumps": [
      [
@@ -3329,6 +3412,7 @@
     "group": "Easter",
     "tag": "e:43-48",
     "path": "Lent/39 Week VII of Easter.pdf",
+    "start": 359,
     "pages": 12,
     "jumps": [
      [
@@ -3423,6 +3507,7 @@
     "group": "Easter",
     "tag": "e:49",
     "path": "Lent/40 Pentecost.pdf",
+    "start": 371,
     "pages": 22,
     "jumps": [
      [
@@ -3462,6 +3547,7 @@
     "group": "After Pentecost",
     "tag": "e:56",
     "path": "Lent/41 Trinity Sunday.pdf",
+    "start": 393,
     "pages": 17,
     "jumps": [
      [
@@ -3496,6 +3582,7 @@
     "group": "After Pentecost",
     "tag": "e:60 e:63",
     "path": "Lent/42 Corpus Christi.pdf",
+    "start": 410,
     "pages": 32,
     "jumps": [
      [
@@ -3535,6 +3622,7 @@
     "group": "After Pentecost",
     "tag": "e:68",
     "path": "Lent/43 The Most Sacred Heart of Jesus.pdf",
+    "start": 442,
     "pages": 27,
     "jumps": [
      [
@@ -3574,6 +3662,7 @@
     "group": "After Pentecost",
     "tag": "ot:6-33",
     "path": "Lent/44 Sundays through the Year.pdf",
+    "start": 469,
     "pages": 86,
     "jumps": [
      [
@@ -3998,6 +4087,7 @@
     "group": "After Pentecost",
     "tag": "ck",
     "path": "Lent/45 Christ the King.pdf",
+    "start": 555,
     "pages": 20,
     "jumps": [
      [
@@ -4037,6 +4127,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Lent/46 Ordinary.pdf",
+    "start": 575,
     "pages": 20,
     "jumps": []
    },
@@ -4045,6 +4136,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Lent/47 Invitatory.pdf",
+    "start": 595,
     "pages": 48,
     "jumps": []
    },
@@ -4053,6 +4145,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Lent/48 Proper psalms at Vespers.pdf",
+    "start": 643,
     "pages": 18,
     "jumps": []
    },
@@ -4061,6 +4154,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Lent/49 Magnificat.pdf",
+    "start": 661,
     "pages": 26,
     "jumps": [
      [
@@ -4080,6 +4174,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Lent/50 Te Deum.pdf",
+    "start": 687,
     "pages": 12,
     "jumps": []
    },
@@ -4088,6 +4183,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Lent/51 Index.pdf",
+    "start": 699,
     "pages": 4,
     "jumps": []
    },
@@ -4096,6 +4192,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Lent/52 Benedictus and Magnificat tones.pdf",
+    "start": 703,
     "pages": 12,
     "jumps": []
    },
@@ -4104,6 +4201,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Lent/53 Antiphonae in cantu.pdf",
+    "start": 715,
     "pages": 16,
     "jumps": []
    },
@@ -4112,6 +4210,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Lent/54 Blessings, prayers and Benediction.pdf",
+    "start": 731,
     "pages": 18,
     "jumps": []
    }
@@ -4119,12 +4218,14 @@
  },
  "Sanctoral": {
   "label": "Saints",
+  "offset": 12,
   "sections": [
    {
     "title": "Saint Andrew, Apostle (30 Nov)",
     "group": "November–December",
     "tag": "d:11-30",
     "path": "Sanctoral/01 Saint Andrew, Apostle (30 Nov).pdf",
+    "start": 15,
     "pages": 17,
     "jumps": [
      [
@@ -4154,6 +4255,7 @@
     "group": "November–December",
     "tag": "d:12-08",
     "path": "Sanctoral/02 The Immaculate Conception (8 Dec).pdf",
+    "start": 32,
     "pages": 18,
     "jumps": [
      [
@@ -4188,6 +4290,7 @@
     "group": "January–March",
     "tag": "d:01-15",
     "path": "Sanctoral/03 Saints Maurus and Placid (15 Jan).pdf",
+    "start": 50,
     "pages": 17,
     "jumps": [
      [
@@ -4217,6 +4320,7 @@
     "group": "January–March",
     "tag": "d:01-25",
     "path": "Sanctoral/04 Conversion of Saint Paul (25 Jan).pdf",
+    "start": 67,
     "pages": 15,
     "jumps": [
      [
@@ -4246,6 +4350,7 @@
     "group": "January–March",
     "tag": "d:02-02",
     "path": "Sanctoral/05 The Presentation of the Lord (2 Feb).pdf",
+    "start": 82,
     "pages": 21,
     "jumps": [
      [
@@ -4280,6 +4385,7 @@
     "group": "January–March",
     "tag": "d:02-10",
     "path": "Sanctoral/06 Saint Scholastica (10 Feb).pdf",
+    "start": 103,
     "pages": 18,
     "jumps": [
      [
@@ -4309,6 +4415,7 @@
     "group": "January–March",
     "tag": "d:02-22",
     "path": "Sanctoral/07 The Chair of Saint Peter (22 Feb).pdf",
+    "start": 121,
     "pages": 14,
     "jumps": [
      [
@@ -4338,6 +4445,7 @@
     "group": "January–March",
     "tag": "d:03-19",
     "path": "Sanctoral/08 Saint Joseph (19 Mar).pdf",
+    "start": 135,
     "pages": 35,
     "jumps": [
      [
@@ -4397,6 +4505,7 @@
     "group": "January–March",
     "tag": "d:03-21",
     "path": "Sanctoral/09 The Passing of Our Holy Father Benedict (21 Mar).pdf",
+    "start": 170,
     "pages": 35,
     "jumps": [
      [
@@ -4456,6 +4565,7 @@
     "group": "January–March",
     "tag": "d:03-25",
     "path": "Sanctoral/10 The Annunciation (25 Mar), during Lent.pdf",
+    "start": 205,
     "pages": 17,
     "jumps": [
      [
@@ -4490,6 +4600,7 @@
     "group": "January–March",
     "tag": "",
     "path": "Sanctoral/11 The Annunciation, during Paschaltide.pdf",
+    "start": 222,
     "pages": 17,
     "jumps": [
      [
@@ -4524,6 +4635,7 @@
     "group": "April–June",
     "tag": "d:04-25",
     "path": "Sanctoral/12 Saint Mark, Evangelist (25 Apr).pdf",
+    "start": 239,
     "pages": 14,
     "jumps": [
      [
@@ -4553,6 +4665,7 @@
     "group": "April–June",
     "tag": "d:05-03",
     "path": "Sanctoral/13 Saints Philip and James (3 May).pdf",
+    "start": 253,
     "pages": 17,
     "jumps": [
      [
@@ -4582,6 +4695,7 @@
     "group": "April–June",
     "tag": "d:05-14",
     "path": "Sanctoral/14 Saint Matthias (14 May).pdf",
+    "start": 270,
     "pages": 17,
     "jumps": [
      [
@@ -4611,6 +4725,7 @@
     "group": "April–June",
     "tag": "d:05-31",
     "path": "Sanctoral/15 The Visitation (31 May).pdf",
+    "start": 287,
     "pages": 16,
     "jumps": [
      [
@@ -4640,6 +4755,7 @@
     "group": "April–June",
     "tag": "d:06-24",
     "path": "Sanctoral/16 Nativity of Saint John the Baptist (24 Jun).pdf",
+    "start": 303,
     "pages": 19,
     "jumps": [
      [
@@ -4674,6 +4790,7 @@
     "group": "April–June",
     "tag": "d:06-29",
     "path": "Sanctoral/17 Saints Peter and Paul (29 Jun).pdf",
+    "start": 322,
     "pages": 18,
     "jumps": [
      [
@@ -4708,6 +4825,7 @@
     "group": "July–September",
     "tag": "d:07-03",
     "path": "Sanctoral/18 Saint Thomas, Apostle (3 Jul).pdf",
+    "start": 340,
     "pages": 16,
     "jumps": [
      [
@@ -4737,6 +4855,7 @@
     "group": "July–September",
     "tag": "d:07-11",
     "path": "Sanctoral/19 Our Most Holy Father Benedict (11 Jul).pdf",
+    "start": 356,
     "pages": 20,
     "jumps": [
      [
@@ -4776,6 +4895,7 @@
     "group": "July–September",
     "tag": "d:07-25",
     "path": "Sanctoral/20 Saint James, Apostle (25 Jul).pdf",
+    "start": 376,
     "pages": 16,
     "jumps": [
      [
@@ -4805,6 +4925,7 @@
     "group": "July–September",
     "tag": "d:08-06",
     "path": "Sanctoral/21 The Transfiguration (6 Aug).pdf",
+    "start": 392,
     "pages": 14,
     "jumps": [
      [
@@ -4834,6 +4955,7 @@
     "group": "July–September",
     "tag": "d:08-10",
     "path": "Sanctoral/22 Saint Laurence (10 Aug).pdf",
+    "start": 406,
     "pages": 14,
     "jumps": [
      [
@@ -4863,6 +4985,7 @@
     "group": "July–September",
     "tag": "d:08-15",
     "path": "Sanctoral/23 The Assumption (15 Aug).pdf",
+    "start": 420,
     "pages": 17,
     "jumps": [
      [
@@ -4897,6 +5020,7 @@
     "group": "July–September",
     "tag": "d:08-20",
     "path": "Sanctoral/24 Saint Bernard (20 Aug).pdf",
+    "start": 437,
     "pages": 15,
     "jumps": [
      [
@@ -4931,6 +5055,7 @@
     "group": "July–September",
     "tag": "d:08-24",
     "path": "Sanctoral/25 Saint Bartholomew (24 Aug).pdf",
+    "start": 452,
     "pages": 16,
     "jumps": [
      [
@@ -4960,6 +5085,7 @@
     "group": "July–September",
     "tag": "d:09-03",
     "path": "Sanctoral/26 Saint Gregory the Great (3 Sep).pdf",
+    "start": 468,
     "pages": 14,
     "jumps": [
      [
@@ -4989,6 +5115,7 @@
     "group": "July–September",
     "tag": "d:09-08",
     "path": "Sanctoral/27 Nativity of the Blessed Virgin Mary (8 Sep).pdf",
+    "start": 482,
     "pages": 16,
     "jumps": [
      [
@@ -5018,6 +5145,7 @@
     "group": "July–September",
     "tag": "d:09-14",
     "path": "Sanctoral/28 Exaltation of the Holy Cross (14 Sep).pdf",
+    "start": 498,
     "pages": 23,
     "jumps": [
      [
@@ -5052,6 +5180,7 @@
     "group": "July–September",
     "tag": "d:09-21",
     "path": "Sanctoral/29 Saint Matthew (21 Sep).pdf",
+    "start": 521,
     "pages": 15,
     "jumps": [
      [
@@ -5081,6 +5210,7 @@
     "group": "July–September",
     "tag": "d:09-29",
     "path": "Sanctoral/30 Saints Michael, Gabriel and Raphael (29 Sep).pdf",
+    "start": 536,
     "pages": 17,
     "jumps": [
      [
@@ -5110,6 +5240,7 @@
     "group": "October–November",
     "tag": "d:10-02",
     "path": "Sanctoral/31 The Holy Guardian Angels (2 Oct).pdf",
+    "start": 553,
     "pages": 15,
     "jumps": [
      [
@@ -5139,6 +5270,7 @@
     "group": "October–November",
     "tag": "d:10-18",
     "path": "Sanctoral/32 Saint Luke, Evangelist (18 Oct).pdf",
+    "start": 568,
     "pages": 14,
     "jumps": [
      [
@@ -5168,6 +5300,7 @@
     "group": "October–November",
     "tag": "d:10-28",
     "path": "Sanctoral/33 Saints Simon and Jude (28 Oct).pdf",
+    "start": 582,
     "pages": 15,
     "jumps": [
      [
@@ -5197,6 +5330,7 @@
     "group": "October–November",
     "tag": "d:11-01",
     "path": "Sanctoral/34 All Saints (1 Nov).pdf",
+    "start": 597,
     "pages": 22,
     "jumps": [
      [
@@ -5226,6 +5360,7 @@
     "group": "October–November",
     "tag": "d:11-02",
     "path": "Sanctoral/35 All the Faithful Departed (2 Nov).pdf",
+    "start": 619,
     "pages": 33,
     "jumps": [
      [
@@ -5260,6 +5395,7 @@
     "group": "October–November",
     "tag": "d:11-09",
     "path": "Sanctoral/36 Dedication of the Lateran Basilica (9 Nov).pdf",
+    "start": 652,
     "pages": 13,
     "jumps": [
      [
@@ -5284,6 +5420,7 @@
     "group": "October–November",
     "tag": "",
     "path": "Sanctoral/37 Common of the Dedication of a Church.pdf",
+    "start": 665,
     "pages": 22,
     "jumps": [
      [
@@ -5338,6 +5475,7 @@
     "group": "October–November",
     "tag": "d:11-11",
     "path": "Sanctoral/38 Saint Martin (11 Nov).pdf",
+    "start": 687,
     "pages": 16,
     "jumps": [
      [
@@ -5367,6 +5505,7 @@
     "group": "October–November",
     "tag": "d:11-13",
     "path": "Sanctoral/39 All Saints of Our Order (13 Nov).pdf",
+    "start": 703,
     "pages": 16,
     "jumps": [
      [
@@ -5396,6 +5535,7 @@
     "group": "October–November",
     "tag": "d:11-14",
     "path": "Sanctoral/40 All the Departed of Our Order (14 Nov).pdf",
+    "start": 719,
     "pages": 2,
     "jumps": []
    },
@@ -5404,6 +5544,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Sanctoral/41 Ordinary.pdf",
+    "start": 721,
     "pages": 20,
     "jumps": []
    },
@@ -5412,6 +5553,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Sanctoral/42 Invitatory.pdf",
+    "start": 741,
     "pages": 11,
     "jumps": []
    },
@@ -5420,6 +5562,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Sanctoral/43 Proper psalms.pdf",
+    "start": 752,
     "pages": 14,
     "jumps": []
    },
@@ -5428,6 +5571,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Sanctoral/44 Gospel canticles; Te Deum.pdf",
+    "start": 766,
     "pages": 28,
     "jumps": [
      [
@@ -5447,6 +5591,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Sanctoral/45 Hymn at Sext.pdf",
+    "start": 794,
     "pages": 6,
     "jumps": []
    },
@@ -5455,6 +5600,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Sanctoral/46 Benediction; Laudes ab Hincmaro.pdf",
+    "start": 800,
     "pages": 11,
     "jumps": []
    },
@@ -5463,6 +5609,7 @@
     "group": "Reference",
     "tag": "",
     "path": "Sanctoral/47 Order of Service; prayers.pdf",
+    "start": 811,
     "pages": 10,
     "jumps": []
    },
@@ -5471,7 +5618,959 @@
     "group": "Reference",
     "tag": "",
     "path": "Sanctoral/48 Index.pdf",
+    "start": 821,
     "pages": 6,
+    "jumps": []
+   }
+  ]
+ },
+ "Psalter": {
+  "label": "Psalter",
+  "offset": 6,
+  "sections": [
+   {
+    "title": "Week I/1 Sunday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week I/1 Sunday/1 Matins.pdf",
+    "start": 12,
+    "pages": 20,
+    "jumps": []
+   },
+   {
+    "title": "Week I/1 Sunday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week I/1 Sunday/2 Lauds.pdf",
+    "start": 32,
+    "pages": 12,
+    "jumps": []
+   },
+   {
+    "title": "Week I/2 Monday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week I/2 Monday/1 Matins.pdf",
+    "start": 44,
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Week I/2 Monday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week I/2 Monday/2 Lauds.pdf",
+    "start": 54,
+    "pages": 7,
+    "jumps": []
+   },
+   {
+    "title": "Week I/3 Tuesday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week I/3 Tuesday/1 Matins.pdf",
+    "start": 61,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week I/3 Tuesday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week I/3 Tuesday/2 Lauds.pdf",
+    "start": 69,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week I/4 Wednesday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week I/4 Wednesday/1 Matins.pdf",
+    "start": 77,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week I/4 Wednesday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week I/4 Wednesday/2 Lauds.pdf",
+    "start": 85,
+    "pages": 7,
+    "jumps": []
+   },
+   {
+    "title": "Week I/5 Thursday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week I/5 Thursday/1 Matins.pdf",
+    "start": 92,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week I/5 Thursday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week I/5 Thursday/2 Lauds.pdf",
+    "start": 101,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week I/6 Friday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week I/6 Friday/1 Matins.pdf",
+    "start": 109,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week I/6 Friday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week I/6 Friday/2 Lauds.pdf",
+    "start": 118,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week I/7 Saturday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week I/7 Saturday/1 Matins.pdf",
+    "start": 126,
+    "pages": 13,
+    "jumps": []
+   },
+   {
+    "title": "Week I/7 Saturday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week I/7 Saturday/2 Lauds.pdf",
+    "start": 139,
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Week II/1 Sunday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week II/1 Sunday/1 Matins.pdf",
+    "start": 150,
+    "pages": 20,
+    "jumps": []
+   },
+   {
+    "title": "Week II/1 Sunday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week II/1 Sunday/2 Lauds.pdf",
+    "start": 170,
+    "pages": 12,
+    "jumps": []
+   },
+   {
+    "title": "Week II/2 Monday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week II/2 Monday/1 Matins.pdf",
+    "start": 182,
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Week II/2 Monday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week II/2 Monday/2 Lauds.pdf",
+    "start": 192,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week II/3 Tuesday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week II/3 Tuesday/1 Matins.pdf",
+    "start": 200,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week II/3 Tuesday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week II/3 Tuesday/2 Lauds.pdf",
+    "start": 209,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week II/4 Wednesday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week II/4 Wednesday/1 Matins.pdf",
+    "start": 218,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week II/4 Wednesday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week II/4 Wednesday/2 Lauds.pdf",
+    "start": 227,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week II/5 Thursday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week II/5 Thursday/1 Matins.pdf",
+    "start": 236,
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Week II/5 Thursday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week II/5 Thursday/2 Lauds.pdf",
+    "start": 247,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week II/6 Friday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week II/6 Friday/1 Matins.pdf",
+    "start": 256,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week II/6 Friday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week II/6 Friday/2 Lauds.pdf",
+    "start": 265,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week II/7 Saturday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week II/7 Saturday/1 Matins.pdf",
+    "start": 273,
+    "pages": 14,
+    "jumps": []
+   },
+   {
+    "title": "Week II/7 Saturday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week II/7 Saturday/2 Lauds.pdf",
+    "start": 287,
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Week III/1 Sunday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week III/1 Sunday/1 Matins.pdf",
+    "start": 298,
+    "pages": 18,
+    "jumps": []
+   },
+   {
+    "title": "Week III/1 Sunday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week III/1 Sunday/2 Lauds.pdf",
+    "start": 316,
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Week III/2 Monday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week III/2 Monday/1 Matins.pdf",
+    "start": 327,
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Week III/2 Monday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week III/2 Monday/2 Lauds.pdf",
+    "start": 337,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week III/3 Tuesday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week III/3 Tuesday/1 Matins.pdf",
+    "start": 345,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week III/3 Tuesday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week III/3 Tuesday/2 Lauds.pdf",
+    "start": 353,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week III/4 Wednesday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week III/4 Wednesday/1 Matins.pdf",
+    "start": 361,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week III/4 Wednesday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week III/4 Wednesday/2 Lauds.pdf",
+    "start": 369,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week III/5 Thursday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week III/5 Thursday/1 Matins.pdf",
+    "start": 377,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week III/5 Thursday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week III/5 Thursday/2 Lauds.pdf",
+    "start": 386,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week III/6 Friday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week III/6 Friday/1 Matins.pdf",
+    "start": 394,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week III/6 Friday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week III/6 Friday/2 Lauds.pdf",
+    "start": 402,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week III/7 Saturday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week III/7 Saturday/1 Matins.pdf",
+    "start": 411,
+    "pages": 13,
+    "jumps": []
+   },
+   {
+    "title": "Week III/7 Saturday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week III/7 Saturday/2 Lauds.pdf",
+    "start": 424,
+    "pages": 12,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/1 Sunday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/1 Sunday/1 Matins.pdf",
+    "start": 436,
+    "pages": 19,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/1 Sunday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/1 Sunday/2 Lauds.pdf",
+    "start": 455,
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/2 Monday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/2 Monday/1 Matins.pdf",
+    "start": 466,
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/2 Monday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/2 Monday/2 Lauds.pdf",
+    "start": 476,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/3 Tuesday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/3 Tuesday/1 Matins.pdf",
+    "start": 484,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/3 Tuesday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/3 Tuesday/2 Lauds.pdf",
+    "start": 492,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/4 Wednesday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/4 Wednesday/1 Matins.pdf",
+    "start": 501,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/4 Wednesday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/4 Wednesday/2 Lauds.pdf",
+    "start": 510,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/5 Thursday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/5 Thursday/1 Matins.pdf",
+    "start": 519,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/5 Thursday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/5 Thursday/2 Lauds.pdf",
+    "start": 528,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/6 Friday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/6 Friday/1 Matins.pdf",
+    "start": 537,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/6 Friday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/6 Friday/2 Lauds.pdf",
+    "start": 545,
+    "pages": 9,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/7 Saturday/1 Matins",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/7 Saturday/1 Matins.pdf",
+    "start": 554,
+    "pages": 13,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/7 Saturday/2 Lauds",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/7 Saturday/2 Lauds.pdf",
+    "start": 567,
+    "pages": 18,
+    "jumps": []
+   },
+   {
+    "title": "Week I/1 Sunday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week I/1 Sunday/3 Sext.pdf",
+    "start": 603,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week I/2 Monday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week I/2 Monday/3 Sext.pdf",
+    "start": 606,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week I/3 Tuesday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week I/3 Tuesday/3 Sext.pdf",
+    "start": 609,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week I/4 Wednesday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week I/4 Wednesday/3 Sext.pdf",
+    "start": 612,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week I/5 Thursday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week I/5 Thursday/3 Sext.pdf",
+    "start": 615,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week I/6 Friday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week I/6 Friday/3 Sext.pdf",
+    "start": 618,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week I/7 Saturday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week I/7 Saturday/3 Sext.pdf",
+    "start": 621,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week II/1 Sunday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week II/1 Sunday/3 Sext.pdf",
+    "start": 625,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week II/2 Monday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week II/2 Monday/3 Sext.pdf",
+    "start": 629,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week II/3 Tuesday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week II/3 Tuesday/3 Sext.pdf",
+    "start": 633,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week II/4 Wednesday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week II/4 Wednesday/3 Sext.pdf",
+    "start": 637,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week II/5 Thursday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week II/5 Thursday/3 Sext.pdf",
+    "start": 641,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week II/6 Friday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week II/6 Friday/3 Sext.pdf",
+    "start": 645,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week II/7 Saturday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week II/7 Saturday/3 Sext.pdf",
+    "start": 648,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week III/1 Sunday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week III/1 Sunday/3 Sext.pdf",
+    "start": 652,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week III/2 Monday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week III/2 Monday/3 Sext.pdf",
+    "start": 655,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week III/3 Tuesday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week III/3 Tuesday/3 Sext.pdf",
+    "start": 659,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week III/4 Wednesday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week III/4 Wednesday/3 Sext.pdf",
+    "start": 662,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week III/5 Thursday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week III/5 Thursday/3 Sext.pdf",
+    "start": 666,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week III/6 Friday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week III/6 Friday/3 Sext.pdf",
+    "start": 669,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week III/7 Saturday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week III/7 Saturday/3 Sext.pdf",
+    "start": 672,
+    "pages": 4,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/1 Sunday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/1 Sunday/3 Sext.pdf",
+    "start": 676,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/2 Monday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/2 Monday/3 Sext.pdf",
+    "start": 679,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/3 Tuesday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/3 Tuesday/3 Sext.pdf",
+    "start": 682,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/4 Wednesday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/4 Wednesday/3 Sext.pdf",
+    "start": 685,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/5 Thursday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/5 Thursday/3 Sext.pdf",
+    "start": 688,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/6 Friday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/6 Friday/3 Sext.pdf",
+    "start": 691,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Week IV/7 Saturday/3 Sext",
+    "group": "",
+    "tag": "",
+    "path": "Week IV/7 Saturday/3 Sext.pdf",
+    "start": 694,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Vespers (same every week)/1 Sunday at Vespers",
+    "group": "",
+    "tag": "",
+    "path": "Vespers (same every week)/1 Sunday at Vespers.pdf",
+    "start": 697,
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Vespers (same every week)/2 Monday at Vespers",
+    "group": "",
+    "tag": "",
+    "path": "Vespers (same every week)/2 Monday at Vespers.pdf",
+    "start": 708,
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Vespers (same every week)/3 Tuesday at Vespers",
+    "group": "",
+    "tag": "",
+    "path": "Vespers (same every week)/3 Tuesday at Vespers.pdf",
+    "start": 719,
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Vespers (same every week)/4 Wednesday at Vespers",
+    "group": "",
+    "tag": "",
+    "path": "Vespers (same every week)/4 Wednesday at Vespers.pdf",
+    "start": 729,
+    "pages": 12,
+    "jumps": []
+   },
+   {
+    "title": "Vespers (same every week)/5 Thursday at Vespers",
+    "group": "",
+    "tag": "",
+    "path": "Vespers (same every week)/5 Thursday at Vespers.pdf",
+    "start": 741,
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Vespers (same every week)/6 Friday at Vespers",
+    "group": "",
+    "tag": "",
+    "path": "Vespers (same every week)/6 Friday at Vespers.pdf",
+    "start": 751,
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Vespers (same every week)/7 Saturday at Vespers",
+    "group": "",
+    "tag": "",
+    "path": "Vespers (same every week)/7 Saturday at Vespers.pdf",
+    "start": 761,
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Compline (every night)",
+    "group": "",
+    "tag": "",
+    "path": "Compline (every night).pdf",
+    "start": 771,
+    "pages": 34,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/01 Title, dedication and Foreword",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/01 Title, dedication and Foreword.pdf",
+    "start": 1,
+    "pages": 11,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/02 Ordinary at Sext",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/02 Ordinary at Sext.pdf",
+    "start": 585,
+    "pages": 18,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/03 Ordinary (opening verses, chanting the psalms, Our Father, Benedicamus)",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/03 Ordinary (opening verses, chanting the psalms, Our Father, Benedicamus).pdf",
+    "start": 805,
+    "pages": 20,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/04 Invitatory (Psalms 94 and 99, all tones)",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/04 Invitatory (Psalms 94 and 99, all tones).pdf",
+    "start": 825,
+    "pages": 52,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/05 Gospel canticles, Te Deum and Te Decet Laus",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/05 Gospel canticles, Te Deum and Te Decet Laus.pdf",
+    "start": 877,
+    "pages": 12,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/06 Capitula in cantu",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/06 Capitula in cantu.pdf",
+    "start": 889,
+    "pages": 8,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/07 Blessings and prayers, Benediction, Laudes Hincmari",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/07 Blessings and prayers, Benediction, Laudes Hincmari.pdf",
+    "start": 897,
+    "pages": 15,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/08 Magnificat and Benedictus tones",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/08 Magnificat and Benedictus tones.pdf",
+    "start": 912,
+    "pages": 14,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/09 Prayers",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/09 Prayers.pdf",
+    "start": 926,
+    "pages": 3,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/10 Order of Service and Distribution of the Psalms",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/10 Order of Service and Distribution of the Psalms.pdf",
+    "start": 929,
+    "pages": 7,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/11 Index and Acknowledgments",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/11 Index and Acknowledgments.pdf",
+    "start": 936,
+    "pages": 10,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/12 Additions (Tuesday before Ash Wednesday, Week XXXIV)",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/12 Additions (Tuesday before Ash Wednesday, Week XXXIV).pdf",
+    "start": 946,
+    "pages": 12,
+    "jumps": []
+   },
+   {
+    "title": "Ordinary, chants and reference/13 Antiphonae in cantu",
+    "group": "",
+    "tag": "",
+    "path": "Ordinary, chants and reference/13 Antiphonae in cantu.pdf",
+    "start": 958,
+    "pages": 23,
     "jumps": []
    }
   ]

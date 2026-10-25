@@ -130,3 +130,12 @@ details.ref .ref-list { margin: .7rem .8rem 1rem; }
 .beta-view .tone { font-style: italic; color: var(--muted); margin: .7rem .85rem 0; font-size: .95rem; }
 .division { text-align: center; font-family: "Cinzel", serif; letter-spacing: .08em; color: var(--accent); margin: .5rem 0 .6rem; }
 .ps-text p.sung { color: var(--muted); font-style: italic; }
+
+/* Phones: the chant runs the full width of the screen (the crops are cut to the printed text block) */
+@media (max-width: 42rem) {
+  .beta-view .chant { margin-left: -12px; margin-right: -12px; }
+  .beta-view details.pick { margin-left: -16px; margin-right: -16px; border-left: 0; border-right: 0; border-radius: 0; }
+  .beta-view details.pick > summary { padding-left: 16px; padding-right: 16px; }
+  .beta-view details.pick .chant { margin: .5rem 4px; }
+  .beta-view .tone { margin-left: 16px; }
+}

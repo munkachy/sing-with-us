@@ -386,20 +386,6 @@ figure.art.portrait img { max-height: 70vh; width: auto; margin: 0 auto; }
 .exchange .psalm { margin: 0; background: transparent; border-radius: 0; }
 .exchange .heard { margin: 0; padding: .5rem 1.1rem .8rem; border-left: 0; border-top: 1px dashed var(--rule); }
 .exchange .heard .voice-img { flex-basis: 3.4rem; width: 3.4rem; height: 3.4rem; }
-.reveal { display: none; }
-@media (max-width: 43.99rem) {
-  .js .exchange .reveal {
-    display: flex; width: 100%; align-items: center; justify-content: center; gap: .5rem;
-    font: inherit; font-size: .95rem; color: var(--link); background: transparent; cursor: pointer;
-    border: 0; border-bottom: 1px dashed var(--rule); padding: .55rem 1rem; min-height: 44px;
-  }
-  .js .exchange .reveal::before { content: "▸"; transition: transform .15s ease; }
-  .js .exchange.open .reveal::before { transform: rotate(90deg); }
-  .js .exchange .reveal-close, .js .exchange.open .reveal-open { display: none; }
-  .js .exchange.open .reveal-close { display: inline; }
-  .js .exchange .psalm { cursor: pointer; }
-  .js .exchange:not(.open) .heard { display: none; }
-}
 @media (min-width: 44rem) {
   .exchange { display: grid; grid-template-columns: 1fr 1.15fr; align-items: stretch; }
   .exchange .heard {

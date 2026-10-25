@@ -221,9 +221,55 @@
         var f = parseFloat(box.dataset.restore); box.dataset.restore = "";
         if (f > 0) scrollTo(0, box.getBoundingClientRect().top + scrollY + f * box.getBoundingClientRect().height);
         else goJump();
-        next();
+        next(); pageLabel();
       });
     });
+  }
+
+  // ---- Page numbers: printed page = PDF page - the book's offset ----
+  var current = null;   // the section on screen: { offset, start }
+  function bookKey() { return state.book === "psalter" ? "Psalter" : state.book; }
+  function whereIs(path) {
+    if (!books) return null;
+    for (var b in books) {
+      var secs = books[b].sections;
+      for (var k = 0; k < secs.length; k++) if (secs[k].path === path) return { offset: books[b].offset, start: secs[k].start };
+    }
+    return null;
+  }
+  function pageLabel() {
+    var el = $("#page-label"), view = $("#pdf-view");
+    if (!current || view.hidden) { el.hidden = true; return; }
+    var cvs = $("#pdf-pages").querySelectorAll("canvas"), at = -1, line = window.innerHeight * 0.4;
+    for (var i = 0; i < cvs.length; i++) { if (cvs[i].getBoundingClientRect().top <= line) at = i; else break; }
+    if (at < 0) at = 0;
+    var n = current.start + at - current.offset;
+    el.textContent = "p. " + n; el.hidden = !cvs.length || n < 1;
+  }
+  window.addEventListener("scroll", pageLabel, { passive: true });
+
+  function pageBox(open) {
+    var box = $("#pagebox"), btn = $("#page-btn");
+    box.hidden = !open; btn.setAttribute("aria-expanded", String(open));
+    $("#page-msg").textContent = "";
+    if (open) { $("#page-book").textContent = books ? books[bookKey()].label : "Psalter"; $("#page-n").focus(); }
+  }
+  function goPage(n) {
+    var b = bookKey(), book = books && books[b];
+    if (!book) return "The page list is still loading. Try again in a moment.";
+    var pdf = n + book.offset, secs = book.sections, first = Infinity, last = 0;
+    for (var k = 0; k < secs.length; k++) {
+      var s = secs[k];
+      first = Math.min(first, s.start - book.offset); last = Math.max(last, s.start + s.pages - 1 - book.offset);
+      if (pdf >= s.start && pdf < s.start + s.pages) {
+        pendingJump = ["p. " + n, pdf - s.start, 0];
+        state.ref = b === "Psalter" ? s.path : null;
+        if (b !== "Psalter") state.sec[b] = k;
+        render();
+        return "";
+      }
+    }
+    return "Page " + n + " isn't here. " + book.label + " runs from page " + Math.max(1, first) + " to " + last + ".";
   }
 
   // Scroll to the hour chosen in "Go to", once its page is laid out
@@ -237,6 +283,7 @@
     scrollTo(0, Math.max(0, r.top + scrollY + Math.max(0, pendingJump[2] - 0.03) * r.height - barH - 6));
     pendingJump = null;
     if (pager) pager.next();
+    pageLabel();
   }
 
   function label(k) {
@@ -257,6 +304,7 @@
       if (betaOn && !state.ref && !hourFile) note = "This hour isn't in the Beta yet, so here is the book. In the Beta so far: " + Object.keys(idx.hours).map(label).join("; ") + ".";
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
+      current = whereIs(path);
       var keyP = vault.key ? Promise.resolve(vault.key) : savedKey();
       if (!keyP) { $("#lock").hidden = false; $("#beta-view").hidden = true; $("#pdf-view").hidden = true; return; }
       $("#lock").hidden = true;
@@ -366,6 +414,7 @@
     $(".book-picks").hidden = !inBook;
     document.querySelectorAll("[data-book]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.book === state.book)); });
     if (inBook) fillBook();
+    if (!$("#pagebox").hidden && books) $("#page-book").textContent = books[bookKey()].label;
     todayNote();
     var weekly = state.hour <= 2;
     $("#now-title").textContent = DAYS[state.day] + (weekly ? " · Week " + ROMAN[state.week] : "") + " · " + HOURS[state.hour];
@@ -435,6 +484,14 @@
       }
       openSection(book, state.sec[book], false);
     });
+  });
+  $("#page-btn").addEventListener("click", function () { pageBox($("#pagebox").hidden); });
+  $("#page-x").addEventListener("click", function () { pageBox(false); });
+  $("#pagebox").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var n = parseInt($("#page-n").value, 10); if (!(n > 0)) return;
+    var err = goPage(n);
+    if (err) $("#page-msg").textContent = err; else { $("#page-n").blur(); pageBox(false); }
   });
   $("#sec").addEventListener("change", function () { openSection(state.book, +this.value, false); });
   $("#jump").addEventListener("change", function () {

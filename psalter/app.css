@@ -277,3 +277,8 @@ p.then { margin: .2rem 0 1.4rem; }
   .head-tools .theme-btn { width: 27px; height: 27px; }
   .cal-btn { width: 31px; height: 31px; border-radius: 8px; } .cal-btn svg { width: 23px; height: 23px; }
 }
+
+/* The ordo's week: a small dot under its button */
+.pickbar .seg button.ordo-wk { position: relative; }
+.pickbar .seg button.ordo-wk::after { content: ""; position: absolute; left: 50%; bottom: 3px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--accent); }
+.pickbar .seg button.ordo-wk[aria-pressed="true"]::after { background: var(--accent-ink); }

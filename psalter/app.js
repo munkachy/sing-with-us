@@ -47,13 +47,17 @@
     return { volume: null, week: weekFrom(base) };
   }
 
-  function hourFor(date) {
-    var h = date.getHours() + date.getMinutes() / 60;
-    if (h >= 3 && h < 9) return 0;      // Matins (Lauds follows)
-    if (h >= 9 && h < 15) return 2;     // Sext
-    if (h >= 15 && h < 19) return 3;    // Vespers
-    return 4;                           // Compline
+  // The abbey's horarium (stbernardabbey.com, October 2026), in minutes after midnight:
+  // Matins, Lauds (after Matins), Sext, Vespers, Compline. An hour stays up while it is being prayed
+  // (LAST minutes after it starts); then the page moves on to the next one.
+  var HORARIUM = { 0: [420, 465, 600, 1050, 1155], 6: [360, 405, 645, 1050, 1155], weekday: [360, 405, 715, 1050, 1155] };
+  var LAST = [45, 30, 20, 35, 25];
+  function nextHour(date) {   // { day (0-6), hour (0-4) }: the hour being prayed now, or the next one
+    var t = date.getHours() * 60 + date.getMinutes(), wd = date.getDay(), times = HORARIUM[wd] || HORARIUM.weekday;
+    for (var i = 0; i < 5; i++) if (t < times[i] + LAST[i]) return { day: wd, hour: i };
+    return wd === 6 ? { day: 6, hour: 4 } : { day: wd + 1, hour: 0 };   // after Compline: tomorrow's Matins (not past Saturday)
   }
+  function hourFor(date) { return nextHour(date).hour; }
 
   function fileKey(week, day, hour) {
     var dayDir = (day + 1) + " " + DAYS[day];
@@ -138,7 +142,9 @@
   var now = new Date();
   var cal = calendar(now);
   var books = null;
-  var state = { week: cal.week, day: now.getDay(), hour: hourFor(now), autoWeek: true, ref: null, book: "psalter", sec: {} };
+  var first = nextHour(now);
+  var state = { week: cal.week, day: first.day, hour: first.hour, autoWeek: true, ref: null, book: "psalter", sec: {} };
+  var touched = false;   // once the monk taps anything, the page stops choosing for him
   var saved = weekOverride(now);
   if (saved !== null) { state.week = saved; state.autoWeek = false; }
 
@@ -243,10 +249,44 @@
     if (!(y in ordos)) {
       ordos[y] = null;
       fetch("ordo-" + y + ".json").then(function (r) { if (!r.ok) throw 0; return r.json(); })
-        .then(function (o) { ordos[y] = o; render(); }, function () {});
+        .then(function (o) { ordos[y] = o; ordoWeek(); autoOpen(); render(); }, function () {});
     }
     return ordos[y];
   }
+  // The week of the psalter, as the ordo counts it (unless this phone has been set to another week)
+  function weekOf(d) { var o = ordoDay(d); return o && o.w ? o.w - 1 : null; }
+  function ordoWeek() { var w = weekOf(now); if (state.autoWeek && w !== null) state.week = w; }
+  // On a feast or solemnity the ordo names, open its section in the seasonal or Saints book at the hour
+  // (I Vespers the evening before). Memorials and Sundays stay in the psalter for now.
+  function rankOf(o) {
+    var h = o && o.n.filter(function (n) { return /^St\. Bernard Abbey: .*\b(Solemnity|Feast)\b/.test(n); })[0];
+    return h ? h.match(/\b(Solemnity|Feast)\b/)[1] : o && o.r;
+  }
+  var autoDone = false;
+  function autoOpen() {
+    if (autoDone || touched || !books || state.hour === 4) return;
+    var d = dayDate(), o = ordoDay(d);
+    if (o === null || o === undefined) return;
+    autoDone = true;
+    var eve = state.hour === 3 && (/^1st Vespers of following/.test(o.v) || o.n.some(function (n) { return /^St\. Bernard Abbey: 1st Vespers of following/.test(n); }));
+    var t = eve ? addDays(d, 1) : d, ot = ordoDay(t);
+    if (!ot || !/Solemnity|Feast/.test(rankOf(ot) || "")) return;
+    var want = eve ? ["I Vespers", "Vespers"] : [["Matins"], ["Lauds"], ["Sext"], ["II Vespers", "Vespers"]][state.hour];
+    var order = ["Sanctoral", "Advent-Christmas", "Lent"];
+    for (var b = 0; b < order.length; b++) {
+      var k = todayIn(order[b], t);
+      if (k < 0) continue;
+      var sec = books[order[b]].sections[k];
+      for (var w = 0; w < want.length; w++) for (var j = 0; j < sec.jumps.length; j++) {
+        if (sec.jumps[j][0] !== want[w]) continue;
+        state.book = order[b]; state.sec[order[b]] = k; pendingJump = sec.jumps[j];
+        autoNote = "Opened for you from the ordo: " + sec.title + " (" + books[order[b]].label + "), " + want[w] + ".";
+        autoJump = String(j); render();
+        return;
+      }
+    }
+  }
+  var autoNote = "", autoJump = null;   // what autoOpen chose, kept in the "Go to" list until the monk taps
   function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   function ordoDay(d) { var o = ordoYear(d.getFullYear()); return o ? o[ymd(d)] || null : undefined; }
   var OURS = /^(St\. Bernard Abbey|Diocese of Birmingham|Province of Mobile)/;
@@ -269,9 +309,16 @@
     if (next) v = "1st Vespers of " + clean(next.t).replace(/\.\s*(Solemnity|Feast|Memorial).*$/, "");   // name the day whose Vespers they are (OA: a holy day of obligation)
     el.appendChild(b);
     // A memorial, feast or solemnity (never an optional memorial: those are only in the "Or" notes) gets its rank in front
+    var hn = o.n.filter(function (n) { return /^St\. Bernard Abbey: .*\b(Solemnity|Feast)\b/.test(n); })[0];
+    if (hn) o = { t: hn.replace(/^St\. Bernard Abbey:\s*(?:(?:White|Red|Green|Violet|Rose)\s+)?/, "").replace(/\s*–.*$/, ""), r: rankOf(o), v: (hn.match(/–\s*(.+)$/) || [])[1] || o.v, n: o.n, w: o.w };   // what the house keeps
+    if (hn) v = o.v;
+    if (o.n.some(function (n) { return /^St\. Bernard Abbey: 1st Vespers of following/.test(n); })) {   // the house's own eve
+      var nx = ordoDay(addDays(d, 1)), nh = nx && nx.n.filter(function (n) { return /^St\. Bernard Abbey: .*\b(Solemnity|Feast)\b/.test(n); })[0];
+      if (nh) v = "1st Vespers of " + clean(nh.replace(/^St\. Bernard Abbey:\s*(?:(?:White|Red|Green|Violet|Rose)\s+)?/, "").replace(/\s*–.*$/, "")).replace(/\.\s*(Solemnity|Feast).*$/, "");
+    }
     var name = clean(o.t).replace(/\s*\*\s*/g, " ").replace(/ ,/g, ",").replace(/\.?\s*(Solemnity( with an Octave:?)?|Feast|Memorial)\.?$/, "");
     if (o.r) { var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase(); r.textContent = o.r; el.appendChild(r); }
-    el.appendChild(document.createTextNode(name + (v ? " – " + v : "")));
+    el.appendChild(document.createTextNode(name + (v ? " – " + v : "") + (o.w ? " · Psalter Week " + ROMAN[o.w - 1] : "")));
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
     if (rest.length) {
       var det = document.createElement("details"), sm = document.createElement("summary"); sm.textContent = "More from the ordo";
@@ -539,6 +586,7 @@
     var o0 = document.createElement("option"); o0.value = ""; o0.textContent = sec.jumps.length ? "Go to…" : "(one piece: no hours to jump to)"; jumpSel.appendChild(o0);
     sec.jumps.forEach(function (j, i) { var o = document.createElement("option"); o.value = i; o.textContent = j[0]; jumpSel.appendChild(o); });
     jumpSel.disabled = !sec.jumps.length;
+    if (autoJump !== null && !touched) jumpSel.value = autoJump;
   }
 
   function render() {
@@ -556,7 +604,13 @@
     var note = "";
     if (cal.volume && state.day === now.getDay() && !inBook) note = "Today falls in " + (cal.volume === "Lent" ? "Lent" : "Advent or Christmastide") + ": the choir uses the " + cal.volume + " volume. You can still use the four-week psalter here.";
     $("#season-note").textContent = note; $("#season-note").hidden = !note;
-    document.querySelectorAll("[data-week]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.week === state.week)); });
+    var ow = weekOf(dayDate());
+    document.querySelectorAll("[data-week]").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(+b.dataset.week === state.week));
+      b.classList.toggle("ordo-wk", +b.dataset.week === ow);
+      b.title = +b.dataset.week === ow ? "The ordo's week" : "";
+    });
+    $("#auto-note-text").textContent = autoNote; $("#auto-note").hidden = !autoNote;
     document.querySelectorAll("[data-day]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.day === state.day)); });
     document.querySelectorAll("[data-hour]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.hour === state.hour)); });
     $("#ref-note").hidden = !state.ref;
@@ -605,7 +659,8 @@
     if (j >= 0) $("#jump").value = j;
   }
 
-  function pick(fn) { return function () { state.ref = null; fn(this); render(); }; }
+  function pick(fn) { return function () { touched = true; autoNote = ""; state.ref = null; fn(this); render(); }; }
+  document.addEventListener("click", function (e) { if (e.target.closest(".pickbar, #today-note, #pagebox")) { touched = true; if (!e.target.closest("#auto-note")) autoNote = ""; } }, true);
   document.querySelectorAll("[data-book]").forEach(function (b) {
     b.addEventListener("click", function () {
       var book = b.dataset.book;
@@ -667,8 +722,9 @@
     books.Lent.sections.splice(books.Lent.sections.findIndex(function (s) { return s.group === "Reference"; }), 0,
       { title: "Magnificat antiphons of Lent, cut out (all)", group: "Reference", tag: "", recipe: "lent", jumps: [], pages: 0, start: 0 });
     return fetch("assembly.json").then(function (r) { return r.json(); }).then(function (a) { asm = a; });
-  }).then(function () { todayNote(); if (state.hour === 3 && (state.day === 0 || state.day === 6)) render(); }, function () {});
+  }).then(function () { todayNote(); autoOpen(); render(); }, function () {});
+  $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
   $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });
-  window.PSALTER = { epiphany: epiphany, ordoDay: ordoDay, sundayVespers: sundayVespers, tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
+  window.PSALTER = { nextHour: nextHour, weekOf: weekOf, epiphany: epiphany, ordoDay: ordoDay, sundayVespers: sundayVespers, tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
 })();

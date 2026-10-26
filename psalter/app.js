@@ -135,7 +135,7 @@
     if (!mine.length) return -1;
     var want = [["Matins"], ["Lauds"], ["Sext"], ["II Vespers", "Vespers", "I Vespers"], ["II Vespers", "Vespers", "I Vespers"]][hourFor(date)];
     for (var w = 0; w < want.length; w++)
-      for (var i = 0; i < mine.length; i++) if (mine[i][0].replace(/^.* · /, "") === want[w]) return j.indexOf(mine[i]);
+      for (var i = 0; i < mine.length; i++) if (mine[i][0].replace(/^.* · /, "").replace(/ \(\d\)$/, "") === want[w]) return j.indexOf(mine[i]);
     return j.indexOf(mine[0]);
   }
 
@@ -288,8 +288,8 @@
       if (k < 0) continue;
       var sec = books[order[b]].sections[k];
       for (var w = 0; w < want.length; w++) for (var j = 0; j < sec.jumps.length; j++) {
-        if (sec.jumps[j][0] !== want[w]) continue;
-        state.book = order[b]; state.sec[order[b]] = k; pendingJump = sec.jumps[j];
+        if (sec.jumps[j][0].replace(/ \(\d\)$/, "") !== want[w]) continue;
+        state.book = order[b]; state.sec[order[b]] = k; pendingJump = sec.jumps[j]; bookHour = sec.jumps[j][0];
         autoNote = "Opened for you from the ordo: " + sec.title + " (" + books[order[b]].label + "), " + want[w] + ".";
         autoJump = String(j); render();
         return;
@@ -417,7 +417,25 @@
     var h = extrasData.house, l = h && h.bvmSaturdays && h.bvmSaturdays[d.getFullYear()];
     return !!l && l.indexOf(ymd(d).slice(5)) >= 0;
   }
-  function cutFile(e, season, bvm) {
+  // Weekday Matins has two hymns: "When the Office begins in darkness" and "… in light". By default the daylight hymn
+  // when dawn at the abbey (sun 6° below the horizon) comes before Matins starts; the switch on the page overrides it.
+  var CULLMAN = [34.17, -86.84], hymnLight = null;
+  function dawnMinutes(d) {   // local clock minutes after midnight (NOAA's approximation)
+    var n = Math.round((midnight(d) - new Date(d.getFullYear(), 0, 1)) / 864e5), g = 2 * Math.PI / 365 * n;
+    var eq = 229.18 * (0.000075 + 0.001868 * Math.cos(g) - 0.032077 * Math.sin(g) - 0.014615 * Math.cos(2 * g) - 0.040849 * Math.sin(2 * g));
+    var dec = 0.006918 - 0.399912 * Math.cos(g) + 0.070257 * Math.sin(g) - 0.006758 * Math.cos(2 * g) + 0.000907 * Math.sin(2 * g) - 0.002697 * Math.cos(3 * g) + 0.00148 * Math.sin(3 * g);
+    var phi = CULLMAN[0] * Math.PI / 180, ha = Math.acos((Math.sin(-6 * Math.PI / 180) - Math.sin(phi) * Math.sin(dec)) / (Math.cos(phi) * Math.cos(dec))) * 180 / Math.PI;
+    var noon = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12);
+    var off = -noon.getTimezoneOffset();   // the abbey's clock (Central Time), whatever the phone's zone
+    try { off = (new Date(noon.toLocaleString("en-US", { timeZone: "America/Chicago" })) - new Date(noon.toLocaleString("en-US", { timeZone: "UTC" }))) / 6e4; } catch (x) {}
+    return 720 - 4 * (CULLMAN[1] + ha) - eq + off;
+  }
+  function matinsStart(d) { return (HORARIUM[d.getDay()] || HORARIUM.weekday)[0]; }
+  function lightAuto(d) { return dawnMinutes(d) <= matinsStart(d); }
+  function inLight(d) { return hymnLight === null ? lightAuto(d) : hymnLight; }
+  function clock(m) { m = Math.round(m); var h = Math.floor(m / 60), mm = m % 60; return (h % 12 || 12) + ":" + String(mm).padStart(2, "0") + (h < 12 ? " a.m." : " p.m."); }
+  function hasHymnPair(e) { return e && e.marks.some(function (k) { return k[2] === "dark"; }); }
+  function cutFile(e, season, bvm, light) {
     var prefs = { "Passiontide": ["Passiontide", "Lent"], "Ascension to Pentecost": ["Ascension to Pentecost", "Paschaltide"], "Epiphany": ["Epiphany", "Christmas"] }[season] || (season === "year" ? [] : [season]);
     var m = e.marks, keep = [];
     for (var a = 0; a < m.length;) {
@@ -428,7 +446,7 @@
       var pick = prefs.filter(function (p) { return labels.indexOf(p) >= 0; })[0] || null;
       for (var c = a; c < b; c++) {
         var k = m[c][2];
-        keep[c] = bvm && hasTwo ? k === "two" : k === "two" ? false : k === "one" ? true : k === "season" ? m[c][3] === pick : !pick;
+        keep[c] = bvm && hasTwo ? k === "two" : k === "two" ? false : k === "dark" ? !light : k === "light" ? !!light : k === "one" ? true : k === "season" ? m[c][3] === pick : !pick;
       }
       a = b;
     }
@@ -479,9 +497,90 @@
         note: "Saturday Commemoration of the Blessed Virgin Mary (from the abbey's list): her own office for Paschaltide." };
     var e = asm.marks[fileKey(state.week, 6, state.hour)];
     if (!e) return null;
-    return { key: "sat:" + fileKey(state.week, 6, state.hour) + ":" + season + ":" + bvm, items: cutFile(e, season, bvm),
+    var light = inLight(d);
+    return { key: "sat:" + fileKey(state.week, 6, state.hour) + ":" + season + ":" + bvm + ":" + light, items: cutFile(e, season, bvm, light), hymns: !bvm && hasHymnPair(e),
       note: bvm ? "Pasted together: the Saturday Commemoration of the Blessed Virgin Mary (from the abbey's list): only Our Lady's texts where the book gives a choice."
                 : "Pasted together: Saturday " + seasonWords(season) + ", without the texts for Our Lady's Saturday." };
+  }
+  function matinsRecipe() {
+    if (!asm || !asm.marks || plain || state.ref || state.book !== "psalter" || state.hour !== 0 || state.day === 0 || state.day === 6) return null;
+    var e = asm.marks[fileKey(state.week, state.day, 0)];
+    if (!hasHymnPair(e)) return null;
+    var light = inLight(dayDate());
+    return { key: "matins:" + fileKey(state.week, state.day, 0) + ":" + light, items: cutFile(e, "year", false, light), hymns: true, note: "" };
+  }
+  function hymnNote(recipe) {
+    var el = $("#hymn-note"), d = dayDate();
+    if (!recipe || !recipe.hymns) { el.hidden = true; return; }
+    var light = inLight(d), auto = hymnLight === null;
+    el.textContent = "";
+    el.appendChild(document.createTextNode("Hymn " + (light ? "for when the Office begins in light" : "for when the Office begins in darkness") +
+      (auto ? " (dawn at the abbey " + clock(dawnMinutes(d)) + ", Matins " + clock(matinsStart(d)) + "). " : ". ")));
+    var a = document.createElement("a"); a.href = "#"; a.textContent = light ? "Use the darkness hymn" : "Use the daylight hymn";
+    a.addEventListener("click", function (ev) { ev.preventDefault(); hymnLight = !light; try { localStorage.setItem("psalter-hymn", JSON.stringify([ymd(d), hymnLight])); } catch (x) {} render(); });
+    el.appendChild(a);
+    if (!auto) {
+      var r = document.createElement("a"); r.href = "#"; r.textContent = "Go by the dawn"; r.style.marginLeft = ".6em";
+      r.addEventListener("click", function (ev) { ev.preventDefault(); hymnLight = null; try { localStorage.removeItem("psalter-hymn"); } catch (x) {} render(); });
+      el.appendChild(document.createTextNode(" · ")); el.appendChild(r);
+    }
+    el.hidden = false;
+  }
+  try { var hs = JSON.parse(localStorage.getItem("psalter-hymn") || "null"); if (hs && hs[0] === ymd(new Date())) hymnLight = hs[1]; } catch (x) {}
+  // The Te Deum at Sunday Matins: the book prints it spoken, in English; the Ordinary has it sung in English
+  // (Mode IV, Mode VII) and in Latin. The choice is remembered on this phone.
+  var TEDEUM = { book: "English, as printed here" }, teChoice = "book";
+  try { teChoice = localStorage.getItem("psalter-tedeum") || "book"; } catch (x) {}
+  function tedeumFile() {
+    return asm && asm.tedeum && !plain && !state.ref && state.book === "psalter" && state.hour === 0 && state.day === 0 && asm.tedeum.files[fileKey(state.week, 0, 0)];
+  }
+  function tedeumRecipe() {
+    var f = tedeumFile(), v = f && asm.tedeum.versions[teChoice];
+    if (!v) return null;
+    var path = fileKey(state.week, 0, 0), items = [];
+    for (var p = 0; p < f.pages; p++) {
+      if (p === f.te[0]) { items.push([path, p, 0, f.te[1], f.first + p], { h: "Te Deum · " + v.label }); items = items.concat(v.te); continue; }
+      if (p === f.decet[0] && teChoice === "latin") { items.push([path, p, 0, f.decet[1], f.first + p], { h: "Te decet laus · Latin" }); items = items.concat(v.decet); continue; }
+      items.push([path, p, 0, 1, f.first + p]);
+    }
+    return { key: "tedeum:" + path + ":" + teChoice, items: items, note: "Pasted together: Sunday Matins with the Te Deum " + v.label.replace(/^English, /, "in English, ") + "." };
+  }
+  function tedeumNote() {
+    var el = $("#tedeum-note"), f = tedeumFile(), fh = feastHours(), feast = !!fh && fh.some(function (x) { return x.ins === "tedeum"; });
+    el.hidden = !f && !feast;
+    if (!f && !feast) return;
+    el.textContent = "Te Deum: ";
+    var sel = document.createElement("select"); sel.setAttribute("aria-label", "Te Deum");
+    (feast ? [] : [["book", TEDEUM.book]]).concat(Object.keys(asm.tedeum.versions).map(function (k) { return [k, asm.tedeum.versions[k].label]; })).forEach(function (o) {
+      var op = document.createElement("option"); op.value = o[0]; op.textContent = o[1]; op.selected = o[0] === teChoice || feast && teChoice === "book" && o[0] === "mode4"; sel.appendChild(op);
+    });
+    sel.addEventListener("change", function () { teChoice = sel.value; try { localStorage.setItem("psalter-tedeum", teChoice); } catch (x) {} render(); });
+    el.appendChild(sel);
+  }
+  // A feast in the Saints book, one hour pasted together: its own pages, with the proper psalms, the Gospel canticle and
+  // the Te Deum put in where it points to them (assembly.json "feasts", from books/tools/feasts.py). Sext also gets the
+  // psalter's opening, the hymn for the day (On Feasts, On Solemnities, Our Lady) and the conclusion.
+  function feastHours() {
+    if (!asm || !asm.feasts || plain || state.ref || state.book !== "Sanctoral" || !books || !bookHour) return null;
+    var h = asm.feasts.hours[books.Sanctoral.sections[state.sec.Sanctoral].path];
+    return h && h[bookHour] ? h[bookHour] : null;
+  }
+  function feastRecipe() {
+    var hs = feastHours(); if (!hs) return null;
+    var sec = books.Sanctoral.sections[state.sec.Sanctoral], F = asm.feasts, hour = bookHour, lauds = hour === "Lauds", items = [];
+    var v = asm.tedeum && (asm.tedeum.versions[teChoice] || asm.tedeum.versions.mode4);
+    hs.forEach(function (x) {
+      if (Array.isArray(x)) { items.push(x); return; }
+      if (x.ins === "psalms") { items.push({ h: "Psalms (p. " + x.page + ")" }); items = items.concat(F.psalms[x.page] || []); items.push({ h: "Continued: " + sec.title.replace(/ \(.*/, "") }); }
+      if (x.ins === "canticle") { items.push({ h: (lauds ? "Benedictus" : "Magnificat") + (x.tones ? " (sung tones from p. " + x.tones + ")" : "") }); items = items.concat(lauds ? F.benedictus : F.magnificat); }
+      if (x.ins === "tedeum" && v) { items.push({ h: "Te Deum · " + v.label }); items = items.concat(v.te, [{ h: "Holy Gospel (from the lectionary)" }, { h: "Te decet laus" }], v.decet); }
+    });
+    if (hour === "Sext" && asm.sext) {
+      var hk = sextHymn(dayDate(), false), S = asm.sext;
+      items = [S.opening, { h: "Hymn: " + SEXT_HYMN[hk] }, S.hymns[hk], { h: sec.title.replace(/ \(.*/, "") + " · Sext" }].concat(items, [{ h: "Conclusion" }, S.conclusion]);
+    }
+    return { key: "feast:" + sec.path + ":" + hour + ":" + teChoice, items: items, tedeum: hour === "Matins",
+      note: "Pasted together: " + sec.title + ", " + hour + ", from the Saints book, with the pages it points to put in their places." };
   }
   function lentRecipe(sec) {
     if (!asm || !sec.recipe) return null;
@@ -531,9 +630,12 @@
 
   // ---- The end of the day (Br. Augustine) ----
   // On the haustus days, Wednesday and Sunday, the community sings the Ultima instead of Compline.
-  var ULTIMA = "Ultima (Wednesday and Sunday, instead of Compline).pdf", wantCompline = false;
+  // A feast or solemnity on a haustus day normally has no haustus, so Compline is the default then; the Abbot may decide otherwise.
+  var ULTIMA = "Ultima (Wednesday and Sunday, instead of Compline).pdf", wantCompline = null;
   function haustus() { return state.day === 0 || state.day === 3; }
-  function ultima() { return state.hour === 4 && haustus() && !wantCompline && !state.ref && state.book === "psalter"; }
+  function feastNight() { var r = rankOf(ordoDay(dayDate())); return r === "Feast" || r === "Solemnity"; }
+  function complineTonight() { return wantCompline === null ? feastNight() : wantCompline; }
+  function ultima() { return state.hour === 4 && haustus() && !complineTonight() && !state.ref && state.book === "psalter"; }
   // After Compline or the Ultima: the brothers of our house who died on this day (read at dinner, remembered at the
   // end of the day). After Matins, Lauds and Vespers: the collect for a Benedictine saint of the day, from the
   // Benedictine Supplement (osb.org), until the community's own Sanctorale is here.
@@ -568,9 +670,11 @@
       box.appendChild(rip);
       if (haustus()) {
         var sw = document.createElement("p"); sw.className = "de-switch";
-        var a = document.createElement("a"); a.href = "#"; a.textContent = wantCompline ? "Show the Ultima instead" : "Show Compline instead";
-        a.addEventListener("click", function (e) { e.preventDefault(); wantCompline = !wantCompline; render(); scrollTo(0, 0); });
-        sw.appendChild(document.createTextNode(wantCompline ? "Wednesday and Sunday are haustus days: the Ultima is sung instead of Compline. " : "Wednesday and Sunday are haustus days: the Ultima instead of Compline. "));
+        var on = complineTonight(), a = document.createElement("a"); a.href = "#"; a.textContent = on ? "Show the Ultima instead" : "Show Compline instead";
+        a.addEventListener("click", function (e) { e.preventDefault(); wantCompline = !on; render(); scrollTo(0, 0); });
+        sw.appendChild(document.createTextNode(feastNight()
+          ? "A " + rankOf(ordoDay(dayDate())).toLowerCase() + " on a haustus day: normally no haustus, so Compline. If the Abbot keeps the haustus, the Ultima is sung instead. "
+          : "Wednesday and Sunday are haustus days: the Ultima instead of Compline. "));
         sw.appendChild(a); box.insertBefore(sw, box.firstChild);
       }
       box.hidden = false; return;
@@ -625,7 +729,7 @@
       var s = secs[k];
       first = Math.min(first, s.start - book.offset); last = Math.max(last, s.start + s.pages - 1 - book.offset);
       if (pdf >= s.start && pdf < s.start + s.pages) {
-        pendingJump = ["p. " + n, pdf - s.start, 0];
+        pendingJump = ["p. " + n, pdf - s.start, 0]; bookHour = null;
         state.ref = b === "Psalter" ? s.path : null;
         if (b !== "Psalter") state.sec[b] = k;
         render();
@@ -636,9 +740,10 @@
   }
 
   // Scroll to the hour chosen in "Go to", once its page is laid out
-  var pendingJump = null;
+  var pendingJump = null, bookHour = null;
   function goJump() {
     if (!pendingJump) return;
+    if (feastHours()) { pendingJump = null; return; }
     var cv = $("#pdf-pages").querySelectorAll("canvas")[pendingJump[1]];
     if (!cv) return;
     var r = cv.getBoundingClientRect(), bar = document.querySelector(".pickbar").getBoundingClientRect();
@@ -668,9 +773,10 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? lentRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe();
+      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || matinsRecipe() || tedeumRecipe();
+      hymnNote(recipe); tedeumNote();
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
-      $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour === 3 && (state.day === 0 || state.day === 6));
+      $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour === 0 && (state.day !== 0 || teChoice !== "book") || state.book === "Sanctoral" && !!bookHour || state.hour === 3 && (state.day === 0 || state.day === 6));
       var keyP = vault.key ? Promise.resolve(vault.key) : savedKey();
       if (!keyP) { $("#lock").hidden = false; $("#beta-view").hidden = true; $("#pdf-view").hidden = true; return; }
       $("#lock").hidden = true;
@@ -794,7 +900,7 @@
     var vn = $("#view-note");
     vn.hidden = !viewing;
     if (viewing) $("#view-date").textContent = dayDate().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
-    var cb = document.querySelector('[data-hour="4"]'); cb.textContent = haustus() ? "Ultima" : "Compline";
+    var cb = document.querySelector('[data-hour="4"]'); cb.textContent = haustus() && !complineTonight() ? "Ultima" : "Compline";
     var weekly = state.hour <= 2;
     $("#now-title").textContent = DAYS[state.day] + (weekly ? " · Week " + ROMAN[state.week] : "") + " · " + (ultima() ? "Ultima" : HOURS[state.hour]);
     if (inBook) $("#now-title").textContent = books[state.book].label + " · " + books[state.book].sections[state.sec[state.book]].title;
@@ -851,8 +957,8 @@
   function openSection(book, k, toNow) {
     state.ref = null; state.book = book; state.sec[book] = k;
     var sec = books[book].sections[k], j = toNow ? jumpFor(sec, whenFor()) : -1;
-    pendingJump = j >= 0 ? sec.jumps[j] : null;
-    if (!pendingJump) scrollTo(0, 0);
+    pendingJump = j >= 0 ? sec.jumps[j] : null; bookHour = pendingJump ? pendingJump[0] : null;
+    if (!pendingJump || feastHours()) scrollTo(0, 0);
     render();
     if (j >= 0) $("#jump").value = j;
   }
@@ -882,8 +988,8 @@
   $("#sec").addEventListener("change", function () { openSection(state.book, +this.value, false); });
   $("#jump").addEventListener("change", function () {
     if (this.value === "") return;
-    pendingJump = books[state.book].sections[state.sec[state.book]].jumps[+this.value];
-    goJump();
+    pendingJump = books[state.book].sections[state.sec[state.book]].jumps[+this.value]; bookHour = pendingJump[0];
+    if (feastHours()) { render(); scrollTo(0, 0); } else goJump();
   });
   document.querySelectorAll("[data-week]").forEach(function (b) {
     b.addEventListener("click", pick(function (b) {
@@ -894,7 +1000,7 @@
       store("psalter-anchor", { week: state.week, sunday: sundayOf(now).toISOString() });
     }));
   });
-  document.querySelectorAll("[data-day]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.day = +b.dataset.day; wantCompline = false; })); });
+  document.querySelectorAll("[data-day]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.day = +b.dataset.day; wantCompline = null; })); });
   document.querySelectorAll("[data-hour]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.hour = +b.dataset.hour; })); });
   document.querySelectorAll("[data-ref]").forEach(function (a) {
     a.href = "#"; a.removeAttribute("target");
@@ -922,7 +1028,11 @@
     books = b;
     books.Lent.sections.splice(books.Lent.sections.findIndex(function (s) { return s.group === "Reference"; }), 0,
       { title: "Magnificat antiphons of Lent, cut out (all)", group: "Reference", tag: "", recipe: "lent", jumps: [], pages: 0, start: 0 });
-    return fetch("assembly.json").then(function (r) { return r.json(); }).then(function (a) { asm = a; });
+    return fetch("assembly.json").then(function (r) { return r.json(); }).then(function (a) {
+      asm = a;
+      // The Saints book's hours as read from its headings (assembly.json), which catch a few the first split missed
+      if (asm.feasts) books.Sanctoral.sections.forEach(function (s) { if (asm.feasts.jumps[s.path]) s.jumps = asm.feasts.jumps[s.path]; });
+    });
   }).then(function () { todayNote(); autoOpen(); render(); }, function () {});
   $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });

@@ -660,6 +660,7 @@
     }, 150);
   });
 
+  document.querySelectorAll(".cal-day").forEach(function (t) { t.textContent = now.getDate(); });
   render();
   fetch("books.json").then(function (r) { return r.json(); }).then(function (b) {
     books = b;

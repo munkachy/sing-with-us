@@ -245,7 +245,7 @@
   var asm = null, plain = false;
   var extrasData = {};   // the necrology and the Benedictine collects, for the ordo line
   ["necrology", "collects"].forEach(function (k) {
-    fetch(k + ".json").then(function (r) { return r.json(); }).then(function (j) { extrasData[k] = j; ordoNote(); }, function () {});
+    fetch(k + ".json").then(function (r) { return r.json(); }).then(function (j) { extrasData[k] = j; ordoNote(); dayEnd(); }, function () {});
   });
   // ---- The Congregation's ordo (ordo-YEAR.json, read from amcass.org's PDF by books/ordo.py) ----
   var ordos = {};
@@ -324,10 +324,6 @@
     if (o.r) { var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase(); r.textContent = o.r; el.appendChild(r); }
     el.appendChild(document.createTextNode(name + (v ? " – " + v : "") + (o.w ? " · Psalter Week " + ROMAN[o.w - 1] : "")));
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
-    var md = ymd(d).slice(5), cl = extrasData.collects && extrasData.collects[md] || [];
-    var dead = (extrasData.necrology && extrasData.necrology.days[md] || []).filter(function (n) { return n[3] === "Ala"; });
-    if (dead.length) { var pd = document.createElement("span"); pd.className = "ordo-necro"; pd.textContent = "† Our necrology: " + dead.map(function (n) { return n[0] + " " + n[1] + " (" + n[2] + ")"; }).join("; "); el.appendChild(pd); }
-    cl.forEach(function (k) { rest = rest.concat(["Collect for " + k.name + (k.supplement ? " (Benedictine Supplement)" : "") + ": " + k.prayer]); });
     var cal = document.createElement("a"); cal.className = "ordo-cal"; cal.href = "calendar.html#" + ymd(d); cal.textContent = "This day in the calendar →";
     el.appendChild(cal);
     if (rest.length) {
@@ -405,6 +401,65 @@
     });
   }
 
+  // ---- The end of the day (Br. Augustine) ----
+  // On the haustus days, Wednesday and Sunday, the community sings the Ultima instead of Compline.
+  var ULTIMA = "Ultima (Wednesday and Sunday, instead of Compline).pdf", wantCompline = false;
+  function haustus() { return state.day === 0 || state.day === 3; }
+  function ultima() { return state.hour === 4 && haustus() && !wantCompline && !state.ref && state.book === "psalter"; }
+  // After Compline or the Ultima: the brothers of our house who died on this day (read at dinner, remembered at the
+  // end of the day). After Matins, Lauds and Vespers: the collect for a Benedictine saint of the day, from the
+  // Benedictine Supplement (osb.org), until the community's own Sanctorale is here.
+  function dayEnd() {
+    var box = $("#day-end"), d = dayDate(), md = ymd(d).slice(5);
+    box.innerHTML = "";
+    if (state.ref) { box.hidden = true; return; }
+    var nec = extrasData.necrology, col = extrasData.collects && extrasData.collects[md];
+    if (state.hour === 4 && state.book === "psalter") {
+      var h = document.createElement("h2"); h.textContent = "Necrology"; box.appendChild(h);
+      var when = document.createElement("p"); when.className = "de-when";
+      when.textContent = d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+      box.appendChild(when);
+      var all = nec && nec.days[md] || [], ours = all.filter(function (n) { return n[3] === nec.ours; });
+      var p = document.createElement("p"); p.className = "de-lead";
+      p.textContent = !nec ? "Loading…" : ours.length ? "Let us remember our brothers of Saint Bernard Abbey who died on this day:" : "No brother of Saint Bernard Abbey died on this day.";
+      box.appendChild(p);
+      if (ours.length) {
+        var ul = document.createElement("ul"); ul.className = "de-names";
+        ours.forEach(function (n) { var li = document.createElement("li"); li.innerHTML = ""; li.appendChild(document.createTextNode(n[0] + " " + n[1])); var y = document.createElement("span"); y.textContent = n[2]; li.appendChild(y); ul.appendChild(li); });
+        box.appendChild(ul);
+      }
+      var rest = all.filter(function (n) { return n[3] !== nec.ours; });
+      if (rest.length) {
+        var det = document.createElement("details"), sm = document.createElement("summary"); sm.textContent = "The rest of the Congregation (" + rest.length + ")";
+        det.appendChild(sm);
+        rest.forEach(function (n) { var q = document.createElement("p"); q.textContent = n[0] + " " + n[1] + ", " + (nec.houses[n[3]] || n[3]) + ", " + n[2]; det.appendChild(q); });
+        box.appendChild(det);
+      }
+      var rip = document.createElement("p"); rip.className = "de-rip";
+      rip.textContent = "May they and all the faithful departed, through the mercy of God, rest in peace. Amen.";
+      box.appendChild(rip);
+      if (haustus()) {
+        var sw = document.createElement("p"); sw.className = "de-switch";
+        var a = document.createElement("a"); a.href = "#"; a.textContent = wantCompline ? "Show the Ultima instead" : "Show Compline instead";
+        a.addEventListener("click", function (e) { e.preventDefault(); wantCompline = !wantCompline; render(); scrollTo(0, 0); });
+        sw.appendChild(document.createTextNode(wantCompline ? "Wednesday and Sunday are haustus days: the Ultima is sung instead of Compline. " : "Wednesday and Sunday are haustus days: the Ultima instead of Compline. "));
+        sw.appendChild(a); box.insertBefore(sw, box.firstChild);
+      }
+      box.hidden = false; return;
+    }
+    if (col && (state.hour === 0 || state.hour === 1 || state.hour === 3)) {
+      col.forEach(function (k) {
+        var h2 = document.createElement("h2"); h2.textContent = "Collect: " + k.name; box.appendChild(h2);
+        var t = document.createElement("p"); t.className = "de-collect"; t.textContent = k.prayer.replace(/\.\.\.\.?$/, "…"); box.appendChild(t);
+      });
+      var src = document.createElement("p"); src.className = "de-src";
+      src.textContent = "From the Benedictine Supplement to the Roman Missal (osb.org), for use until our own Proper of the Saints is here.";
+      box.appendChild(src);
+      box.hidden = false; return;
+    }
+    box.hidden = true;
+  }
+
   // ---- Page numbers: printed page = PDF page - the book's offset ----
   var current = null;   // the section on screen: { offset, start }
   function bookKey() { return state.book === "psalter" ? "Psalter" : state.book; }
@@ -476,7 +531,7 @@
   function show() {
     var token = vault.token = {};
     var inBook = state.book !== "psalter" && books;
-    var path = state.ref || (inBook ? books[state.book].sections[state.sec[state.book]].path : fileKey(state.week, state.day, state.hour));
+    var path = state.ref || (inBook ? books[state.book].sections[state.sec[state.book]].path : ultima() ? ULTIMA : fileKey(state.week, state.day, state.hour));
     index().then(function (idx) {
       if (vault.token !== token) return;
       var hourFile = !state.ref && !inBook && betaOn && idx.hours[path];
@@ -606,9 +661,10 @@
     document.querySelectorAll("[data-book]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.book === state.book)); });
     if (inBook) fillBook();
     if (!$("#pagebox").hidden && books) $("#page-book").textContent = books[bookKey()].label;
-    todayNote(); ordoNote();
+    todayNote(); ordoNote(); dayEnd();
+    var cb = document.querySelector('[data-hour="4"]'); cb.textContent = haustus() ? "Ultima" : "Compline";
     var weekly = state.hour <= 2;
-    $("#now-title").textContent = DAYS[state.day] + (weekly ? " · Week " + ROMAN[state.week] : "") + " · " + HOURS[state.hour];
+    $("#now-title").textContent = DAYS[state.day] + (weekly ? " · Week " + ROMAN[state.week] : "") + " · " + (ultima() ? "Ultima" : HOURS[state.hour]);
     if (inBook) $("#now-title").textContent = books[state.book].label + " · " + books[state.book].sections[state.sec[state.book]].title;
     document.title = (state.ref ? label(state.ref) : $("#now-title").textContent) + " · Monastic Psalter";
     var note = "";
@@ -705,7 +761,7 @@
       store("psalter-anchor", { week: state.week, sunday: sundayOf(now).toISOString() });
     }));
   });
-  document.querySelectorAll("[data-day]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.day = +b.dataset.day; })); });
+  document.querySelectorAll("[data-day]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.day = +b.dataset.day; wantCompline = false; })); });
   document.querySelectorAll("[data-hour]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.hour = +b.dataset.hour; })); });
   document.querySelectorAll("[data-ref]").forEach(function (a) {
     a.href = "#"; a.removeAttribute("target");

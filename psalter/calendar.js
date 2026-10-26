@@ -142,6 +142,8 @@
       var dn = el("details", "fold"); dn.appendChild(el("summary", null, "Notes and other choices (" + rest.length + ")"));
       rest.forEach(function (n) { dn.appendChild(el("p", null, n)); }); body.appendChild(dn);
     }
+    var pray = el("a", "day-pray", "Pray this day's hours →"); pray.href = "./#date=" + key;
+    body.appendChild(pray);
     h.appendChild(body); li.appendChild(h);
     return li;
   }

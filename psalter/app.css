@@ -303,3 +303,7 @@ p.then { margin: .2rem 0 1.4rem; }
 .day-end details p { margin: .15rem 0; }
 .day-end .de-collect { font-size: 1.1rem; text-align: left; margin: .3rem 0 .5rem; }
 .day-end .de-src { font-size: .82rem; color: #6a5f52; margin: .3rem 0 0; }
+
+/* Looking at another day (from the calendar) */
+.view-note { border-left-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface)); }
+.view-note a { font-weight: 600; white-space: nowrap; }

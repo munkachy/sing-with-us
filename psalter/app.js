@@ -140,9 +140,15 @@
   }
 
   var now = new Date();
-  var cal = calendar(now);
+  // Another day can be opened from the calendar (psalter/#date=YYYY-MM-DD): the page then shows that day's week
+  // (from the ordo), starting at Matins, with a link back to today.
+  var base = midnight(now), hm = location.hash.match(/date=(\d{4})-(\d{2})-(\d{2})/);
+  if (hm) base = new Date(+hm[1], +hm[2] - 1, +hm[3]);
+  var viewing = daysBetween(midnight(now), base) !== 0, weekTouched = false;
+  window.addEventListener("hashchange", function () { location.reload(); });
+  var cal = calendar(viewing ? base : now);
   var books = null;
-  var first = nextHour(now);
+  var first = viewing ? { day: base.getDay(), hour: 0 } : nextHour(now);
   var state = { week: cal.week, day: first.day, hour: first.hour, autoWeek: true, ref: null, book: "psalter", sec: {} };
   var touched = false;   // once the monk taps anything, the page stops choosing for him
   var saved = weekOverride(now);
@@ -259,7 +265,7 @@
   }
   // The week of the psalter, as the ordo counts it (unless this phone has been set to another week)
   function weekOf(d) { var o = ordoDay(d); return o && o.w ? o.w - 1 : null; }
-  function ordoWeek() { var w = weekOf(now); if (state.autoWeek && w !== null) state.week = w; }
+  function ordoWeek() { var w = weekOf(dayDate()); if ((state.autoWeek || viewing && !weekTouched) && w !== null) state.week = w; }
   // On a feast or solemnity the ordo names, open its section in the seasonal or Saints book at the hour
   // (I Vespers the evening before). Memorials and Sundays stay in the psalter for now.
   function rankOf(o) {
@@ -333,7 +339,13 @@
     }
     el.hidden = false;
   }
-  function dayDate() { return addDays(midnight(now), state.day - now.getDay()); }
+  function dayDate() { return addDays(base, state.day - base.getDay()); }
+  // The moment to choose hours by: now, or (another day) the start of the hour picked, by the horarium
+  function whenFor() {
+    if (!viewing) return now;
+    var d = dayDate(), t = (HORARIUM[d.getDay()] || HORARIUM.weekday)[state.hour];
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate(), Math.floor(t / 60), t % 60 + 1);
+  }
   function sundayRecipe() {
     if (!asm || plain || state.ref || state.book !== "psalter" || state.hour !== 3 || (state.day !== 0 && state.day !== 6)) return null;
     var sun = state.day === 6 ? addDays(dayDate(), 1) : dayDate();
@@ -655,7 +667,7 @@
     return { hymn: hymn, marian: marian };
   }
   function openPicks(root) {
-    var t = addDays(midnight(now), state.day - now.getDay()), pick = compline(t);
+    var t = dayDate(), pick = compline(t);
     root.querySelectorAll("details.pick").forEach(function (dt) {
       var mine = dt.dataset.hymn ? dt.dataset.hymn === pick.hymn : dt.dataset.marian === pick.marian;
       dt.classList.toggle("today", mine);
@@ -692,14 +704,18 @@
     document.querySelectorAll("[data-book]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.book === state.book)); });
     if (inBook) fillBook();
     if (!$("#pagebox").hidden && books) $("#page-book").textContent = books[bookKey()].label;
+    if (viewing && !weekTouched) ordoWeek();
     todayNote(); ordoNote(); dayEnd();
+    var vn = $("#view-note");
+    vn.hidden = !viewing;
+    if (viewing) $("#view-date").textContent = dayDate().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
     var cb = document.querySelector('[data-hour="4"]'); cb.textContent = haustus() ? "Ultima" : "Compline";
     var weekly = state.hour <= 2;
     $("#now-title").textContent = DAYS[state.day] + (weekly ? " · Week " + ROMAN[state.week] : "") + " · " + (ultima() ? "Ultima" : HOURS[state.hour]);
     if (inBook) $("#now-title").textContent = books[state.book].label + " · " + books[state.book].sections[state.sec[state.book]].title;
     document.title = (state.ref ? label(state.ref) : $("#now-title").textContent) + " · Monastic Psalter";
     var note = "";
-    if (cal.volume && state.day === now.getDay() && !inBook) note = "Today falls in " + (cal.volume === "Lent" ? "Lent" : "Advent or Christmastide") + ": the choir uses the " + cal.volume + " volume. You can still use the four-week psalter here.";
+    if (cal.volume && !viewing && state.day === now.getDay() && !inBook) note = "Today falls in " + (cal.volume === "Lent" ? "Lent" : "Advent or Christmastide") + ": the choir uses the " + cal.volume + " volume. You can still use the four-week psalter here.";
     $("#season-note").textContent = note; $("#season-note").hidden = !note;
     var ow = weekOf(dayDate());
     document.querySelectorAll("[data-week]").forEach(function (b) {
@@ -719,7 +735,7 @@
     var rd = $("#readings");
     rd.hidden = (state.hour !== 0 && state.hour !== 3) || !!state.ref || !!inBook;
     if (!rd.hidden) {
-      var t = addDays(midnight(now), state.day - now.getDay());
+      var t = dayDate();
       var ymd = t.getFullYear() + String(t.getMonth() + 1).padStart(2, "0") + String(t.getDate()).padStart(2, "0");
       $("#readings-link").href = "https://divineoffice.org/?date=" + ymd;
       $("#readings-text").textContent = state.hour === 0 ? "The long Matins readings aren't printed in our book." : "The short reading at Vespers isn't printed in our book.";
@@ -733,11 +749,11 @@
     var n = $("#today-note");
     if (!books) { n.hidden = true; return; }
     n.innerHTML = "";
-    var hits = Object.keys(books).map(function (b) { return [b, todayIn(b, now)]; }).filter(function (h) { return h[1] >= 0; });
+    var hits = Object.keys(books).map(function (b) { return [b, todayIn(b, dayDate())]; }).filter(function (h) { return h[1] >= 0; });
     hits.sort(function (a, b) { return (a[0] === "Sanctoral" ? 0 : 1) - (b[0] === "Sanctoral" ? 0 : 1); });
     hits = hits.filter(function (h) { return !(h[0] === state.book && state.sec[h[0]] === h[1]); });
     if (!hits.length) { n.hidden = true; return; }
-    n.appendChild(document.createTextNode("Today in the books: "));
+    n.appendChild(document.createTextNode((viewing || state.day !== now.getDay() ? "This day" : "Today") + " in the books: "));
     hits.forEach(function (h, i) {
       if (i) n.appendChild(document.createTextNode(" · "));
       var a = document.createElement("a"); a.href = "#";
@@ -749,7 +765,7 @@
   }
   function openSection(book, k, toNow) {
     state.ref = null; state.book = book; state.sec[book] = k;
-    var sec = books[book].sections[k], j = toNow ? jumpFor(sec, now) : -1;
+    var sec = books[book].sections[k], j = toNow ? jumpFor(sec, whenFor()) : -1;
     pendingJump = j >= 0 ? sec.jumps[j] : null;
     if (!pendingJump) scrollTo(0, 0);
     render();
@@ -763,7 +779,7 @@
       var book = b.dataset.book;
       if (book === "psalter" || !books) { state.ref = null; state.book = "psalter"; render(); return; }
       if (state.sec[book] === undefined) {   // first time in this book: today's section, else the first one
-        var t = todayIn(book, now);
+        var t = todayIn(book, dayDate());
         if (t >= 0) return openSection(book, t, true);
         state.sec[book] = 0;
       }
@@ -786,7 +802,8 @@
   });
   document.querySelectorAll("[data-week]").forEach(function (b) {
     b.addEventListener("click", pick(function (b) {
-      state.week = +b.dataset.week;
+      state.week = +b.dataset.week; weekTouched = true;
+      if (viewing) return;   // another day: just look, don't change this phone's week
       if (state.week === weekOf(now)) { state.autoWeek = true; store("psalter-anchor", null); return; }   // the ordo's week: follow the ordo again
       state.autoWeek = false;
       store("psalter-anchor", { week: state.week, sunday: sundayOf(now).toISOString() });

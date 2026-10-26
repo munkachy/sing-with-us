@@ -582,8 +582,14 @@
     return { key: "feast:" + sec.path + ":" + hour + ":" + teChoice, items: items, tedeum: hour === "Matins",
       note: "Pasted together: " + sec.title + ", " + hour + ", from the Saints book, with the pages it points to put in their places." };
   }
+  function simpleRecipe(sec) {
+    if (!asm || sec.recipe !== "simple" || !asm.feasts) return null;
+    var items = [];
+    asm.feasts.simple.forEach(function (x) { items.push({ h: x.h }); items = items.concat(x.strips); });
+    return { key: "feast-simple", items: items, note: "" };
+  }
   function lentRecipe(sec) {
-    if (!asm || !sec.recipe) return null;
+    if (!asm || sec.recipe !== "lent") return null;
     var items = [];
     asm.lent.forEach(function (x) {
       items.push({ h: x.section + (x.day && x.section.indexOf(x.day) < 0 ? " · " + x.day : "") + " · " + x.hour +
@@ -773,7 +779,7 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || matinsRecipe() || tedeumRecipe();
+      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || matinsRecipe() || tedeumRecipe();
       hymnNote(recipe); tedeumNote();
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
       $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour === 0 && (state.day !== 0 || teChoice !== "book") || state.book === "Sanctoral" && !!bookHour || state.hour === 3 && (state.day === 0 || state.day === 6));
@@ -1032,6 +1038,9 @@
       asm = a;
       // The Saints book's hours as read from its headings (assembly.json), which catch a few the first split missed
       if (asm.feasts) books.Sanctoral.sections.forEach(function (s) { if (asm.feasts.jumps[s.path]) s.jumps = asm.feasts.jumps[s.path]; });
+      // The simpler settings cut out of the feasts ("Or:" with the same words), kept together in case they're wanted
+      if (asm.feasts && asm.feasts.simple) books.Sanctoral.sections.splice(books.Sanctoral.sections.findIndex(function (s) { return s.group === "Reference"; }), 0,
+        { title: "Simple versions, cut out of the feasts (all)", group: "Reference", tag: "", recipe: "simple", jumps: [], pages: 0, start: 0 });
     });
   }).then(function () { todayNote(); autoOpen(); render(); }, function () {});
   $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });

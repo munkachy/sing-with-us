@@ -9,6 +9,11 @@
   var $ = function (s) { return document.querySelector(s); };
   var now = new Date();
   var view = { y: now.getFullYear(), m: now.getMonth() }, ordos = {};
+  // The Congregation's necrology and the collects for Benedictine saints (books/extras.py)
+  var extras = Promise.all(["necrology.json", "collects.json"].map(function (f) {
+    return fetch(f).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+  }));
+  var necro = null, collects = null;
   var want = location.hash.match(/^#(\d{4})-(\d{2})(?:-(\d{2}))?/);
   if (want) { view.y = +want[1]; view.m = +want[2] - 1; }
 
@@ -48,6 +53,7 @@
     var v = (n.match(/–\s*(.+)$/) || [])[1] || x.v;
     return { c: x.c, t: t, r: r, v: v, n: x.n, m: x.m, a: x.a };
   }
+  function ourDead(key) { return necro && (necro.days[key.slice(5)] || []).filter(function (n) { return n[3] === necro.ours; }) || []; }
   function ours(x) { return x.n.filter(function (n) { return OURS.test(n); }); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
@@ -62,7 +68,8 @@
       b.setAttribute("aria-label", name); b.addEventListener("click", function () { view.m = i; go(); });
       chips.appendChild(b);
     });
-    load(y).then(function (o) {
+    Promise.all([load(y), extras]).then(function (got) {
+      var o = got[0]; necro = got[1][0]; collects = got[1][1];
       if (view.y !== y || view.m !== m) return;
       var grid = $("#grid"), agenda = $("#agenda"), msg = $("#ordo-msg");
       grid.innerHTML = ""; agenda.innerHTML = "";
@@ -80,6 +87,7 @@
         if (x) {
           if (x.r) { var r = el("span", "rk rk-" + RANK[x.r], RANK[x.r].toUpperCase()); r.title = x.r; c.appendChild(r); }
           if (ours(x).length) c.appendChild(el("span", "ours-star", "✦"));
+          if (ourDead(key).length) { var nd = el("span", "necro-mark", "†"); nd.title = "In our necrology"; c.appendChild(nd); }
           var s = short(x); if (s) c.appendChild(el("span", "lbl", s));
           c.setAttribute("aria-label", d + " " + MONTHS[m] + ": " + title(clean(x.t)) + (x.r ? ", " + x.r : ""));
           c.addEventListener("click", pick);
@@ -112,6 +120,22 @@
     meta.appendChild(document.createTextNode((x.c || "") + (v ? " · " + v : "") + (x.w ? " · Psalter Week " + ["I", "II", "III", "IV"][x.w - 1] : "")));
     body.appendChild(meta);
     ours(x).forEach(function (n) { var p = el("p", "day-ours"); p.appendChild(el("span", "ours-star", "✦ ")); p.appendChild(document.createTextNode(n)); body.appendChild(p); });
+    var md = key.slice(5), cl = collects && collects[md];
+    (cl || []).forEach(function (k) {
+      var dc = el("details", "fold collect"); dc.appendChild(el("summary", null, "Collect: " + k.name + (k.supplement ? " (Benedictine Supplement)" : "")));
+      dc.appendChild(el("p", null, k.prayer)); body.appendChild(dc);
+    });
+    var mine = ourDead(key), all = necro && necro.days[md] || [];
+    if (mine.length) {
+      var pn = el("p", "day-necro"); pn.appendChild(el("span", "necro-mark", "† "));
+      pn.appendChild(document.createTextNode("Our necrology: " + mine.map(function (n) { return n[0] + " " + n[1] + " (" + n[2] + ")"; }).join("; ")));
+      body.appendChild(pn);
+    }
+    if (all.length) {
+      var dnc = el("details", "fold"); dnc.appendChild(el("summary", null, "Necrology of the Congregation (" + all.length + ")"));
+      all.forEach(function (n) { dnc.appendChild(el("p", null, n[0] + " " + n[1] + ", " + (necro.houses[n[3]] || n[3]) + ", " + n[2])); });
+      body.appendChild(dnc);
+    }
     if (x.m) { var dm = el("details", "fold"); dm.appendChild(el("summary", null, "Mass")); dm.appendChild(el("p", null, x.m)); body.appendChild(dm); }
     var rest = (x.a || []).filter(function (n) { return !OURS.test(n); });
     if (rest.length) {
@@ -136,6 +160,12 @@
     view.y = now.getFullYear(); view.m = now.getMonth(); history.replaceState(null, "", "#" + ymd(view.y, view.m, now.getDate()));
     want = location.hash.match(/^#(\d{4})-(\d{2})(?:-(\d{2}))?/); draw();
     setTimeout(function () { select(ymd(view.y, view.m, now.getDate()), true); }, 200);
+  });
+  window.addEventListener("hashchange", function () {   // a link to another day or month
+    var h = location.hash.match(/^#(\d{4})-(\d{2})(?:-(\d{2}))?/);
+    if (!h || (+h[1] === view.y && +h[2] - 1 === view.m && !h[3])) return;
+    if (+h[1] === view.y && +h[2] - 1 === view.m) { select(h[0].slice(1), true); return; }
+    view.y = +h[1]; view.m = +h[2] - 1; want = h; draw();
   });
   draw();
 })();

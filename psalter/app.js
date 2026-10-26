@@ -243,6 +243,10 @@
   // Magnificat antiphon is the Sunday's own (Year I/II at I Vespers, Year A/B/C at II Vespers), sung in the
   // first alternate tone the antiphon names, then the antiphon again and the psalter's Conclusion.
   var asm = null, plain = false;
+  var extrasData = {};   // the necrology and the Benedictine collects, for the ordo line
+  ["necrology", "collects"].forEach(function (k) {
+    fetch(k + ".json").then(function (r) { return r.json(); }).then(function (j) { extrasData[k] = j; ordoNote(); }, function () {});
+  });
   // ---- The Congregation's ordo (ordo-YEAR.json, read from amcass.org's PDF by books/ordo.py) ----
   var ordos = {};
   function ordoYear(y) {
@@ -320,6 +324,12 @@
     if (o.r) { var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase(); r.textContent = o.r; el.appendChild(r); }
     el.appendChild(document.createTextNode(name + (v ? " – " + v : "") + (o.w ? " · Psalter Week " + ROMAN[o.w - 1] : "")));
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
+    var md = ymd(d).slice(5), cl = extrasData.collects && extrasData.collects[md] || [];
+    var dead = (extrasData.necrology && extrasData.necrology.days[md] || []).filter(function (n) { return n[3] === "Ala"; });
+    if (dead.length) { var pd = document.createElement("span"); pd.className = "ordo-necro"; pd.textContent = "† Our necrology: " + dead.map(function (n) { return n[0] + " " + n[1] + " (" + n[2] + ")"; }).join("; "); el.appendChild(pd); }
+    cl.forEach(function (k) { rest = rest.concat(["Collect for " + k.name + (k.supplement ? " (Benedictine Supplement)" : "") + ": " + k.prayer]); });
+    var cal = document.createElement("a"); cal.className = "ordo-cal"; cal.href = "calendar.html#" + ymd(d); cal.textContent = "This day in the calendar →";
+    el.appendChild(cal);
     if (rest.length) {
       var det = document.createElement("details"), sm = document.createElement("summary"); sm.textContent = "More from the ordo";
       det.appendChild(sm); rest.forEach(function (n) { var p = document.createElement("p"); p.textContent = n; det.appendChild(p); });
@@ -536,7 +546,7 @@
   function compline(date) {
     var d = midnight(date), y = d.getFullYear(), m = d.getMonth(), dd = d.getDate();
     var e = easter(y), adv = firstAdventSunday(y), bapt = endOfChristmastide(y);
-    var ash = addDays(e, -46), asc = addDays(e, 39), pent = addDays(e, 49);
+    var ash = addDays(e, -46), asc = addDays(e, 42), pent = addDays(e, 49);
     var hymn = (d.getDay() === 0 || d.getDay() === 6) ? "satsun" : "ferial";
     if (m === 7 && dd === 6) hymn = "transfig";
     if (same(d, addDays(adv, -7))) hymn = "king";

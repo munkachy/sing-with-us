@@ -285,3 +285,5 @@ p.then { margin: .2rem 0 1.4rem; }
 
 /* Notes that come after the pages */
 #asm-note, #plain-note, #today-note { margin: .4rem 0 .8rem; }
+.ordo-note .ordo-necro { display: block; margin-top: .2rem; color: var(--muted); font-style: italic; }
+.ordo-note .ordo-cal { display: inline-block; margin-top: .25rem; font-size: .92rem; margin-right: 1rem; }

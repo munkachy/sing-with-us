@@ -316,8 +316,57 @@
     var m = o && o.m && o.m.match(/readings\s+no\.?\s*([\dA-Za-z]+(?:ff\.)?)\s*\(([^)]*)\)/);
     var p = document.createElement("span"); p.className = "ordo-mass";
     p.appendChild(document.createTextNode(m ? "Mass readings (no. " + m[1] + "): " + m[2].replace(/\s+/g, " ").replace(/\s*([:,])\s*/g, "$1 ").replace(/:\s/g, ":") + " " : "Mass readings: "));
-    var a = document.createElement("a"); a.href = usccbUrl(d); a.target = "_blank"; a.rel = "noopener"; a.textContent = "Read them at USCCB ↗";
+    var here = document.createElement("button"); here.type = "button"; here.className = "mr-open";
+    here.textContent = readingsOpen ? "Hide the readings" : "Read here";
+    here.setAttribute("aria-expanded", String(readingsOpen));
+    here.addEventListener("click", function () { readingsOpen = !readingsOpen; ordoNote(); showReadings(); });
+    p.appendChild(here); p.appendChild(document.createTextNode(" · "));
+    var a = document.createElement("a"); a.href = usccbUrl(d); a.target = "_blank"; a.rel = "noopener"; a.textContent = "Official text at USCCB ↗";
     p.appendChild(a); return p;
+  }
+  // The readings themselves, read here: the Douay-Rheims (Challoner; public domain) and an easier wording of it made for
+  // the community (readings-YEAR.json, from books/readings.py in the private repo). The Church's official text is at USCCB.
+  var readingsOpen = /(^|[#&])readings\b/.test(location.hash), readingsData = {}, readingsPlain = false;
+  try { readingsPlain = localStorage.getItem("psalter-readings") === "douay"; } catch (x) {}
+  function showReadings() {
+    var box = $("#mass-readings"), d = dayDate(), y = d.getFullYear();
+    if (!readingsOpen || state.ref) { box.hidden = true; return; }
+    if (readingsData[y] === undefined) {
+      readingsData[y] = null;
+      fetch("readings-" + y + ".json").then(function (r) { return r.ok ? r.json() : {}; }).then(function (j) { readingsData[y] = j; showReadings(); }, function () { readingsData[y] = {}; showReadings(); });
+    }
+    box.textContent = ""; box.hidden = false;
+    var day = readingsData[y] && readingsData[y][ymd(d)];
+    if (readingsData[y] === null) { box.appendChild(document.createTextNode("Opening the readings…")); return; }
+    if (!day) {
+      var none = document.createElement("p"); none.textContent = "The readings for this day aren't here yet. ";
+      var u = document.createElement("a"); u.href = usccbUrl(d); u.target = "_blank"; u.rel = "noopener"; u.textContent = "Read them at USCCB ↗";
+      none.appendChild(u); box.appendChild(none); return;
+    }
+    var sw = document.createElement("p"); sw.className = "mr-switch";
+    [["Easier wording", false], ["Douay wording", true]].forEach(function (o) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = o[0]; b.setAttribute("aria-pressed", String(readingsPlain === o[1]));
+      b.addEventListener("click", function () { readingsPlain = o[1]; try { localStorage.setItem("psalter-readings", o[1] ? "douay" : "easy"); } catch (x) {} showReadings(); });
+      sw.appendChild(b);
+    });
+    box.appendChild(sw);
+    day.items.forEach(function (it) {
+      var h = document.createElement("h3"); h.textContent = it.label; var r = document.createElement("span"); r.className = "mr-ref"; r.textContent = it.ref; h.appendChild(r); box.appendChild(h);
+      var poem = it.label === "Psalm" || it.label === "Canticle", p = document.createElement(poem ? "div" : "p"); p.className = poem ? "mr-poem" : "mr-text";
+      var lastC = null;
+      it.verses.forEach(function (v) {
+        var line = poem ? document.createElement("p") : p;
+        var n = document.createElement("sup"); n.textContent = (v[0] !== lastC && it.verses[0][0] !== it.verses[it.verses.length - 1][0] ? v[0] + ":" : "") + v[1]; lastC = v[0];
+        line.appendChild(n); line.appendChild(document.createTextNode((readingsPlain ? v[2] : v[3] || v[2]) + " "));
+        if (poem) p.appendChild(line);
+      });
+      box.appendChild(p);
+    });
+    var f = document.createElement("p"); f.className = "mr-foot";
+    f.appendChild(document.createTextNode((readingsPlain ? "The Douay-Rheims Bible (Challoner revision), in the public domain." : "An easier wording of the Douay-Rheims (Challoner revision), made for the community; the Douay itself is in the public domain.") +
+      " Whole verses are given where the Lectionary reads part of one; the psalm's response is in the Lectionary. The Church's official text: "));
+    var u2 = document.createElement("a"); u2.href = usccbUrl(d); u2.target = "_blank"; u2.rel = "noopener"; u2.textContent = "USCCB ↗"; f.appendChild(u2);
+    box.appendChild(f);
   }
   function ordoNote() {
     var el = $("#ordo-note"), d = dayDate(), o = !state.ref ? ordoDay(d) : null;
@@ -341,7 +390,7 @@
     el.appendChild(document.createTextNode(name + (v ? " – " + v : "") + (o.w ? " · Psalter Week " + ROMAN[o.w - 1] : "")));
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
     if (d.getDay() === 6 && bvmSaturday(d)) { var bs = document.createElement("span"); bs.className = "ordo-ours"; bs.textContent = "✦ Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary"; el.appendChild(bs); }
-    el.appendChild(massReadings(o, d));
+    el.appendChild(massReadings(o, d)); showReadings();
     var cal = document.createElement("a"); cal.className = "ordo-cal"; cal.href = "calendar.html#" + ymd(d); cal.textContent = "This day in the calendar →";
     el.appendChild(cal);
     if (rest.length) {

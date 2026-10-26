@@ -147,7 +147,8 @@
       rest.forEach(function (n) { dn.appendChild(el("p", null, n)); }); body.appendChild(dn);
     }
     var pray = el("a", "day-pray", "Pray this day's hours →"); pray.href = "./#date=" + key;
-    body.appendChild(pray); body.appendChild(rl);
+    var rh = el("a", "day-pray", "Read the Mass readings →"); rh.href = "./#date=" + key + "&readings"; rh.style.marginLeft = ".4rem";
+    body.appendChild(pray); body.appendChild(rh); body.appendChild(rl);
     h.appendChild(body); li.appendChild(h);
     return li;
   }

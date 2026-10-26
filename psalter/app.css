@@ -282,3 +282,6 @@ p.then { margin: .2rem 0 1.4rem; }
 .pickbar .seg button.ordo-wk { position: relative; }
 .pickbar .seg button.ordo-wk::after { content: ""; position: absolute; left: 50%; bottom: 3px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--accent); }
 .pickbar .seg button.ordo-wk[aria-pressed="true"]::after { background: var(--accent-ink); }
+
+/* Notes that come after the pages */
+#asm-note, #plain-note, #today-note { margin: .4rem 0 .8rem; }

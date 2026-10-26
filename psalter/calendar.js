@@ -109,7 +109,7 @@
     body.appendChild(top);
     var meta = el("p", "day-meta");
     meta.appendChild(el("span", "swatch lc-" + color(x.c)));
-    meta.appendChild(document.createTextNode((x.c || "") + (v ? " · " + v : "")));
+    meta.appendChild(document.createTextNode((x.c || "") + (v ? " · " + v : "") + (x.w ? " · Psalter Week " + ["I", "II", "III", "IV"][x.w - 1] : "")));
     body.appendChild(meta);
     ours(x).forEach(function (n) { var p = el("p", "day-ours"); p.appendChild(el("span", "ours-star", "✦ ")); p.appendChild(document.createTextNode(n)); body.appendChild(p); });
     if (x.m) { var dm = el("details", "fold"); dm.appendChild(el("summary", null, "Mass")); dm.appendChild(el("p", null, x.m)); body.appendChild(dm); }

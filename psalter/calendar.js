@@ -10,10 +10,11 @@
   var now = new Date();
   var view = { y: now.getFullYear(), m: now.getMonth() }, ordos = {};
   // The Congregation's necrology and the collects for Benedictine saints (books/extras.py)
-  var extras = Promise.all(["necrology.json", "collects.json"].map(function (f) {
+  var extras = Promise.all(["necrology.json", "collects.json", "house.json"].map(function (f) {
     return fetch(f).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   }));
-  var necro = null, collects = null;
+  var necro = null, collects = null, houseData = null;
+  function ladySat(key) { var l = houseData && houseData.bvmSaturdays && houseData.bvmSaturdays[key.slice(0, 4)]; return !!l && l.indexOf(key.slice(5)) >= 0; }
   var want = location.hash.match(/^#(\d{4})-(\d{2})(?:-(\d{2}))?/);
   if (want) { view.y = +want[1]; view.m = +want[2] - 1; }
 
@@ -54,7 +55,7 @@
     return { c: x.c, t: t, r: r, v: v, n: x.n, m: x.m, a: x.a };
   }
   function ourDead(key) { return necro && (necro.days[key.slice(5)] || []).filter(function (n) { return n[3] === necro.ours; }) || []; }
-  function ours(x) { return x.n.filter(function (n) { return OURS.test(n); }); }
+  function ours(x, key) { return x.n.filter(function (n) { return OURS.test(n); }); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
   function draw() {
@@ -69,7 +70,7 @@
       chips.appendChild(b);
     });
     Promise.all([load(y), extras]).then(function (got) {
-      var o = got[0]; necro = got[1][0]; collects = got[1][1];
+      var o = got[0]; necro = got[1][0]; collects = got[1][1]; houseData = got[1][2];
       if (view.y !== y || view.m !== m) return;
       var grid = $("#grid"), agenda = $("#agenda"), msg = $("#ordo-msg");
       grid.innerHTML = ""; agenda.innerHTML = "";
@@ -86,7 +87,8 @@
         c.appendChild(el("span", "num", d));
         if (x) {
           if (x.r) { var r = el("span", "rk rk-" + RANK[x.r], RANK[x.r].toUpperCase()); r.title = x.r; c.appendChild(r); }
-          if (ours(x).length) c.appendChild(el("span", "ours-star", "✦"));
+          if (ours(x).length || ladySat(key)) c.appendChild(el("span", "ours-star" + (x.r ? "" : " solo"), "✦"));
+          if (ladySat(key) && !x.r) c.appendChild(el("span", "lbl", "Our Lady"));
           if (ourDead(key).length) { var nd = el("span", "necro-mark", "†"); nd.title = "In our necrology"; c.appendChild(nd); }
           var s = short(x); if (s) c.appendChild(el("span", "lbl", s));
           c.setAttribute("aria-label", d + " " + MONTHS[m] + ": " + title(clean(x.t)) + (x.r ? ", " + x.r : ""));
@@ -119,6 +121,7 @@
     meta.appendChild(el("span", "swatch lc-" + color(x.c)));
     meta.appendChild(document.createTextNode((x.c || "") + (v ? " · " + v : "") + (x.w ? " · Psalter Week " + ["I", "II", "III", "IV"][x.w - 1] : "")));
     body.appendChild(meta);
+    if (ladySat(key)) { var pl = el("p", "day-ours"); pl.appendChild(el("span", "ours-star", "✦ ")); pl.appendChild(document.createTextNode("Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary")); body.appendChild(pl); }
     ours(x).forEach(function (n) { var p = el("p", "day-ours"); p.appendChild(el("span", "ours-star", "✦ ")); p.appendChild(document.createTextNode(n)); body.appendChild(p); });
     var md = key.slice(5), cl = collects && collects[md];
     (cl || []).forEach(function (k) {

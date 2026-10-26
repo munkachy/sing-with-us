@@ -250,8 +250,8 @@
   // first alternate tone the antiphon names, then the antiphon again and the psalter's Conclusion.
   var asm = null, plain = false;
   var extrasData = {};   // the necrology and the Benedictine collects, for the ordo line
-  ["necrology", "collects"].forEach(function (k) {
-    fetch(k + ".json").then(function (r) { return r.json(); }).then(function (j) { extrasData[k] = j; ordoNote(); dayEnd(); }, function () {});
+  ["necrology", "collects", "house"].forEach(function (k) {
+    fetch(k + ".json").then(function (r) { return r.json(); }).then(function (j) { extrasData[k] = j; ordoNote(); dayEnd(); if (k === "house") render(); }, function () {});
   });
   // ---- The Congregation's ordo (ordo-YEAR.json, read from amcass.org's PDF by books/ordo.py) ----
   var ordos = {};
@@ -330,6 +330,7 @@
     if (o.r) { var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase(); r.textContent = o.r; el.appendChild(r); }
     el.appendChild(document.createTextNode(name + (v ? " – " + v : "") + (o.w ? " · Psalter Week " + ROMAN[o.w - 1] : "")));
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
+    if (d.getDay() === 6 && bvmSaturday(d)) { var bs = document.createElement("span"); bs.className = "ordo-ours"; bs.textContent = "✦ Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary"; el.appendChild(bs); }
     var cal = document.createElement("a"); cal.className = "ordo-cal"; cal.href = "calendar.html#" + ymd(d); cal.textContent = "This day in the calendar →";
     el.appendChild(cal);
     if (rest.length) {
@@ -397,6 +398,90 @@
     return { key: "compline:" + k.hymn + ":" + k.marian + ":" + k.tone + ":" + k.vers, items: items,
       note: "Pasted together: Compline with tonight's hymn only (" + h.label.replace(/^\d+\.\s*/, "") + ")" +
         (m ? " and " + m.label + " in the " + k.tone + " tone" : "") + "." };
+  }
+  // ---- Cutting by season, and Our Lady's Saturday (assembly.json "marks", made by books/tools/saturday.py) ----
+  // Where the book prints choices ("Through the Year", Advent, Lent, Passiontide, Paschaltide …; on Saturdays
+  // "I. Through the Year" and "II. Office of the Blessed Virgin Mary on Saturday"), keep only the one for the day.
+  function seasonOf(d) {
+    var y = d.getFullYear(), m = d.getMonth(), e = easter(y), adv = firstAdventSunday(y), ep = epiphany(y), bapt = endOfChristmastide(y);
+    if (d >= adv && d < new Date(y, 11, 25)) return "Advent";
+    if ((m === 11 && d.getDate() >= 25) || (m === 0 && d < ep)) return "Christmas";
+    if (d >= ep && d <= bapt) return "Epiphany";
+    if (d >= addDays(e, -46) && d < addDays(e, -14)) return "Lent";
+    if (d >= addDays(e, -14) && d < e) return "Passiontide";
+    if (d >= e && d < addDays(e, 42)) return "Paschaltide";
+    if (d >= addDays(e, 42) && d <= addDays(e, 49)) return "Ascension to Pentecost";
+    return "year";
+  }
+  function bvmSaturday(d) {   // the abbey's list (house.json)
+    var h = extrasData.house, l = h && h.bvmSaturdays && h.bvmSaturdays[d.getFullYear()];
+    return !!l && l.indexOf(ymd(d).slice(5)) >= 0;
+  }
+  function cutFile(e, season, bvm) {
+    var prefs = { "Passiontide": ["Passiontide", "Lent"], "Ascension to Pentecost": ["Ascension to Pentecost", "Paschaltide"], "Epiphany": ["Epiphany", "Christmas"] }[season] || (season === "year" ? [] : [season]);
+    var m = e.marks, keep = [];
+    for (var a = 0; a < m.length;) {
+      if (m[a][2] === "common") { keep[a] = true; a++; continue; }
+      var b = a; while (b < m.length && m[b][2] !== "common") b++;
+      var g = m.slice(a, b), hasTwo = g.some(function (k) { return k[2] === "two"; });
+      var labels = g.filter(function (k) { return k[2] === "season"; }).map(function (k) { return k[3]; });
+      var pick = prefs.filter(function (p) { return labels.indexOf(p) >= 0; })[0] || null;
+      for (var c = a; c < b; c++) {
+        var k = m[c][2];
+        keep[c] = bvm && hasTwo ? k === "two" : k === "two" ? false : k === "one" ? true : k === "season" ? m[c][3] === pick : !pick;
+      }
+      a = b;
+    }
+    var segs = [], cur = [0, 0], on = true;
+    m.forEach(function (mk, j) { if (on) segs.push([cur, [mk[0], mk[1]]]); cur = [mk[0], mk[1]]; on = keep[j]; });
+    if (on) segs.push([cur, e.end]);
+    var out = [];
+    segs.forEach(function (sg) {
+      for (var p = sg[0][0]; p <= sg[1][0]; p++) {
+        var f0 = p === sg[0][0] ? sg[0][1] : e.heads[p], f1 = p === sg[1][0] ? sg[1][1] : 1;
+        if (p === sg[0][0] && sg[0][1] === 0 && p > 0) f0 = e.heads[p];
+        if (f1 - f0 > 0.012) out.push([e.path, p, f0, f1, e.first + p]);
+      }
+    });
+    return out;
+  }
+  var SEXT_HYMN = { ferial: "On Ferial Days", memorial: "On Memorials", sunday: "On Sundays", feast: "On Feasts", solemnity: "On Solemnities",
+    bvm: "On Feasts of the Blessed Virgin Mary · Saturday Commemoration", advent: "Advent", nativity: "Nativity of the Lord", epiphany: "Epiphany",
+    lent: "Lent and Passiontide", easterA: "Paschaltide", ascA: "Ascension to Pentecost" };
+  function sextHymn(d, bvm) {
+    if (bvm) return "bvm";
+    var base = compline(d).hymn, o = ordoDay(d), rank = o ? rankOf(o) || "" : "", e = easter(d.getFullYear());
+    if (d >= e && d <= addDays(e, 7)) return "easterA";
+    if (base === "nativity" || base === "epiphany") return base;
+    if (rank === "Solemnity" || rank === "Feast") return BVM.test(o.t + " " + o.n.join(" ")) ? "bvm" : rank.toLowerCase();
+    if (["advent", "lent", "easterA", "ascA"].indexOf(base) >= 0) return base;
+    if (base === "baptism") return "feast";
+    if (base === "pentecost" || base === "heart") return "solemnity";
+    if (rank === "Memorial" && d.getDay() !== 0) return "memorial";
+    return d.getDay() === 0 ? "sunday" : "ferial";
+  }
+  function seasonWords(season) { return season === "year" ? "through the year" : season === "Ascension to Pentecost" ? "from the Ascension to Pentecost" : "of " + season; }
+  function sextRecipe() {
+    if (!asm || !asm.marks || plain || state.ref || state.book !== "psalter" || state.hour !== 2) return null;
+    var e = asm.marks[fileKey(state.week, state.day, 2)];
+    if (!e) return null;
+    var d = dayDate(), bvm = d.getDay() === 6 && bvmSaturday(d), season = seasonOf(d), hk = sextHymn(d, bvm), S = asm.sext;
+    var items = [S.opening, { h: "Hymn: " + SEXT_HYMN[hk] }, S.hymns[hk]].concat(cutFile(e, season, bvm), [{ h: "Conclusion" }, S.conclusion]);
+    return { key: "sext:" + fileKey(state.week, state.day, 2) + ":" + season + ":" + bvm + ":" + hk, items: items,
+      note: "Pasted together: Sext with the hymn " + SEXT_HYMN[hk] + " and only the antiphon, reading and versicle " +
+        (bvm ? "of the Saturday Commemoration of the Blessed Virgin Mary" : seasonWords(season)) + "." };
+  }
+  function saturdayRecipe() {
+    if (!asm || !asm.marks || plain || state.ref || state.book !== "psalter" || state.day !== 6 || state.hour > 1) return null;
+    var d = dayDate(), bvm = bvmSaturday(d), season = seasonOf(d), hour = state.hour === 0 ? "matins" : "lauds";
+    if (bvm && (season === "Paschaltide" || season === "Ascension to Pentecost"))
+      return { key: "ptbvm:" + hour, items: [{ h: "Office of the Blessed Virgin Mary on Saturday in Paschaltide" }].concat(asm.ptbvm[hour]),
+        note: "Saturday Commemoration of the Blessed Virgin Mary (from the abbey's list): her own office for Paschaltide." };
+    var e = asm.marks[fileKey(state.week, 6, state.hour)];
+    if (!e) return null;
+    return { key: "sat:" + fileKey(state.week, 6, state.hour) + ":" + season + ":" + bvm, items: cutFile(e, season, bvm),
+      note: bvm ? "Pasted together: the Saturday Commemoration of the Blessed Virgin Mary (from the abbey's list): only Our Lady's texts where the book gives a choice."
+                : "Pasted together: Saturday " + seasonWords(season) + ", without the texts for Our Lady's Saturday." };
   }
   function lentRecipe(sec) {
     if (!asm || !sec.recipe) return null;
@@ -583,9 +668,9 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? lentRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe() || complineRecipe();
+      var recipe = inBook ? lentRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe();
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
-      $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 3 && (state.day === 0 || state.day === 6));
+      $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour === 3 && (state.day === 0 || state.day === 6));
       var keyP = vault.key ? Promise.resolve(vault.key) : savedKey();
       if (!keyP) { $("#lock").hidden = false; $("#beta-view").hidden = true; $("#pdf-view").hidden = true; return; }
       $("#lock").hidden = true;
@@ -842,5 +927,5 @@
   $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
   $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });
-  window.PSALTER = { complineFor: complineFor, nextHour: nextHour, weekOf: weekOf, epiphany: epiphany, ordoDay: ordoDay, sundayVespers: sundayVespers, tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
+  window.PSALTER = { seasonOf: seasonOf, sextHymn: sextHymn, complineFor: complineFor, nextHour: nextHour, weekOf: weekOf, epiphany: epiphany, ordoDay: ordoDay, sundayVespers: sundayVespers, tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
 })();

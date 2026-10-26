@@ -1026,7 +1026,7 @@
    {
     "title": "Second Sunday after the Nativity",
     "group": "Christmas",
-    "tag": "xmas:sun2",
+    "tag": "",
     "path": "Advent-Christmas/28 Second Sunday after the Nativity.pdf",
     "start": 312,
     "pages": 9,
@@ -1061,7 +1061,7 @@
    {
     "title": "2 January to the Epiphany",
     "group": "Christmas",
-    "tag": "d:01-02 d:01-03 d:01-04 d:01-05",
+    "tag": "xmas:before-epiphany",
     "path": "Advent-Christmas/29 2 January to the Epiphany.pdf",
     "start": 321,
     "pages": 19,
@@ -1171,7 +1171,7 @@
    {
     "title": "The Epiphany of the Lord",
     "group": "Christmas",
-    "tag": "d:01-06",
+    "tag": "xmas:epiphany",
     "path": "Advent-Christmas/30 The Epiphany of the Lord.pdf",
     "start": 340,
     "pages": 21,
@@ -1241,7 +1241,7 @@
    {
     "title": "Weekdays after the Epiphany",
     "group": "Christmas",
-    "tag": "d:01-07 d:01-08 d:01-09 d:01-10 d:01-11 d:01-12",
+    "tag": "xmas:after-epiphany",
     "path": "Advent-Christmas/32 Weekdays after the Epiphany.pdf",
     "start": 373,
     "pages": 12,

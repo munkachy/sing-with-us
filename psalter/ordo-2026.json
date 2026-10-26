@@ -1,0 +1,2854 @@
+{
+"2026-01-01": {
+"c": "White",
+"t": "Thu. MARY, THE HOLY MOTHER OF GOD (OCTAVE DAY OF CHRISTMAS) OA. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-01-02": {
+"c": "White",
+"t": "Fri. Basil the Great and Gregory Nazianzen, Bishops, Doctors of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-01-03": {
+"c": "White",
+"t": "Sat after Octave of Christmas.",
+"r": "",
+"v": "1st Vespers of following OA",
+"n": [
+"Or Most Holy Name of Jesus. Optional Mem.",
+"Where Epiphany is not transferred to Sunday: 1st Vespers of following Sunday"
+]
+},
+"2026-01-04": {
+"c": "White",
+"t": "Sun. EPIPHANY. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": [
+"Where Epiphany is not transferred to Sunday: X White SECOND SUNDAY AFTER CHRISTMAS. – 2nd Vespers"
+]
+},
+"2026-01-05": {
+"c": "White",
+"t": "Mon after Epiphany.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"U.S.A.: As supra or John Neumann, Bishop, Religious, Missionary, Educator. Optional Mem. – Vespers of Memorial",
+"Where Epiphany is not transferred to Sunday: Mon after Octave of Christmas. – 1st Vespers of following OA (Vigil Mass on the evening either before or after Vespers: White Gl, 3 readings no 20 as supra, Cr, Pref of Epiphany)"
+]
+},
+"2026-01-06": {
+"c": "White",
+"t": "Tue after Epiphany.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"U.S.A.: As supra or André Bessette, Religious. Optional Mem. – Vespers of Memorial",
+"Where Epiphany is not transferred to Sunday: X White* EPIPHANY. Solemnity. – 2nd Vespers"
+]
+},
+"2026-01-07": {
+"c": "White",
+"t": "Wed after Epiphany.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Raymond of Penyafort, Priest. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-01-08": {
+"c": "White",
+"t": "Thu after Epiphany.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-01-09": {
+"c": "White",
+"t": "Fri after Epiphany.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-01-10": {
+"c": "White",
+"t": "Sat after Epiphany.",
+"r": "",
+"v": "1st Vespers of following",
+"n": [
+"Or Gregory of Nyssa, Bishop. Optional Mem."
+]
+},
+"2026-01-11": {
+"c": "White",
+"t": "Sun. BAPTISM OF THE LORD. Feast.",
+"r": "Feast",
+"v": "2nd Vespers, with which Christmas Time ends",
+"n": []
+},
+"2026-01-12": {
+"c": "Green",
+"t": "Mon of 1st Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-01-13": {
+"c": "Green",
+"t": "Tue of 1st Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Hilary, Bishop, Doctor of the Church. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-01-14": {
+"c": "Green",
+"t": "Wed of 1st Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-01-15": {
+"c": "White",
+"t": "Thu. Maur and Placid, Disciples of Benedict. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-01-16": {
+"c": "Green",
+"t": "Fri of 1st Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-01-17": {
+"c": "White",
+"t": "Sat. Anthony, Abbot. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-01-18": {
+"c": "Green",
+"t": "SECOND SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-01-19": {
+"c": "Green",
+"t": "Mon of 2nd Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-01-20": {
+"c": "Green",
+"t": "Tue of 2nd Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Fabian, Pope, Martyr. Optional Mem. – Vespers of Memorial",
+"Or Sebastian, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-01-21": {
+"c": "Red",
+"t": "Wed. Agnes, * Virgin, Martyr. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-01-22": {
+"c": "Green",
+"t": "Thu of 2nd Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Vincent, Deacon, Martyr. Optional Mem. – Vespers of Memorial",
+"U.S.A.: Or Violet or White Day of prayer for the legal protection of unborn children."
+]
+},
+"2026-01-23": {
+"c": "Green",
+"t": "Fri of 2nd Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"U.S.A.: As supra or Vincent, Deacon, Martyr (22 Jan.). Optional Mem. – Vespers of Memorial",
+"U.S.A.: As supra or Marianne Cope, Virgin. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-01-24": {
+"c": "White",
+"t": "Sat. Francis de Sales, Bishop, Religious Founder, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-01-25": {
+"c": "Green",
+"t": "THIRD SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-01-26": {
+"c": "Green",
+"t": "Mon of 3d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Robert, Alberic and Stephen, Abbots of Citeaux. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-01-27": {
+"c": "Green",
+"t": "Tue of 3d Week in Ordinary time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Timothy and Titus, Bishops (26 Jan.). Optional Mem. – Vespers of Memorial",
+"Or Angela Merici, Virgin, Religious Founder, Educator. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-01-28": {
+"c": "White",
+"t": "Wed. Thomas Aquinas, Priest, Religious, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-01-29": {
+"c": "Green",
+"t": "Thu of 3d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-01-30": {
+"c": "Green",
+"t": "Fri of 3d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-01-31": {
+"c": "White",
+"t": "Sat. John Bosco, Priest, Religious Founder, Educator. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-02-01": {
+"c": "Green",
+"t": "FOURTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-02-02": {
+"c": "White",
+"t": "Mon. PRESENTATION OF THE LORD. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-02-03": {
+"c": "Green",
+"t": "Tue of 4th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Ansgar, Bishop, Monk, Missionary. Optional Mem. – Vespers of Memorial",
+"Or Blaise, Bishop, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-02-04": {
+"c": "Green",
+"t": "Wed of 4th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-05": {
+"c": "Red",
+"t": "Thu. Agatha, * Virgin, Martyr. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-02-06": {
+"c": "Red",
+"t": "Fri. Paul Miki, Religious, Missionary, Martyr, and his Companions, Martyrs. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-02-07": {
+"c": "Green",
+"t": "Sat of 4th Week in Ordinary Times.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem."
+]
+},
+"2026-02-08": {
+"c": "Green",
+"t": "FIFTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-02-09": {
+"c": "Green",
+"t": "Mon of 5th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-10": {
+"c": "White",
+"t": "Tue. SCHOLASTICA, VIRGIN, RELIGIOUS FOUNDER. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-02-11": {
+"c": "Green",
+"t": "Wed of 5th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Benedict of Aniane, Abbot. Optional Mem. – Vespers of Memorial N.b.: The Roman Martyrology also supports celebrating Benedict of Aniane on Feb. 12",
+"Or Our Lady of Lourdes. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-02-12": {
+"c": "Green",
+"t": "Thu of 5th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-13": {
+"c": "Green",
+"t": "Fri of 5th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-14": {
+"c": "White",
+"t": "Sat. Cyril, Monk, Missionary, and Methodius, Bishop, Missionary. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-02-15": {
+"c": "Green",
+"t": "SIXTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-02-16": {
+"c": "Green",
+"t": "Mon of 6th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-17": {
+"c": "Green",
+"t": "Tue of 6th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Seven Founders of the Servite Order, Religious. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-02-18": {
+"c": "Violet",
+"t": "ASH WEDNESDAY (EF).",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-19": {
+"c": "Violet",
+"t": "† Thu after Ash Wednesday.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-20": {
+"c": "Violet",
+"t": "† Fri after Ash Wednesday.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-21": {
+"c": "Violet",
+"t": "† Sat after Ash Wednesday.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"At Lauds optional commemoration of Peter Damian, Bishop, Religious, Doctor of the Church. At Mass optional Collect of Peter Damian."
+]
+},
+"2026-02-22": {
+"c": "Violet",
+"t": "FIRST SUNDAY OF LENT.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-02-23": {
+"c": "Violet",
+"t": "† Mon of 1st Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"At Lauds and Vespers optional commemoration of Polycarp, Bishop, Martyr. At Mass optional Collect of Polycarp."
+]
+},
+"2026-02-24": {
+"c": "Violet",
+"t": "† Tue of 1st Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-25": {
+"c": "Violet",
+"t": "† Wed of 1st Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-26": {
+"c": "Violet",
+"t": "† Thu of 1st Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-02-27": {
+"c": "Violet",
+"t": "† Fri of 1st Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"At Lauds and Vespers optional commemoration of Gregory of Narek, Abbot and Doctor of the Church. At Mass optional Collect of Gregory of Narek."
+]
+},
+"2026-02-28": {
+"c": "Violet",
+"t": "† Sat of 1st Week of Lent.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-03-01": {
+"c": "Violet",
+"t": "SECOND SUNDAY OF LENT.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-03-02": {
+"c": "Violet",
+"t": "† Mon of 2nd Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-03": {
+"c": "Violet",
+"t": "† Tue of 2nd Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"U.S.A.: At Lauds and Vespers optional commemoration of Katharine Drexel, Virgin, Religious Founder. At Mass optional Collect of Katharine Drexel."
+]
+},
+"2026-03-04": {
+"c": "Violet",
+"t": "† Wed of 2nd Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"At Lauds and Vespers optional commemoration of Casimir. At Mass optional Collect of Casimir."
+]
+},
+"2026-03-05": {
+"c": "Violet",
+"t": "† Thu of 2nd Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-06": {
+"c": "Violet",
+"t": "† Fri of 2nd Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-07": {
+"c": "Violet",
+"t": "† Sat of 2nd Week of Lent.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"At Lauds optional commemoration of Perpetua and Felicity, Martyrs. At Mass optional Collect of Perpetua and Felicity."
+]
+},
+"2026-03-08": {
+"c": "Violet",
+"t": "THIRD SUNDAY OF LENT.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-03-09": {
+"c": "Violet",
+"t": "† Mon of 3d Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"At Lauds and Vespers optional commemoration of Frances of Rome, Married Woman, Religious Founder, Co-patron of Benedictine Oblates. At Mass optional Collect of Frances of Rome."
+]
+},
+"2026-03-10": {
+"c": "Violet",
+"t": "† Tue of 3d Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-11": {
+"c": "Violet",
+"t": "† Wed of 3d Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-12": {
+"c": "Violet",
+"t": "† Thu of 3d Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-13": {
+"c": "Violet",
+"t": "† Fri of 3d Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-14": {
+"c": "Violet",
+"t": "† Sat of 3d Week of Lent.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-03-15": {
+"c": "Rose or Violet",
+"t": "FOURTH SUNDAY OF LENT.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-03-16": {
+"c": "Violet",
+"t": "† Mon of 4th Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-17": {
+"c": "Violet",
+"t": "† Tue of 4th Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"At Lauds and Vespers optional commemoration of Patrick, Bishop, Missionary. At Mass optional Collect of Patrick."
+]
+},
+"2026-03-18": {
+"c": "Violet",
+"t": "† Wed of 4th Week of Lent.",
+"r": "",
+"v": "1st Vespers of following",
+"n": [
+"At Lauds optional commemoration of Cyril of Jerusalem, Bishop, Doctor of the Church. At Mass optional Collect of Cyril."
+]
+},
+"2026-03-19": {
+"c": "White",
+"t": "Thu. JOSEPH * SPOUSE OF THE VIRGIN MARY. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-03-20": {
+"c": "Violet",
+"t": "† Fri of 4th Week of Lent.",
+"r": "",
+"v": "1st Vespers of following OA",
+"n": []
+},
+"2026-03-21": {
+"c": "White",
+"t": "Sat. PASSING OF OUR HOLY FATHER BENEDICT, ABBOT. Solemnity.",
+"r": "Solemnity",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-03-22": {
+"c": "Violet",
+"t": "FIFTH SUNDAY OF LENT.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-03-23": {
+"c": "Violet",
+"t": "† Mon of 5th Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"At Lauds and Vespers optional commemoration of Toribio de Mogrovejo, Bishop. At Mass optional Collect of Toribio."
+]
+},
+"2026-03-24": {
+"c": "Violet",
+"t": "† Tue of 5th Week of Lent.",
+"r": "",
+"v": "1st Vespers of following",
+"n": []
+},
+"2026-03-25": {
+"c": "White",
+"t": "Wed. ANNUNCIATION OF THE LORD. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-03-26": {
+"c": "Violet",
+"t": "† Thu of 5th Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-27": {
+"c": "Violet",
+"t": "† Fri of 5th Week of Lent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-28": {
+"c": "Violet",
+"t": "† Sat of 5th Week of Lent.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-03-29": {
+"c": "Red",
+"t": "PALM SUNDAY OF THE PASSION OF THE LORD. Procession before Conventual or Principal Mass, Solemn Entrance before other well attended masses: Gospel no. 37 (Mt 21: 1-11), altar is kissed and incensed, but the greeting, Penitential Act, and “Lord, have mercy” are omitted and Mass begins with the Collect (but after Simple Entrance during entrance antiphon before other masses, Mass begins as usual), readings no. 38 (Is 50: 4-7; Ps 22: 8-9, 17-18, 19-20, 23-24; Phil 2: 6-11; Mt 26: 14—27: 66), Cr, Pref of this Sunday – 2nd Vespers",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-03-30": {
+"c": "Violet",
+"t": "MONDAY OF HOLY WEEK.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-03-31": {
+"c": "Violet",
+"t": "TUESDAY OF HOLY WEEK.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-04-01": {
+"c": "Violet",
+"t": "WEDNESDAY OF HOLY WEEK.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-04-02": {
+"c": "Violet",
+"t": "THURSDAY OF HOLY WEEK. Ordinary office of Lent up to the Evening Mass exclusive.",
+"r": "",
+"v": "Vespers is said only by those who did not participate in the Evening Mass",
+"n": [
+"Where some pastoral reason demands, the local Ordinary may permit that, in addition to the principal"
+]
+},
+"2026-04-03": {
+"c": "Red",
+"t": "THE PASSION OF THE LORD (GOOD FRIDAY) (EF), OA. Proper Office. Afternoon Liturgy of the Lord’s Passion, 3 readings no. 40 (Is 52: 13—53: 12; Ps 31: 2, 6, 12-13, 15-16, 17, 25; Heb 4: 14-16 & 5: 7-9; Jn 18: 1—19: 42) – Vespers is said only by those who did not participate in the Afternoon Liturgy",
+"r": "",
+"v": "Vespers is said only by those who did not participate in the Afternoon Liturgy",
+"n": []
+},
+"2026-04-04": {
+"c": "Violet",
+"t": "HOLY SATURDAY, OA. Proper Office – Vespers at usual hour; Compline is said only by those who do not participate in the Easter Vigil.",
+"r": "",
+"v": "Vespers at usual hour; Compline is said only by those who do not participate in the Easter Vigil",
+"n": []
+},
+"2026-04-05": {
+"c": "White",
+"t": "THE RESURRECTION OF THE LORD, EASTER SUNDAY, OA. Solemnity with an Octave:",
+"r": "Solemnity",
+"v": "Vespers of the solemnity, with which the Triduum ends",
+"n": []
+},
+"2026-04-06": {
+"c": "White",
+"t": "MONDAY IN THE OCTAVE OF EASTER. Solemnity.",
+"r": "Solemnity",
+"v": "Vespers of Octave",
+"n": []
+},
+"2026-04-07": {
+"c": "White",
+"t": "TUESDAY IN THE OCTAVE OF EASTER. Solemnity.",
+"r": "Solemnity",
+"v": "Vespers of Octave",
+"n": []
+},
+"2026-04-08": {
+"c": "White",
+"t": "WEDNESDAY IN THE OCTAVE OF EASTER. Solemnity.",
+"r": "Solemnity",
+"v": "Vespers of Octave",
+"n": []
+},
+"2026-04-09": {
+"c": "White",
+"t": "THURSDAY IN THE OCTAVE OF EASTER. Solemnity.",
+"r": "Solemnity",
+"v": "Vespers of Octave",
+"n": []
+},
+"2026-04-10": {
+"c": "White",
+"t": "FRIDAY IN THE OCTAVE OF EASTER. Solemnity.",
+"r": "Solemnity",
+"v": "Vespers of Octave",
+"n": []
+},
+"2026-04-11": {
+"c": "White",
+"t": "SATURDAY IN THE OCTAVE OF EASTER. Solemnity.",
+"r": "Solemnity",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-04-12": {
+"c": "White",
+"t": "SECOND SUNDAY OF EASTER (Divine Mercy),",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-04-13": {
+"c": "White",
+"t": "Mon of 2nd Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Martin I, Pope, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-04-14": {
+"c": "White",
+"t": "Tue of 2nd Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-04-15": {
+"c": "White",
+"t": "Wed of 2nd Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-04-16": {
+"c": "White",
+"t": "Thu of 2nd Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-04-17": {
+"c": "White",
+"t": "Fri of 2nd Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-04-18": {
+"c": "White",
+"t": "Sat of 2nd Week of Easter.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-04-19": {
+"c": "White",
+"t": "THIRD SUNDAY OF EASTER.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-04-20": {
+"c": "White",
+"t": "Mon of 3d Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-04-21": {
+"c": "White",
+"t": "Tue. Anselm, Bishop, Monk, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-04-22": {
+"c": "White",
+"t": "Wed of 3d Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-04-23": {
+"c": "White",
+"t": "Thu of 3d Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Adalbert, Bishop, Martyr. Optional Mem. – Vespers of Memorial",
+"Or George, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-04-24": {
+"c": "White",
+"t": "Fri of 3d Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Fidelis of Sigmaringen, Priest, Religious, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-04-25": {
+"c": "Red",
+"t": "Sat. MARK, EVANGELIST. Feast.",
+"r": "Feast",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-04-26": {
+"c": "White",
+"t": "FOURTH SUNDAY OF EASTER.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-04-27": {
+"c": "White",
+"t": "Mon of 4th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-04-28": {
+"c": "White",
+"t": "Tue of 4th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Peter Chanel, Priest, Religious, Missionary, Martyr. Optional Mem. – Vespers of Memorial",
+"Or Louis Grignon de Montfort, Priest, Religious Founder. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-04-29": {
+"c": "White",
+"t": "Wed. Catherine of Siena, Virgin, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-04-30": {
+"c": "White",
+"t": "Thu of 4th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Pius V, Pope, Religious. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-01": {
+"c": "White",
+"t": "Fri of 4th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Joseph the Worker. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-02": {
+"c": "White",
+"t": "Sat. Athanasius, Bishop and Doctor. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-05-03": {
+"c": "White",
+"t": "FIFTH SUNDAY OF EASTER.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-05-04": {
+"c": "White",
+"t": "Mon of 5th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-05-05": {
+"c": "White",
+"t": "Tue of 5th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-05-06": {
+"c": "White",
+"t": "Wed of 5th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-05-07": {
+"c": "White",
+"t": "Thu of 5th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-05-08": {
+"c": "White",
+"t": "Fri of 5th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-05-09": {
+"c": "White",
+"t": "Sat of 5th Week of Easter.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-05-10": {
+"c": "White",
+"t": "SIXTH SUNDAY OF EASTER.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-05-11": {
+"c": "White",
+"t": "Mon. Odo, Maiolus, Odilo, Hugh and Peter the Venerable, Abbots of Cluny. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-05-12": {
+"c": "White",
+"t": "Tue of 6th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Nereus and Achilleus, Martyrs. Optional Mem. – Vespers of Memorial",
+"Or Pancras, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-13": {
+"c": "White",
+"t": "Wed of 6th Week of Easter.",
+"r": "",
+"v": "1st Vespers of following OA",
+"n": [
+"Or Our Lady of Fatima. Optional Mem.",
+"Where Ascension is transferred to Sunday: Vespers of Weekday or of feastday"
+]
+},
+"2026-05-14": {
+"c": "White",
+"t": "Thu. ASCENSION OF THE LORD. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": [
+"Where Ascension is transferred to Sunday: Red MATTHIAS, * APOSTLE. Feast. – Vespers of Feast"
+]
+},
+"2026-05-15": {
+"c": "White",
+"t": "Fri. Pachomius, Abbot. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-05-16": {
+"c": "White",
+"t": "Sat of 6th Week of Easter.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Where Ascension is transferred to Sunday: As supra, but without Pref of Ascension – 1st Vespers of following OA; see above for Vigil Mass (13 May)"
+]
+},
+"2026-05-17": {
+"c": "White",
+"t": "SEVENTH SUNDAY OF EASTER.",
+"r": "",
+"v": "2nd Vespers",
+"n": [
+"Where Ascension is transferred to Sunday: X White * Sun. ASCENSION OF THE LORD. Solemnity. – 2nd Vespers"
+]
+},
+"2026-05-18": {
+"c": "White",
+"t": "Mon of 7th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or John I, Pope, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-19": {
+"c": "White",
+"t": "Tue of 7th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Celestine V, Pope, Hermit. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-20": {
+"c": "White",
+"t": "Wed of 7th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Bernardine of Siena, Priest, Religious, Missionary. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-21": {
+"c": "White",
+"t": "Thu of 7th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Christopher Magallanes, Priest, Martyr, and Companions, Martyrs. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-22": {
+"c": "White",
+"t": "Fri of 7th Week of Easter.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Rita of Cascia, Nun. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-23": {
+"c": "White",
+"t": "Sat of 7th Week of Easter.",
+"r": "",
+"v": "1st Vespers of following OA",
+"n": []
+},
+"2026-05-24": {
+"c": "Red",
+"t": "PENTECOST SUNDAY. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers, with which the Easter season ends",
+"n": []
+},
+"2026-05-25": {
+"c": "White",
+"t": "Mon. Blessed Virgin Mary, Mother of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-05-26": {
+"c": "Green",
+"t": "Tue of 8th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Gregory VII, Pope, Monk. Optional Mem. – Vespers of Memorial",
+"Or Mary Magdalene de’ Pazzi, Virgin, Nun. Optional Mem. – Vespers of Memorial",
+"Or Philip Neri, Priest, Religious Founder. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-27": {
+"c": "Green",
+"t": "Wed of 8th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Augustine of Canterbury, Bishop, Monk, Missionary. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-28": {
+"c": "Green",
+"t": "Thu of 8th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-05-29": {
+"c": "Green",
+"t": "Fri of 8th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Paul VI, Pope. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-05-30": {
+"c": "Green",
+"t": "Sat of 8th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem."
+]
+},
+"2026-05-31": {
+"c": "White",
+"t": "Sun. MOST HOLY TRINITY. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-06-01": {
+"c": "Red",
+"t": "Mon. Justin, Martyr. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-06-02": {
+"c": "Green",
+"t": "Tue of 9th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Marcellinus, * Priest, Martyr, and Peter, * Exorcist, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-06-03": {
+"c": "Red",
+"t": "Wed. Charles Lwanga, Catechist, Martyr, and his Companions, Martyrs. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": [
+"Where Corpus Christi is not transferred to Sunday: 1st Vespers of following OA. From after Vespers and throughout tomorrow “alleluia” is added to “You have given them bread” and its response."
+]
+},
+"2026-06-04": {
+"c": "Green",
+"t": "Thu of 9th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Where Corpus Christi is not transferred to Sunday: X White * MOST HOLY BODY AND BLOOD OF CHRIST. Solemnity. – 2nd Vespers"
+]
+},
+"2026-06-05": {
+"c": "Red",
+"t": "Fri. Boniface, Bishop, Monk, Missionary, Martyr. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-06-06": {
+"c": "Green",
+"t": "Sat of 9th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following OA",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Norbert, Bishop, Religious Founder. Optional Mem.",
+"Where Corpus Christi is not transferred to Sunday: 1st Vespers of following Sunday"
+]
+},
+"2026-06-07": {
+"c": "White",
+"t": "Sun. MOST HOLY BODY AND BLOOD OF CHRIST (Corpus Christi). Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": [
+"Where Corpus Christi is not transferred to Sunday: X Green TENTH SUNDAY IN ORDINARY TIME. – 2nd Vespers"
+]
+},
+"2026-06-08": {
+"c": "Green",
+"t": "Mon of 10th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-06-09": {
+"c": "Green",
+"t": "Tue of 10th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Ephrem of Syria, Deacon, Doctor of the Church. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-06-10": {
+"c": "Green",
+"t": "Wed of 10th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-06-11": {
+"c": "Red",
+"t": "Thu. Barnabas, * Apostle. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following",
+"n": []
+},
+"2026-06-12": {
+"c": "White",
+"t": "Fri. MOST SACRED HEART OF JESUS. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-06-13": {
+"c": "Green",
+"t": "Sat of 10th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Immaculate Heart of the Blessed Virgin Mary. Memorial.",
+"Or Anthony of Padua, Priest, Religious, Doctor of the Church. Memorial."
+]
+},
+"2026-06-14": {
+"c": "Green",
+"t": "ELEVENTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-06-15": {
+"c": "Green",
+"t": "Mon of 11th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-06-16": {
+"c": "Green",
+"t": "Tue of 11th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-06-17": {
+"c": "Green",
+"t": "Wed of 11th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-06-18": {
+"c": "Green",
+"t": "Thu of 11th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-06-19": {
+"c": "White",
+"t": "Fri. Romuald, Abbot, Religious Founder. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-06-20": {
+"c": "Green",
+"t": "Sat of 11th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem."
+]
+},
+"2026-06-21": {
+"c": "Green",
+"t": "TWELFTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-06-22": {
+"c": "Green",
+"t": "Mon of 12th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Paulinus of Nola, Bishop. Optional Mem. – Vespers of Memorial",
+"Or John Fisher, Bishop, Martyr, and Thomas More, Married Man, Martyr. Optional Mem. – Vespers of Memorial",
+"Diocese of Birmingham: Anniversary of Bishop’s installation tomorrow"
+]
+},
+"2026-06-23": {
+"c": "Green",
+"t": "Tue of 12th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following",
+"n": []
+},
+"2026-06-24": {
+"c": "White",
+"t": "Wed. NATIVITY OF JOHN THE BAPTIST.* Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-06-25": {
+"c": "Green",
+"t": "Thu of 12th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-06-26": {
+"c": "Green",
+"t": "Fri of 12th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-06-27": {
+"c": "Green",
+"t": "Sat of 12th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Cyril of Alexandria, Bishop, Doctor of the Church. Optional Mem.",
+"Where Peter and Paul is transferred to Sunday: 1st Vespers of following. Either before or after Vespers Proper Evening"
+]
+},
+"2026-06-28": {
+"c": "Green",
+"t": "THIRTEENTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "1st Vespers of following",
+"n": [
+"Where Peter and Paul is transferred to Sunday: X Red * Sun. PETER AND PAUL, ** APOSTLES (29 June.). Solemnity. – 2nd Vespers"
+]
+},
+"2026-06-29": {
+"c": "Red",
+"t": "Mon. PETER AND PAUL, ** APOSTLES. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": [
+"Where Peter and Paul is transferred to Sunday: Mon of 13th Week in Ordinary Time. – Vespers of Weekday"
+]
+},
+"2026-06-30": {
+"c": "Green",
+"t": "Tue of 13th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or The First Martyrs of Rome. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-01": {
+"c": "Green",
+"t": "Wed of 13th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"U.S.A.: As supra or Junípero Serra, Priest, Religious, Missionary. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-02": {
+"c": "Green",
+"t": "Thu of 13th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-07-03": {
+"c": "Red",
+"t": "Fri. THOMAS, * APOSTLE. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-07-04": {
+"c": "Green",
+"t": "Sat of 13th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Elizabeth of Portugal, Queen, Married Woman. Optional Mem.",
+"U.S.A.: INDEPENDENCE DAY."
+]
+},
+"2026-07-05": {
+"c": "Green",
+"t": "FOURTEENTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-07-06": {
+"c": "Green",
+"t": "Mon of 14th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Maria Goretti, Virgin, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-07": {
+"c": "Green",
+"t": "Tue of 14th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-07-08": {
+"c": "Green",
+"t": "Wed of 14th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-07-09": {
+"c": "Green",
+"t": "Thu of 14th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Augustine Zhao Rong, Priest, Martyr, and Companions, Martyrs. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-10": {
+"c": "Green",
+"t": "Fri of 14th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-07-11": {
+"c": "White",
+"t": "Sat. BENEDICT, PATRIARCH OF WESTERN MONASTICISM. Feast.",
+"r": "Feast",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-07-12": {
+"c": "Green",
+"t": "FIFTEENTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-07-13": {
+"c": "Green",
+"t": "Mon of 15th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Henry, Emperor, Married Man (Co-Patron of Benedictine Oblates). Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-14": {
+"c": "Green",
+"t": "Tue of 15th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Camillus de Lellis, Priest. Optional Mem. – Vespers of Memorial",
+"U.S.A.: As supra or Kateri Tekakwitha, Virgin. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-15": {
+"c": "White",
+"t": "Wed. Bonaventure, Bishop, Religious, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-07-16": {
+"c": "Green",
+"t": "Thu of 15th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Our Lady of Mount Carmel. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-17": {
+"c": "Green",
+"t": "Fri of 15th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-07-18": {
+"c": "Green",
+"t": "Sat of 15th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"U.S.A.: As supra or Camillus de Lellis, Priest (14 Jul.). Optional Mem."
+]
+},
+"2026-07-19": {
+"c": "Green",
+"t": "SIXTEENTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-07-20": {
+"c": "Green",
+"t": "Mon of 16th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Apollinaris, Bishop, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-21": {
+"c": "Green",
+"t": "Tue of 16th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Lawrence of Brindisi, Priest, Religious, Doctor of the Church. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-22": {
+"c": "White",
+"t": "Wed. MARY MAGDALENE, APOSTLE TO THE APOSTLES. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-07-23": {
+"c": "Green",
+"t": "Thu of 16th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Bridget of Sweden, Married Woman, Religious Founder. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-24": {
+"c": "Green",
+"t": "Fri of 16th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Sharbel Makhlūf, Priest. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-25": {
+"c": "Red",
+"t": "Sat. JAMES, * APOSTLE. Feast.",
+"r": "Feast",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-07-26": {
+"c": "Green",
+"t": "SEVENTEENTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-07-27": {
+"c": "Green",
+"t": "Mon of 17th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-07-28": {
+"c": "Green",
+"t": "Tue of 17th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-07-29": {
+"c": "White",
+"t": "Wed. Martha, Mary and Lazarus, Hosts of the Lord. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-07-30": {
+"c": "Green",
+"t": "Thu of 17th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Peter Chrysologus, Bishop, Doctor of the Church. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-07-31": {
+"c": "White",
+"t": "Fri. Ignatius of Loyola, Priest, Religious Founder. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-08-01": {
+"c": "White",
+"t": "Sat. Alphonsus Liguori, Bishop, Religious Founder, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-08-02": {
+"c": "Green",
+"t": "EIGHTEENTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-08-03": {
+"c": "Green",
+"t": "Mon of 18th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-08-04": {
+"c": "White",
+"t": "Tue. John Mary Vianney, Priest. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-08-05": {
+"c": "Green",
+"t": "Wed of 18th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or The Dedication of the Basilica of Saint Mary Major in Rome. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-08-06": {
+"c": "White",
+"t": "Thu. THE TRANSFIGURATION OF THE LORD. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-08-07": {
+"c": "Green",
+"t": "Fri of 18th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Sixtus II, * Pope, Martyr, and his Companions, Martyrs. Optional Mem. – Vespers of Memorial",
+"Or Cajetan, Priest, Religious Founder. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-08-08": {
+"c": "White",
+"t": "Sat. Dominic, Priest, Religious Founder. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-08-09": {
+"c": "Green",
+"t": "NINETEENTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-08-10": {
+"c": "Red",
+"t": "Mon. LAWRENCE, * DEACON, MARTYR. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-08-11": {
+"c": "White",
+"t": "Tue. Clare, Virgin, Religious Founder. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-08-12": {
+"c": "Green",
+"t": "Wed of 19th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Jane Frances de Chantal, Married Woman, Religious Founder. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-08-13": {
+"c": "Green",
+"t": "Thu of 19th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Pontian, Pope, Martyr, and Hippolytus, Priest, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-08-14": {
+"c": "Red",
+"t": "Fri. Maximilian Kolbe, Priest, Religious, Martyr. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following OA",
+"n": [
+"Where Assumption is transferred to Sunday: Vespers of Memorial"
+]
+},
+"2026-08-15": {
+"c": "White",
+"t": "Sat. THE ASSUMPTION OF THE VIRGIN MARY. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": [
+"Where Assumption is transferred to Sunday: Sat of 19th Week in Ordinary Time. – 1st Vespers of following OA. Vigil Mass on the evening either before or after Vespers (see under August 14 above)"
+]
+},
+"2026-08-16": {
+"c": "Green",
+"t": "TWENTIETH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": [
+"Where Assumption is transferred to Sunday: X White * ASSUMPTION (15 Aug.). Solemnity. – 2nd Vespers"
+]
+},
+"2026-08-17": {
+"c": "Green",
+"t": "Mon of 20th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-08-18": {
+"c": "Green",
+"t": "Tue of 20th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-08-19": {
+"c": "Green",
+"t": "Wed of 20th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Bernard Tolomei, Abbot. Optional Mem. – Vespers of Memorial",
+"Or John Eudes, Priest, Religious Founder, Educator. Optional Mem. – Vespers of Memorial",
+"St. Bernard Abbey: 1st Vespers of following"
+]
+},
+"2026-08-20": {
+"c": "White",
+"t": "Thu. Bernard, Abbot, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": [
+"St. Bernard Abbey: White BERNARD, TITULAR. Solemnity. – 2nd Vespers"
+]
+},
+"2026-08-21": {
+"c": "White",
+"t": "Fri. Pius X, Pope. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-08-22": {
+"c": "White",
+"t": "Sat. The Queenship of the Virgin Mary. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-08-23": {
+"c": "Green",
+"t": "TWENTY-FIRST SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-08-24": {
+"c": "Red",
+"t": "Mon. BARTHOLOMEW, * APOSTLE. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-08-25": {
+"c": "Green",
+"t": "Tue of 21st Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Louis of France, King, Married Man. Optional Mem. – Vespers of Memorial",
+"Or Joseph Calasanz, Priest, Religious Founder, Educator. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-08-26": {
+"c": "Green",
+"t": "Wed of 21st Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-08-27": {
+"c": "White",
+"t": "Thu. Monica, Married Woman. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-08-28": {
+"c": "White",
+"t": "Fri. Augustine, Bishop, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-08-29": {
+"c": "Red",
+"t": "Sat. The Passion of John the Baptist.* Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-08-30": {
+"c": "Green",
+"t": "TWENTY-SECOND SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-08-31": {
+"c": "Green",
+"t": "Mon of 22d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-01": {
+"c": "Green",
+"t": "Tue of 22d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-02": {
+"c": "Green",
+"t": "Wed of 22d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-03": {
+"c": "White",
+"t": "Thu. GREGORY THE GREAT, POPE, MONK, DOCTOR OF THE CHURCH. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-09-04": {
+"c": "Green",
+"t": "Fri of 22d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-05": {
+"c": "Green",
+"t": "Sat of 22d Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Teresa of Calcutta, Virgin, Religious. Optional Mem."
+]
+},
+"2026-09-06": {
+"c": "Green",
+"t": "TWENTY-THIRD SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-09-07": {
+"c": "Green",
+"t": "Mon of 23d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"U.S.A.: LABOR DAY. Unless a solemnity occurs, the following may be celebrated as the Conventual or Principal Mass: White Mass for the Sanctification of Human Labor, Gl, readings no. 907ff., Pref for Sundays V"
+]
+},
+"2026-09-08": {
+"c": "White",
+"t": "Tue. NATIVITY OF THE VIRGIN MARY. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-09-09": {
+"c": "Green",
+"t": "Wed of 23d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"U.S.A.: as supra or Peter Claver, Priest, Religious, Missionary. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-09-10": {
+"c": "Green",
+"t": "Thu of 23d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-11": {
+"c": "Green",
+"t": "Fri of 23d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-12": {
+"c": "Green",
+"t": "Sat of 23d Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Most Holy Name of Mary. Optional Mem."
+]
+},
+"2026-09-13": {
+"c": "Green",
+"t": "TWENTY-FOURTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-09-14": {
+"c": "Red",
+"t": "Mon. EXALTATION OF THE HOLY CROSS. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-09-15": {
+"c": "White",
+"t": "Tue. Our Lady of Sorrows. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-09-16": {
+"c": "Red",
+"t": "Wed. Cornelius, * Pope, Martyr, and Cyprian, * Bishop, Martyr. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-09-17": {
+"c": "Green",
+"t": "Thu of 24th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Hildegard, Nun, Doctor of the Church. Optional Mem. – Vespers of Memorial",
+"Or Robert Bellarmine, Bishop, Religious, Doctor of the Church. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-09-18": {
+"c": "Green",
+"t": "Fri of 24th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-19": {
+"c": "Green",
+"t": "Sat of 24th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Januarius, Bishop, Martyr. Optional Mem."
+]
+},
+"2026-09-20": {
+"c": "Green",
+"t": "TWENTY-FIFTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-09-21": {
+"c": "Red",
+"t": "Mon. MATTHEW, * APOSTLE, EVANGE-LIST. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-09-22": {
+"c": "Green",
+"t": "Tue of 25th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-23": {
+"c": "White",
+"t": "Wed. Pius of Pietrelcina, Priest, Religious. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-09-24": {
+"c": "Green",
+"t": "Thu of 25th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-25": {
+"c": "Green",
+"t": "Fri of 25th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-09-26": {
+"c": "Green",
+"t": "Sat of 25th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Cosmas and Damian, ** Martyrs. Optional Mem."
+]
+},
+"2026-09-27": {
+"c": "Green",
+"t": "TWENTY-SIXTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-09-28": {
+"c": "Green",
+"t": "Mon of 26th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Wenceslaus, Duke, Martyr. Optional Mem. – Vespers of Memorial",
+"Or Lawrence Ruiz, Married Man, Martyr, and his Companions, Martyrs. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-09-29": {
+"c": "White",
+"t": "Tue. MICHAEL, GABRIEL, AND RAPHAEL, ARCHANGELS. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-09-30": {
+"c": "White",
+"t": "Wed. Jerome, Priest, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-10-01": {
+"c": "White",
+"t": "Thu. Thérèse of the Child Jesus, Virgin, Nun, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-10-02": {
+"c": "White",
+"t": "Fri. GUARDIAN ANGELS, PATRON OF CONGREGATION. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-10-03": {
+"c": "Green",
+"t": "Sat of 26th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Bl Columba Marmion, Abbot. Optional Mem."
+]
+},
+"2026-10-04": {
+"c": "Green",
+"t": "TWENTY-SEVENTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-10-05": {
+"c": "Green",
+"t": "Mon of 27th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Faustina Kowalska, Virgin. Optional Mem. – Vespers of Memorial",
+"U.S.A.: As supra or Bl Francis Xavier Seelos, Priest. Optional Mem."
+]
+},
+"2026-10-06": {
+"c": "White",
+"t": "Tue. Bruno, Priest, Hermit, Religious Founder. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-10-07": {
+"c": "White",
+"t": "Wed. Our Lady of the Rosary. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-10-08": {
+"c": "Green",
+"t": "Thu of 27th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-10-09": {
+"c": "Green",
+"t": "Fri of 27th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Denis, Bishop, Martyr, and his Companions, Martyrs. Optional Mem. – Vespers of Memorial",
+"Or John Leonardi, Priest, Religious Founder. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-10-10": {
+"c": "Green",
+"t": "Sat of 27th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem."
+]
+},
+"2026-10-11": {
+"c": "Green",
+"t": "TWENTY-EIGHTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-10-12": {
+"c": "Green",
+"t": "Mon of 28th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-10-13": {
+"c": "Green",
+"t": "Tue of 28th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-10-14": {
+"c": "Green",
+"t": "Wed of 28th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Callistus I, Pope, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-10-15": {
+"c": "White",
+"t": "Thu. Teresa of Jesus, Virgin, Nun, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-10-16": {
+"c": "Green",
+"t": "Fri of 28th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Hedwig, Married Woman, Religious. Optional Mem. – Vespers of Memorial",
+"Or Margaret Mary Alacoque, Nun, Religious. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-10-17": {
+"c": "Red",
+"t": "Sat. Ignatius of Antioch, Bishop, Martyr. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-10-18": {
+"c": "Green",
+"t": "TWENTY-NINTH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-10-19": {
+"c": "Green",
+"t": "Mon of 29th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Isaac Jogues and John de Brébeuf, Priests, Religious, Missionaries, Martyrs and their Companions, Martyrs. Optional Mem. – Vespers of Memorial",
+"Or Paul of the Cross, Priest, Religious Founder. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-10-20": {
+"c": "Green",
+"t": "Tue of 29th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"U.S.A.: As supra or Paul of the Cross, Priest, Religious Founder (19 Oct.). Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-10-21": {
+"c": "Green",
+"t": "Wed of 29th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-10-22": {
+"c": "Green",
+"t": "Thu of 29th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or John Paul II, Pope. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-10-23": {
+"c": "Green",
+"t": "Fri of 29th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or John of Capistrano, Priest, Religious, Missionary. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-10-24": {
+"c": "Green",
+"t": "Sat of 29th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Anthony Mary Claret, Bishop, Religious Founder. Optional Mem."
+]
+},
+"2026-10-25": {
+"c": "Green",
+"t": "THIRTIETH SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-10-26": {
+"c": "Green",
+"t": "Mon of 30th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-10-27": {
+"c": "Green",
+"t": "Tue of 30th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-10-28": {
+"c": "Red",
+"t": "Wed. SIMON AND JUDE, ** APOSTLES. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-10-29": {
+"c": "Green",
+"t": "Thu of 30th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-10-30": {
+"c": "Green",
+"t": "Fri of 30th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-10-31": {
+"c": "Green",
+"t": "Sat of 30th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following OA",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem."
+]
+},
+"2026-11-01": {
+"c": "White",
+"t": "Sun. ALL SAINTS. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-11-02": {
+"c": "White, Violet or Black",
+"t": "Mon. COMMEMORATION OF ALL THE FAITHFUL DEPARTED.",
+"r": "",
+"v": "Vespers of Dead",
+"n": []
+},
+"2026-11-03": {
+"c": "Green",
+"t": "Tue of 31st Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Martin de Porres, Religious. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-11-04": {
+"c": "White",
+"t": "Wed. Charles Borromeo, Bishop. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-11-05": {
+"c": "Green",
+"t": "Thu of 31st Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-11-06": {
+"c": "Green",
+"t": "Fri of 31st Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-11-07": {
+"c": "Green",
+"t": "Sat of 31st Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem.",
+"Or Willibrord, Bishop. Optional Mem."
+]
+},
+"2026-11-08": {
+"c": "Green",
+"t": "THIRTY-SECOND SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-11-09": {
+"c": "White",
+"t": "Mon. DEDICATION OF THE LATERAN BASILICA IN ROME. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-11-10": {
+"c": "White",
+"t": "Tue. Leo the Great, Pope, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-11-11": {
+"c": "White",
+"t": "Wed. MARTIN OF TOURS, BISHOP. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-11-12": {
+"c": "Green",
+"t": "Thu of 32d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Theodore of Studis, Abbot. Optional Mem. – Vespers of Memorial",
+"Or Josaphat, Bishop, Monk, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-11-13": {
+"c": "Green",
+"t": "Fri of 32d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"U.S.A.: As supra or Frances Xavier Cabrini, Virgin, Religious Founder, Missionary. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-11-14": {
+"c": "Green",
+"t": "Sat of 32d Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem."
+]
+},
+"2026-11-15": {
+"c": "Green",
+"t": "THIRTY-THIRD SUNDAY IN ORDINARY TIME.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-11-16": {
+"c": "White",
+"t": "Mon. Gertrude the Great, Virgin, Nun. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-11-17": {
+"c": "Green",
+"t": "Tue of 33d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Margaret of Scotland, Queen, Married Woman. Optional Mem. – Vespers of Memorial",
+"Or Elizabeth of Hungary, Married Woman, Religious. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-11-18": {
+"c": "Green",
+"t": "Wed of 33d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or The Dedication of the Basilicas of the Apostles Peter and Paul** in Rome. Optional Mem. – Vespers of Memorial",
+"U.S.A.: As supra or Rose Philippine Duchesne, Virgin, Religious, Missionary. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-11-19": {
+"c": "Green",
+"t": "Thu of 33d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Mechtild, Virgin, Nun. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-11-20": {
+"c": "Green",
+"t": "Fri of 33d Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-11-21": {
+"c": "White",
+"t": "Sat. Presentation of the Virgin Mary. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following",
+"n": []
+},
+"2026-11-22": {
+"c": "White",
+"t": "Sun. JESUS CHRIST, KING OF THE UNIVERSE. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-11-23": {
+"c": "Green",
+"t": "Mon of 34th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Clement I, * Pope, Martyr. Optional Mem. – Vespers of Memorial",
+"Or Columban, Abbot, Missionary. Optional Mem. – Vespers of Memorial",
+"U.S.A. and Mexico: As supra or Bl. Miguel Agustín Pro, Priest, Religious, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-11-24": {
+"c": "Red",
+"t": "Tue. Andrew Dũng-Lạc, Priest, Martyr, and his Companions, Martyrs. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-11-25": {
+"c": "Green",
+"t": "Wed of 34th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Catherine of Alexandria, Virgin, Martyr. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-11-26": {
+"c": "Green",
+"t": "Thu of 34th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Silvester, Abbot. Optional Mem. – Vespers of Memorial",
+"U.S.A.: THANKSGIVING DAY."
+]
+},
+"2026-11-27": {
+"c": "Green",
+"t": "Fri of 34th Week in Ordinary Time.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-11-28": {
+"c": "Green",
+"t": "Sat of 34th Week in Ordinary Time.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saturday Office of Blessed Virgin Mary. Optional Mem."
+]
+},
+"2026-11-29": {
+"c": "Violet",
+"t": "FIRST SUNDAY OF ADVENT.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-11-30": {
+"c": "Red",
+"t": "Mon. ANDREW, * APOSTLE. Feast.",
+"r": "Feast",
+"v": "Vespers of Feast",
+"n": []
+},
+"2026-12-01": {
+"c": "Violet",
+"t": "Tue of 1st Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Diocese of Birmingham: White ANNIVERSARY OF DEDICATION OF CATHEDRAL. Feast."
+]
+},
+"2026-12-02": {
+"c": "Violet",
+"t": "Wed of 1st Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-12-03": {
+"c": "White",
+"t": "Thu. Francis Xavier, Priest, Religious, Missionary. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-12-04": {
+"c": "Violet",
+"t": "Fri of 1st Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or John of Damascus, Priest, Monk, Doctor of the Church. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-12-05": {
+"c": "Violet",
+"t": "Sat of 1st Week of Advent.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": [
+"Or Saba, Abbot. Optional Mem."
+]
+},
+"2026-12-06": {
+"c": "Violet",
+"t": "SECOND SUNDAY OF ADVENT.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-12-07": {
+"c": "White",
+"t": "Mon. Ambrose, Bishop, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "1st Vespers of following OA",
+"n": []
+},
+"2026-12-08": {
+"c": "White",
+"t": "Tue. IMMACULATE CONCEPTION OF THE VIRGIN MARY. Solemnity.",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-12-09": {
+"c": "Violet",
+"t": "Wed of 2nd Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-12-10": {
+"c": "Violet",
+"t": "Thu of 2nd Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Our Lady of Loreto. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-12-11": {
+"c": "Violet",
+"t": "Fri of 2nd Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"Or Damasus I, Pope. Optional Mem. – Vespers of Memorial"
+]
+},
+"2026-12-12": {
+"c": "White",
+"t": "Sat. OUR LADY OF GUADALUPE. Feast.",
+"r": "Feast",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-12-13": {
+"c": "Rose or Violet",
+"t": "THIRD SUNDAY OF ADVENT.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-12-14": {
+"c": "White",
+"t": "Mon. John of the Cross, Priest, Religious, Doctor of the Church. Memorial.",
+"r": "Memorial",
+"v": "Vespers of Memorial",
+"n": []
+},
+"2026-12-15": {
+"c": "Violet",
+"t": "Tue of 3d Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-12-16": {
+"c": "Violet",
+"t": "Wed of 3d Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-12-17": {
+"c": "Violet",
+"t": "† Thu of 3d Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-12-18": {
+"c": "Violet",
+"t": "† Fri of 3d Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-12-19": {
+"c": "Violet",
+"t": "† Sat of 3d Week of Advent.",
+"r": "",
+"v": "1st Vespers of following Sunday",
+"n": []
+},
+"2026-12-20": {
+"c": "Violet",
+"t": "FOURTH SUNDAY OF ADVENT.",
+"r": "",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-12-21": {
+"c": "Violet",
+"t": "† Mon of 4th Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"At Lauds and Vespers optional commemoration of Peter Canisius, Priest, Religious, Doctor of the Church. At Mass optional Collect of Peter."
+]
+},
+"2026-12-22": {
+"c": "Violet",
+"t": "† Tue of 4th Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": []
+},
+"2026-12-23": {
+"c": "Violet",
+"t": "† Wed of 4th Week of Advent.",
+"r": "",
+"v": "Vespers of Weekday",
+"n": [
+"At Lauds and Vespers optional commemoration of John of Kanty, Priest. At Mass optional Collect of John."
+]
+},
+"2026-12-24": {
+"c": "Violet",
+"t": "† Thu of 4th Week of Advent.",
+"r": "",
+"v": "1st Vespers of following OA",
+"n": []
+},
+"2026-12-25": {
+"c": "White",
+"t": "Fri. THE NATIVITY OF THE LORD. Solemnity with an Octave:",
+"r": "Solemnity",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-12-26": {
+"c": "Red",
+"t": "Sat. STEPHEN, * FIRST MARTYR. Feast.",
+"r": "Feast",
+"v": "1st Vespers of following",
+"n": []
+},
+"2026-12-27": {
+"c": "White",
+"t": "Sun. HOLY FAMILY. Feast.",
+"r": "Feast",
+"v": "2nd Vespers",
+"n": []
+},
+"2026-12-28": {
+"c": "Red",
+"t": "Mon. THE HOLY INNOCENTS, MARTYRS. Feast.",
+"r": "Feast",
+"v": "Vespers of Octave (not of Innocents)",
+"n": []
+},
+"2026-12-29": {
+"c": "White",
+"t": "† Tue. FIFTH DAY IN THE OCTAVE OF CHRISTMAS.",
+"r": "",
+"v": "Vespers of Octave",
+"n": [
+"At Lauds and Vespers optional commemoration of Thomas Becket, Bishop, Martyr. At Mass optional Collect of Thomas."
+]
+},
+"2026-12-30": {
+"c": "White",
+"t": "† Wed. SIXTH DAY IN THE OCTAVE OF CHRISTMAS.",
+"r": "",
+"v": "Vespers of Octave",
+"n": []
+},
+"2026-12-31": {
+"c": "White",
+"t": "† Thu. SEVENTH DAY IN THE OCTAVE OF CHRISTMAS.",
+"r": "",
+"v": "1st Vespers of following OA",
+"n": [
+"At Lauds optional commemoration of Sylvester I, Pope. At Mass optional Collect of Sylvester."
+]
+}
+}

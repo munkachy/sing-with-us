@@ -27,9 +27,12 @@
     var xmas = new Date(y, 11, 25), back = xmas.getDay() || 7;
     return addDays(xmas, -back - 21);
   }
-  function endOfChristmastide(y) {  // Baptism of the Lord: first Sunday after Jan 6
-    var jan7 = new Date(y, 0, 7);
-    return addDays(jan7, (7 - jan7.getDay()) % 7);
+  // U.S. calendar (as in the Congregation's ordo): Epiphany is the Sunday from 2 to 8 January; the Baptism
+  // of the Lord is the next Sunday, or the Monday after Epiphany when Epiphany falls on 7 or 8 January.
+  function epiphany(y) { var jan2 = new Date(y, 0, 2); return addDays(jan2, (7 - jan2.getDay()) % 7); }
+  function endOfChristmastide(y) {
+    var ep = epiphany(y);
+    return addDays(ep, ep.getDate() >= 7 ? 1 : 7);
   }
 
   // What the calendar says for a date: which volume, and which psalter week.
@@ -90,7 +93,10 @@
     } else tags.push(dated);
     var hf = new Date(y, 11, 26 + ((7 - new Date(y, 11, 26).getDay()) % 7));   // the Sunday after Christmas
     if (same(d, hf.getMonth() === 11 ? hf : new Date(y, 11, 30))) tags.unshift("xmas:holyfamily");
-    if (m === 0 && dd >= 2 && dd <= 5 && wd === 0) tags.unshift("xmas:sun2");
+    var ep = epiphany(y);
+    if (m === 0 && dd >= 2 && d < ep) tags.unshift("xmas:before-epiphany");
+    if (d > ep && d < bapt) tags.unshift("xmas:after-epiphany");
+    if (same(d, ep)) tags.unshift("xmas:epiphany");
     if (same(d, bapt)) tags.unshift("xmas:baptism");
     tags.push({ e: daysBetween(e, d) });
     var ck = addDays(adv, -7);
@@ -231,10 +237,51 @@
   // Magnificat antiphon is the Sunday's own (Year I/II at I Vespers, Year A/B/C at II Vespers), sung in the
   // first alternate tone the antiphon names, then the antiphon again and the psalter's Conclusion.
   var asm = null, plain = false;
+  // ---- The Congregation's ordo (ordo-YEAR.json, read from amcass.org's PDF by books/ordo.py) ----
+  var ordos = {};
+  function ordoYear(y) {
+    if (!(y in ordos)) {
+      ordos[y] = null;
+      fetch("ordo-" + y + ".json").then(function (r) { if (!r.ok) throw 0; return r.json(); })
+        .then(function (o) { ordos[y] = o; render(); }, function () {});
+    }
+    return ordos[y];
+  }
+  function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function ordoDay(d) { var o = ordoYear(d.getFullYear()); return o ? o[ymd(d)] || null : undefined; }
+  var OURS = /^(St\. Bernard Abbey|Diocese of Birmingham|Province of Mobile)/;
+  // Is tonight's Vespers the Sunday's? (undefined when there is no ordo for that year)
+  function sundayVespers(d) {
+    var o = ordoDay(d);
+    if (!o) return o === null ? false : undefined;
+    if (o.n.some(function (n) { return /^St\. Bernard Abbey/.test(n) && /Vespers|Solemnity|Feast/.test(n); })) return false;
+    if (d.getDay() === 6) return /^1st Vespers of following Sunday/.test(o.v);
+    return /SUNDAY IN ORDINARY TIME/.test(o.t) && /^2nd Vespers/.test(o.v);
+  }
+  function clean(t) { return t.replace(/^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\. /, "").replace(/,? OA\b/, "").replace(/\.$/, ""); }
+  function ordoNote() {
+    var el = $("#ordo-note"), d = dayDate(), o = state.book === "psalter" && !state.ref ? ordoDay(d) : null;
+    if (!o) { el.hidden = true; return; }
+    var ours = o.n.filter(function (n) { return OURS.test(n); }), rest = o.n.filter(function (n) { return !OURS.test(n); });
+    el.innerHTML = "";
+    var b = document.createElement("b"); b.textContent = "Ordo, " + d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) + ": ";
+    var v = o.v, next = /^1st Vespers of following\b/.test(v) && ordoDay(addDays(d, 1));
+    if (next) v = "1st Vespers of " + clean(next.t).replace(/\.\s*(Solemnity|Feast|Memorial).*$/, "");   // name the day whose Vespers they are (OA: a holy day of obligation)
+    el.appendChild(b); el.appendChild(document.createTextNode(clean(o.t) + (v ? " – " + v : "")));
+    ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
+    if (rest.length) {
+      var det = document.createElement("details"), sm = document.createElement("summary"); sm.textContent = "More from the ordo";
+      det.appendChild(sm); rest.forEach(function (n) { var p = document.createElement("p"); p.textContent = n; det.appendChild(p); });
+      el.appendChild(det);
+    }
+    el.hidden = false;
+  }
   function dayDate() { return addDays(midnight(now), state.day - now.getDay()); }
   function sundayRecipe() {
     if (!asm || plain || state.ref || state.book !== "psalter" || state.hour !== 3 || (state.day !== 0 && state.day !== 6)) return null;
     var sun = state.day === 6 ? addDays(dayDate(), 1) : dayDate();
+    var sv = sundayVespers(dayDate());
+    if (sv === false) return null;   // the ordo keeps something else tonight
     var ot = tagsFor(sun).tags.filter(function (t) { return typeof t === "object" && "n" in t; })[0];
     if (!ot) return null;
     var first = state.day === 6, y = sun.getFullYear();
@@ -444,7 +491,7 @@
     if (same(d, addDays(adv, -7))) hymn = "king";
     if (d >= adv && d < new Date(y, 11, 25)) hymn = "advent";
     else if (m === 11 && dd >= 25) hymn = "nativity";
-    else if (m === 0 && d < bapt) hymn = dd < 6 ? "nativity" : "epiphany";
+    else if (m === 0 && d < bapt) hymn = d < epiphany(y) ? "nativity" : "epiphany";
     else if (same(d, bapt)) hymn = "baptism";
     else if (d >= ash && d < e) hymn = "lent";
     else if (d >= e && d < asc) hymn = "easterA";
@@ -497,7 +544,7 @@
     document.querySelectorAll("[data-book]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.book === state.book)); });
     if (inBook) fillBook();
     if (!$("#pagebox").hidden && books) $("#page-book").textContent = books[bookKey()].label;
-    todayNote();
+    todayNote(); ordoNote();
     var weekly = state.hour <= 2;
     $("#now-title").textContent = DAYS[state.day] + (weekly ? " · Week " + ROMAN[state.week] : "") + " · " + HOURS[state.hour];
     if (inBook) $("#now-title").textContent = books[state.book].label + " · " + books[state.book].sections[state.sec[state.book]].title;
@@ -618,5 +665,5 @@
   }).then(function () { todayNote(); if (state.hour === 3 && (state.day === 0 || state.day === 6)) render(); }, function () {});
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
   $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });
-  window.PSALTER = { tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
+  window.PSALTER = { epiphany: epiphany, ordoDay: ordoDay, sundayVespers: sundayVespers, tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
 })();

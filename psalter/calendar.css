@@ -1,0 +1,123 @@
+/* The ordo calendar. Colors come from the site's themes (cloister, habit, glass);
+   the liturgical colors are tuned for each so they read on parchment, black and blue glass. */
+:root, [data-theme="cloister"] {
+  --lc-white: #fffdf7; --lc-white-edge: #c9b98f; --lc-red: #a8231d; --lc-green: #2f7a46;
+  --lc-violet: #5e3a8c; --lc-rose: #d48aa5; --lc-black: #2a2420; --lc-none: var(--rule);
+  --cell-bg: var(--surface); --cell-edge: var(--rule); --cell-tint: 10%;
+}
+[data-theme="habit"] {
+  --lc-white: #efe6d2; --lc-white-edge: #c8a45a; --lc-red: #c2463c; --lc-green: #4f9a63;
+  --lc-violet: #8a6cc0; --lc-rose: #d99ab2; --lc-black: #5a5650;
+  --cell-bg: #111; --cell-edge: #2c2a27; --cell-tint: 12%;
+}
+[data-theme="glass"] {
+  --lc-white: #f6f0e3; --lc-white-edge: #ffd36b; --lc-red: #e2475f; --lc-green: #1f9d63;
+  --lc-violet: #8b5cf6; --lc-rose: #f29bbd; --lc-black: #5b6178;
+  --cell-bg: #151e48; --cell-edge: #0a0f26; --cell-tint: 22%;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --lc-white: #efe6d2; --lc-white-edge: #c8a45a; --lc-red: #c2463c; --lc-green: #4f9a63;
+    --lc-violet: #8a6cc0; --lc-rose: #d99ab2; --lc-black: #5a5650;
+    --cell-bg: #111; --cell-edge: #2c2a27; --cell-tint: 12%;
+  }
+}
+.lc-white { --lc: var(--lc-white); } .lc-red { --lc: var(--lc-red); } .lc-green { --lc: var(--lc-green); }
+.lc-violet { --lc: var(--lc-violet); } .lc-rose { --lc: var(--lc-rose); } .lc-black { --lc: var(--lc-black); } .lc-none { --lc: var(--lc-none); }
+
+.ordo-page .wrap { max-width: 64rem; }
+.ordo-back { margin: .4rem 0 0; font-size: .95rem; }
+.ordo-back a { color: var(--link); text-decoration: none; }
+.ordo-head { text-align: center; margin: .6rem 0 1.2rem; }
+.ordo-kicker { font-family: "Cinzel", serif; letter-spacing: .14em; text-transform: uppercase; font-size: .78rem; color: var(--muted); margin: 0; }
+.ordo-head h1 { font-family: "Cinzel", serif; font-weight: 600; letter-spacing: .06em; margin: .2rem 0 .3rem; color: var(--accent); font-size: clamp(1.7rem, 5vw, 2.4rem); }
+.ordo-sub { color: var(--muted); margin: 0 auto; max-width: 34rem; font-size: 1rem; }
+.ours-star { color: var(--accent); }
+
+/* Month bar */
+.month-nav { display: grid; grid-template-columns: 2.6rem 1fr 2.6rem auto; align-items: center; gap: .5rem; margin: .4rem 0 .5rem; }
+.month-nav h2 { margin: 0; text-align: center; font-family: "Cinzel", serif; font-weight: 600; letter-spacing: .05em; font-size: clamp(1.15rem, 3.6vw, 1.5rem); }
+.mnav { font: inherit; font-size: 1.5rem; line-height: 1; height: 2.6rem; border-radius: 50%; border: 1px solid var(--rule); background: var(--surface); color: var(--text); cursor: pointer; }
+.mnav:hover { border-color: var(--accent); color: var(--accent); }
+.today-btn { min-height: 2.4rem; padding: 0 .9rem; }
+.month-chips { display: flex; gap: .3rem; overflow-x: auto; padding: .1rem 0 .6rem; scrollbar-width: none; }
+.month-chips::-webkit-scrollbar { display: none; }
+.chip { font: inherit; font-size: .88rem; flex: 0 0 auto; padding: .2rem .65rem; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--muted); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+
+/* Month grid */
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.wd { text-align: center; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: .2rem 0; }
+.cell {
+  position: relative; min-height: 4.6rem; padding: 1.25rem .25rem .3rem; text-align: left; font: inherit; color: var(--text); cursor: pointer;
+  border: 1px solid var(--cell-edge); border-top: 5px solid var(--lc); border-radius: 7px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--lc) var(--cell-tint), var(--cell-bg)), var(--cell-bg) 70%);
+  display: flex; flex-direction: column; overflow: hidden; transition: transform .12s, box-shadow .12s;
+}
+.cell.lc-white { border-top-color: var(--lc-white-edge); }
+.cell.empty { background: none; border: 0; cursor: default; }
+.cell:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 0, 0, .12); }
+.cell .num { position: absolute; top: .15rem; left: .35rem; font-family: "Cinzel", serif; font-weight: 600; font-size: .95rem; }
+.cell.is-sun .num { color: var(--accent); }
+.cell .rk { position: absolute; top: .2rem; right: .25rem; }
+.cell .ours-star { position: absolute; top: .18rem; right: 1.55rem; font-size: .8rem; }
+.cell .lbl { font-size: .68rem; line-height: 1.12; hyphens: auto; -webkit-hyphens: auto; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--text); }
+.cell.is-today { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
+.cell.is-picked { outline: 2px solid var(--accent); outline-offset: 1px; }
+.rk { display: inline-grid; place-items: center; width: 1.15rem; height: 1.15rem; border-radius: 50%; font-size: .66rem; font-weight: 700; font-family: "Cinzel", serif; }
+.rk-s { background: var(--accent); color: var(--accent-ink); }
+.rk-f { border: 1.5px solid var(--accent); color: var(--accent); }
+.rk-m { border: 1px solid var(--muted); color: var(--muted); }
+@media (min-width: 46rem) { .cell { min-height: 6.2rem; padding: 1.5rem .45rem .4rem; } .cell .lbl { font-size: .8rem; -webkit-line-clamp: 4; } .cell .num { font-size: 1.1rem; } }
+
+.legend { list-style: none; padding: 0; margin: .7rem 0 1.4rem; display: flex; flex-wrap: wrap; gap: .3rem 1rem; font-size: .85rem; color: var(--muted); }
+.legend li { display: inline-flex; align-items: center; gap: .35rem; }
+.lc { display: inline-block; width: .95rem; height: .95rem; border-radius: 3px; background: var(--lc); border: 1px solid var(--cell-edge); }
+.lc.lc-white { border-color: var(--lc-white-edge); }
+
+/* Every day of the month, in full */
+.agenda { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: .55rem; }
+.day { border: 1px solid var(--rule); border-left: 6px solid var(--lc); border-radius: 10px; background: var(--surface); scroll-margin-top: 1rem; }
+.day.lc-white { border-left-color: var(--lc-white-edge); }
+.day.is-picked { box-shadow: 0 0 0 2px var(--accent); }
+.day-head { display: grid; grid-template-columns: 3.2rem 1fr; gap: .2rem .6rem; padding: .6rem .8rem .6rem .5rem; }
+.day-date { text-align: center; }
+.dnum { display: block; font-family: "Cinzel", serif; font-weight: 600; font-size: 1.5rem; line-height: 1.05; }
+.dwd { display: block; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.day-title { margin: .1rem 0 .15rem; font-size: 1.08rem; line-height: 1.3; }
+.day-meta { margin: 0; color: var(--muted); font-size: .92rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+.swatch { width: .8rem; height: .8rem; border-radius: 50%; background: var(--lc); border: 1px solid var(--cell-edge); display: inline-block; }
+.swatch.lc-white { border-color: var(--lc-white-edge); }
+.day-ours { margin: .3rem 0 0; font-weight: 600; }
+.fold { margin-top: .35rem; font-size: .93rem; }
+.fold summary { cursor: pointer; color: var(--link); }
+.fold p { margin: .3rem 0; color: var(--text); }
+.day .ordo-rank { display: inline-block; font-size: .72rem; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; padding: 0 .4rem; margin-right: .45rem; border-radius: 4px; border: 1px solid currentColor; color: var(--accent); vertical-align: .1em; }
+.day .ordo-rank.rank-memorial { color: var(--muted); }
+.day .ordo-rank.rank-solemnity { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+/* Habit: black and candle gold */
+[data-theme="habit"] .ordo-head h1 { color: #c8a45a; text-shadow: 0 0 18px rgba(200, 164, 90, .25); }
+[data-theme="habit"] .cell { border-color: #2c2a27; border-top-color: var(--lc); }
+[data-theme="habit"] .cell.is-sun .num, [data-theme="habit"] .dnum { color: #c8a45a; }
+[data-theme="habit"] .day { background: #111; border-color: #2c2a27; border-left-color: var(--lc); }
+
+/* Stained glass: each day a pane of colored glass in dark leading */
+[data-theme="glass"] .cal-grid { gap: 3px; background: #0a0f26; padding: 3px; border-radius: 10px; box-shadow: 0 0 24px rgba(240, 180, 41, .12); }
+[data-theme="glass"] .wd { color: #ffd36b; }
+[data-theme="glass"] .cell {
+  border: 0; border-radius: 4px; border-top: 4px solid var(--lc);
+  background: radial-gradient(120% 90% at 30% 0%, color-mix(in srgb, var(--lc) 38%, transparent), transparent 70%),
+              linear-gradient(180deg, color-mix(in srgb, var(--lc) 26%, #151e48), #121a40);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05), inset 0 -8px 18px rgba(0, 0, 0, .25);
+}
+[data-theme="glass"] .cell.empty { background: #0d1330; box-shadow: none; }
+[data-theme="glass"] .cell.is-today { box-shadow: 0 0 0 2px #0a0f26, 0 0 0 4px #ffd36b, 0 0 18px rgba(255, 211, 107, .45); }
+[data-theme="glass"] .ordo-head h1 { color: #ffd36b; text-shadow: 0 0 20px rgba(240, 180, 41, .35); }
+[data-theme="glass"] .day { background: linear-gradient(90deg, color-mix(in srgb, var(--lc) 16%, #151e48), #151e48 40%); border-color: #2b3670; border-left-color: var(--lc); }
+[data-theme="glass"] .chip[aria-pressed="true"] { background: linear-gradient(90deg, #d7263d, #2b59c3 35%, #1f9d63 70%, #f0b429); color: #fff; border-color: transparent; }
+
+@media print {
+  .month-nav, .month-chips, .ordo-back, .callout { display: none; }
+  .cell { break-inside: avoid; } .day { break-inside: avoid; }
+}

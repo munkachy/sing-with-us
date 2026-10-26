@@ -243,3 +243,37 @@ p.then { margin: .2rem 0 1.4rem; }
 .ordo-note summary { cursor: pointer; color: var(--accent); }
 .ordo-rank { display: inline-block; font-size: .78rem; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; padding: 0 .4rem; margin-right: .4rem; border-radius: 4px; border: 1px solid currentColor; color: var(--accent); vertical-align: .08em; }
 .ordo-rank.rank-memorial { color: var(--muted); }
+
+/* The calendar button in the header: a little calendar in the colors of each theme, showing today's date */
+.head-tools { display: flex; align-items: center; gap: .55rem; }
+.cal-btn {
+  display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 10px;
+  border: 2px solid var(--rule); background: var(--surface); text-decoration: none;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.cal-btn:hover, .cal-btn:focus-visible { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); transform: translateY(-1px); }
+.cal-btn[aria-current="page"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
+.cal-btn svg { width: 28px; height: 28px; display: block; }
+.cal-body { fill: var(--bg); stroke: var(--text); stroke-width: 1.6; }
+.cal-top { fill: var(--accent); }
+.cal-ring { fill: var(--text); stroke: var(--surface); stroke-width: .8; }
+.cal-day { font-family: "Cinzel", "EB Garamond", serif; font-weight: 700; font-size: 11.5px; fill: var(--text); }
+[data-theme="habit"] .cal-body { fill: #0b0b0b; stroke: #c8a45a; }
+[data-theme="habit"] .cal-day { fill: #c8a45a; }
+[data-theme="habit"] .cal-ring { fill: #ece5d8; stroke: #0b0b0b; }
+[data-theme="glass"] .cal-btn { background: linear-gradient(135deg, #151e48, #0d1330); border-color: #2b3670; box-shadow: 0 0 10px rgba(240, 180, 41, .18); }
+[data-theme="glass"] .cal-body { fill: #10183d; stroke: #ffd36b; }
+[data-theme="glass"] .cal-top { fill: url(#calGlass); }
+[data-theme="glass"] .cal-ring { fill: #ffd36b; stroke: #0d1330; }
+[data-theme="glass"] .cal-day { fill: #f6f0e3; }
+/* Phones: the brand, the calendar and the three themes all on the top line */
+@media (max-width: 51.99rem) {
+  .site-header .bar { flex-wrap: nowrap; gap: .5rem; }
+  .site-header .brand { min-width: 0; }
+  .site-header .brand .name { font-size: .88rem; letter-spacing: .07em; }
+  .site-header .brand .sub { font-size: .76rem; }
+  .head-tools { gap: .3rem; flex: 0 0 auto; }
+  .head-tools .themes { gap: .25rem; }
+  .head-tools .theme-btn { width: 27px; height: 27px; }
+  .cal-btn { width: 31px; height: 31px; border-radius: 8px; } .cal-btn svg { width: 23px; height: 23px; }
+}

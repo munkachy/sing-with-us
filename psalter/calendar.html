@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- For the monks only. Not linked from the public site; search engines asked not to list it. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Ordo · Monastic Psalter · Saint Bernard Abbey</title>
+<link rel="icon" type="image/png" href="../assets/img/crest-icon.png">
+<link rel="stylesheet" href="../assets/css/site.css?v=16">
+<link rel="stylesheet" href="app.css?v=20">
+<link rel="stylesheet" href="calendar.css?v=3">
+<script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
+<script src="../assets/js/site.js?v=16" defer></script>
+<script src="calendar.js?v=3" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the calendar</a>
+<header class="site-header">
+  <div class="bar">
+    <a class="brand" href="./">
+      <img src="../assets/img/crest-small.png" alt="" width="30" height="54">
+      <span><span class="name">Monastic Psalter</span><span class="sub">Saint Bernard Abbey · for the monks</span></span>
+    </a>
+    <div class="head-tools">
+    <a class="cal-btn" href="calendar.html" aria-current="page" title="The ordo: calendar for the year" aria-label="Calendar: the full ordo"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><defs><linearGradient id="calGlass" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#d7263d"/><stop offset=".25" stop-color="#d7263d"/><stop offset=".25" stop-color="#2b59c3"/><stop offset=".5" stop-color="#2b59c3"/><stop offset=".5" stop-color="#1f9d63"/><stop offset=".75" stop-color="#1f9d63"/><stop offset=".75" stop-color="#f0b429"/><stop offset="1" stop-color="#f0b429"/></linearGradient></defs><rect class="cal-body" x="3.5" y="6.5" width="25" height="22" rx="4"/><path class="cal-top" d="M3.5 10.5a4 4 0 0 1 4-4h17a4 4 0 0 1 4 4v2.5h-25z"/><rect class="cal-ring" x="9" y="3" width="2.6" height="6.5" rx="1.3"/><rect class="cal-ring" x="20.4" y="3" width="2.6" height="6.5" rx="1.3"/><text class="cal-day" x="16" y="25.2" text-anchor="middle">1</text></svg></a>
+    <div class="themes" role="group" aria-label="Color theme">
+      <span class="label" aria-hidden="true">Theme</span>
+      <button type="button" class="theme-btn" data-set="habit" aria-pressed="false" title="Habit: black, like our habits"><span class="visually-hidden">Habit theme (black)</span></button>
+      <button type="button" class="theme-btn" data-set="cloister" aria-pressed="false" title="Cloister: parchment and red"><span class="visually-hidden">Cloister theme (parchment)</span></button>
+      <button type="button" class="theme-btn" data-set="glass" aria-pressed="false" title="Stained glass: bright colors"><span class="visually-hidden">Stained glass theme (colorful)</span></button>
+    </div>
+    </div>
+  </div>
+</header>
+<main id="main" class="ordo-page">
+  <div class="wrap">
+    <p class="ordo-back"><a href="./">← Back to the psalter</a></p>
+    <header class="ordo-head">
+      <p class="ordo-kicker">American-Cassinese Congregation</p>
+      <h1>The Ordo <span id="ordo-year"></span></h1>
+      <p class="ordo-sub">The order of the Liturgy of the Hours and Mass, day by day. Lines for <b>Saint Bernard Abbey</b> and our diocese are marked <span class="ours-star" aria-hidden="true">✦</span>.</p>
+    </header>
+
+    <nav class="month-nav" aria-label="Month">
+      <button type="button" id="prev" class="mnav" aria-label="Previous month">‹</button>
+      <h2 id="month-name" aria-live="polite"></h2>
+      <button type="button" id="next" class="mnav" aria-label="Next month">›</button>
+      <button type="button" id="today-btn" class="btn today-btn">Today</button>
+    </nav>
+    <div class="month-chips" id="chips" role="group" aria-label="Jump to a month"></div>
+
+    <div class="cal-grid" id="grid" role="grid" aria-label="Days of the month"></div>
+    <ul class="legend" aria-label="Key">
+      <li><span class="lc lc-white"></span>White</li><li><span class="lc lc-red"></span>Red</li><li><span class="lc lc-green"></span>Green</li>
+      <li><span class="lc lc-violet"></span>Violet</li><li><span class="lc lc-rose"></span>Rose</li>
+      <li><span class="rk rk-s">S</span>Solemnity</li><li><span class="rk rk-f">F</span>Feast</li><li><span class="rk rk-m">M</span>Memorial</li>
+    </ul>
+
+    <p id="ordo-msg" class="slim-note" hidden></p>
+    <ol class="agenda" id="agenda"></ol>
+
+    <aside class="callout small">
+      <p>From the Congregation's ordo for the year (<a href="https://www.amcass.org/documents/ordo/" target="_blank" rel="noopener">amcass.org ↗</a>). The ordo for a new year usually comes out in December. Abbreviations: Gl, Gloria; Cr, Creed; Pref, Preface; Euch Pr, Eucharistic Prayer; OA, holy day of obligation.</p>
+    </aside>
+  </div>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <img class="crest" src="../assets/img/crest-small.png" alt="Crest of Saint Bernard Abbey" width="44" height="80">
+    <p><strong>Saint Bernard Abbey</strong> · Benedictine monks · Cullman, Alabama</p>
+  </div>
+</footer>
+</body>
+</html>

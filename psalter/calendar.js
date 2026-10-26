@@ -1,0 +1,141 @@
+/* The ordo as a calendar: a month grid (liturgical color, rank, the day's name) and, under it,
+   every day of the month in full. Data: ordo-YEAR.json, read from the Congregation's PDF by
+   books/ordo.py in the private psalter repo. */
+(function () {
+  var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var WD = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var OURS = /^(St\. Bernard Abbey|Diocese of Birmingham|Province of Mobile)/;
+  var RANK = { Solemnity: "s", Feast: "f", Memorial: "m" };
+  var $ = function (s) { return document.querySelector(s); };
+  var now = new Date();
+  var view = { y: now.getFullYear(), m: now.getMonth() }, ordos = {};
+  var want = location.hash.match(/^#(\d{4})-(\d{2})(?:-(\d{2}))?/);
+  if (want) { view.y = +want[1]; view.m = +want[2] - 1; }
+
+  document.querySelectorAll(".cal-day").forEach(function (t) { t.textContent = now.getDate(); });
+
+  function ymd(y, m, d) { return y + "-" + String(m + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0"); }
+  function load(y) {
+    if (!ordos[y]) ordos[y] = fetch("ordo-" + y + ".json").then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .catch(function () { delete ordos[y]; return null; });
+    return ordos[y];
+  }
+  function color(c) {   // the first color named: "White, Violet or Black" -> white
+    var m = (c || "").match(/White|Red|Green|Violet|Rose|Black/);
+    return m ? m[0].toLowerCase() : "none";
+  }
+  function clean(t) {
+    return t.replace(/^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\. /, "").replace(/^†\s*/, "").replace(/\s*\*+\s*/g, " ").replace(/ ,/g, ",")
+      .replace(/,? OA\b/, "").replace(/\.?\s*(Solemnity( with an Octave:?)?|Feast|Memorial)\.?$/, "").replace(/\.$/, "");
+  }
+  function title(s) {   // FOURTH SUNDAY OF ADVENT -> Fourth Sunday of Advent
+    if (s !== s.toUpperCase()) return s;
+    return s.toLowerCase().replace(/(^|[\s(“-])(\S)/g, function (a, b, c) { return b + c.toUpperCase(); })
+      .replace(/\b(Of|The|In|And|After|With|To|A)\b/g, function (w) { return w.toLowerCase(); }).replace(/^(\S)/, function (c) { return c.toUpperCase(); });
+  }
+  function short(x) {   // what fits in a calendar square
+    var t = title(clean(x.t));
+    if (!x.r && !/Sunday|SUNDAY/.test(x.t) && !/^[A-Z ,'’]+$/.test(clean(x.t))) return "";
+    return t.replace(/ in Ordinary Time$/, "").replace(/, (Bishop|Priest|Virgin|Martyr|Abbot|Religious|Doctor|Apostle|Pope|Deacon)s?.*$/, "")
+      .replace(/^Commemoration of /, "");
+  }
+  // What Saint Bernard Abbey keeps, when the ordo gives the house its own feast or solemnity (e.g. 20 August)
+  function house(x) {
+    var n = x.n.filter(function (n) { return /^St\. Bernard Abbey: .*\b(Solemnity|Feast)\b/.test(n); })[0];
+    if (!n) return x;
+    var r = n.match(/\b(Solemnity|Feast)\b/)[1];
+    var t = n.replace(/^St\. Bernard Abbey:\s*(?:(?:White|Red|Green|Violet|Rose)\s+)?/, "").replace(/\s*–.*$/, "");
+    var v = (n.match(/–\s*(.+)$/) || [])[1] || x.v;
+    return { c: x.c, t: t, r: r, v: v, n: x.n, m: x.m, a: x.a };
+  }
+  function ours(x) { return x.n.filter(function (n) { return OURS.test(n); }); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  function draw() {
+    var y = view.y, m = view.m;
+    $("#month-name").textContent = MONTHS[m] + " " + y;
+    $("#ordo-year").textContent = y;
+    document.title = MONTHS[m] + " " + y + " · Ordo · Monastic Psalter";
+    var chips = $("#chips"); chips.innerHTML = "";
+    MONTHS.forEach(function (name, i) {
+      var b = el("button", "chip", name.slice(0, 3)); b.type = "button"; b.setAttribute("aria-pressed", String(i === m));
+      b.setAttribute("aria-label", name); b.addEventListener("click", function () { view.m = i; go(); });
+      chips.appendChild(b);
+    });
+    load(y).then(function (o) {
+      if (view.y !== y || view.m !== m) return;
+      var grid = $("#grid"), agenda = $("#agenda"), msg = $("#ordo-msg");
+      grid.innerHTML = ""; agenda.innerHTML = "";
+      msg.hidden = !!o;
+      if (!o) { msg.textContent = "The ordo for " + y + " isn't here yet. The Congregation usually publishes the new year's ordo in December."; return; }
+      WD.forEach(function (w) { grid.appendChild(el("div", "wd", w.slice(0, 2))); });
+      var first = new Date(y, m, 1).getDay(), days = new Date(y, m + 1, 0).getDate();
+      for (var i = 0; i < first; i++) grid.appendChild(el("div", "cell empty"));
+      for (var d = 1; d <= days; d++) {
+        var key = ymd(y, m, d), x = o[key] && house(o[key]);
+        var c = el("button", "cell lc-" + color(x && x.c)); c.type = "button"; c.dataset.key = key;
+        if (key === ymd(now.getFullYear(), now.getMonth(), now.getDate())) c.classList.add("is-today");
+        if (new Date(y, m, d).getDay() === 0) c.classList.add("is-sun");
+        c.appendChild(el("span", "num", d));
+        if (x) {
+          if (x.r) { var r = el("span", "rk rk-" + RANK[x.r], RANK[x.r].toUpperCase()); r.title = x.r; c.appendChild(r); }
+          if (ours(x).length) c.appendChild(el("span", "ours-star", "✦"));
+          var s = short(x); if (s) c.appendChild(el("span", "lbl", s));
+          c.setAttribute("aria-label", d + " " + MONTHS[m] + ": " + title(clean(x.t)) + (x.r ? ", " + x.r : ""));
+          c.addEventListener("click", pick);
+        }
+        grid.appendChild(c);
+        if (x) agenda.appendChild(card(key, new Date(y, m, d), x, o[ymd(y, m, d + 1)] || null));   // x: as the house keeps it
+      }
+      var day = want && want[3] ? ymd(y, m, +want[3]) : (y === now.getFullYear() && m === now.getMonth() ? ymd(y, m, now.getDate()) : null);
+      want = null;
+      if (day) select(day, false);
+    });
+  }
+
+  function card(key, date, x, next) {
+    var v = x.v;
+    if (x.n.some(function (n) { return /^St\. Bernard Abbey: 1st Vespers of following/.test(n); })) v = "1st Vespers of following";   // the house's own eve
+    // name the day whose 1st Vespers they are (OA in the ordo: a holy day of obligation)
+    if (/^1st Vespers of following\b/.test(v) && next) v = "1st Vespers of " + title(clean(house(next).t));
+    var li = el("li", "day lc-" + color(x.c)); li.id = "d-" + key;
+    var h = el("div", "day-head");
+    var dt = el("div", "day-date"); dt.appendChild(el("span", "dnum", date.getDate())); dt.appendChild(el("span", "dwd", WD[date.getDay()]));
+    h.appendChild(dt);
+    var body = el("div", "day-body");
+    var top = el("p", "day-title");
+    if (x.r) top.appendChild(el("span", "ordo-rank rank-" + x.r.toLowerCase(), x.r));
+    top.appendChild(document.createTextNode(title(clean(x.t))));
+    body.appendChild(top);
+    var meta = el("p", "day-meta");
+    meta.appendChild(el("span", "swatch lc-" + color(x.c)));
+    meta.appendChild(document.createTextNode((x.c || "") + (v ? " · " + v : "")));
+    body.appendChild(meta);
+    ours(x).forEach(function (n) { var p = el("p", "day-ours"); p.appendChild(el("span", "ours-star", "✦ ")); p.appendChild(document.createTextNode(n)); body.appendChild(p); });
+    if (x.m) { var dm = el("details", "fold"); dm.appendChild(el("summary", null, "Mass")); dm.appendChild(el("p", null, x.m)); body.appendChild(dm); }
+    var rest = (x.a || []).filter(function (n) { return !OURS.test(n); });
+    if (rest.length) {
+      var dn = el("details", "fold"); dn.appendChild(el("summary", null, "Notes and other choices (" + rest.length + ")"));
+      rest.forEach(function (n) { dn.appendChild(el("p", null, n)); }); body.appendChild(dn);
+    }
+    h.appendChild(body); li.appendChild(h);
+    return li;
+  }
+
+  function select(key, scroll) {
+    document.querySelectorAll(".cell.is-picked, .day.is-picked").forEach(function (e) { e.classList.remove("is-picked"); });
+    var c = document.querySelector('.cell[data-key="' + key + '"]'), d = document.getElementById("d-" + key);
+    if (c) c.classList.add("is-picked");
+    if (d) { d.classList.add("is-picked"); if (scroll) d.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  }
+  function pick() { select(this.dataset.key, true); history.replaceState(null, "", "#" + this.dataset.key); }
+  function go() { history.replaceState(null, "", "#" + ymd(view.y, view.m, 1).slice(0, 7)); draw(); }
+  $("#prev").addEventListener("click", function () { if (--view.m < 0) { view.m = 11; view.y--; } go(); });
+  $("#next").addEventListener("click", function () { if (++view.m > 11) { view.m = 0; view.y++; } go(); });
+  $("#today-btn").addEventListener("click", function () {
+    view.y = now.getFullYear(); view.m = now.getMonth(); history.replaceState(null, "", "#" + ymd(view.y, view.m, now.getDate()));
+    want = location.hash.match(/^#(\d{4})-(\d{2})(?:-(\d{2}))?/); draw();
+    setTimeout(function () { select(ymd(view.y, view.m, now.getDate()), true); }, 200);
+  });
+  draw();
+})();

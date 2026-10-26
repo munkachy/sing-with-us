@@ -355,6 +355,37 @@
     return { key: "sun:" + name, items: items,
       note: "Pasted together: " + name + ". The Magnificat antiphon comes from the " + src + " book and the Magnificat is in its first alternate tone." };
   }
+  // Compline with only tonight's hymn and the antiphon of Our Lady for the season (Br. Augustine).
+  // The hymn: a proper one (Christmas, Epiphany, Pentecost, Christ the King …) if the day has one; else the hymn
+  // of a solemnity or feast in the ordo (Our Lady's own for hers); else the season's; else the memorial's; else the
+  // ferial or Saturday-Sunday hymn. The eve of a solemnity or feast takes its hymn. The antiphon: solemn tone on
+  // Sundays, solemnities and feasts, simple tone on other days, then its versicle and prayer.
+  var BVM = /Blessed Virgin|Virgin Mary|HOLY MOTHER OF GOD|Our Lady|ASSUMPTION|IMMACULATE|VISITATION|Queenship|Rosary|Mother of the Church|Presentation of the Blessed/i;
+  function complineFor(d) {
+    var base = compline(d), o = ordoDay(d), t = d;
+    var eve = o && (/^1st Vespers of following/.test(o.v) || o.n.some(function (n) { return /^St\. Bernard Abbey: 1st Vespers of following/.test(n); }));
+    if (eve) { var nx = ordoDay(addDays(d, 1)); if (nx && /Solemnity|Feast/.test(rankOf(nx) || "")) { o = nx; t = addDays(d, 1); } }
+    var rank = o ? rankOf(o) || "" : "", name = o ? o.t + " " + o.n.join(" ") : "";
+    var hymn = base.hymn, proper = ["transfig", "king", "nativity", "epiphany", "baptism", "pentecost", "heart"];
+    var e = easter(d.getFullYear()), octave = d >= e && d <= addDays(e, 7);   // the Easter octave keeps the Easter hymn
+    if (proper.indexOf(hymn) < 0 && !octave) {
+      if (rank === "Solemnity" || rank === "Feast") hymn = BVM.test(name) ? "bvm" : rank.toLowerCase();
+      else if (["advent", "lent", "easterA", "ascA"].indexOf(hymn) < 0 && rank === "Memorial" && d.getDay() !== 0 && d.getDay() !== 6) hymn = "memorial";
+    }
+    var solemn = t.getDay() === 0 || rank === "Solemnity" || rank === "Feast";
+    var vers = base.marian === "alma" ? (d.getMonth() === 11 && d.getDate() < 24 ? "advent" : "christmas") : "";
+    return { hymn: hymn, marian: base.marian, tone: solemn ? "solemn" : "simple", vers: vers };
+  }
+  function complineRecipe() {
+    if (!asm || !asm.compline || plain || state.ref || state.book !== "psalter" || state.hour !== 4 || ultima()) return null;
+    var c = asm.compline, k = complineFor(dayDate()), h = c.hymns[k.hymn], m = k.marian && c.marian[k.marian];
+    if (!h) return null;
+    var items = c.head.concat([{ h: h.label.replace(/^\d+\.\s*/, "") }], h.strips, c.chapter);
+    if (m) items = items.concat([{ h: m.label + ", " + k.tone + " tone" }], m[k.tone], [{ h: "Versicle and prayer" }], m.versicle[k.vers] || []);
+    return { key: "compline:" + k.hymn + ":" + k.marian + ":" + k.tone + ":" + k.vers, items: items,
+      note: "Pasted together: Compline with tonight's hymn only (" + h.label.replace(/^\d+\.\s*/, "") + ")" +
+        (m ? " and " + m.label + " in the " + k.tone + " tone" : "") + "." };
+  }
   function lentRecipe(sec) {
     if (!asm || !sec.recipe) return null;
     var items = [];
@@ -540,9 +571,9 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? lentRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe();
+      var recipe = inBook ? lentRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe() || complineRecipe();
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
-      $("#plain-note").hidden = !plain || !!state.ref || state.hour !== 3 || (state.day !== 0 && state.day !== 6);
+      $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 3 && (state.day === 0 || state.day === 6));
       var keyP = vault.key ? Promise.resolve(vault.key) : savedKey();
       if (!keyP) { $("#lock").hidden = false; $("#beta-view").hidden = true; $("#pdf-view").hidden = true; return; }
       $("#lock").hidden = true;
@@ -794,5 +825,5 @@
   $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
   $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });
-  window.PSALTER = { nextHour: nextHour, weekOf: weekOf, epiphany: epiphany, ordoDay: ordoDay, sundayVespers: sundayVespers, tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
+  window.PSALTER = { complineFor: complineFor, nextHour: nextHour, weekOf: weekOf, epiphany: epiphany, ordoDay: ordoDay, sundayVespers: sundayVespers, tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
 })();

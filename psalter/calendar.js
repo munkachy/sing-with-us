@@ -140,13 +140,14 @@
       body.appendChild(dnc);
     }
     if (x.m) { var dm = el("details", "fold"); dm.appendChild(el("summary", null, "Mass")); dm.appendChild(el("p", null, x.m)); body.appendChild(dm); }
+    var rl = el("a", "day-pray", "Mass readings at USCCB ↗"); rl.href = "https://bible.usccb.org/bible/readings/" + key.slice(5, 7) + key.slice(8, 10) + key.slice(2, 4) + ".cfm"; rl.target = "_blank"; rl.rel = "noopener"; rl.style.marginLeft = ".4rem";
     var rest = (x.a || []).filter(function (n) { return !OURS.test(n); });
     if (rest.length) {
       var dn = el("details", "fold"); dn.appendChild(el("summary", null, "Notes and other choices (" + rest.length + ")"));
       rest.forEach(function (n) { dn.appendChild(el("p", null, n)); }); body.appendChild(dn);
     }
     var pray = el("a", "day-pray", "Pray this day's hours →"); pray.href = "./#date=" + key;
-    body.appendChild(pray);
+    body.appendChild(pray); body.appendChild(rl);
     h.appendChild(body); li.appendChild(h);
     return li;
   }

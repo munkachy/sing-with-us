@@ -309,8 +309,18 @@
     return /SUNDAY IN ORDINARY TIME/.test(o.t) && /^2nd Vespers/.test(o.v);
   }
   function clean(t) { return t.replace(/^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\. /, "").replace(/,? OA\b/, "").replace(/\.$/, ""); }
+  // The day's Mass readings: the citations from the ordo, and a link to the texts on USCCB's own site (the Lectionary
+  // text is copyrighted and may not be shown here without written permission, so it is read there).
+  function usccbUrl(d) { return "https://bible.usccb.org/bible/readings/" + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0") + String(d.getFullYear()).slice(2) + ".cfm"; }
+  function massReadings(o, d) {
+    var m = o && o.m && o.m.match(/readings\s+no\.?\s*([\dA-Za-z]+(?:ff\.)?)\s*\(([^)]*)\)/);
+    var p = document.createElement("span"); p.className = "ordo-mass";
+    p.appendChild(document.createTextNode(m ? "Mass readings (no. " + m[1] + "): " + m[2].replace(/\s+/g, " ").replace(/\s*([:,])\s*/g, "$1 ").replace(/:\s/g, ":") + " " : "Mass readings: "));
+    var a = document.createElement("a"); a.href = usccbUrl(d); a.target = "_blank"; a.rel = "noopener"; a.textContent = "Read them at USCCB ↗";
+    p.appendChild(a); return p;
+  }
   function ordoNote() {
-    var el = $("#ordo-note"), d = dayDate(), o = state.book === "psalter" && !state.ref ? ordoDay(d) : null;
+    var el = $("#ordo-note"), d = dayDate(), o = !state.ref ? ordoDay(d) : null;
     if (!o) { el.hidden = true; return; }
     var ours = o.n.filter(function (n) { return OURS.test(n); }), rest = o.n.filter(function (n) { return !OURS.test(n); });
     el.innerHTML = "";
@@ -331,6 +341,7 @@
     el.appendChild(document.createTextNode(name + (v ? " – " + v : "") + (o.w ? " · Psalter Week " + ROMAN[o.w - 1] : "")));
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
     if (d.getDay() === 6 && bvmSaturday(d)) { var bs = document.createElement("span"); bs.className = "ordo-ours"; bs.textContent = "✦ Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary"; el.appendChild(bs); }
+    el.appendChild(massReadings(o, d));
     var cal = document.createElement("a"); cal.className = "ordo-cal"; cal.href = "calendar.html#" + ymd(d); cal.textContent = "This day in the calendar →";
     el.appendChild(cal);
     if (rest.length) {

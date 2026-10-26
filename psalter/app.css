@@ -287,3 +287,19 @@ p.then { margin: .2rem 0 1.4rem; }
 #asm-note, #plain-note, #today-note { margin: .4rem 0 .8rem; }
 .ordo-note .ordo-necro { display: block; margin-top: .2rem; color: var(--muted); font-style: italic; }
 .ordo-note .ordo-cal { display: inline-block; margin-top: .25rem; font-size: .92rem; margin-right: 1rem; }
+
+/* The end of the hour: the necrology after Compline or the Ultima, a Benedictine collect after the other hours */
+.day-end { margin: 1rem 0 1.4rem; padding: 1rem 1.1rem 1.1rem; border-radius: 12px; background: #f3ede1; color: #2b241d; border: 1px solid #d6cab4; text-align: center; }
+.day-end h2 { font-family: "Cinzel", serif; font-weight: 600; letter-spacing: .08em; font-size: 1.15rem; margin: .2rem 0 .1rem; color: #9b1c1c; }
+.day-end .de-when { margin: 0 0 .6rem; color: #6a5f52; font-size: .95rem; }
+.day-end .de-lead { margin: .2rem 0 .4rem; }
+.day-end .de-names { list-style: none; padding: 0; margin: .3rem 0 .6rem; }
+.day-end .de-names li { font-size: 1.15rem; margin: .2rem 0; }
+.day-end .de-names li span { color: #6a5f52; font-size: .9rem; margin-left: .5rem; }
+.day-end .de-rip { font-style: italic; margin: .6rem 0 0; }
+.day-end .de-switch { font-size: .92rem; color: #6a5f52; margin: 0 0 .8rem; }
+.day-end .de-switch a, .day-end summary { color: #9b1c1c; }
+.day-end details { text-align: left; font-size: .93rem; margin-top: .4rem; }
+.day-end details p { margin: .15rem 0; }
+.day-end .de-collect { font-size: 1.1rem; text-align: left; margin: .3rem 0 .5rem; }
+.day-end .de-src { font-size: .82rem; color: #6a5f52; margin: .3rem 0 0; }

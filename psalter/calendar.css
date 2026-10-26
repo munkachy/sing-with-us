@@ -127,3 +127,5 @@
 .cell .necro-mark { position: absolute; bottom: .15rem; right: .35rem; font-size: .8rem; }
 .day-necro { margin: .3rem 0 0; color: var(--muted); font-style: italic; }
 .fold.collect p { font-style: italic; }
+.day-pray { display: inline-block; margin-top: .45rem; font-weight: 600; color: var(--link); text-decoration: none; border: 1px solid var(--rule); border-radius: 999px; padding: .15rem .8rem; background: var(--bg); }
+.day-pray:hover { border-color: var(--accent); }

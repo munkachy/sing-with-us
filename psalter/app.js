@@ -437,19 +437,35 @@
   function hasHymnPair(e) { return e && e.marks.some(function (k) { return k[2] === "dark"; }); }
   function cutFile(e, season, bvm, light) {
     var prefs = { "Passiontide": ["Passiontide", "Lent"], "Ascension to Pentecost": ["Ascension to Pentecost", "Paschaltide"], "Epiphany": ["Epiphany", "Christmas"] }[season] || (season === "year" ? [] : [season]);
-    var m = e.marks, keep = [];
-    for (var a = 0; a < m.length;) {
-      if (m[a][2] === "common") { keep[a] = true; a++; continue; }
-      var b = a; while (b < m.length && m[b][2] !== "common") b++;
-      var g = m.slice(a, b), hasTwo = g.some(function (k) { return k[2] === "two"; });
-      var labels = g.filter(function (k) { return k[2] === "season"; }).map(function (k) { return k[3]; });
+    // Each choice covers only its own lines: a run of choices starts at each "Through the Year" ("I." or plain), and holds
+    // what follows it until the next shared heading: Our Lady's version ("II."), the seasons' versions.
+    var m = e.marks, keep = [], hasLady = m.some(function (k) { return k[2] === "two"; });
+    var runs = [], cur = null;
+    m.forEach(function (k, j) {
+      var kind = k[2];
+      if (kind === "common" || kind === "dark" || kind === "light") { cur = null; return; }
+      if (!cur || kind === "one" || kind === "year") { cur = []; runs.push(cur); }
+      cur.push(j);
+    });
+    runs.forEach(function (r) {
+      var kinds = r.map(function (j) { return m[j][2]; }), hasTwo = kinds.indexOf("two") >= 0;
+      var labels = r.filter(function (j) { return m[j][2] === "season"; }).map(function (j) { return m[j][3]; });
       var pick = prefs.filter(function (p) { return labels.indexOf(p) >= 0; })[0] || null;
-      for (var c = a; c < b; c++) {
-        var k = m[c][2];
-        keep[c] = bvm && hasTwo ? k === "two" : k === "two" ? false : k === "dark" ? !light : k === "light" ? !!light : k === "one" ? true : k === "season" ? m[c][3] === pick : !pick;
-      }
-      a = b;
-    }
+      var chosen = bvm && hasTwo ? r.filter(function (j) { return m[j][2] === "two"; })[0]
+        : pick ? r.filter(function (j) { return m[j][2] === "season" && m[j][3] === pick; })[0] : null;
+      // the chosen version is only a versicle, and "Through the Year" has an antiphon above its versicle: keep that antiphon
+      var onlyVerse = chosen != null && m[chosen][4] === "v" && kinds.indexOf("verse") >= 0;
+      r.forEach(function (j) {
+        var k = m[j][2];
+        keep[j] = k === "one" || k === "year" ? chosen == null || onlyVerse : k === "verse" ? chosen == null : j === chosen;
+      });
+    });
+    m.forEach(function (k, j) {
+      if (k[2] === "common") keep[j] = true;
+      // the darkness and daylight hymns give way to Our Lady's hymn on her Saturdays
+      if (k[2] === "dark") keep[j] = !light && !(bvm && hasLady);
+      if (k[2] === "light") keep[j] = !!light && !(bvm && hasLady);
+    });
     var segs = [], cur = [0, 0], on = true;
     m.forEach(function (mk, j) { if (on) segs.push([cur, [mk[0], mk[1]]]); cur = [mk[0], mk[1]]; on = keep[j]; });
     if (on) segs.push([cur, e.end]);

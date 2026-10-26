@@ -560,6 +560,24 @@
   // A feast in the Saints book, one hour pasted together: its own pages, with the proper psalms, the Gospel canticle and
   // the Te Deum put in where it points to them (assembly.json "feasts", from books/tools/feasts.py). Sext also gets the
   // psalter's opening, the hymn for the day (On Feasts, On Solemnities, Our Lady) and the conclusion.
+  // The Magnificat: the plain (Simple) tone on ordinary days, the fancier (Solemn) one on Saturday evening (I Vespers of
+  // Sunday), on Sunday and on solemnities; feasts go plain unless they fall then. A link switches it for the evening.
+  var magnChoice = null;
+  function magnificatAuto(hour) {
+    var d = dayDate(), feastDay = /^I Vespers/.test(hour || "") ? addDays(d, 1) : d, o = ordoDay(feastDay);
+    return d.getDay() === 6 || d.getDay() === 0 || rankOf(o) === "Solemnity";
+  }
+  function magnificatSolemn(hour) { return magnChoice === null ? magnificatAuto(hour) : magnChoice; }
+  function toneNote(recipe) {
+    var el = $("#tone-note");
+    if (!recipe || !recipe.magnificat) { el.hidden = true; return; }
+    var solemn = magnificatSolemn(bookHour), auto = magnChoice === null;
+    el.textContent = "Magnificat in the " + (solemn ? "Solemn (fancier)" : "Simple (plainer)") + " tone" +
+      (auto ? (solemn ? ": Saturday evening, Sunday or a solemnity. " : ": an ordinary evening. ") : ". ");
+    var a = document.createElement("a"); a.href = "#"; a.textContent = solemn ? "Use the Simple tone" : "Use the Solemn tone";
+    a.addEventListener("click", function (ev) { ev.preventDefault(); magnChoice = !solemn; render(); });
+    el.appendChild(a); el.hidden = false;
+  }
   function feastHours() {
     if (!asm || !asm.feasts || plain || state.ref || state.book !== "Sanctoral" || !books || !bookHour) return null;
     var h = asm.feasts.hours[books.Sanctoral.sections[state.sec.Sanctoral].path];
@@ -572,18 +590,31 @@
     hs.forEach(function (x) {
       if (Array.isArray(x)) { items.push(x); return; }
       if (x.ins === "psalms") { items.push({ h: "Psalms (p. " + x.page + ")" }); items = items.concat(F.psalms[x.page] || []); items.push({ h: "Continued: " + sec.title.replace(/ \(.*/, "") }); }
-      if (x.ins === "canticle") { items.push({ h: (lauds ? "Benedictus" : "Magnificat") + (x.tones ? " (sung tones from p. " + x.tones + ")" : "") }); items = items.concat(lauds ? F.benedictus : F.magnificat); }
+      if (x.ins === "canticle") {
+        items.push({ h: lauds ? "Benedictus" : "Magnificat" }); items = items.concat(lauds ? F.benedictus : F.magnificat);
+        if (F.tones) {   // the words, then the same canticle with its English notes underneath
+          var solemn = !lauds && magnificatSolemn(hour);
+          items.push({ h: lauds ? "Benedictus · English, Simple Tone, Mode 1" : "Magnificat · English, " + (solemn ? "Solemn" : "Simple") + " Tone, Mode II D" });
+          items = items.concat(lauds ? F.tones.benedictus.simple : F.tones.magnificat[solemn ? "solemn" : "simple"]);
+        }
+      }
       if (x.ins === "tedeum" && v) { items.push({ h: "Te Deum · " + v.label }); items = items.concat(v.te, [{ h: "Holy Gospel (from the lectionary)" }, { h: "Te decet laus" }], v.decet); }
     });
     if (hour === "Sext" && asm.sext) {
       var hk = sextHymn(dayDate(), false), S = asm.sext;
       items = [S.opening, { h: "Hymn: " + SEXT_HYMN[hk] }, S.hymns[hk], { h: sec.title.replace(/ \(.*/, "") + " · Sext" }].concat(items, [{ h: "Conclusion" }, S.conclusion]);
     }
-    return { key: "feast:" + sec.path + ":" + hour + ":" + teChoice, items: items, tedeum: hour === "Matins",
+    return { key: "feast:" + sec.path + ":" + hour + ":" + teChoice + ":" + (/Vespers/.test(hour) && magnificatSolemn(hour)), items: items, tedeum: hour === "Matins", magnificat: /Vespers/.test(hour),
       note: "Pasted together: " + sec.title + ", " + hour + ", from the Saints book, with the pages it points to put in their places." };
   }
   function simpleRecipe(sec) {
-    if (!asm || sec.recipe !== "simple" || !asm.feasts) return null;
+    if (!asm || !asm.feasts) return null;
+    if (sec.recipe === "latin" && asm.feasts.tones) {
+      var L = asm.feasts.tones.latin, li = [{ h: "Magnificat · Latin, Solemn Tone, Mode II (Saints)" }].concat(L.magnificat, [{ h: "Benedictus · Latin, Simple Tone, Mode 1 (Saints)" }], L.benedictus);
+      (L.psalter || []).forEach(function (x) { li = li.concat([{ h: x[0] }], x[1]); });
+      return { key: "feast-latin", note: "", items: li };
+    }
+    if (sec.recipe !== "simple") return null;
     var items = [];
     asm.feasts.simple.forEach(function (x) { items.push({ h: x.h }); items = items.concat(x.strips); });
     return { key: "feast-simple", items: items, note: "" };
@@ -780,7 +811,7 @@
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
       var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || matinsRecipe() || tedeumRecipe();
-      hymnNote(recipe); tedeumNote();
+      hymnNote(recipe); tedeumNote(); toneNote(recipe);
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
       $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour === 0 && (state.day !== 0 || teChoice !== "book") || state.book === "Sanctoral" && !!bookHour || state.hour === 3 && (state.day === 0 || state.day === 6));
       var keyP = vault.key ? Promise.resolve(vault.key) : savedKey();
@@ -1006,7 +1037,7 @@
       store("psalter-anchor", { week: state.week, sunday: sundayOf(now).toISOString() });
     }));
   });
-  document.querySelectorAll("[data-day]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.day = +b.dataset.day; wantCompline = null; })); });
+  document.querySelectorAll("[data-day]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.day = +b.dataset.day; wantCompline = null; magnChoice = null; })); });
   document.querySelectorAll("[data-hour]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.hour = +b.dataset.hour; })); });
   document.querySelectorAll("[data-ref]").forEach(function (a) {
     a.href = "#"; a.removeAttribute("target");
@@ -1040,7 +1071,8 @@
       if (asm.feasts) books.Sanctoral.sections.forEach(function (s) { if (asm.feasts.jumps[s.path]) s.jumps = asm.feasts.jumps[s.path]; });
       // The simpler settings cut out of the feasts ("Or:" with the same words), kept together in case they're wanted
       if (asm.feasts && asm.feasts.simple) books.Sanctoral.sections.splice(books.Sanctoral.sections.findIndex(function (s) { return s.group === "Reference"; }), 0,
-        { title: "Simple versions, cut out of the feasts (all)", group: "Reference", tag: "", recipe: "simple", jumps: [], pages: 0, start: 0 });
+        { title: "Simple versions, cut out of the feasts (all)", group: "Reference", tag: "", recipe: "simple", jumps: [], pages: 0, start: 0 },
+        { title: "Latin Magnificat and Benedictus, sung (not used)", group: "Reference", tag: "", recipe: "latin", jumps: [], pages: 0, start: 0 });
     });
   }).then(function () { todayNote(); autoOpen(); render(); }, function () {});
   $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });

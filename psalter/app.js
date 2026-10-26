@@ -598,6 +598,7 @@
           items = items.concat(lauds ? F.tones.benedictus.simple : F.tones.magnificat[solemn ? "solemn" : "simple"]);
         }
       }
+      if (x.ins === "psalm94" && asm.weekly && asm.weekly.psalm94[x.mode]) { items.push({ h: "Psalm 94 · Mode " + x.label + " (sung by the cantors)" }); items = items.concat(asm.weekly.psalm94[x.mode]); }
       if (x.ins === "tedeum" && v) { items.push({ h: "Te Deum · " + v.label }); items = items.concat(v.te, [{ h: "Holy Gospel (from the lectionary)" }, { h: "Te decet laus" }], v.decet); }
     });
     if (hour === "Sext" && asm.sext) {

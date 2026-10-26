@@ -440,6 +440,8 @@
     // Each choice covers only its own lines: a run of choices starts at each "Through the Year" ("I." or plain), and holds
     // what follows it until the next shared heading: Our Lady's version ("II."), the seasons' versions.
     var m = e.marks, keep = [], hasLady = m.some(function (k) { return k[2] === "two"; });
+    // In Paschaltide, where the hour gives its own Alleluia antiphon, the "Through the Year" antiphons are not said at all
+    var easter = (season === "Paschaltide" || season === "Ascension to Pentecost") && m.some(function (k) { return k[2] === "season" && k[3] === "Paschaltide"; });
     var runs = [], cur = null;
     m.forEach(function (k, j) {
       var kind = k[2];
@@ -453,11 +455,12 @@
       var pick = prefs.filter(function (p) { return labels.indexOf(p) >= 0; })[0] || null;
       var chosen = bvm && hasTwo ? r.filter(function (j) { return m[j][2] === "two"; })[0]
         : pick ? r.filter(function (j) { return m[j][2] === "season" && m[j][3] === pick; })[0] : null;
-      // the chosen version is only a versicle, and "Through the Year" has an antiphon above its versicle: keep that antiphon
-      var onlyVerse = chosen != null && m[chosen][4] === "v" && kinds.indexOf("verse") >= 0;
+      // A season's version that is only a versicle (Advent, Lent), where "Through the Year" has an antiphon above its
+      // versicle: keep that antiphon. On Our Lady's Saturdays only her versicle is said there.
+      var onlyVerse = chosen != null && m[chosen][2] === "season" && m[chosen][4] === "v" && kinds.indexOf("verse") >= 0;
       r.forEach(function (j) {
         var k = m[j][2];
-        keep[j] = k === "one" || k === "year" ? chosen == null || onlyVerse : k === "verse" ? chosen == null : j === chosen;
+        keep[j] = k === "one" || k === "year" ? (chosen == null && !(easter && k === "year")) || onlyVerse : k === "verse" ? chosen == null : j === chosen;
       });
     });
     m.forEach(function (k, j) {

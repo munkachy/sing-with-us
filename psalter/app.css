@@ -235,3 +235,9 @@ p.then { margin: .2rem 0 1.4rem; }
 /* Pasted-together hours: a thin label between the strips */
 .asm-head { margin: 14px 0 8px; padding: 4px 10px; font-size: .9rem; color: #6b5d4f; border-left: 3px solid #9b1c1c; background: rgba(155, 28, 28, .05); border-radius: 0 6px 6px 0; }
 #pdf-pages canvas.strip { margin-bottom: 0; }
+
+/* The ordo's line for the day */
+.ordo-note .ordo-ours { display: block; font-weight: 600; margin-top: .2rem; }
+.ordo-note details { margin-top: .25rem; font-size: .92rem; }
+.ordo-note details p { margin: .2rem 0; }
+.ordo-note summary { cursor: pointer; color: var(--accent); }

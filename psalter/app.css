@@ -241,3 +241,5 @@ p.then { margin: .2rem 0 1.4rem; }
 .ordo-note details { margin-top: .25rem; font-size: .92rem; }
 .ordo-note details p { margin: .2rem 0; }
 .ordo-note summary { cursor: pointer; color: var(--accent); }
+.ordo-rank { display: inline-block; font-size: .78rem; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; padding: 0 .4rem; margin-right: .4rem; border-radius: 4px; border: 1px solid currentColor; color: var(--accent); vertical-align: .08em; }
+.ordo-rank.rank-memorial { color: var(--muted); }

@@ -267,7 +267,11 @@
     var b = document.createElement("b"); b.textContent = "Ordo, " + d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) + ": ";
     var v = o.v, next = /^1st Vespers of following\b/.test(v) && ordoDay(addDays(d, 1));
     if (next) v = "1st Vespers of " + clean(next.t).replace(/\.\s*(Solemnity|Feast|Memorial).*$/, "");   // name the day whose Vespers they are (OA: a holy day of obligation)
-    el.appendChild(b); el.appendChild(document.createTextNode(clean(o.t) + (v ? " – " + v : "")));
+    el.appendChild(b);
+    // A memorial, feast or solemnity (never an optional memorial: those are only in the "Or" notes) gets its rank in front
+    var name = clean(o.t).replace(/\s*\*\s*/g, " ").replace(/ ,/g, ",").replace(/\.?\s*(Solemnity( with an Octave:?)?|Feast|Memorial)\.?$/, "");
+    if (o.r) { var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase(); r.textContent = o.r; el.appendChild(r); }
+    el.appendChild(document.createTextNode(name + (v ? " – " + v : "")));
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
     if (rest.length) {
       var det = document.createElement("details"), sm = document.createElement("summary"); sm.textContent = "More from the ordo";

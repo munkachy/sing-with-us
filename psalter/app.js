@@ -689,7 +689,9 @@
   });
   document.querySelectorAll("[data-week]").forEach(function (b) {
     b.addEventListener("click", pick(function (b) {
-      state.week = +b.dataset.week; state.autoWeek = false;
+      state.week = +b.dataset.week;
+      if (state.week === weekOf(now)) { state.autoWeek = true; store("psalter-anchor", null); return; }   // the ordo's week: follow the ordo again
+      state.autoWeek = false;
       store("psalter-anchor", { week: state.week, sunday: sundayOf(now).toISOString() });
     }));
   });

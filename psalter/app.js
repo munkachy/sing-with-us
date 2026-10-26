@@ -619,6 +619,53 @@
     asm.feasts.simple.forEach(function (x) { items.push({ h: x.h }); items = items.concat(x.strips); });
     return { key: "feast-simple", items: items, note: "" };
   }
+  // ---- Cutting and pasting into any hour: split the strips at a place in a file, leave a stretch out, put pieces in ----
+  function cutAt(items, path, pt) {
+    var out = [];
+    items.forEach(function (it) {
+      if (Array.isArray(it) && it[0] === path && it[1] === pt[0] && it[2] < pt[1] && pt[1] < it[3]) out.push([it[0], it[1], it[2], pt[1], it[4]], [it[0], it[1], pt[1], it[3], it[4]]);
+      else out.push(it);
+    });
+    return out;
+  }
+  function after(it, path, pt) { return Array.isArray(it) && it[0] === path && (it[1] > pt[0] || it[1] === pt[0] && it[2] >= pt[1] - 1e-6); }
+  function pasteAt(items, path, pt, extra) {
+    items = cutAt(items, path, pt);
+    for (var k = 0; k < items.length; k++) if (after(items[k], path, pt)) return items.slice(0, k).concat(extra, items.slice(k));
+    return items.concat(extra);
+  }
+  function leaveOut(items, path, a, b) {
+    items = cutAt(cutAt(items, path, a), path, b);
+    return items.filter(function (it) { return !(after(it, path, a) && !after(it, path, b)); });
+  }
+  function wholeFile(path) {
+    var f = asm.weekly.files[path], out = [];
+    for (var p = 0; p < f.pages; p++) out.push([path, p, 0, 1, f.first + p]);
+    return out;
+  }
+  // The weekly Matins: Psalm 94 after the invitatory, in its mode (the cantors sing it), without the simpler "Or:" copy.
+  // The weekly Lauds: the sung English Benedictus (Mode 1, the Saints book's) under the words.
+  // Both are one-line choices here if the community sings them otherwise.
+  var MODE_NAME = { "IID": "II D", "VIId": "VII d", "I": "I", "II*VIII*": "II* and VIII*", "IVA": "IV A", "VI": "VI" };
+  var BENEDICTUS_TONE = function () { return asm.feasts && asm.feasts.tones && asm.feasts.tones.benedictus.simple; };
+  function weeklyExtras(recipe) {
+    if (!asm || !asm.weekly || plain || state.ref || state.book !== "psalter" || state.hour > 1) return recipe;
+    if (recipe && /^ptbvm/.test(recipe.key)) return recipe;
+    var path = fileKey(state.week, state.day, state.hour), W = asm.weekly, items = recipe ? recipe.items : null, tag = "";
+    if (state.hour === 0 && W.invitatory[path]) {
+      var inv = W.invitatory[path], d = dayDate(), mode = state.day === 6 && bvmSaturday(d) && inv.modeBvm ? inv.modeBvm : inv.mode;
+      items = items || wholeFile(path);
+      if (inv.drop) items = leaveOut(items, path, inv.drop[0], inv.drop[1]);
+      if (W.psalm94[mode]) items = pasteAt(items, path, inv.at, [{ h: "Psalm 94 · Mode " + (MODE_NAME[mode] || mode) + " (sung by the cantors)" }].concat(W.psalm94[mode]));
+      tag = ":ps94:" + mode;
+    } else if (state.hour === 1 && W.benedictus[path] && BENEDICTUS_TONE()) {
+      items = pasteAt(items || wholeFile(path), path, W.benedictus[path], [{ h: "Benedictus · English, Simple Tone, Mode 1" }].concat(BENEDICTUS_TONE()));
+      tag = ":ben1";
+    } else return recipe;
+    var add = state.hour === 0 ? "Psalm 94 after the invitatory, without the invitatory's simpler second setting" : "the Benedictus sung in English under its words";
+    return { key: (recipe ? recipe.key : "whole:" + path) + tag, items: items, hymns: recipe && recipe.hymns,
+      note: recipe && recipe.note ? recipe.note.replace(/\.$/, "") + "; with " + add + "." : "Pasted together: with " + add + "." };
+  }
   function lentRecipe(sec) {
     if (!asm || sec.recipe !== "lent") return null;
     var items = [];
@@ -810,10 +857,10 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || matinsRecipe() || tedeumRecipe();
+      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || matinsRecipe() || tedeumRecipe());
       hymnNote(recipe); tedeumNote(); toneNote(recipe);
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
-      $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour === 0 && (state.day !== 0 || teChoice !== "book") || state.book === "Sanctoral" && !!bookHour || state.hour === 3 && (state.day === 0 || state.day === 6));
+      $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour <= 1 || state.book === "Sanctoral" && !!bookHour || state.hour === 3 && (state.day === 0 || state.day === 6));
       var keyP = vault.key ? Promise.resolve(vault.key) : savedKey();
       if (!keyP) { $("#lock").hidden = false; $("#beta-view").hidden = true; $("#pdf-view").hidden = true; return; }
       $("#lock").hidden = true;

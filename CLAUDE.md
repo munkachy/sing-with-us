@@ -32,7 +32,7 @@ Serve the repo root (`python3 -m http.server 8765`), open `http://127.0.0.1:8765
 the password (env `LECTIONARY_PASSWORD`, typed into `#pw` by Playwright; never print it). `PSALTER_IN.recipe.items`
 is what was pasted together; munkachy/psalter `books/ocr/` turns strips back into text to check them.
 
-## Publishing (only when the user says so)
+## Publishing: go live after every change, unless the user says to wait (the user, 27 Oct 2026)
 
 Work on the session's branch; then push it to `main`, then fast-forward `claude/sing-with-us-site-hgfd57` to `main`
 (both are plain fast-forward pushes). Pages updates in about a minute; check `curl …/psalter/` shows the new `?v=`.

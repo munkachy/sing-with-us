@@ -52,7 +52,8 @@
     var r = n.match(/\b(Solemnity|Feast)\b/)[1];
     var t = n.replace(/^St\. Bernard Abbey:\s*(?:(?:White|Red|Green|Violet|Rose)\s+)?/, "").replace(/\s*–.*$/, "");
     var v = (n.match(/–\s*(.+)$/) || [])[1] || x.v;
-    return { c: x.c, t: t, r: r, v: v, n: x.n, m: x.m, a: x.a };
+    var c = (n.match(/^St\. Bernard Abbey:\s*(White|Red|Green|Violet|Rose)\s/) || [])[1] || x.c;   // the house feast's own colour
+    return { c: c, t: t, r: r, v: v, n: x.n, m: x.m, a: x.a };
   }
   function ourDead(key) { return necro && (necro.days[key.slice(5)] || []).filter(function (n) { return n[3] === necro.ours; }) || []; }
   function ours(x, key) { return x.n.filter(function (n) { return OURS.test(n); }); }

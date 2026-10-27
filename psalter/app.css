@@ -371,3 +371,7 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .mk-menu { position: fixed; right: 12px; bottom: 66px; z-index: 51; display: grid; gap: 4px; padding: 6px; border-radius: 10px; background: #fbf8f2; border: 1px solid #d6cab4; box-shadow: 0 8px 24px rgba(40, 28, 12, .25); }
 .mk-menu button { font: inherit; font-size: .95rem; min-height: 40px; padding: 0 .9rem; border-radius: 7px; border: 0; background: none; color: #2b241d; text-align: left; cursor: pointer; }
 .mk-menu button:hover, .mk-menu button:focus-visible { background: #f3ede1; }
+
+/* The Matins readings in their places among the pages (under "First Reading", "Second Reading") */
+#pdf-pages .lect-slot { margin: 10px 0 14px; }
+#pdf-pages .lect-slot:empty { display: none; }

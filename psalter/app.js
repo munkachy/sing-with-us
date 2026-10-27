@@ -453,7 +453,8 @@
   function clock(m) { m = Math.round(m); var h = Math.floor(m / 60), mm = m % 60; return (h % 12 || 12) + ":" + String(mm).padStart(2, "0") + (h < 12 ? " a.m." : " p.m."); }
   function hasHymnPair(e) { return e && e.marks.some(function (k) { return k[2] === "dark"; }); }
   function cutFile(e, season, bvm, light) {
-    var prefs = { "Passiontide": ["Passiontide", "Lent"], "Ascension to Pentecost": ["Ascension to Pentecost", "Paschaltide"], "Epiphany": ["Epiphany", "Christmas"] }[season] || (season === "year" ? [] : [season]);
+    var prefs = { "Passiontide": ["Passiontide", "Lent"], "Holy Week": ["Holy Week", "Passiontide", "Lent"], "Palm Sunday": ["Palm Sunday", "Holy Week", "Passiontide", "Lent"],
+      "Ascension to Pentecost": ["Ascension to Pentecost", "Paschaltide"], "Epiphany": ["Epiphany", "Christmas"] }[season] || (season === "year" ? [] : [season]);
     // Each choice covers only its own lines: a run of choices starts at each "Through the Year" ("I." or plain), and holds
     // what follows it until the next shared heading: Our Lady's version ("II."), the seasons' versions.
     var m = e.marks, keep = [], hasLady = m.some(function (k) { return k[2] === "two"; });
@@ -544,6 +545,49 @@
     if (!hasHymnPair(e)) return null;
     var light = inLight(dayDate());
     return { key: "matins:" + fileKey(state.week, state.day, 0) + ":" + light, items: cutFile(e, "year", false, light), hymns: true, note: "" };
+  }
+  // The weekly Matins, Lauds and Vespers (books/seasons.py marks them like Sext): only the texts for the day's season
+  // where the book prints them for each season ("Through the Year :", "Advent :" … "Paschaltide :"), the weekday Matins
+  // hymn for darkness or light, and on Sunday the Te Deum chosen. Holy Week and Palm Sunday have their own texts.
+  function cutSeason(d) {
+    var s = seasonOf(d), e = easter(d.getFullYear());
+    if (s === "Passiontide" && d >= addDays(e, -7)) return d.getDay() === 0 ? "Palm Sunday" : "Holy Week";
+    return s;
+  }
+  function replaceFrom(items, path, pt, extra) {   // the rest of that page gives way to the extra pieces
+    items = cutAt(items, path, pt);
+    var out = [], put = false;
+    items.forEach(function (it) {
+      if (Array.isArray(it) && it[0] === path && it[1] === pt[0] && it[2] >= pt[1] - 1e-6) { if (!put) { out = out.concat(extra); put = true; } return; }
+      if (!put && after(it, path, pt)) { out = out.concat(extra); put = true; }
+      out.push(it);
+    });
+    return put ? out : out.concat(extra);
+  }
+  function weekRecipe() {
+    if (!asm || !asm.marks || plain || state.ref || state.book !== "psalter" || state.hour === 2 || state.hour === 4) return null;
+    if (state.day === 6 && state.hour <= 1) return null;   // Saturday: saturdayRecipe
+    var path = fileKey(state.week, state.day, state.hour), e = asm.marks[path];
+    if (!e) return null;
+    var d = dayDate(), season = cutSeason(d), light = inLight(d), items = cutFile(e, season, false, light), te = "";
+    var f = state.hour === 0 && state.day === 0 && asm.tedeum && asm.tedeum.files[path], v = f && asm.tedeum.versions[teChoice];
+    if (v) {
+      items = replaceFrom(items, path, f.te, [{ h: "Te Deum · " + v.label }].concat(v.te));
+      if (teChoice === "latin") items = replaceFrom(items, path, f.decet, [{ h: "Te decet laus · Latin" }].concat(v.decet));
+      te = " and the Te Deum " + v.label.replace(/^English, /, "in English, ");
+    }
+    return { key: "week:" + path + ":" + season + ":" + light + ":" + teChoice, items: items, hymns: hasHymnPair(e),
+      note: "Pasted together: only the texts " + seasonWords(season) + " where the book gives a choice" + te + "." };
+  }
+  // At Matins, the day's two readings go in their places: under "First Reading" and "Second Reading", before each
+  // responsory (assembly.json "readings"); readings.js writes them there.
+  function withReadings(recipe) {
+    if (!recipe || !asm || !asm.readings || state.book !== "psalter" || state.hour !== 0 || state.ref) return recipe;
+    var path = fileKey(state.week, state.day, 0), at = asm.readings[path];
+    if (!at) return recipe;
+    var items = recipe.items;
+    ["Patristic", "Biblical"].forEach(function (k) { if (at[k]) items = pasteAt(items, path, at[k], [{ lect: k }]); });
+    return { key: recipe.key + ":lect", items: items, hymns: recipe.hymns, note: recipe.note, magnificat: recipe.magnificat };
   }
   function hymnNote(recipe) {
     var el = $("#hymn-note"), d = dayDate();
@@ -733,6 +777,7 @@
       if (vault.token !== token) return;
       var jobs = [];
       items.forEach(function (it, i) {
+        if (it.lect) { var sl = document.createElement("section"); sl.className = "lect lect-slot"; sl.dataset.kind = it.lect; box.appendChild(sl); return; }   // a reading (readings.js)
         if (!Array.isArray(it)) { var h = document.createElement("p"); h.className = "asm-head"; h.textContent = it.h; box.appendChild(h); return; }
         var page = pages[i], vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
         var top = it[2] * vp.height, hgt = Math.max(1, (it[3] - it[2]) * vp.height);
@@ -897,10 +942,11 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || matinsRecipe() || tedeumRecipe());
+      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : withReadings(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()));
+      window.PSALTER_IN.recipe = recipe;   // what was pasted together (for checking it)
       hymnNote(recipe); tedeumNote(); toneNote(recipe);
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
-      $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour <= 1 || state.book === "Sanctoral" && !!bookHour || state.hour === 3 && (state.day === 0 || state.day === 6));
+      $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour <= 1 || state.book === "Sanctoral" && !!bookHour || state.hour === 3);
       var keyP = vault.key ? Promise.resolve(vault.key) : savedKey();
       if (!keyP) { $("#lock").hidden = false; $("#beta-view").hidden = true; $("#pdf-view").hidden = true; return; }
       $("#lock").hidden = true;
@@ -1153,7 +1199,7 @@
     books = b;
     books.Lent.sections.splice(books.Lent.sections.findIndex(function (s) { return s.group === "Reference"; }), 0,
       { title: "Magnificat antiphons of Lent, cut out (all)", group: "Reference", tag: "", recipe: "lent", jumps: [], pages: 0, start: 0 });
-    return fetch("assembly.json").then(function (r) { return r.json(); }).then(function (a) {
+    return fetch("assembly.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (a) {
       asm = a;
       // The Saints book's hours as read from its headings (assembly.json), which catch a few the first split missed
       if (asm.feasts) books.Sanctoral.sections.forEach(function (s) { if (asm.feasts.jumps[s.path]) s.jumps = asm.feasts.jumps[s.path]; });

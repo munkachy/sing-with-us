@@ -120,6 +120,7 @@
     var box = $("#lect"), rd = $("#readings"), my = token = {};
     if (!IN.matins()) { box.hidden = true; shown = null; return; }
     var d = IN.dayDate();
+    if (shown && IN.ymd(shown.d) !== IN.ymd(d)) shown = null;   // another day: no old readings in the new pages' slots
     IN.index().then(function (idx) {
       if (token !== my) return;
       var lect = idx.lect || {}, k = dayKey(d, lect);
@@ -144,20 +145,25 @@
     for (var i = 0; i < es.length; i++) if (rid(es[i]) === c) return i;
     return 0;
   }
+  // Each reading goes in its place among the pages ("First Reading", "Second Reading": app.js leaves a slot for it),
+  // or, where the pages have no slots (the book's own pages, a feast), both go in the box after the pages.
+  function slotFor(kind) { return document.querySelector('#pdf-pages .lect-slot[data-kind="' + kind + '"]'); }
   function draw() {
     var box = $("#lect"), first = entriesOf("Biblical")[0] || entriesOf("Patristic")[0];
     box.innerHTML = "";
+    document.querySelectorAll("#pdf-pages .lect-slot").forEach(function (sl) { sl.innerHTML = ""; });
+    var inSlots = !!(slotFor("Biblical") || slotFor("Patristic"));
     if (!first) { box.hidden = true; return; }
     var head = document.createElement("p"); head.className = "lect-day";
     head.textContent = "Matins readings · " + dayName(first.title) + " · Year " + shown.year;
-    box.appendChild(head);
+    (inSlots ? slotFor("Biblical") || slotFor("Patristic") : box).appendChild(head);
     ["Biblical", "Patristic"].forEach(function (kind) {
-      var es = entriesOf(kind);
-      if (!es.length) return;
+      var es = entriesOf(kind), host = inSlots ? slotFor(kind) : box;
+      if (!es.length || !host) return;
       var at = chosen(kind), e = es[at];
       var art = document.createElement("article"); art.className = "lect-r"; art.dataset.kind = kind; art.dataset.rid = rid(e);
       var lab = document.createElement("p"); lab.className = "lect-kind"; lab.textContent = kind === "Biblical" ? "Biblical reading" : "Patristic reading";
-      art.appendChild(lab);
+      if (!inSlots) art.appendChild(lab);   // among the pages the book's own heading says which reading it is
       if (es.length > 1) {   // an alternative, or an older version: the reader chooses
         var alts = document.createElement("div"); alts.className = "lect-alts"; alts.setAttribute("role", "group"); alts.setAttribute("aria-label", "Choose the " + kind + " reading");
         es.forEach(function (x, i) {
@@ -173,9 +179,10 @@
       e.paras.forEach(function (segs, i) { var p = document.createElement("p"); p.dataset.i = i; fillPara(p, segs, hlsIn(e, kind, i)); tx.appendChild(p); });
       art.appendChild(tx);
       if (e.cite) { var c = document.createElement("p"); c.className = "lect-cite"; c.textContent = e.cite; art.appendChild(c); }
-      box.appendChild(art);
+      host.appendChild(art);
     });
-    box.hidden = false;
+    box.hidden = inSlots;
+    fab();
   }
   // A paragraph: Word's runs (italic kept: the Scripture a Father quotes), LORD set small, highlights marked
   function hlsIn(e, kind, i) {
@@ -233,10 +240,10 @@
     if (touching || !shown) return;
     var sel = getSelection();
     if (!sel || sel.isCollapsed || !sel.rangeCount) return;
-    var range = sel.getRangeAt(0), box = $("#lect");
-    if (!box.contains(range.commonAncestorContainer)) return;
+    var range = sel.getRangeAt(0), anc = range.commonAncestorContainer;
+    if (!(anc.nodeType === 1 ? anc : anc.parentNode).closest(".lect, .lect-r")) return;
     var touched = [];
-    box.querySelectorAll(".lect-r").forEach(function (art) {
+    document.querySelectorAll(".lect-r").forEach(function (art) {
       var kind = art.dataset.kind, e = entriesOf(kind)[chosen(kind)];
       art.querySelectorAll(".lect-text p").forEach(function (p) {
         if (!range.intersectsNode(p)) return;
@@ -274,7 +281,7 @@
   }
   // Tap a highlight: read its note, change its colour or note, or remove it
   document.addEventListener("click", function (e) {
-    var m = e.target.closest && e.target.closest("#lect mark.hl");
+    var m = e.target.closest && e.target.closest(".lect-r mark.hl");
     if (!m) return;
     var sel = getSelection(); if (sel && !sel.isCollapsed) return;
     var h = notes.hls.filter(function (x) { return x.id === m.dataset.hl; })[0];
@@ -408,7 +415,7 @@
   fabEl.setAttribute("aria-label", "Highlights, notes and marks"); fabEl.setAttribute("aria-expanded", "false"); fabEl.hidden = true;
   document.body.appendChild(fabEl);
   fabEl.addEventListener("click", function () { menu(!menuEl); });
-  function fab() { fabEl.hidden = $("#pdf-view").hidden && $("#lect").hidden && !notes.hls.length && !notes.marks.length; }
+  function fab() { fabEl.hidden = $("#pdf-view").hidden && !document.querySelector(".lect-r") && !notes.hls.length && !notes.marks.length; }
   function menu(open) {
     if (menuEl) { menuEl.remove(); menuEl = null; }
     fabEl.setAttribute("aria-expanded", String(!!open));
@@ -416,7 +423,7 @@
     menuEl = document.createElement("div"); menuEl.className = "mk-menu";
     var items = [];
     if (!$("#pdf-view").hidden && document.querySelector("#pdf-pages .pg")) items.push(["Mark part of a page", startMarking]);
-    if (!$("#lect").hidden) items.push(["Highlight in a reading: select the words", function () { menu(false); toast("Select some words in a reading, then choose a colour."); }]);
+    if (document.querySelector(".lect-r")) items.push(["Highlight in a reading: select the words", function () { menu(false); toast("Select some words in a reading, then choose a colour."); }]);
     items.push(["Back up and export…", function () { menu(false); backupSheet(); }]);
     items.forEach(function (it) { var b = document.createElement("button"); b.type = "button"; b.textContent = it[0]; b.addEventListener("click", it[1]); menuEl.appendChild(b); });
     document.body.appendChild(menuEl);
@@ -553,6 +560,6 @@
       '<p class="foot">From the community\'s psalter and lectionary at Saint Bernard Abbey: for your own use; please don\'t share it outside the community.</p></body></html>';
   }
 
-  window.LECT = { update: function () { update(); fab(); }, pages: paintMarks, _test: { seasonKey: seasonKey, dayKey: dayKey, cycleYear: cycleYear, sundayCycle: sundayCycle, notes: function () { return notes; } } };
+  window.LECT = { update: function () { update(); fab(); }, pages: function () { paintMarks(); if (shown && IN.matins()) draw(); }, _test: { seasonKey: seasonKey, dayKey: dayKey, cycleYear: cycleYear, sundayCycle: sundayCycle, notes: function () { return notes; } } };
   update(); fab();
 })();

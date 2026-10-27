@@ -346,6 +346,21 @@
     if (o.r) { var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase(); r.textContent = o.r; el.appendChild(r); }
     el.appendChild(document.createTextNode(name + (v ? " – " + v : "") + (o.w ? " · Psalter Week " + ROMAN[o.w - 1] : "")));
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
+    var nec = extrasData.necrology, mdd = ymd(d).slice(5);
+    var nn = (nec && nec.days[mdd] || []).filter(function (n) { return n[3] === nec.ours; }).map(function (n) { return [n[0] + " " + n[1], n[2]]; });
+    notices(mdd).forEach(function (e) { if (!nn.some(function (n) { return n[0] === e.name; })) nn.push([e.name, e.year]); });
+    if (nn.length) {   // the brothers of our house who died on this day, each with his notice
+      loadNecro();
+      var nd = document.createElement("details"); nd.className = "ordo-necro";
+      var ns = document.createElement("summary"); ns.textContent = "Necrology: " + nn.map(function (n) { return n[0] + " (" + n[1] + ")"; }).join(", ");
+      nd.appendChild(ns);
+      nn.forEach(function (n) {
+        var e = noticeFor(mdd, n[0]);
+        if (e) nd.appendChild(noticeEl(e, n[0] + ", " + n[1]));
+        else { var q = document.createElement("p"); q.textContent = n[0] + ", " + n[1] + (necroText ? ": no notice in our necrology yet." : ""); nd.appendChild(q); }
+      });
+      el.appendChild(nd);
+    }
     if (d.getDay() === 6 && bvmSaturday(d)) { var bs = document.createElement("span"); bs.className = "ordo-ours"; bs.textContent = "✦ Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary"; el.appendChild(bs); }
     el.appendChild(massReadings(o, d));
     var cal = document.createElement("a"); cal.className = "ordo-cal"; cal.href = "calendar.html#" + ymd(d); cal.textContent = "This day in the calendar →";
@@ -806,6 +821,29 @@
   // After Compline or the Ultima: the brothers of our house who died on this day (read at dinner, remembered at the
   // end of the day). After Matins, Lauds and Vespers: the collect for a Benedictine saint of the day, from the
   // Benedictine Supplement (osb.org), until the community's own Sanctorale is here.
+  // The abbey's own necrology (vault "necro", made by books/necrology_text.py in the private repo): each brother's notice,
+  // the text read the evening before his anniversary. Sealed, so it opens only once this phone has the password.
+  var necroText = null, necroP = null;
+  function loadNecro() {
+    if (necroText || necroP) return;
+    necroP = index().then(function (idx) {
+      var k = idx.necro && (vault.key ? Promise.resolve(vault.key) : savedKey());
+      if (!k) { necroP = null; return; }
+      return k.then(function (key) { return open(idx.necro, key); }).then(function (b) {
+        necroText = JSON.parse(new TextDecoder().decode(b)); dayEnd(); ordoNote();
+      });
+    }).catch(function () { necroP = null; });
+  }
+  function notices(md) { return necroText && necroText[md] || []; }
+  function noticeFor(md, name) { return notices(md).filter(function (e) { return e.name === name; })[0] || null; }
+  function noticeEl(e, label) {
+    var dt = document.createElement("details"); dt.className = "de-notice";
+    var sm = document.createElement("summary"); sm.textContent = label || "Read his necrology"; dt.appendChild(sm);
+    var r = document.createElement("p"); r.className = "de-read"; r.textContent = "Read on the evening of " + e.read + ".";
+    dt.appendChild(r);
+    e.paras.forEach(function (t) { var q = document.createElement("p"); q.textContent = t; dt.appendChild(q); });
+    return dt;
+  }
   function dayEnd() {
     var box = $("#day-end"), d = dayDate(), md = ymd(d).slice(5);
     box.innerHTML = "";
@@ -820,16 +858,28 @@
       var p = document.createElement("p"); p.className = "de-lead";
       p.textContent = !nec ? "Loading…" : ours.length ? "Let us remember our brothers of Saint Bernard Abbey who died on this day:" : "No brother of Saint Bernard Abbey died on this day.";
       box.appendChild(p);
-      if (ours.length) {
+      loadNecro();
+      var listed = all.map(function (n) { return n[0] + " " + n[1]; });
+      var extra = notices(md).filter(function (e) { return listed.indexOf(e.name) < 0; });   // in our necrology, not (yet) in the Congregation's list
+      if (extra.length && !ours.length) p.textContent = "Let us remember our brothers of Saint Bernard Abbey who died on this day:";
+      if (ours.length || extra.length) {
         var ul = document.createElement("ul"); ul.className = "de-names";
-        ours.forEach(function (n) { var li = document.createElement("li"); li.innerHTML = ""; li.appendChild(document.createTextNode(n[0] + " " + n[1])); var y = document.createElement("span"); y.textContent = n[2]; li.appendChild(y); ul.appendChild(li); });
+        ours.map(function (n) { return [n[0] + " " + n[1], n[2]]; }).concat(extra.map(function (e) { return [e.name, e.year]; })).forEach(function (n) {
+          var li = document.createElement("li"); li.appendChild(document.createTextNode(n[0]));
+          var y = document.createElement("span"); y.textContent = n[1]; li.appendChild(y);
+          var e = noticeFor(md, n[0]); if (e) li.appendChild(noticeEl(e));
+          ul.appendChild(li);
+        });
         box.appendChild(ul);
       }
       var rest = all.filter(function (n) { return n[3] !== nec.ours; });
       if (rest.length) {
         var det = document.createElement("details"), sm = document.createElement("summary"); sm.textContent = "The rest of the Congregation (" + rest.length + ")";
         det.appendChild(sm);
-        rest.forEach(function (n) { var q = document.createElement("p"); q.textContent = n[0] + " " + n[1] + ", " + (nec.houses[n[3]] || n[3]) + ", " + n[2]; det.appendChild(q); });
+        rest.forEach(function (n) {
+          var q = document.createElement("p"); q.textContent = n[0] + " " + n[1] + ", " + (nec.houses[n[3]] || n[3]) + ", " + n[2]; det.appendChild(q);
+          var e = noticeFor(md, n[0] + " " + n[1]); if (e) det.appendChild(noticeEl(e));   // Archabbot Boniface Wimmer
+        });
         box.appendChild(det);
       }
       var rip = document.createElement("p"); rip.className = "de-rip";

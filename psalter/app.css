@@ -375,3 +375,23 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 /* The Matins readings in their places among the pages (under "First Reading", "Second Reading") */
 #pdf-pages .lect-slot { margin: 10px 0 14px; }
 #pdf-pages .lect-slot:empty { display: none; }
+
+/* The abbey's necrology: each brother's notice, folded under his name (after Compline, and on the ordo line) */
+.day-end .de-names li { margin: .35rem 0 .6rem; }
+.de-notice { text-align: left; margin: .25rem auto 0; max-width: 34rem; font-size: 1rem; }
+.de-notice > summary { cursor: pointer; color: #9b1c1c; font-size: .92rem; text-align: center; }
+.de-notice p { margin: .4rem 0; line-height: 1.55; }
+.de-notice .de-read { font-size: .85rem; color: #6a5f52; font-style: italic; }
+.ordo-note .ordo-necro { display: block; margin-top: .3rem; font-size: .95rem; font-style: normal; color: var(--text); }
+.ordo-note .ordo-necro > summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.ordo-note .ordo-necro .de-notice { max-width: none; }
+.ordo-note .ordo-necro .de-notice > summary { text-align: left; color: var(--text); font-weight: 600; }
+.ordo-note .ordo-necro .de-read { color: var(--muted); }
+
+/* "How to use this page": one line, then topics that open one at a time */
+.help-menu { margin-top: .6rem; }
+.help-menu > summary { cursor: pointer; font-weight: 600; color: var(--link); }
+.help-menu details { margin: .5rem 0 0 .2rem; border-top: 1px solid var(--rule); padding-top: .45rem; }
+.help-menu details > summary { cursor: pointer; font-weight: 600; }
+.help-menu details p { margin: .45rem 0 .3rem; }
+.help-menu > p.muted { margin-top: .8rem; }

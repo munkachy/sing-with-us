@@ -17,6 +17,9 @@
     if (YEAR_FROM === "advent" && d >= IN.firstAdventSunday(y)) y++;
     return y % 2 ? "I" : "II";
   }
+  // The abbey usually keeps the Ascension on the Sunday after (the Seventh Sunday of Easter); "thursday" keeps it
+  // on its own day, and that Sunday then has no readings of its own in the files.
+  var ASCENSION_ON = "sunday";
   function sundayCycle(d) { var y = d.getFullYear(); if (d >= IN.firstAdventSunday(y)) y++; return ["C", "A", "B"][y % 3]; }
 
   // ---- Which readings a day takes ----
@@ -40,7 +43,7 @@
       var n = Math.floor(B(A(ash, 4), d) / 7) + 1;
       return n >= 6 && wd !== "sun" ? "holy-" + wd : "lent" + n + "-" + wd;
     }
-    if (S(d, A(e, 39))) return "ascension";
+    if (S(d, A(e, ASCENSION_ON === "sunday" ? 42 : 39))) return "ascension";
     if (S(d, A(e, 49))) return "pentecost";
     if (d >= e && d < A(e, 49)) return "east" + (Math.floor(B(e, d) / 7) + 1) + "-" + wd;
     if (S(d, A(e, 56))) return "trinity";

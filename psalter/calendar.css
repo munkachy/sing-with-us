@@ -130,3 +130,12 @@
 .fold.collect p { font-style: italic; }
 .day-pray { display: inline-block; margin-top: .45rem; font-weight: 600; color: var(--link); text-decoration: none; border: 1px solid var(--rule); border-radius: 999px; padding: .15rem .8rem; background: var(--bg); }
 .day-pray:hover { border-color: var(--accent); }
+
+/* Our necrology in a day's entry: the names, and each brother's notice folded under them */
+.day-necro > summary { font-weight: 600; }
+.day-necro .notice { margin: .35rem 0 .2rem .4rem; }
+.day-necro .notice > summary { cursor: pointer; font-weight: 600; }
+.day-necro .notice p { margin: .35rem 0; line-height: 1.55; }
+.day-necro .notice-read { font-size: .86rem; font-style: italic; color: var(--muted); }
+.day-necro .notice p { font-style: normal; color: var(--text); }
+.day-necro .notice > summary { color: var(--text); font-style: normal; }

@@ -14,6 +14,19 @@
     return fetch(f).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   }));
   var necro = null, collects = null, houseData = null;
+  // The abbey's own necrology notices, sealed in the vault (vault/index.json "necro"). They open with the key this phone
+  // kept when the psalter page was unlocked (the same site, so the same storage); without it, only the names show.
+  var notices = fetch("vault/index.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (idx) {
+    var k = null; try { k = JSON.parse(localStorage.getItem("psalter-key")); } catch (e) {}
+    if (!idx.necro || !k || k.salt !== idx.salt) return null;
+    var raw = Uint8Array.from(atob(k.raw), function (c) { return c.charCodeAt(0); });
+    return crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]).then(function (key) {
+      return fetch("vault/" + idx.necro).then(function (r) { return r.arrayBuffer(); }).then(function (buf) {
+        return crypto.subtle.decrypt({ name: "AES-GCM", iv: new Uint8Array(buf, 0, 12) }, key, new Uint8Array(buf, 12));
+      });
+    }).then(function (b) { return JSON.parse(new TextDecoder().decode(b)); });
+  }).catch(function () { return null; });
+  var noticeText = null;
   function ladySat(key) { var l = houseData && houseData.bvmSaturdays && houseData.bvmSaturdays[key.slice(0, 4)]; return !!l && l.indexOf(key.slice(5)) >= 0; }
   var want = location.hash.match(/^#(\d{4})-(\d{2})(?:-(\d{2}))?/);
   if (want) { view.y = +want[1]; view.m = +want[2] - 1; }
@@ -55,7 +68,14 @@
     var c = (n.match(/^St\. Bernard Abbey:\s*(White|Red|Green|Violet|Rose)\s/) || [])[1] || x.c;   // the house feast's own colour
     return { c: c, t: t, r: r, v: v, n: x.n, m: x.m, a: x.a };
   }
-  function ourDead(key) { return necro && (necro.days[key.slice(5)] || []).filter(function (n) { return n[3] === necro.ours; }) || []; }
+  function ourDead(key) {   // [title, name, year]: the Congregation's list for our house, and anyone only in our necrology
+    var md = key.slice(5), l = necro && (necro.days[md] || []).filter(function (n) { return n[3] === necro.ours; }) || [];
+    (noticeText && noticeText[md] || []).forEach(function (e) {
+      if (!l.some(function (n) { return n[0] + " " + n[1] === e.name; }) && !(necro && (necro.days[md] || []).some(function (n) { return n[0] + " " + n[1] === e.name; })))
+        l = l.concat([["", e.name, e.year, "Ala"]]);
+    });
+    return l;
+  }
   function ours(x, key) { return x.n.filter(function (n) { return OURS.test(n); }); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
@@ -70,8 +90,8 @@
       b.setAttribute("aria-label", name); b.addEventListener("click", function () { view.m = i; go(); });
       chips.appendChild(b);
     });
-    Promise.all([load(y), extras]).then(function (got) {
-      var o = got[0]; necro = got[1][0]; collects = got[1][1]; houseData = got[1][2];
+    Promise.all([load(y), extras, notices]).then(function (got) {
+      var o = got[0]; necro = got[1][0]; collects = got[1][1]; houseData = got[1][2]; noticeText = got[2];
       if (view.y !== y || view.m !== m) return;
       var grid = $("#grid"), agenda = $("#agenda"), msg = $("#ordo-msg");
       grid.innerHTML = ""; agenda.innerHTML = "";
@@ -130,10 +150,21 @@
       dc.appendChild(el("p", null, k.prayer)); body.appendChild(dc);
     });
     var mine = ourDead(key), all = necro && necro.days[md] || [];
-    if (mine.length) {
-      var pn = el("p", "day-necro"); pn.appendChild(el("span", "necro-mark", "† "));
-      pn.appendChild(document.createTextNode("Our necrology: " + mine.map(function (n) { return n[0] + " " + n[1] + " (" + n[2] + ")"; }).join("; ")));
-      body.appendChild(pn);
+    if (mine.length) {   // our brothers who died on this day, each with his notice to read
+      var nf = el("details", "fold day-necro"), ns = el("summary");
+      ns.appendChild(el("span", "necro-mark", "† "));
+      ns.appendChild(document.createTextNode("Our necrology: " + mine.map(function (n) { return (n[0] + " " + n[1]).trim() + " (" + n[2] + ")"; }).join("; ")));
+      nf.appendChild(ns);
+      mine.forEach(function (n) {
+        var name = (n[0] + " " + n[1]).trim(), e = (noticeText && noticeText[md] || []).filter(function (x) { return x.name === name; })[0];
+        if (!e) { nf.appendChild(el("p", null, name + ", " + n[2] + (noticeText ? ": no notice in our necrology yet." : ""))); return; }
+        var one = el("details", "notice"); one.appendChild(el("summary", null, name + ", " + n[2]));
+        one.appendChild(el("p", "notice-read", "Read on the evening of " + e.read + "."));
+        e.paras.forEach(function (t) { one.appendChild(el("p", null, t)); });
+        nf.appendChild(one);
+      });
+      if (!noticeText) nf.appendChild(el("p", "notice-read", "To read their notices here, open the psalter page once on this phone with the community password."));
+      body.appendChild(nf);
     }
     if (all.length) {
       var dnc = el("details", "fold"); dnc.appendChild(el("summary", null, "Necrology of the Congregation (" + all.length + ")"));

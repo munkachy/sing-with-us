@@ -12,10 +12,11 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="stylesheet" href="../assets/css/site.css?v=16">
-<link rel="stylesheet" href="app.css?v=27">
+<link rel="stylesheet" href="app.css?v=28">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=16" defer></script>
-<script src="app.js?v=37" defer></script>
+<script src="app.js?v=38" defer></script>
+<script src="readings.js?v=1" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the psalter</a>
@@ -85,6 +86,7 @@
     <section id="pdf-view" class="beta-view pdf-view" aria-label="The pages for this hour" hidden>
       <div id="pdf-pages"></div>
     </section>
+    <section id="lect" class="lect" aria-label="The Matins readings" hidden></section>
     <section id="day-end" class="day-end" aria-label="End of the hour" hidden></section>
     <p class="then"><a id="then-lauds" class="btn" href="#" hidden>Then Lauds →</a></p>
   </div>
@@ -93,7 +95,7 @@
     <p id="today-note" class="slim-note" hidden></p>
     <p id="asm-note" class="slim-note" hidden><span id="asm-note-text"></span> <a href="#" id="asm-plain">Show the book pages instead</a></p>
     <p id="plain-note" class="slim-note" hidden>Showing the psalter's own pages. <a href="#" id="asm-back">Paste it together again</a></p>
-    <p id="readings" class="readings" hidden><span id="readings-text"></span> <a id="readings-link" href="https://divineoffice.org/" target="_blank" rel="noopener">DivineOffice.org ↗</a></p>
+    <p id="readings" class="readings" hidden><span id="readings-text"></span><a id="readings-link" href="https://divineoffice.org/" target="_blank" rel="noopener">DivineOffice.org ↗</a></p>
 
     <details class="ref">
       <summary>Ordinary, chants and reference</summary>

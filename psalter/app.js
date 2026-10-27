@@ -199,7 +199,12 @@
   // Pages are laid out at full size at once, but drawn only near where the monk is reading,
   // and let go again when far away: a long section (80 pages) would not fit in a phone's memory.
   var pager = null;
-  function drawPdf(data, token) {
+  function pageBox_(cv, path, pg, f0, f1, strip) {   // a page (or a strip of one) in a box: the marks are drawn over it
+    var b = document.createElement("div"); b.className = "pg" + (strip ? " pg-strip" : "");
+    b.dataset.src = path; b.dataset.pg = pg; b.dataset.f0 = f0; b.dataset.f1 = f1;
+    b.appendChild(cv); return b;
+  }
+  function drawPdf(data, token, path) {
     var box = $("#pdf-pages"); box.innerHTML = "";
     if (pager) pager.stop();
     return pdfjs().then(function (lib) { return lib.getDocument({ data: new Uint8Array(data.slice(0)) }).promise; }).then(function (doc) {
@@ -213,7 +218,7 @@
           var vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
           var cv = document.createElement("canvas");
           cv.style.aspectRatio = Math.floor(vp.width) + " / " + Math.floor(vp.height);
-          cv.setAttribute("aria-label", "Page " + (i + 1)); box.appendChild(cv);
+          cv.setAttribute("aria-label", "Page " + (i + 1)); box.appendChild(pageBox_(cv, path, i, 0, 1));
           return { page: page, vp: vp, cv: cv, drawn: false };
         });
         var busy = false, stopped = false;
@@ -236,6 +241,7 @@
         var onScroll = function () { next(); };
         window.addEventListener("scroll", onScroll, { passive: true });
         pager = { stop: function () { stopped = true; window.removeEventListener("scroll", onScroll); }, next: next };
+        if (window.LECT) LECT.pages();
         var f = parseFloat(box.dataset.restore); box.dataset.restore = "";
         if (f > 0) scrollTo(0, box.getBoundingClientRect().top + scrollY + f * box.getBoundingClientRect().height);
         else goJump();
@@ -733,9 +739,10 @@
         var cv = document.createElement("canvas"); cv.className = "strip";
         cv.width = Math.floor(vp.width); cv.height = Math.floor(hgt); cv.dataset.p = it[4];
         cv.style.aspectRatio = cv.width + " / " + cv.height; cv.setAttribute("aria-label", "From page " + it[4]);
-        box.appendChild(cv);
+        box.appendChild(pageBox_(cv, it[0], it[1], it[2], it[3], true));
         jobs.push(function () { return page.render({ canvasContext: cv.getContext("2d"), viewport: vp, transform: [1, 0, 0, 1, 0, -top] }).promise; });
       });
+      if (window.LECT) LECT.pages();
       var f = parseFloat(box.dataset.restore); box.dataset.restore = "";
       if (f > 0) scrollTo(0, box.getBoundingClientRect().top + scrollY + f * box.getBoundingClientRect().height);
       pageLabel();
@@ -826,7 +833,8 @@
     for (var i = 0; i < cvs.length; i++) { if (cvs[i].getBoundingClientRect().top <= line) at = i; else break; }
     if (at < 0) at = 0;
     var n = strips ? +cvs[at].dataset.p : current.start + at - current.offset;
-    el.textContent = "p. " + n; el.hidden = !cvs.length || n < 1;
+    var past = cvs.length && cvs[cvs.length - 1].getBoundingClientRect().bottom < line;   // reading on below the pages (the Matins readings)
+    el.textContent = "p. " + n; el.hidden = !cvs.length || n < 1 || past;
   }
   window.addEventListener("scroll", pageLabel, { passive: true });
 
@@ -878,6 +886,7 @@
   // Show the current hour (or reference section): the Beta text if chosen and ready, else the PDF.
   function show() {
     var token = vault.token = {};
+    if (window.LECT) LECT.update();
     var inBook = state.book !== "psalter" && books;
     var path = state.ref || (inBook ? books[state.book].sections[state.sec[state.book]].path : ultima() ? ULTIMA : fileKey(state.week, state.day, state.hour));
     index().then(function (idx) {
@@ -916,7 +925,7 @@
             openPicks(content);
           } else if ($("#pdf-pages").dataset.file !== file) {
             $("#pdf-pages").dataset.file = file;
-            return drawPdf(plain, token);
+            return drawPdf(plain, token, path);
           } else goJump();
         });
       });
@@ -1037,14 +1046,15 @@
     var lauds = $("#then-lauds");
     lauds.hidden = state.hour !== 0 || !!state.ref || !!inBook;
     if (state.hour === 0) lauds.onclick = function (e) { e.preventDefault(); state.hour = 1; render(); scrollTo(0, 0); };
-    // Readings not printed in our book: the long ones at Matins, the short one at Vespers
+    // At Matins the day's readings follow the pages (readings.js), with this link only on a day without them;
+    // at Vespers the short reading, which isn't printed in our book
     var rd = $("#readings");
     rd.hidden = (state.hour !== 0 && state.hour !== 3) || !!state.ref || !!inBook;
     if (!rd.hidden) {
       var t = dayDate();
       var ymd = t.getFullYear() + String(t.getMonth() + 1).padStart(2, "0") + String(t.getDate()).padStart(2, "0");
       $("#readings-link").href = "https://divineoffice.org/?date=" + ymd;
-      $("#readings-text").textContent = state.hour === 0 ? "The long Matins readings aren't printed in our book." : "The short reading at Vespers isn't printed in our book.";
+      $("#readings-text").textContent = state.hour === 0 ? "" : "The short reading at Vespers isn't printed in our book. ";
       $("#readings-link").textContent = (state.hour === 0 ? "That day's Office of Readings" : "That day's Evening Prayer") + " at DivineOffice.org ↗";
     }
     show();
@@ -1156,5 +1166,14 @@
   $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
   $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });
+  // For readings.js: the day on screen, the ordo, the vault and the books
+  window.PSALTER_IN = { dayDate: dayDate, ordoDay: ordoDay, rankOf: rankOf, ymd: ymd, addDays: addDays, daysBetween: daysBetween, same: same,
+    easter: easter, firstAdventSunday: firstAdventSunday, epiphany: epiphany, endOfChristmastide: endOfChristmastide, sundayOf: sundayOf,
+    index: index, open: open, getDoc: getDoc, books: function () { return books; }, label: label,
+    key: function () { return vault.key ? Promise.resolve(vault.key) : vault.idx && savedKey() || null; },
+    matins: function () { return !state.ref && (state.book === "psalter" ? state.hour === 0 && !ultima() : /Matins/.test(bookHour || "")); },
+    printed: function (src, pg) {   // the page number printed in the book, for a page of a file
+      var w = whereIs(src); return w ? w.start + pg - w.offset : pg + 1;
+    } };
   window.PSALTER = { seasonOf: seasonOf, sextHymn: sextHymn, complineFor: complineFor, nextHour: nextHour, weekOf: weekOf, epiphany: epiphany, ordoDay: ordoDay, sundayVespers: sundayVespers, tagsFor: tagsFor, todayIn: function (b, d) { return todayIn(b, d); }, jumpFor: jumpFor, books: function () { return books; }, compline: compline, calendar: calendar, easter: easter, firstAdventSunday: firstAdventSunday, endOfChristmastide: endOfChristmastide, hourFor: hourFor, fileKey: fileKey };
 })();

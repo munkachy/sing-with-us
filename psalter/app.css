@@ -180,8 +180,9 @@ details.ref .ref-list { margin: .7rem .8rem 1rem; }
 
 /* PDFs drawn on the page (PDF.js), on the same cream page as the Beta */
 .pdf-view { padding-top: .6rem; }
-#pdf-pages canvas { display: block; width: calc(100% + 24px); margin: 0 -12px 10px; height: auto; mix-blend-mode: multiply; background: #fff; }
-@media (min-width: 42.01rem) { #pdf-pages canvas { width: 100%; margin: 0 0 12px; } }
+#pdf-pages .pg { position: relative; width: calc(100% + 24px); margin: 0 -12px 10px; }
+#pdf-pages canvas { display: block; width: 100%; height: auto; mix-blend-mode: multiply; background: #fff; }
+@media (min-width: 42.01rem) { #pdf-pages .pg { width: 100%; margin: 0 0 12px; } }
 #lock { margin: 1rem 0; }
 #vault-msg { margin: .8rem 0; text-align: center; }
 p.then { margin: .2rem 0 1.4rem; }
@@ -191,7 +192,7 @@ p.then { margin: .2rem 0 1.4rem; }
   .site-header, .pickbar { display: none; }
   main .wrap { max-width: none; }
   .beta-view { margin-left: -16px; margin-right: -16px; border-radius: 0; box-shadow: none; padding-left: 16px; padding-right: 16px; }
-  #pdf-pages canvas { width: calc(100% + 24px); margin: 0 -12px 10px; }
+  #pdf-pages .pg { width: calc(100% + 24px); margin: 0 -12px 10px; }
 }
 
 /* No Now button: the bar is just week, day and hour */
@@ -234,7 +235,7 @@ p.then { margin: .2rem 0 1.4rem; }
 
 /* Pasted-together hours: a thin label between the strips */
 .asm-head { margin: 14px 0 8px; padding: 4px 10px; font-size: .9rem; color: #6b5d4f; border-left: 3px solid #9b1c1c; background: rgba(155, 28, 28, .05); border-radius: 0 6px 6px 0; }
-#pdf-pages canvas.strip { margin-bottom: 0; }
+#pdf-pages .pg-strip { margin-bottom: 0; }
 
 /* The ordo's line for the day */
 .ordo-note .ordo-ours { display: block; font-weight: 600; margin-top: .2rem; }
@@ -311,3 +312,62 @@ p.then { margin: .2rem 0 1.4rem; }
 .tedeum-note select { font: inherit; margin-left: .3em; padding: .15rem .4rem; border-radius: 6px; border: 1px solid var(--rule); background: var(--surface); color: var(--text); max-width: 100%; }
 
 .ordo-note .ordo-mass { display: block; margin-top: .3rem; }
+
+/* ---- Matins readings (the Two-Year Lectionary), typed on the same cream page as the book ---- */
+.lect { margin: 1rem 0 1.4rem; padding: 1rem 1.1rem 1.2rem; border-radius: 12px; background: #f3ede1; color: #2b241d; border: 1px solid #d6cab4; }
+.lect-day { margin: 0 0 .2rem; font-size: .9rem; color: #6a5f52; }
+.lect-r + .lect-r { margin-top: 1.6rem; padding-top: 1.1rem; border-top: 1px solid #d6cab4; }
+.lect-kind { margin: 0 0 .35rem; font-family: "Cinzel", serif; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: #9b1c1c; }
+.lect h3 { margin: 0 0 .6rem; font-family: inherit; font-size: 1rem; font-weight: 600; letter-spacing: .05em; line-height: 1.4; color: #2b241d; }
+.lect-text p { margin: 0 0 .7rem; font-size: 1.1rem; line-height: 1.6; }
+.lect-text .lord { font-size: .8em; letter-spacing: .06em; }
+.lect-cite { margin: .4rem 0 0; font-size: .9rem; font-style: italic; color: #6a5f52; text-align: right; }
+.lect-alts { display: flex; flex-wrap: wrap; gap: .35rem; margin: 0 0 .7rem; }
+.lect-alts button { font: inherit; font-size: .86rem; padding: .3rem .6rem; border-radius: 7px; border: 1px solid #d6cab4; background: #fbf8f2; color: #2b241d; cursor: pointer; text-align: left; }
+.lect-alts button[aria-pressed="true"] { border-color: #9b1c1c; box-shadow: inset 0 0 0 1px #9b1c1c; font-weight: 600; }
+.lect-msg { margin: 0; color: #6a5f52; font-style: italic; }
+
+/* Highlights and notes (kept only in this browser), as in Lumina: four colours */
+:root { --hl-gold: #f0dc9a; --hl-rose: #f0c3bd; --hl-sage: #cfdcb4; --hl-sky: #c2d7e8; }
+mark.hl { color: inherit; border-radius: .2em; padding: .02em 0; cursor: pointer; }
+mark.hl.gold { background: var(--hl-gold); } mark.hl.rose { background: var(--hl-rose); }
+mark.hl.sage { background: var(--hl-sage); } mark.hl.sky { background: var(--hl-sky); }
+mark.hl.noted { border-bottom: 2px dotted #8a6d1e; }
+.hl-dots { display: flex; gap: .7rem; justify-content: center; margin: .2rem 0 .7rem; }
+.hl-dot { width: 2rem; height: 2rem; border-radius: 50%; border: 2px solid rgba(43, 36, 29, .25); cursor: pointer; padding: 0; }
+.hl-dot.gold { background: var(--hl-gold); } .hl-dot.rose { background: var(--hl-rose); } .hl-dot.sage { background: var(--hl-sage); } .hl-dot.sky { background: var(--hl-sky); }
+.hl-dot[aria-pressed="true"] { border-color: #2b241d; box-shadow: 0 0 0 2px #fbf8f2, 0 0 0 4px #2b241d; }
+.nt-pop { position: fixed; z-index: 60; width: min(22rem, calc(100vw - 16px)); padding: .8rem; border-radius: 12px; background: #fbf8f2; color: #2b241d; border: 1px solid #d6cab4; box-shadow: 0 8px 28px rgba(40, 28, 12, .25); }
+.nt-pop textarea, .nt-sheet textarea { display: block; width: 100%; box-sizing: border-box; min-height: 4.2rem; font: inherit; font-size: 1rem; padding: .45rem .55rem; border-radius: 8px; border: 1px solid #d6cab4; background: #fff; color: #2b241d; resize: vertical; }
+.nt-btns { display: flex; flex-wrap: wrap; gap: .45rem; justify-content: flex-end; margin-top: .6rem; }
+.nt-btns button { font: inherit; font-size: .95rem; min-height: 38px; padding: 0 .9rem; border-radius: 8px; border: 1px solid #d6cab4; background: #fff; color: #2b241d; cursor: pointer; }
+.nt-btns button.primary { background: #9b1c1c; border-color: #9b1c1c; color: #fff8ee; font-weight: 600; }
+.nt-btns button.danger { color: #9b1c1c; margin-right: auto; }
+.nt-btns button:disabled { opacity: .5; cursor: default; }
+.nt-back { position: fixed; inset: 0; z-index: 59; background: rgba(20, 14, 8, .45); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.nt-sheet { width: min(30rem, 100%); max-height: calc(100vh - 32px); overflow: auto; padding: 1rem 1.1rem; border-radius: 12px; background: #fbf8f2; color: #2b241d; border: 1px solid #d6cab4; }
+.nt-sheet h2 { margin: 0 0 .5rem; font-family: "Cinzel", serif; font-size: 1.1rem; letter-spacing: .06em; color: #9b1c1c; text-align: center; }
+.nt-sheet p { margin: .3rem 0 .6rem; font-size: .95rem; }
+.nt-sheet .nt-quote { font-style: italic; color: #6a5f52; }
+.nt-sheet .nt-view { white-space: pre-wrap; font-size: 1.05rem; line-height: 1.55; }
+.nt-row { display: flex; align-items: center; gap: .7rem; margin: .55rem 0; }
+.nt-row button { flex: 0 0 9.5rem; font: inherit; font-size: .95rem; min-height: 40px; border-radius: 8px; border: 1px solid #d6cab4; background: #fff; color: #2b241d; cursor: pointer; }
+.nt-row button:disabled { opacity: .5; cursor: default; }
+.nt-row span { font-size: .9rem; color: #6a5f52; line-height: 1.35; }
+.nt-msg { text-align: center; color: #9b1c1c; }
+.nt-toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 70; padding: .45rem .9rem; border-radius: 8px; background: #2b241d; color: #fbf8f2; font-size: .92rem; max-width: calc(100vw - 32px); }
+
+/* Marks over the book's pages: a translucent box, placed by the page itself (so it stays put at any width) */
+#pdf-pages .mk { position: absolute; border-radius: 3px; opacity: .45; mix-blend-mode: multiply; cursor: pointer; }
+#pdf-pages .mk.gold { background: #e8c547; } #pdf-pages .mk.rose { background: #e8968b; }
+#pdf-pages .mk.sage { background: #a9c47f; } #pdf-pages .mk.sky { background: #86b2d8; }
+#pdf-pages .mk.noted { outline: 2px dotted rgba(43, 36, 29, .7); outline-offset: -2px; }
+#pdf-pages .mk.draft { background: #e8c547; outline: 2px dashed #9b1c1c; outline-offset: -2px; cursor: crosshair; }
+body.marking #pdf-pages .pg { touch-action: none; cursor: crosshair; }
+body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
+.mk-bar { position: fixed; left: 50%; top: 10px; transform: translateX(-50%); z-index: 55; display: flex; align-items: center; gap: .7rem; padding: .45rem .5rem .45rem .9rem; border-radius: 10px; background: #2b241d; color: #fbf8f2; font-size: .95rem; box-shadow: 0 6px 20px rgba(0, 0, 0, .3); max-width: calc(100vw - 20px); }
+.mk-bar button { font: inherit; font-size: .9rem; min-height: 34px; padding: 0 .8rem; border-radius: 7px; border: 0; background: #fbf8f2; color: #2b241d; cursor: pointer; }
+.mk-fab { position: fixed; right: 12px; bottom: 12px; z-index: 50; width: 46px; height: 46px; border-radius: 50%; border: 1px solid #d6cab4; background: #fbf8f2; color: #9b1c1c; font-size: 1.3rem; line-height: 1; cursor: pointer; box-shadow: 0 4px 14px rgba(40, 28, 12, .25); }
+.mk-menu { position: fixed; right: 12px; bottom: 66px; z-index: 51; display: grid; gap: 4px; padding: 6px; border-radius: 10px; background: #fbf8f2; border: 1px solid #d6cab4; box-shadow: 0 8px 24px rgba(40, 28, 12, .25); }
+.mk-menu button { font: inherit; font-size: .95rem; min-height: 40px; padding: 0 .9rem; border-radius: 7px; border: 0; background: none; color: #2b241d; text-align: left; cursor: pointer; }
+.mk-menu button:hover, .mk-menu button:focus-visible { background: #f3ede1; }

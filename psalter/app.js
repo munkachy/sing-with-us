@@ -242,6 +242,7 @@
         window.addEventListener("scroll", onScroll, { passive: true });
         pager = { stop: function () { stopped = true; window.removeEventListener("scroll", onScroll); }, next: next };
         if (window.LECT) LECT.pages();
+        if (window.PROPER) PROPER.pages();
         var f = parseFloat(box.dataset.restore); box.dataset.restore = "";
         if (f > 0) scrollTo(0, box.getBoundingClientRect().top + scrollY + f * box.getBoundingClientRect().height);
         else goJump();
@@ -604,6 +605,29 @@
     ["Patristic", "Biblical"].forEach(function (k) { if (at[k]) items = pasteAt(items, path, at[k], [{ lect: k }]); });
     return { key: recipe.key + ":lect", items: items, hymns: recipe.hymns, note: recipe.note, magnificat: recipe.magnificat };
   }
+  // The hebdomadarian's Proper (proper.js; places from books/seasons.py, assembly.json "proper_at"): the capitulum under
+  // "Reading" at Lauds, Sext and Vespers, the Oration under "Prayer from the Proper" (at Sext, before the Conclusion).
+  // The printed reading or prayer gives way only to a typed one.
+  function withProper(recipe) {
+    if (!recipe || !window.PROPER || !asm || !asm.proper_at || state.ref || state.book !== "psalter" || state.hour === 4) return recipe;
+    var pl = PROPER.plan(dayDate(), HOURS[state.hour]);
+    if (!pl || (!pl.cap && !pl.ora)) return recipe;
+    var path = fileKey(state.week, state.day, state.hour), at = asm.proper_at[path] || {}, items = recipe.items;
+    if (pl.cap && at.reading) {
+      if (pl.cap.text && state.hour === 1) items = leaveOut(items, path, at.reading[0], at.reading[1]);   // Lauds: the feast's, not the psalter's
+      items = pasteAt(items, path, at.reading[0], [{ proper: "cap" }]);
+    }
+    if (pl.ora) {
+      if (state.hour === 2) {
+        var c = -1; items.forEach(function (it, k) { if (!Array.isArray(it) && it.h === "Conclusion") c = k; });
+        if (c >= 0) items = items.slice(0, c).concat([{ proper: "ora" }], items.slice(c));
+      } else if (at.oration) {
+        if (pl.ora.lines) items = leaveOut(items, path, at.oration[0], at.oration[1]);
+        items = pasteAt(items, path, at.oration[0], [{ proper: "ora" }]);
+      }
+    }
+    return { key: recipe.key + ":pr:" + pl.sig, items: items, hymns: recipe.hymns, note: recipe.note, magnificat: recipe.magnificat };
+  }
   function hymnNote(recipe) {
     var el = $("#hymn-note"), d = dayDate();
     if (!recipe || !recipe.hymns) { el.hidden = true; return; }
@@ -792,6 +816,7 @@
       if (vault.token !== token) return;
       var jobs = [];
       items.forEach(function (it, i) {
+        if (it.proper) { var ps = document.createElement("section"); ps.className = "proper proper-slot"; ps.dataset.part = it.proper; box.appendChild(ps); return; }   // proper.js
         if (it.lect) { var sl = document.createElement("section"); sl.className = "lect lect-slot"; sl.dataset.kind = it.lect; box.appendChild(sl); return; }   // a reading (readings.js)
         if (!Array.isArray(it)) { var h = document.createElement("p"); h.className = "asm-head"; h.textContent = it.h; box.appendChild(h); return; }
         var page = pages[i], vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
@@ -803,6 +828,7 @@
         jobs.push(function () { return page.render({ canvasContext: cv.getContext("2d"), viewport: vp, transform: [1, 0, 0, 1, 0, -top] }).promise; });
       });
       if (window.LECT) LECT.pages();
+      if (window.PROPER) PROPER.pages();
       var f = parseFloat(box.dataset.restore); box.dataset.restore = "";
       if (f > 0) scrollTo(0, box.getBoundingClientRect().top + scrollY + f * box.getBoundingClientRect().height);
       pageLabel();
@@ -982,6 +1008,7 @@
   function show() {
     var token = vault.token = {};
     if (window.LECT) LECT.update();
+    if (window.PROPER) PROPER.update();
     var inBook = state.book !== "psalter" && books;
     var path = state.ref || (inBook ? books[state.book].sections[state.sec[state.book]].path : ultima() ? ULTIMA : fileKey(state.week, state.day, state.hour));
     index().then(function (idx) {
@@ -992,7 +1019,7 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : withReadings(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()));
+      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : withReadings(withProper(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe())));
       window.PSALTER_IN.recipe = recipe;   // what was pasted together (for checking it)
       hymnNote(recipe); tedeumNote(); toneNote(recipe);
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
@@ -1004,10 +1031,11 @@
         vault.key = key;
         if (recipe) {
           $("#beta-view").hidden = true; $("#pdf-view").hidden = false; msg("");
-          if ($("#pdf-pages").dataset.file === recipe.key) { goJump(); return; }
-          $("#pdf-pages").dataset.file = recipe.key; current = null;
+          // "done" only once drawn: a drawing cut short by a newer one (e.g. the Proper arriving) must not count as shown
+          if ($("#pdf-pages").dataset.done === recipe.key) { goJump(); return; }
+          $("#pdf-pages").dataset.file = recipe.key; $("#pdf-pages").dataset.done = ""; current = null;
           msg("Opening…");
-          return drawRecipe(recipe.items, idx, key, token).then(function () { if (vault.token === token) msg(""); });
+          return drawRecipe(recipe.items, idx, key, token).then(function () { if (vault.token === token) { msg(""); $("#pdf-pages").dataset.done = recipe.key; } });
         }
         var isBeta = !!hourFile, cached = !!vault.cache[file];
         if (!cached) msg("Opening…");
@@ -1019,9 +1047,9 @@
             var content = $("#beta-content");
             if (content.dataset.page !== path) { content.innerHTML = new TextDecoder().decode(plain); content.dataset.page = path; }
             openPicks(content);
-          } else if ($("#pdf-pages").dataset.file !== file) {
-            $("#pdf-pages").dataset.file = file;
-            return drawPdf(plain, token, path);
+          } else if ($("#pdf-pages").dataset.done !== file) {
+            $("#pdf-pages").dataset.file = file; $("#pdf-pages").dataset.done = "";
+            return drawPdf(plain, token, path).then(function () { if (vault.token === token) $("#pdf-pages").dataset.done = file; });
           } else goJump();
         });
       });
@@ -1239,7 +1267,7 @@
     var box = $("#pdf-pages"), frac = readFrac;   // where we were reading before the turn
     clearTimeout(turnT);
     turnT = setTimeout(function () {
-      box.dataset.file = ""; box.dataset.restore = frac; show();
+      box.dataset.file = box.dataset.done = ""; box.dataset.restore = frac; show();
     }, 150);
   });
 
@@ -1267,6 +1295,13 @@
     easter: easter, firstAdventSunday: firstAdventSunday, epiphany: epiphany, endOfChristmastide: endOfChristmastide, sundayOf: sundayOf,
     index: index, open: open, getDoc: getDoc, books: function () { return books; }, label: label,
     key: function () { return vault.key ? Promise.resolve(vault.key) : vault.idx && savedKey() || null; },
+    hour: function () {   // the hour on screen, by name: in a seasonal book, the hour chosen there ("I Vespers" counts as Vespers)
+      if (state.ref) return null;
+      if (state.book === "psalter") return state.hour === 4 ? null : HOURS[state.hour];
+      var m = (bookHour || "").match(/Matins|Lauds|Sext|Vespers/); return m ? m[0] : null;
+    },
+    inBook: function () { return state.book !== "psalter" || plain; },
+    bvmSaturday: function (d) { return bvmSaturday(d); }, redraw: function () { render(); },
     matins: function () { return !state.ref && (state.book === "psalter" ? state.hour === 0 && !ultima() : /Matins/.test(bookHour || "")); },
     printed: function (src, pg) {   // the page number printed in the book, for a page of a file
       var w = whereIs(src); return w ? w.start + pg - w.offset : pg + 1;

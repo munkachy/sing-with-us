@@ -395,3 +395,19 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .help-menu details > summary { cursor: pointer; font-weight: 600; }
 .help-menu details p { margin: .45rem 0 .3rem; }
 .help-menu > p.muted { margin-top: .8rem; }
+
+/* The hebdomadarian's Proper: the capitulum and the Oration, typed on the book's cream page */
+.proper { margin: .6rem 0 1rem; padding: .8rem 1rem; border-radius: 12px; background: #f3ede1; color: #2b241d; border: 1px solid #d6cab4; }
+#pdf-pages .proper-slot { margin: 8px 0 12px; }
+#pdf-pages .proper-slot:empty { display: none; }
+.proper .pr-cap + .pr-ora { margin-top: 1rem; padding-top: .8rem; border-top: 1px solid #d6cab4; }
+.proper .pr-kind { margin: 0 0 .3rem; font-family: "Cinzel", serif; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: #9b1c1c; }
+.proper .pr-ref { margin: 0 0 .3rem; text-align: right; font-style: italic; font-size: .92rem; color: #6a5f52; }
+.proper .pr-text, .proper .pr-lines { margin: 0 0 .4rem; font-size: 1.1rem; line-height: 1.6; }
+.proper .pr-lines { padding-left: 1.2em; text-indent: -1.2em; }
+.proper .pr-lead, .proper .pr-resp { margin: .2rem 0; font-size: 1rem; }
+.proper .pr-note { margin: .2rem 0; font-style: italic; color: #6a5f52; }
+.proper .lord { font-size: .8em; letter-spacing: .06em; }
+.proper .pr-switch { display: flex; flex-wrap: wrap; gap: .35rem; margin: .1rem 0 .4rem; }
+.proper .pr-switch button { font: inherit; font-size: .88rem; padding: .3rem .65rem; border-radius: 7px; border: 1px solid #d6cab4; background: #fbf8f2; color: #2b241d; cursor: pointer; }
+.proper .pr-switch button[aria-pressed="true"] { border-color: #9b1c1c; box-shadow: inset 0 0 0 1px #9b1c1c; font-weight: 600; }

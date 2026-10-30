@@ -16,7 +16,16 @@
   var data = null, loading = null, choiceKey = "psalter-oration";
 
   function orationChoice() { try { return localStorage.getItem(choiceKey) === "sunday" ? "sunday" : "psalter"; } catch (x) { return "psalter"; } }
-  function setChoice(v) { try { localStorage.setItem(choiceKey, v); } catch (x) {} IN.redraw(); }
+  function setChoice(v) { try { localStorage.setItem(choiceKey, v); } catch (x) {} keepPlace(); IN.redraw(); }
+  // Switching the Oration redraws the hour (the printed prayer stays or goes): keep the Oration where it was on the
+  // screen, instead of the page jumping while the strips are drawn again
+  var anchor = null, anchorT = null;
+  function oraBox() { return document.querySelector('#pdf-pages .proper-slot[data-part="ora"] .pr-ora') || document.querySelector("#proper .pr-ora"); }
+  function keepPlace() {
+    var b = oraBox(); if (!b) return;
+    anchor = b.getBoundingClientRect().top; clearTimeout(anchorT); anchorT = setTimeout(function () { anchor = null; }, 4000);
+  }
+  function restorePlace() { var b = anchor !== null && oraBox(); if (b) window.scrollBy(0, b.getBoundingClientRect().top - anchor); }
 
   function load() {
     if (data || loading) return;
@@ -115,7 +124,7 @@
   function altChoice(key) { try { return +(JSON.parse(localStorage.getItem("psalter-oration-alt") || "{}")[key] || 0); } catch (x) { return 0; } }
   function setAlt(key, n) {
     try { var m = JSON.parse(localStorage.getItem("psalter-oration-alt") || "{}"); m[key] = n; localStorage.setItem("psalter-oration-alt", JSON.stringify(m)); } catch (x) {}
-    IN.redraw();
+    keepPlace(); IN.redraw();
   }
 
   // ---- Drawing ----
@@ -180,6 +189,7 @@
       if (pl.ora && !pl.ora.choose) box.appendChild(oraEl(pl));
       box.hidden = !box.children.length;
     }
+    restorePlace();
   }
 
   window.PROPER = { plan: function (d, hour) { load(); return plan(d, hour); }, pages: draw, update: function () { load(); draw(); } };

@@ -280,10 +280,11 @@
     return h ? h.match(/\b(Solemnity|Feast)\b/)[1] : o && o.r;
   }
   var autoDone = false;
-  // The Office of the Dead (the Saints book's All Souls, 2 November): on All Souls, every hour it prints but Compline; on
+  // The Office of the Dead (the Saints book's All Souls, 2 November): on All Souls, every hour it prints, its own Compline
+  // too (the abbey uses it; the necrology still follows); on
   // 14 November, the Commemoration of all the Departed of our Order ("All as in the Office of All Souls Day", p. 707),
   // Matins to Sext, Vespers being I Vespers of Sunday (Master of Ceremonies, 2026). Not on a Sunday (the 14th moves).
-  var DEAD = { "11-02": ["Matins", "Lauds", "Sext", "Vespers"], "11-14": ["Matins", "Lauds", "Sext"] };
+  var DEAD = { "11-02": ["Matins", "Lauds", "Sext", "Vespers", "Compline"], "11-14": ["Matins", "Lauds", "Sext"] };
   function deadOffice(d, hour) {
     var md = ymd(d).slice(5), l = DEAD[md];
     return !!l && !(md === "11-14" && d.getDay() === 0) && l.indexOf(hour) >= 0;
@@ -298,7 +299,7 @@
     return true;
   }
   function autoOpen() {
-    if (autoDone || touched || !books || state.hour === 4) return;
+    if (autoDone || touched || !books || (state.hour === 4 && !deadOffice(dayDate(), "Compline"))) return;
     var d = dayDate(), o = ordoDay(d);
     if (o === null || o === undefined) return;
     autoDone = true;
@@ -901,7 +902,7 @@
     box.innerHTML = "";
     if (state.ref) { box.hidden = true; return; }
     var nec = extrasData.necrology, col = extrasData.collects && extrasData.collects[md];
-    if (state.hour === 4 && state.book === "psalter") {
+    if (state.book === "psalter" ? state.hour === 4 : /^Compline/.test(bookHour || "")) {   // also after a Compline in the Saints book (All Souls)
       var h = document.createElement("h2"); h.textContent = "Necrology"; box.appendChild(h);
       var when = document.createElement("p"); when.className = "de-when";
       when.textContent = d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
@@ -937,7 +938,7 @@
       var rip = document.createElement("p"); rip.className = "de-rip";
       rip.textContent = "May they and all the faithful departed, through the mercy of God, rest in peace. Amen.";
       box.appendChild(rip);
-      if (haustus()) {
+      if (haustus() && state.book === "psalter") {
         var sw = document.createElement("p"); sw.className = "de-switch";
         var on = complineTonight(), a = document.createElement("a"); a.href = "#"; a.textContent = on ? "Show the Ultima instead" : "Show Compline instead";
         a.addEventListener("click", function (e) { e.preventDefault(); wantCompline = !on; render(); scrollTo(0, 0); });

@@ -514,7 +514,8 @@
     });
     runs.forEach(function (r) {
       var kinds = r.map(function (j) { return m[j][2]; }), hasTwo = kinds.indexOf("two") >= 0;
-      var labels = r.filter(function (j) { return m[j][2] === "season"; }).map(function (j) { return m[j][3]; });
+      // a label may name several seasons that share a text ("Christmas/Epiphany": Sunday's second-nocturn canticle)
+      var labels = [].concat.apply([], r.filter(function (j) { return m[j][2] === "season"; }).map(function (j) { return m[j][3].split("/"); }));
       var pick = prefs.filter(function (p) { return labels.indexOf(p) >= 0; })[0] || null;
       var chosen = bvm && hasTwo ? r.filter(function (j) { return m[j][2] === "two"; })[0]
         : pick ? r.filter(function (j) { return m[j][2] === "season" && m[j][3] === pick; })[0] : null;
@@ -523,7 +524,8 @@
       var onlyVerse = chosen != null && m[chosen][2] === "season" && m[chosen][4] === "v" && kinds.indexOf("verse") >= 0;
       r.forEach(function (j) {
         var k = m[j][2];
-        keep[j] = k === "one" || k === "year" ? (chosen == null && !(easter && k === "year")) || onlyVerse : k === "verse" ? chosen == null : j === chosen;
+        keep[j] = k === "one" || k === "year" ? (chosen == null && !(easter && k === "year")) || onlyVerse : k === "verse" ? chosen == null
+          : j === chosen || (k === "season" && !(bvm && hasTwo) && !!pick && m[j][3].split("/").indexOf(pick) >= 0);   // every block of the day's season
       });
     });
     m.forEach(function (k, j) {

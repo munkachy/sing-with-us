@@ -1,6 +1,12 @@
 {
- "about": "Saint Bernard Abbey's own choices. bvmSaturdays: the Saturday Commemoration of the Blessed Virgin Mary (Office and Mass), on all open Saturdays through the year and once in Easter Time; the list from the Office of the Master of Ceremonies, calculated by Br. Thomas.",
+ "about": "Saint Bernard Abbey's own choices. bvmSaturdays: the Saturday Commemoration of the Blessed Virgin Mary (Office and Mass), on all open Saturdays through the year and once in Easter Time; the list from the Office of the Master of Ceremonies, calculated by Br. Thomas. notices: the Master of Ceremonies' notices of upcoming celebrations, by date (\"Upcoming Liturgical Celebrations\"), shown on the ordo line and in the calendar.",
  "bvmSaturdays": {
   "2026": ["02-07", "05-16", "05-30", "06-20", "09-19", "09-26", "10-10", "10-24", "10-31", "11-28"]
+ },
+ "notices": {
+  "2026-11-01": ["All Saints will be an Office of the Abbot."],
+  "2026-11-02": ["All Souls will be an Office of the Abbot.", "Cemetery procession with Vespers of the Dead will begin at 4 p.m.", "Procession will begin in Statio, from the usual place.", "Cucullas are to be worn for Offices and Mass."],
+  "2026-11-13": ["Treated like a normal feast (statio, servers, cucullas, etc.).", "There are three readings (OT, NT, and Gospel).", "NOT an Office of the Abbot.", "Weekday celebrant has Mass."],
+  "2026-11-14": ["The Office of the Dead is prayed.", "Abbot responsible for Orations in the Office.", "Weekday celebrant has Mass.", "Mass is said as on a feast (incense, servers, statio, cucullas).", "There are three readings (OT, NT, and Gospel).", "NO procession to the cemetery.", "Vespers will be I Vespers of Sunday."]
  }
 }

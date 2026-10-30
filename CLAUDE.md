@@ -15,6 +15,7 @@ The psalter page is `psalter/` (unlisted, for the monks). Its sources and tools 
 | `assembly.json` | Made in munkachy/psalter (`books/assemble.py`, `books/seasons.py`). "marks": where the book offers seasonal choices; "readings": where the two readings go in each Matins; "proper_at": where the capitulum and Oration go in each weekly hour |
 | `vault/` | Everything sealed. `index.json`: "pdfs" (book files), "lect" (readings, one file per day key), "necro" (the abbey's necrology notices by day of death), "proper" (the Proper, one file). Never change its salt |
 | `books.json`, `ordo-YEAR.json`, `house.json`, `necrology.json`, `collects.json` | Data, from munkachy/psalter |
+| `house.json` | Kept here, by hand: the abbey's Our Lady Saturdays (`bvmSaturdays`) and the Master of Ceremonies' notices by date (`notices`, shown on the ordo line and in the calendar). The Office of the Dead days (2 and 14 Nov) are `DEAD` in app.js |
 
 ### How an hour is shown
 

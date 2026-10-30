@@ -32,6 +32,7 @@
   // What the Proper gives for a day and hour: { cap: {ref, text} | {note}, ora: {lines} | {note} | {choose}, title, sig }
   function plan(d, hour) {
     if (!data || !hour) return null;
+    if (IN.deadOffice && IN.deadOffice(d, hour)) return null;   // the Office of the Dead has its own texts
     var md = IN.ymd(d).slice(5), next = IN.addDays(d, 1), nmd = IN.ymd(next).slice(5), S = data.sanctoral || {};
     var part = { Lauds: "lauds", Sext: "sext", Vespers: "vespers" }[hour], day = null, title = "", cap = null, ora = null, src = "";
     var eve = hour === "Vespers" && S[nmd] && S[nmd].rank === "Solemnity";

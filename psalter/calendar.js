@@ -143,6 +143,11 @@
     meta.appendChild(document.createTextNode((x.c || "") + (v ? " · " + v : "") + (x.w ? " · Psalter Week " + ["I", "II", "III", "IV"][x.w - 1] : "")));
     body.appendChild(meta);
     if (ladySat(key)) { var pl = el("p", "day-ours"); pl.appendChild(el("span", "ours-star", "✦ ")); pl.appendChild(document.createTextNode("Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary")); body.appendChild(pl); }
+    var mc = houseData && houseData.notices && houseData.notices[key];
+    if (mc) {   // the Master of Ceremonies' notice of upcoming celebrations
+      var mb = el("div", "day-mc"); mb.appendChild(el("p", "day-mc-h", "From the Master of Ceremonies:"));
+      var ul = el("ul"); mc.forEach(function (t) { ul.appendChild(el("li", null, t)); }); mb.appendChild(ul); body.appendChild(mb);
+    }
     ours(x).forEach(function (n) { var p = el("p", "day-ours"); p.appendChild(el("span", "ours-star", "✦ ")); p.appendChild(document.createTextNode(n)); body.appendChild(p); });
     var md = key.slice(5), cl = collects && collects[md];
     (cl || []).forEach(function (k) {

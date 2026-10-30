@@ -280,6 +280,23 @@
     return h ? h.match(/\b(Solemnity|Feast)\b/)[1] : o && o.r;
   }
   var autoDone = false;
+  // The Office of the Dead (the Saints book's All Souls, 2 November): on All Souls, every hour it prints but Compline; on
+  // 14 November, the Commemoration of all the Departed of our Order ("All as in the Office of All Souls Day", p. 707),
+  // Matins to Sext, Vespers being I Vespers of Sunday (Master of Ceremonies, 2026). Not on a Sunday (the 14th moves).
+  var DEAD = { "11-02": ["Matins", "Lauds", "Sext", "Vespers"], "11-14": ["Matins", "Lauds", "Sext"] };
+  function deadOffice(d, hour) {
+    var md = ymd(d).slice(5), l = DEAD[md];
+    return !!l && !(md === "11-14" && d.getDay() === 0) && l.indexOf(hour) >= 0;
+  }
+  function openDead(d) {
+    var k = books.Sanctoral.sections.findIndex(function (s) { return s.tag === "d:11-02"; }), sec = books.Sanctoral.sections[k];
+    var j = sec ? sec.jumps.findIndex(function (x) { return x[0] === HOURS[state.hour]; }) : -1;
+    if (j < 0) return false;
+    state.book = "Sanctoral"; state.sec.Sanctoral = k; pendingJump = sec.jumps[j]; bookHour = sec.jumps[j][0];
+    autoNote = "Opened for you: the Office of the Dead (" + sec.title + ", Saints), " + bookHour + (ymd(d).slice(5) === "11-14" ? ", as the book directs for the Departed of our Order." : ".");
+    autoJump = String(j); render();
+    return true;
+  }
   function autoOpen() {
     if (autoDone || touched || !books || state.hour === 4) return;
     var d = dayDate(), o = ordoDay(d);
@@ -287,6 +304,7 @@
     autoDone = true;
     var eve = state.hour === 3 && (/^1st Vespers of following/.test(o.v) || o.n.some(function (n) { return /^St\. Bernard Abbey: 1st Vespers of following/.test(n); }));
     var t = eve ? addDays(d, 1) : d, ot = ordoDay(t);
+    if (!eve && deadOffice(d, HOURS[state.hour]) && openDead(d)) return;
     if (!ot || !/Solemnity|Feast/.test(rankOf(ot) || "")) return;
     var want = eve ? ["I Vespers", "Vespers"] : [["Matins"], ["Lauds"], ["Sext"], ["II Vespers", "Vespers"]][state.hour];
     var order = ["Sanctoral", "Advent-Christmas", "Lent"];
@@ -347,6 +365,14 @@
     if (o.r) { var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase(); r.textContent = o.r; el.appendChild(r); }
     el.appendChild(document.createTextNode(name + (v ? " – " + v : "") + (o.w ? " · Psalter Week " + ROMAN[o.w - 1] : "")));
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
+    var mc = extrasData.house && extrasData.house.notices && extrasData.house.notices[ymd(d)];
+    if (mc) {   // the Master of Ceremonies' notice of upcoming celebrations (house.json "notices")
+      var mb = document.createElement("div"); mb.className = "ordo-mc";
+      var mt = document.createElement("span"); mt.className = "ordo-mc-h"; mt.textContent = "From the Master of Ceremonies:"; mb.appendChild(mt);
+      var ul = document.createElement("ul");
+      mc.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+      mb.appendChild(ul); el.appendChild(mb);
+    }
     var nec = extrasData.necrology, mdd = ymd(d).slice(5);
     var nn = (nec && nec.days[mdd] || []).filter(function (n) { return n[3] === nec.ours; }).map(function (n) { return [n[0] + " " + n[1], n[2]]; });
     notices(mdd).forEach(function (e) { if (!nn.some(function (n) { return n[0] === e.name; })) nn.push([e.name, e.year]); });
@@ -1301,7 +1327,7 @@
       var m = (bookHour || "").match(/Matins|Lauds|Sext|Vespers/); return m ? m[0] : null;
     },
     inBook: function () { return state.book !== "psalter" || plain; },
-    bvmSaturday: function (d) { return bvmSaturday(d); }, redraw: function () { render(); },
+    bvmSaturday: function (d) { return bvmSaturday(d); }, deadOffice: function (d, hour) { return deadOffice(d, hour); }, redraw: function () { render(); },
     matins: function () { return !state.ref && (state.book === "psalter" ? state.hour === 0 && !ultima() : /Matins/.test(bookHour || "")); },
     printed: function (src, pg) {   // the page number printed in the book, for a page of a file
       var w = whereIs(src); return w ? w.start + pg - w.offset : pg + 1;

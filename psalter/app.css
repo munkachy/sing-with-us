@@ -411,3 +411,9 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .proper .pr-switch { display: flex; flex-wrap: wrap; gap: .35rem; margin: .1rem 0 .4rem; }
 .proper .pr-switch button { font: inherit; font-size: .88rem; padding: .3rem .65rem; border-radius: 7px; border: 1px solid #d6cab4; background: #fbf8f2; color: #2b241d; cursor: pointer; }
 .proper .pr-switch button[aria-pressed="true"] { border-color: #9b1c1c; box-shadow: inset 0 0 0 1px #9b1c1c; font-weight: 600; }
+
+/* The Master of Ceremonies' notices on the ordo line */
+.ordo-note .ordo-mc { margin-top: .35rem; }
+.ordo-note .ordo-mc-h { font-weight: 600; }
+.ordo-note .ordo-mc ul { margin: .15rem 0 0; padding-left: 1.2rem; }
+.ordo-note .ordo-mc li { margin: .05rem 0; }

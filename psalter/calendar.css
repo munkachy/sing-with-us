@@ -139,3 +139,8 @@
 .day-necro .notice-read { font-size: .86rem; font-style: italic; color: var(--muted); }
 .day-necro .notice p { font-style: normal; color: var(--text); }
 .day-necro .notice > summary { color: var(--text); font-style: normal; }
+
+/* The Master of Ceremonies' notices in a day's entry */
+.day-mc { margin: .35rem 0 .2rem; }
+.day-mc-h { margin: 0; font-weight: 600; }
+.day-mc ul { margin: .15rem 0 0; padding-left: 1.2rem; }

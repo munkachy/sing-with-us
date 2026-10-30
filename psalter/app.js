@@ -628,7 +628,7 @@
     var path = fileKey(state.week, state.day, 0), at = asm.readings[path];
     if (!at) return recipe;
     var items = recipe.items;
-    ["Patristic", "Biblical"].forEach(function (k) { if (at[k]) items = pasteAt(items, path, at[k], [{ lect: k }]); });
+    ["Patristic", "Biblical"].forEach(function (k) { if (at[k]) items = pasteAt(items, path, at[k], [{ lect: k, swapped: !!at.swapped }]); });
     return { key: recipe.key + ":lect", items: items, hymns: recipe.hymns, note: recipe.note, magnificat: recipe.magnificat };
   }
   // The hebdomadarian's Proper (proper.js; places from books/seasons.py, assembly.json "proper_at"): the capitulum under
@@ -843,7 +843,7 @@
       var jobs = [];
       items.forEach(function (it, i) {
         if (it.proper) { var ps = document.createElement("section"); ps.className = "proper proper-slot"; ps.dataset.part = it.proper; box.appendChild(ps); return; }   // proper.js
-        if (it.lect) { var sl = document.createElement("section"); sl.className = "lect lect-slot"; sl.dataset.kind = it.lect; box.appendChild(sl); return; }   // a reading (readings.js)
+        if (it.lect) { var sl = document.createElement("section"); sl.className = "lect lect-slot"; sl.dataset.kind = it.lect; if (it.swapped) sl.dataset.swapped = "1"; box.appendChild(sl); return; }   // a reading (readings.js)
         if (!Array.isArray(it)) { var h = document.createElement("p"); h.className = "asm-head"; h.textContent = it.h; box.appendChild(h); return; }
         var page = pages[i], vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
         var top = it[2] * vp.height, hgt = Math.max(1, (it[3] - it[2]) * vp.height);

@@ -147,6 +147,7 @@
   }
   // Each reading goes in its place among the pages ("First Reading", "Second Reading": app.js leaves a slot for it),
   // or, where the pages have no slots (the book's own pages, a feast), both go in the box after the pages.
+  function el2(tag, cls, text) { var e = document.createElement(tag); e.className = cls; e.textContent = text; return e; }
   function slotFor(kind) { return document.querySelector('#pdf-pages .lect-slot[data-kind="' + kind + '"]'); }
   function draw() {
     var box = $("#lect"), first = entriesOf("Biblical")[0] || entriesOf("Patristic")[0];
@@ -173,6 +174,10 @@
           alts.appendChild(b);
         });
         art.appendChild(alts);
+      }
+      if (inSlots && host.dataset.swapped) {   // Friday of Week II: the book prints the two headings the other way round
+        art.appendChild(el2("p", "lect-swap", kind === "Biblical" ? "The book prints “Second Reading” above this by mistake: the Biblical reading is read first."
+                                                                : "The book prints “First Reading” above this by mistake: the Patristic reading is read second."));
       }
       var h = document.createElement("h3"); h.textContent = (e.heading || "").toUpperCase(); art.appendChild(h);
       var tx = document.createElement("div"); tx.className = "lect-text";

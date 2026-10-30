@@ -417,3 +417,4 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .ordo-note .ordo-mc-h { font-weight: 600; }
 .ordo-note .ordo-mc ul { margin: .15rem 0 0; padding-left: 1.2rem; }
 .ordo-note .ordo-mc li { margin: .05rem 0; }
+.lect .lect-swap { margin: 0 0 .5rem; font-size: .88rem; font-style: italic; color: #9b1c1c; }

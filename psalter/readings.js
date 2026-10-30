@@ -221,7 +221,7 @@
     });
   }
 
-  // ---- Selecting words in a reading: choose a colour, add a note if you like ----
+  // ---- Selecting words in a reading: they are highlighted in gold; tap one for its note, colour, or to remove it ----
   function offsetsWithin(el, range) {   // the selection's characters within one paragraph (as Lumina does it)
     var start = -1, end = -1, pos = 0, w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n;
     while ((n = w.nextNode())) {
@@ -233,15 +233,17 @@
     }
     return start >= 0 && end > start ? { s: start, e: end } : null;
   }
-  var touching = false, selT = null, pop = null;
+  // As in Lumina: a selection becomes a gold highlight by itself once the finger or mouse lets go and the selection has
+  // stopped moving (no box to compete with the phone's own menu). Tap a highlight to add a note, change its colour or
+  // remove it. Words already highlighted are left as they are.
+  var touching = false, selT = null;
   addEventListener("touchstart", function () { touching = true; }, { passive: true });
   addEventListener("touchend", function () { touching = false; armSel(); }, { passive: true });
   addEventListener("mouseup", function () { armSel(); });
   document.addEventListener("selectionchange", function () { armSel(); });
-  function armSel() { clearTimeout(selT); selT = setTimeout(checkSel, 550); }
-  function hidePop() { if (pop) { pop.remove(); pop = null; } }
-  document.addEventListener("pointerdown", function (e) { if (pop && !pop.contains(e.target)) hidePop(); });
-  function checkSel() {
+  function armSel() { clearTimeout(selT); selT = setTimeout(autoHighlight, 900); }
+  function hidePop() {}
+  function autoHighlight() {
     if (touching || !shown) return;
     var sel = getSelection();
     if (!sel || sel.isCollapsed || !sel.rangeCount) return;
@@ -256,33 +258,14 @@
         if (off) touched.push({ kind: kind, e: e, i: +p.dataset.i, s: off.s, e2: off.e, t: p.textContent.slice(off.s, off.e) });
       });
     });
-    touched = touched.filter(function (t) { return t.t.trim(); });
-    if (!touched.length) return;
-    var overlap = touched.some(function (t) { return hlsIn(t.e, t.kind, t.i).some(function (r) { return t.s < r.e && t.e2 > r.s; }); });
-    showPop(range.getBoundingClientRect(), touched, overlap);
-  }
-  function showPop(rect, touched, overlap) {
-    hidePop();
-    var color = "gold";
-    pop = document.createElement("div"); pop.className = "nt-pop";
-    pop.innerHTML = dotsHtml(color) + (overlap ? '<p class="nt-msg">This overlaps a highlight already here.</p>' : "") +
-      '<textarea aria-label="Note" placeholder="Add a note (optional)"></textarea>' +
-      '<div class="nt-btns"><button type="button" data-x="cancel">Cancel</button><button type="button" class="primary" data-x="save"' + (overlap ? " disabled" : "") + ">Highlight</button></div>";
-    document.body.appendChild(pop);
-    var w = pop.offsetWidth, left = Math.min(Math.max(8, rect.left + rect.width / 2 - w / 2), innerWidth - w - 8), top = rect.bottom + 10;
-    if (top + pop.offsetHeight > innerHeight - 8) top = Math.max(8, rect.top - pop.offsetHeight - 10);
-    top = Math.min(Math.max(8, top), innerHeight - pop.offsetHeight - 8);   // always on screen
-    pop.style.left = left + "px"; pop.style.top = top + "px";
-    wireDots(pop, function (c) { color = c; });
-    pop.querySelector('[data-x="cancel"]').addEventListener("click", function () { hidePop(); getSelection().removeAllRanges(); });
-    pop.querySelector('[data-x="save"]').addEventListener("click", function () {
-      var note = pop.querySelector("textarea").value.trim(), g = uid();
-      touched.forEach(function (t) {
-        notes.hls.push({ id: uid(), g: g, k: shown.k, year: shown.year, kind: t.kind, rid: rid(t.e), i: t.i, s: t.s, e: t.e2, t: t.t,
-          color: color, note: note, day: IN.ymd(shown.d), name: dayName(t.e.title), heading: t.e.heading, added: Date.now() });
-      });
-      saveNotes(); hidePop(); getSelection().removeAllRanges(); draw(); toast("Highlighted. Tap it to change or remove it.");
+    var fresh = touched.filter(function (t) { return t.t.trim() && !hlsIn(t.e, t.kind, t.i).some(function (r) { return t.s < r.e && t.e2 > r.s; }); });
+    if (!fresh.length) return;
+    var g = uid();
+    fresh.forEach(function (t) {
+      notes.hls.push({ id: uid(), g: g, k: shown.k, year: shown.year, kind: t.kind, rid: rid(t.e), i: t.i, s: t.s, e: t.e2, t: t.t,
+        color: "gold", note: "", day: IN.ymd(shown.d), name: dayName(t.e.title), heading: t.e.heading, added: Date.now() });
     });
+    saveNotes(); sel.removeAllRanges(); draw(); toast("Highlighted — tap it to add a note, change the colour or remove it.");
   }
   // Tap a highlight: read its note, change its colour or note, or remove it
   document.addEventListener("click", function (e) {
@@ -428,7 +411,7 @@
     menuEl = document.createElement("div"); menuEl.className = "mk-menu";
     var items = [];
     if (!$("#pdf-view").hidden && document.querySelector("#pdf-pages .pg")) items.push(["Mark part of a page", startMarking]);
-    if (document.querySelector(".lect-r")) items.push(["Highlight in a reading: select the words", function () { menu(false); toast("Select some words in a reading, then choose a colour."); }]);
+    if (document.querySelector(".lect-r")) items.push(["Highlight in a reading: select the words", function () { menu(false); toast("Select some words in a reading: they are highlighted in gold. Tap a highlight to change it."); }]);
     items.push(["Back up and export…", function () { menu(false); backupSheet(); }]);
     items.forEach(function (it) { var b = document.createElement("button"); b.type = "button"; b.textContent = it[0]; b.addEventListener("click", it[1]); menuEl.appendChild(b); });
     document.body.appendChild(menuEl);

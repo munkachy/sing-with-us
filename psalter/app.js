@@ -389,6 +389,8 @@
       });
       el.appendChild(nd);
     }
+    var cv = !o.r && civicDay(d);
+    if (cv) { var cp = document.createElement("span"); cp.className = "ordo-ours"; cp.textContent = "Optional Memorial: " + cv; el.appendChild(cp); }
     if (d.getDay() === 6 && bvmSaturday(d)) { var bs = document.createElement("span"); bs.className = "ordo-ours"; bs.textContent = "✦ Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary"; el.appendChild(bs); }
     el.appendChild(massReadings(o, d));
     var cal = document.createElement("a"); cal.className = "ordo-cal"; cal.href = "calendar.html#" + ymd(d); cal.textContent = "This day in the calendar →";
@@ -896,6 +898,14 @@
     dt.appendChild(r);
     e.paras.forEach(function (t) { var q = document.createElement("p"); q.textContent = t; dt.appendChild(q); });
     return dt;
+  }
+  // The U.S. civic days the abbey keeps as optional memorials (the user, 30 Oct 2026): 4 July, Labor Day, Thanksgiving
+  function civicDay(d) {
+    var m = d.getMonth(), dd = d.getDate(), wd = d.getDay();
+    if (m === 6 && dd === 4) return "Independence Day";
+    if (m === 8 && wd === 1 && dd <= 7) return "Labor Day";
+    if (m === 10 && wd === 4 && dd >= 22 && dd <= 28) return "Thanksgiving Day";
+    return null;
   }
   function dayEnd() {
     var box = $("#day-end"), d = dayDate(), md = ymd(d).slice(5);

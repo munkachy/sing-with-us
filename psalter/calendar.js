@@ -5,7 +5,15 @@
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var WD = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var OURS = /^(St\. Bernard Abbey|Diocese of Birmingham|Province of Mobile)/;
-  var RANK = { Solemnity: "s", Feast: "f", Memorial: "m" };
+  var RANK = { Solemnity: "s", Feast: "f", Memorial: "m", "Optional Memorial": "om" };
+  // The U.S. civic days the abbey keeps as optional memorials (the user, 30 Oct 2026; their Orations are in the Liber)
+  function civic(key) {
+    var y = +key.slice(0, 4), m = +key.slice(5, 7) - 1, d = +key.slice(8, 10), wd = new Date(y, m, d).getDay();
+    if (m === 6 && d === 4) return "Independence Day";
+    if (m === 8 && wd === 1 && d <= 7) return "Labor Day";
+    if (m === 10 && wd === 4 && d >= 22 && d <= 28) return "Thanksgiving Day";
+    return null;
+  }
   var $ = function (s) { return document.querySelector(s); };
   var now = new Date();
   var view = { y: now.getFullYear(), m: now.getMonth() }, ordos = {};
@@ -107,7 +115,9 @@
         if (new Date(y, m, d).getDay() === 0) c.classList.add("is-sun");
         c.appendChild(el("span", "num", d));
         if (x) {
+          var cv = !x.r && civic(key);
           if (x.r) { var r = el("span", "rk rk-" + RANK[x.r], RANK[x.r].toUpperCase()); r.title = x.r; c.appendChild(r); }
+          else if (cv) { var ro = el("span", "rk rk-om", "OM"); ro.title = "Optional Memorial"; c.appendChild(ro); c.appendChild(el("span", "lbl", cv)); }
           if (ours(x).length || ladySat(key)) c.appendChild(el("span", "ours-star" + (x.r ? "" : " solo"), "✦"));
           if (ladySat(key) && !x.r) c.appendChild(el("span", "lbl", "Our Lady"));
           if (ourDead(key).length) { var nd = el("span", "necro-mark", "†"); nd.title = "In our necrology"; c.appendChild(nd); }
@@ -138,6 +148,8 @@
     if (x.r) top.appendChild(el("span", "ordo-rank rank-" + x.r.toLowerCase(), x.r));
     top.appendChild(document.createTextNode(title(clean(x.t))));
     body.appendChild(top);
+    var cv = !x.r && civic(key);
+    if (cv) { var pc = el("p", "day-civic"); pc.appendChild(el("span", "ordo-rank rank-memorial", "Optional Memorial")); pc.appendChild(document.createTextNode(cv)); body.appendChild(pc); }
     var meta = el("p", "day-meta");
     meta.appendChild(el("span", "swatch lc-" + color(x.c)));
     meta.appendChild(document.createTextNode((x.c || "") + (v ? " · " + v : "") + (x.w ? " · Psalter Week " + ["I", "II", "III", "IV"][x.w - 1] : "")));

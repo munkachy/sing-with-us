@@ -144,3 +144,7 @@
 .day-mc { margin: .35rem 0 .2rem; }
 .day-mc-h { margin: 0; font-weight: 600; }
 .day-mc ul { margin: .15rem 0 0; padding-left: 1.2rem; }
+
+/* Optional memorials (the civic days): a dotted ring */
+.rk-om { width: auto; min-width: 1.15rem; padding: 0 .15rem; border-radius: .6rem; border: 1px dotted var(--muted); color: var(--muted); font-size: .56rem; }
+.day-civic { margin: .2rem 0; }

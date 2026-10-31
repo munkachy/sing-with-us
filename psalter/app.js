@@ -207,13 +207,29 @@
   function drawPdf(data, token, path) {
     var box = $("#pdf-pages"); box.innerHTML = "";
     if (pager) pager.stop();
-    return pdfjs().then(function (lib) { return lib.getDocument({ data: new Uint8Array(data.slice(0)) }).promise; }).then(function (doc) {
+    var TX = window.PTEXT;
+    return (TX ? TX.load([path], vault.idx, vault.key, open) : Promise.resolve()).then(function () {
+      return pdfjs();
+    }).then(function (lib) { return lib.getDocument({ data: new Uint8Array(data.slice(0)) }).promise; }).then(function (doc) {
       var width = box.clientWidth || window.innerWidth;
       var ratio = Math.min(window.devicePixelRatio || 1, 2.5, 2000 / width);
       var pages = [];
       for (var n = 1; n <= doc.numPages; n++) pages.push(doc.getPage(n));
       return Promise.all(pages).then(function (pages) {
         if (vault.token !== token) return;
+        if (TX && TX.on() && pages.every(function (p, i) { return TX.has(path, i); })) {      // the whole file as set text (text.js)
+          var jobs = []; TX.begin();
+          pages.forEach(function (page, i) {
+            var sec = TX.strip(path, i, 0, 1); box.appendChild(sec);
+            sec.querySelectorAll(".tx-chant-img").forEach(function (fig) { jobs.push(cropJob(page, fig, width, ratio)); });
+          });
+          textNote(true, 0);
+          if (window.LECT) LECT.pages();
+          if (window.PROPER) PROPER.pages();
+          goJump(); pageLabel();
+          return jobs.reduce(function (c, j) { return c.then(function () { if (vault.token === token) return j(); }); }, Promise.resolve());
+        }
+        textNote(TX && TX.on(), TX && TX.on() ? 1 : 0);
         var items = pages.map(function (page, i) {
           var vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
           var cv = document.createElement("canvas");
@@ -834,19 +850,43 @@
     }, function (e) { delete docs[path]; throw e; });
     return docs[path];
   }
+  // Cantus: the book's notation for a chant block, cut from its page (text.js leaves a figure with the block's place)
+  function cropJob(page, fig, width, ratio) {
+    var vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
+    var top = +fig.dataset.y0 * vp.height, hgt = Math.max(1, (+fig.dataset.y1 - +fig.dataset.y0) * vp.height);
+    var cv = document.createElement("canvas"); cv.width = Math.floor(vp.width); cv.height = Math.floor(hgt);
+    cv.style.aspectRatio = cv.width + " / " + cv.height; fig.appendChild(cv);
+    return function () { return page.render({ canvasContext: cv.getContext("2d"), viewport: vp, transform: [1, 0, 0, 1, 0, -top] }).promise; };
+  }
+  function textNote(text, missing) {
+    var n = $("#text-note"); if (!n) return;
+    n.hidden = !(text && missing);
+    if (text && missing) n.textContent = "Not all of this hour is in text yet: the parts that aren't are shown as the book's pages.";
+  }
   function drawRecipe(items, idx, key, token) {
     var box = $("#pdf-pages"); box.innerHTML = "";
     if (pager) pager.stop();
     var width = box.clientWidth || window.innerWidth;
     var ratio = Math.min(window.devicePixelRatio || 1, 2.5, 2000 / width);
     var paths = []; items.forEach(function (it) { if (Array.isArray(it) && paths.indexOf(it[0]) < 0) paths.push(it[0]); });
-    return Promise.all(paths.map(function (p) { return getDoc(p, idx, key); })).then(function (ds) {
+    var TX = window.PTEXT;
+    return (TX ? TX.load(paths, idx, key, open) : Promise.resolve()).then(function () {
+      return Promise.all(paths.map(function (p) { return getDoc(p, idx, key); }));
+    }).then(function (ds) {
       var byPath = {}; paths.forEach(function (p, i) { byPath[p] = ds[i]; });
       return Promise.all(items.map(function (it) { return Array.isArray(it) ? byPath[it[0]].getPage(it[1] + 1) : null; }));
     }).then(function (pages) {
       if (vault.token !== token) return;
-      var jobs = [];
+      var jobs = [], text = TX && TX.on(), missing = 0;
+      if (TX) TX.begin();
       items.forEach(function (it, i) {
+        if (TX && !Array.isArray(it)) TX.cut();
+        if (Array.isArray(it) && text && TX.has(it[0], it[1])) {         // the same strip, as set text (text.js)
+          var sec = TX.strip(it[0], it[1], it[2], it[3]); box.appendChild(sec);
+          sec.querySelectorAll(".tx-chant-img").forEach(function (fig) { jobs.push(cropJob(pages[i], fig, width, ratio)); });
+          return;
+        }
+        if (Array.isArray(it) && text) { missing++; TX.cut(); }
         if (it.proper) { var ps = document.createElement("section"); ps.className = "proper proper-slot"; ps.dataset.part = it.proper; box.appendChild(ps); return; }   // proper.js
         if (it.lect) { var sl = document.createElement("section"); sl.className = "lect lect-slot"; sl.dataset.kind = it.lect; if (it.swapped) sl.dataset.swapped = "1"; box.appendChild(sl); return; }   // a reading (readings.js)
         if (!Array.isArray(it)) { var h = document.createElement("p"); h.className = "asm-head"; h.textContent = it.h; box.appendChild(h); return; }
@@ -858,6 +898,7 @@
         box.appendChild(pageBox_(cv, it[0], it[1], it[2], it[3], true));
         jobs.push(function () { return page.render({ canvasContext: cv.getContext("2d"), viewport: vp, transform: [1, 0, 0, 1, 0, -top] }).promise; });
       });
+      textNote(text, missing);
       if (window.LECT) LECT.pages();
       if (window.PROPER) PROPER.pages();
       var f = parseFloat(box.dataset.restore); box.dataset.restore = "";
@@ -1328,6 +1369,7 @@
   }).then(function () { todayNote(); autoOpen(); render(); }, function () {});
   $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
+  if (window.PTEXT) PTEXT.buttons(function () { $("#pdf-pages").dataset.done = ""; show(); });   // Book · Lectio · Cantus
   $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });
   // For readings.js: the day on screen, the ordo, the vault and the books
   window.PSALTER_IN = { dayDate: dayDate, ordoDay: ordoDay, rankOf: rankOf, ymd: ymd, addDays: addDays, daysBetween: daysBetween, same: same,

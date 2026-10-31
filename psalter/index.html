@@ -12,10 +12,11 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="stylesheet" href="../assets/css/site.css?v=16">
-<link rel="stylesheet" href="app.css?v=33">
+<link rel="stylesheet" href="app.css?v=37">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=16" defer></script>
-<script src="app.js?v=46" defer></script>
+<script src="text.js?v=2" defer></script>
+<script src="app.js?v=47" defer></script>
 <script src="readings.js?v=5" defer></script>
 <script src="proper.js?v=4" defer></script>
 </head>
@@ -85,6 +86,8 @@
     </section>
 
     <section id="pdf-view" class="beta-view pdf-view" aria-label="The pages for this hour" hidden>
+      <div id="read-mode" class="seg read-mode" role="group" aria-label="How to read this hour"><button type="button" data-read="book" aria-pressed="true" title="The book's own pages">Book</button><button type="button" data-read="lectio" aria-pressed="false" title="Everything as text, the chant's words too">Lectio</button><button type="button" data-read="cantus" aria-pressed="false" title="Text, keeping the book's music wherever there is chant">Cantus</button></div>
+      <p id="text-note" class="slim-note" hidden></p>
       <div id="pdf-pages"></div>
     </section>
     <section id="lect" class="lect" aria-label="The Matins readings" hidden></section>
@@ -145,6 +148,11 @@
           <p><b>Lauds:</b> the Benedictus sung in English (Mode 1) under its words. <b>Sext:</b> its opening, the hymn for the day and the antiphon, reading and versicle of the season. <b>Saturdays:</b> Matins and Lauds show the ordinary texts, or on the abbey's Saturdays of Our Lady only hers.</p>
           <p><b>Vespers:</b> on Saturday and Sunday evenings through the year, the psalter's Vespers with the Sunday's own Magnificat antiphon (by year), the Magnificat in its first alternate tone. <b>Feasts</b> in the Saints book are pasted together hour by hour: each antiphon with its psalm, the Gospel canticle and the Te Deum where the book points to them.</p>
           <p><b>Compline:</b> only tonight's hymn and the antiphon of Our Lady for the season (solemn tone on Sundays, solemnities and feasts). On Wednesday and Sunday, the haustus days, the Ultima instead; on a feast it is Compline, with a link to the Ultima if the Abbot keeps the haustus.</p>
+        </details>
+        <details>
+          <summary>Book, Lectio and Cantus</summary>
+          <p>Above the pages, choose how to read the hour. <b>Book</b> shows the book's own pages. <b>Lectio</b> sets everything as text, proofread from the book: rubrics in red, the psalms with their large capitals and their <span class="tx-mark">*</span> and <span class="tx-mark">†</span>, and the chant as its words. <b>Cantus</b> is the same text, but wherever the book has music its notation is kept. This phone remembers your choice.</p>
+          <p>The text is being proofread hour by hour; so far, Sunday Matins and Lauds of Week I, with Psalm 94 and the sung Benedictus. Where an hour isn't in text yet, its pages are shown as in the book. Marks with ✎ are made on the book's pages.</p>
         </details>
         <details>
           <summary>The hebdomadarian's Proper</summary>

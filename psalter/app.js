@@ -221,7 +221,7 @@
           var jobs = []; TX.begin();
           pages.forEach(function (page, i) {
             var sec = TX.strip(path, i, 0, 1); box.appendChild(sec);
-            sec.querySelectorAll(".tx-chant-img").forEach(function (fig) { jobs.push(cropJob(page, fig, width, ratio)); });
+            sec.querySelectorAll(".tx-chant-img").forEach(function (fig) { jobs.push(cropJob(pages[+fig.dataset.pg] || page, fig, width, ratio)); });
           });
           textNote(true, 0);
           if (window.LECT) LECT.pages();
@@ -877,13 +877,14 @@
       return Promise.all(items.map(function (it) { return Array.isArray(it) ? byPath[it[0]].getPage(it[1] + 1) : null; }));
     }).then(function (pages) {
       if (vault.token !== token) return;
-      var jobs = [], text = TX && TX.on(), missing = 0;
+      var jobs = [], text = TX && TX.on(), missing = 0, pageOf = {};
+      items.forEach(function (it, i) { if (Array.isArray(it)) pageOf[it[0] + "#" + it[1]] = pages[i]; });
       if (TX) TX.begin();
       items.forEach(function (it, i) {
         if (TX && !Array.isArray(it)) TX.cut();
         if (Array.isArray(it) && text && TX.has(it[0], it[1])) {         // the same strip, as set text (text.js)
           var sec = TX.strip(it[0], it[1], it[2], it[3]); box.appendChild(sec);
-          sec.querySelectorAll(".tx-chant-img").forEach(function (fig) { jobs.push(cropJob(pages[i], fig, width, ratio)); });
+          sec.querySelectorAll(".tx-chant-img").forEach(function (fig) { jobs.push(cropJob(pageOf[fig.dataset.src + "#" + fig.dataset.pg] || pages[i], fig, width, ratio)); });   // a repeated antiphon: from its own page
           return;
         }
         if (Array.isArray(it) && text) { missing++; TX.cut(); }

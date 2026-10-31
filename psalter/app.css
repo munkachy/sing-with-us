@@ -476,3 +476,4 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .tx-chant-img { margin: .5rem 0 .8rem; }
 .tx-chant-img canvas { display: block; width: 100%; height: auto; mix-blend-mode: multiply; filter: none; }
 @media (max-width: 42rem) { .tx-strip { font-size: 1.14rem; } .tx-chant-img { margin-left: -12px; margin-right: -12px; } }
+.tx-repeat { margin-top: .25rem !important; }

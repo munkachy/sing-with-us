@@ -13,6 +13,10 @@
   var MODES = ["book", "lectio", "cantus"];
   var texts = {}, loading = {};          // path -> { page: [blocks] }
   var last = null;                       // the last verse/paragraph drawn, so a block that continues it ("cont") can join it
+  // The antiphon last shown (the day's own, after the season cuts), printed again where the book says "The Antiphon is
+  // repeated." so nobody has to scroll back up (Br. Augustine, Nov 2026). antCtx: under a heading that names an antiphon,
+  // the first chant is the antiphon (alternatives after "Or:" don't replace it).
+  var lastAnt = null, antCtx = false, REPEAT = /^the antiphon is repeated\.?$/i;
 
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
   function mode() { var m = store("psalter-read"); return MODES.indexOf(m) >= 0 ? m : "book"; }
@@ -67,13 +71,36 @@
     if (b.k === "run") return;
     // a block that carries on the verse or paragraph above it (across a column or a page)
     if (b.cont && last && last.k === b.k) {
-      last.el.appendChild(document.createTextNode(" ")); words(last.el, b.t); return;
+      last.el.appendChild(document.createTextNode(" ")); words(last.el, b.t);
+      if (lastAnt && lastAnt.el === last.el) lastAnt.b = Object.assign({}, lastAnt.b, { t: lastAnt.b.t + " " + b.t });
+      return;
     }
+    if (b.k === "head" || b.k === "rubric") {
+      var t = String(b.t).trim();
+      if (REPEAT.test(t) && lastAnt) {                       // the rubric, then the antiphon itself
+        drawn(b, path, pg, out);
+        var again = Object.assign({}, lastAnt.b, { cont: false, init: false });
+        var mark = out.lastChild;
+        drawn(again, lastAnt.path, lastAnt.pg, out, true);
+        if (out.lastChild !== mark) out.lastChild.classList.add("tx-repeat");
+        last = null; return;
+      }
+      if (/antiphon/i.test(t) && !/repeat/i.test(t)) { antCtx = true; lastAnt = null; }
+      else if (!/^or:?$/i.test(t)) antCtx = false;
+    }
+    if (b.k === "ant" || (b.k === "chant" && antCtx && !lastAnt)) {
+      var el0 = drawn(b, path, pg, out);
+      lastAnt = { b: b, path: path, pg: pg, el: el0 };
+      return;
+    }
+    drawn(b, path, pg, out);
+  }
+  function drawn(b, path, pg, out, repeat) {
     if (b.k === "chant" && mode() === "cantus") {        // keep the book's notation here: app.js draws this strip of the page
       var fig = document.createElement("figure"); fig.className = "tx-chant-img";
       fig.dataset.src = path; fig.dataset.pg = pg; fig.dataset.y0 = b.y[0]; fig.dataset.y1 = b.y[1];
       fig.setAttribute("aria-label", "Chant: " + b.t);
-      out.appendChild(fig); last = null; return;
+      out.appendChild(fig); last = null; return fig;
     }
     var el = document.createElement(TAG[b.k] || "p");
     el.className = "tx-" + (b.k in TAG ? b.k : "text");
@@ -85,7 +112,8 @@
     } else if (b.init && b.k === "verse") initial(el, b.t);      // the large capital only where a psalm or canticle begins
     else words(el, b.t);
     out.appendChild(el);
-    last = /^(verse|text|ant|hymn|chant)$/.test(b.k) ? { k: b.k, el: el } : null;
+    last = !repeat && /^(verse|text|ant|hymn|chant)$/.test(b.k) ? { k: b.k, el: el } : null;
+    return el;
   }
 
   // The text for one strip of a page: a section of blocks, in the book's order
@@ -98,7 +126,7 @@
     });
     return sec;
   }
-  function begin() { last = null; }
+  function begin() { last = null; lastAnt = null; antCtx = false; }
   function cut() { last = null; }        // something else (a heading, a reading) came between: start afresh
 
   // ---- the "How to read" buttons ----

@@ -33,14 +33,15 @@
 
   // ---- words: the chant marks in red, the versicle and response signs, italics between _underscores_ ----
   function words(el, t) {
-    String(t).split(/(\s\*|\s†|\s\/(?=\s)|^V\.\s|^R\.\s|_[^_]+_)/).forEach(function (part) {
+    String(t).split(/(\s\*|\s†|\s\/(?=\s)|^V\.\s|^R\.\s|\sR\.\s|_[^_]+_)/).forEach(function (part) {
       if (!part) return;
       var span;
       if (/^\s[*†]$/.test(part) || /^\s\/$/.test(part)) {
         el.appendChild(document.createTextNode(" "));
         span = document.createElement("span"); span.className = "tx-mark"; span.textContent = part.trim();
-      } else if (/^V\.\s$/.test(part) || /^R\.\s$/.test(part)) {
-        span = document.createElement("span"); span.className = "tx-vr"; span.textContent = (part[0] === "V" ? "℣" : "℟") + " ";
+      } else if (/^\s?[VR]\.\s$/.test(part)) {             // ℣ and ℟, also a response on the versicle's line
+        if (part[0] === " ") el.appendChild(document.createTextNode(" "));
+        span = document.createElement("span"); span.className = "tx-sign"; span.textContent = (part.trim()[0] === "V" ? "℣" : "℟") + " ";
       } else if (/^_[^_]+_$/.test(part)) {
         span = document.createElement("em"); span.className = "tx-rub"; span.textContent = part.slice(1, -1);
       } else { el.appendChild(document.createTextNode(part)); return; }
@@ -78,10 +79,10 @@
     el.className = "tx-" + (b.k in TAG ? b.k : "text");
     if (b.k === "chant") {                                   // Lectio: the words of the chant
       if (b.mode) { var md = document.createElement("span"); md.className = "tx-mode"; md.textContent = b.mode; el.appendChild(md); }
-      if (b.init) initial(el, b.t); else words(el, b.t);
+      words(el, b.t);
     } else if (b.k === "hymn") {
       String(b.t).split("\n").forEach(function (line, i) { if (i) el.appendChild(document.createElement("br")); words(el, line); });
-    } else if (b.init) initial(el, b.t);
+    } else if (b.init && b.k === "verse") initial(el, b.t);      // the large capital only where a psalm or canticle begins
     else words(el, b.t);
     out.appendChild(el);
     last = /^(verse|text|ant|hymn|chant)$/.test(b.k) ? { k: b.k, el: el } : null;

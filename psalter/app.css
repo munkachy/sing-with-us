@@ -420,10 +420,12 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .lect .lect-swap { margin: 0 0 .5rem; font-size: .88rem; font-style: italic; color: #9b1c1c; }
 
 /* ===== Book · Lectio · Cantus: the hour as set text (text.js) ===== */
-:root, [data-theme="cloister"] { --rubric: #a3191b; --init-bg: #f6ead0; --init-rule: #c9a24a; }
-[data-theme="habit"] { --rubric: #e0806a; --init-bg: #1f1a12; --init-rule: #8c7240; }
-[data-theme="glass"] { --rubric: #ff9a80; --init-bg: #1c2758; --init-rule: #f0b429; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme]) { --rubric: #e0806a; --init-bg: #1f1a12; --init-rule: #8c7240; } }
+/* The pages always sit on parchment, in every theme: rubrics a strong red, headings dark red in the red-and-white
+   theme and black in the others; only the large capital takes the theme's colours (Br. Augustine, Nov 2026) */
+:root, [data-theme="cloister"] { --rubric: #a3191b; --tx-head: #8e1416; --init-bg: #f6ead0; --init-rule: #c9a24a; --init-ink: #a3191b; }
+[data-theme="habit"] { --rubric: #a3191b; --tx-head: #1d1a16; --init-bg: #1f1a12; --init-rule: #8c7240; --init-ink: #e0806a; }
+[data-theme="glass"] { --rubric: #a3191b; --tx-head: #1d1a16; --init-bg: #1c2758; --init-rule: #f0b429; --init-ink: #ffb199; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme]) { --rubric: #a3191b; --tx-head: #1d1a16; --init-bg: #1f1a12; --init-rule: #8c7240; --init-ink: #e0806a; } }
 
 .read-mode { display: flex; gap: 4px; max-width: 22rem; margin: 0 auto .9rem; }
 .read-mode button { flex: 1; min-height: 38px; font-family: "Cinzel", serif; font-size: .9rem; letter-spacing: .08em; }
@@ -432,18 +434,19 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .tx-strip { font-family: "EB Garamond", Georgia, serif; font-size: 1.2rem; line-height: 1.6; color: var(--text);
   max-width: 36rem; margin: 0 auto; padding: 0 2px; font-variant-numeric: oldstyle-nums; hyphens: manual; }
 .tx-strip p, .tx-strip h2, .tx-strip h3 { margin: 0; }
-.tx-title { font-family: "Cinzel", serif; font-weight: 600; font-size: 1.45rem; letter-spacing: .08em; text-align: center;
-  color: var(--rubric); margin: 1.6rem 0 .3rem !important; line-height: 1.25; }
-.tx-subtitle { font-style: italic; text-align: center; color: var(--rubric); font-size: 1.25rem; margin: 0 0 .5rem !important; }
-.tx-head { font-family: "Cinzel", serif; font-weight: 600; font-size: 1.05rem; letter-spacing: .1em; text-align: center;
-  color: var(--rubric); margin: 1.5rem 0 .15rem !important; line-height: 1.3; }
+#pdf-pages .tx-strip { color: #2b241d; }
+#pdf-pages .tx-title { font-family: "Cinzel", serif; font-weight: 600; font-size: 1.45rem; letter-spacing: .08em; text-align: center;
+  color: var(--tx-head); margin: 1.6rem 0 .3rem !important; line-height: 1.25; }
+#pdf-pages .tx-subtitle { font-style: italic; text-align: center; color: var(--tx-head); font-size: 1.25rem; margin: 0 0 .5rem !important; }
+#pdf-pages .tx-head { font-family: "Cinzel", serif; font-weight: 600; font-size: 1.05rem; letter-spacing: .1em; text-align: center;
+  color: var(--tx-head); margin: 1.5rem 0 .15rem !important; line-height: 1.3; }
 .tx-head::before, .tx-head::after { content: "·"; margin: 0 .55em; opacity: .55; }
-.tx-sub { text-align: center; font-weight: 500; margin: 0 0 .3rem !important; }
-.tx-note { font-style: italic; color: var(--muted); text-align: center; font-size: 1.05rem; margin: 0 1.5rem .6rem !important; line-height: 1.45; }
+#pdf-pages .tx-sub { color: var(--tx-head); text-align: center; font-weight: 500; margin: 0 0 .3rem !important; }
+.tx-note { font-style: italic; color: #6b6156; text-align: center; font-size: 1.05rem; margin: 0 1.5rem .6rem !important; line-height: 1.45; }
 .tx-rubric, .tx-rub { font-style: italic; color: var(--rubric); font-size: 1.06rem; }
 .tx-rubric { margin: .7rem 0 .2rem !important; }
 .tx-mark { color: var(--rubric); font-weight: 600; font-style: normal; }
-.tx-vr { color: var(--rubric); font-weight: 600; }
+.tx-sign { color: var(--rubric); font-weight: 600; }
 
 /* antiphons: set apart, with a red rule */
 .tx-ant, .tx-chant { border-left: 3px solid var(--rubric); padding: .15rem 0 .15rem .8rem; margin: .45rem 0 .7rem !important; font-style: italic; }
@@ -462,17 +465,14 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .tx-title, .tx-subtitle, .tx-head, .tx-sub, .tx-note, .tx-rubric, .tx-ant, .tx-chant, .tx-chant-img, .tx-has-init { clear: both; }
 .tx-strip::after { content: ""; display: block; clear: both; }
 .tx-has-init + .tx-verse, .tx-has-init + .tx-text { text-indent: 0; }       /* beside the capital: no hanging indent into it */
-.tx-init { float: left; font-family: "Cinzel", serif; font-weight: 600; font-size: 2.45em; line-height: 1; color: var(--rubric);
+.tx-init { float: left; font-family: "Cinzel", serif; font-weight: 600; font-size: 2.45em; line-height: 1; color: var(--init-ink);
   width: 1.3em; height: 1.3em; display: grid; place-items: center; margin: .08em .3em 0 0; border-radius: 3px;
   background: radial-gradient(circle at 30% 25%, var(--init-bg) 0 55%, transparent 56%), var(--init-bg);
   box-shadow: inset 0 0 0 1px var(--init-rule), inset 0 0 0 4px var(--init-bg), inset 0 0 0 5px var(--init-rule);
   text-shadow: 0 1px 0 rgba(0, 0, 0, .12); padding-top: .06em; }
 .tx-first { font-variant: small-caps; letter-spacing: .04em; }
 
-/* Cantus: the book's own notation, cut from its page (dark themes turn it light on dark, like the chant above) */
+/* Cantus: the book's own notation, cut from its page: dark notes on the parchment, in every theme */
 .tx-chant-img { margin: .5rem 0 .8rem; }
-.tx-chant-img canvas { display: block; width: 100%; height: auto; }
-:root:not([data-theme]) .tx-chant-img canvas, [data-theme="cloister"] .tx-chant-img canvas { mix-blend-mode: multiply; }
-[data-theme="habit"] .tx-chant-img canvas, [data-theme="glass"] .tx-chant-img canvas { filter: invert(1); mix-blend-mode: screen; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme]) .tx-chant-img canvas { filter: invert(1); mix-blend-mode: screen; } }
+.tx-chant-img canvas { display: block; width: 100%; height: auto; mix-blend-mode: multiply; filter: none; }
 @media (max-width: 42rem) { .tx-strip { font-size: 1.14rem; } .tx-chant-img { margin-left: -12px; margin-right: -12px; } }

@@ -117,15 +117,14 @@
 
   var token = null, shown = null;   // shown: { k, year, d, data } on screen now
   function update() {
-    var box = $("#lect"), rd = $("#readings"), my = token = {};
+    var box = $("#lect"), my = token = {};
     if (!IN.matins()) { box.hidden = true; shown = null; return; }
     var d = IN.dayDate();
     if (shown && IN.ymd(shown.d) !== IN.ymd(d)) shown = null;   // another day: no old readings in the new pages' slots
     IN.index().then(function (idx) {
       if (token !== my) return;
       var lect = idx.lect || {}, k = dayKey(d, lect);
-      if (!lect[k]) { box.hidden = true; shown = null; return; }   // no readings: the DivineOffice.org link stays
-      rd.hidden = true;
+      if (!lect[k]) { box.hidden = true; shown = null; return; }   // no readings for this day
       var keyP = IN.key();
       if (!keyP) { box.hidden = true; return; }   // locked: the password box is showing
       return keyP.then(function (key) { return loadDay(idx, key, k); }).then(function (data) {

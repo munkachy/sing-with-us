@@ -1251,17 +1251,6 @@
     var lauds = $("#then-lauds");
     lauds.hidden = state.hour !== 0 || !!state.ref || !!inBook;
     if (state.hour === 0) lauds.onclick = function (e) { e.preventDefault(); state.hour = 1; render(); scrollTo(0, 0); };
-    // At Matins the day's readings follow the pages (readings.js), with this link only on a day without them;
-    // at Vespers the short reading, which isn't printed in our book
-    var rd = $("#readings");
-    rd.hidden = (state.hour !== 0 && state.hour !== 3) || !!state.ref || !!inBook;
-    if (!rd.hidden) {
-      var t = dayDate();
-      var ymd = t.getFullYear() + String(t.getMonth() + 1).padStart(2, "0") + String(t.getDate()).padStart(2, "0");
-      $("#readings-link").href = "https://divineoffice.org/?date=" + ymd;
-      $("#readings-text").textContent = state.hour === 0 ? "" : "The short reading at Vespers isn't printed in our book. ";
-      $("#readings-link").textContent = (state.hour === 0 ? "That day's Office of Readings" : "That day's Evening Prayer") + " at DivineOffice.org ↗";
-    }
     show();
   }
 

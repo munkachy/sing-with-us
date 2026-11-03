@@ -12,13 +12,14 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="stylesheet" href="../assets/css/site.css?v=16">
-<link rel="stylesheet" href="app.css?v=40">
+<link rel="stylesheet" href="app.css?v=41">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=16" defer></script>
 <script src="text.js?v=6" defer></script>
 <script src="app.js?v=48" defer></script>
 <script src="readings.js?v=5" defer></script>
 <script src="proper.js?v=4" defer></script>
+<script src="picker.js?v=1" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to the psalter</a>
@@ -42,6 +43,7 @@
 <main id="main">
   <nav class="pickbar" aria-label="Choose the book, then the week, day and hour or the section">
     <div class="pickbar-in">
+      <div id="pick-line" class="pick-line" role="group" aria-label="Book, week, day and hour"><button type="button" data-pl="book" aria-expanded="false" aria-haspopup="true" title="Choose the book"><span>Psalter</span> <i aria-hidden="true">▾</i></button><button type="button" data-pl="week" title="Next week"><span>Week</span> <i aria-hidden="true">›</i></button><button type="button" data-pl="day" aria-expanded="false" aria-haspopup="true" title="Choose the day"><span>Day</span> <i aria-hidden="true">▾</i></button><button type="button" data-pl="hour" aria-expanded="false" aria-haspopup="true" title="Choose the hour"><span>Hour</span> <i aria-hidden="true">▾</i></button></div>
       <div class="seg seg-books" role="group" aria-label="Book"><button type="button" data-book="psalter" aria-pressed="true" title="Monastic Psalter: the four-week psalter">Psalter</button><button type="button" data-book="Advent-Christmas" aria-pressed="false" title="Advent, Christmas and Epiphany">Advent</button><button type="button" data-book="Lent" aria-pressed="false" title="Lent, Easter, and the feasts after Pentecost">Lent</button><button type="button" data-book="Sanctoral" aria-pressed="false" title="Proper of the Saints">Saints</button><button type="button" id="page-btn" aria-expanded="false" aria-controls="pagebox" title="Go to a page number in this book">p.</button></div>
       <div class="book-picks" hidden>
         <select id="sec" aria-label="Section of this book"></select>
@@ -127,9 +129,10 @@
         <summary>How to use this page</summary>
         <details>
           <summary>Choosing the book, the week, the day and the hour</summary>
-          <p>The top row chooses the book: the <b>Psalter</b>, or the seasonal books for <b>Advent</b> and Christmas, <b>Lent</b> and Easter (with the feasts after Pentecost and the Sundays through the year), and the <b>Saints</b>. In a seasonal book, pick the section, then “Go to” an hour.</p>
+          <p>On a phone the choices sit on one line: <b>Psalter ▾ · Week › · Day ▾ · Hour ▾</b>. Tap the week to step to the next one (I, II, III, IV, then I again); tap the book, the day or the hour to open its buttons, and pick. On a wide screen every button shows at once.</p>
+          <p>The book is chosen first: the <b>Psalter</b>, or the seasonal books for <b>Advent</b> and Christmas, <b>Lent</b> and Easter (with the feasts after Pentecost and the Sundays through the year), and the <b>Saints</b>. In a seasonal book, pick the section, then “Go to” an hour.</p>
           <p>Tap the week the choir is on (I–IV). This phone remembers it and moves on every Sunday. Until you choose, the page follows the ordo's week, marked with a small dot under its button; tap the dotted week to follow the ordo again.</p>
-          <p>The <b>p.</b> button opens any page by the number printed in the book you're in; the faint number in the corner shows the page you're reading. Turn the phone sideways to hide the bar and see the page full width.</p>
+          <p>The <b>p.</b> button (with the books) opens any page by the number printed in the book you're in; the faint number in the corner shows the page you're reading. Turn the phone sideways to hide the bar and see the page full width.</p>
         </details>
         <details>
           <summary>What opens by itself</summary>

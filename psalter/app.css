@@ -479,3 +479,29 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .tx-chant-img canvas { display: block; width: 100%; height: auto; mix-blend-mode: multiply; filter: none; }
 @media (max-width: 42rem) { .tx-strip { font-size: 1.14rem; } .tx-chant-img { margin-left: -12px; margin-right: -12px; } }
 .tx-repeat { margin-top: .25rem !important; }
+
+/* The compact picker (picker.js), below 62rem: one line "Psalter ▾ · Week IV › · Sunday ▾ · Lauds ▾"; the rows of
+   buttons open under it one at a time (.pickbar[data-open]); wide screens keep every row showing */
+.pick-line { display: none; }
+@media (max-width: 61.99rem) {
+  .pickbar-in { position: relative; grid-template-columns: 1fr; grid-template-areas: "line"; }
+  .pickbar.in-book .pickbar-in { grid-template-areas: "line" "picks"; }
+  .pick-line { grid-area: line; display: grid; grid-template-columns: 1.15fr 1fr 1.2fr 1.1fr; gap: 4px; }
+  .pickbar.in-book .pick-line { grid-template-columns: 1fr; }
+  .pickbar.in-book .pick-line [data-pl="week"], .pickbar.in-book .pick-line [data-pl="day"], .pickbar.in-book .pick-line [data-pl="hour"] { display: none; }
+  .pick-line button {
+    font: inherit; font-size: .95rem; min-height: 38px; padding: 0 .35rem; border-radius: 7px; cursor: pointer; white-space: nowrap;
+    background: var(--surface); color: var(--text); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; gap: .3em;
+  }
+  .pick-line button i { font-style: normal; font-size: .8em; color: var(--muted); }
+  .pick-line button[aria-expanded="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+  .pick-line button[aria-expanded="true"] i { color: inherit; }
+  .pick-line button.ordo-wk span { position: relative; }
+  .pick-line button.ordo-wk span::after { content: ""; position: absolute; left: 50%; bottom: -5px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--accent); }
+  .pickbar .seg-books, .pickbar .seg-4, .pickbar .seg-7, .pickbar .seg-5 { display: none; }
+  .pickbar[data-open="book"] .seg-books, .pickbar[data-open="day"] .seg-7, .pickbar[data-open="hour"] .seg-5 {
+    display: grid; position: absolute; left: 10px; right: 10px; top: calc(100% - 2px); z-index: 45;
+    padding: 8px; background: var(--bg); border: 1px solid var(--rule); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  }
+  .pickbar[data-open] .seg button { min-height: 44px; }
+}

@@ -149,7 +149,7 @@
   var cal = calendar(viewing ? base : now);
   var books = null;
   var first = viewing ? { day: base.getDay(), hour: 0 } : nextHour(now);
-  var state = { week: cal.week, day: first.day, hour: first.hour, autoWeek: true, ref: null, book: "psalter", sec: {} };
+  var state = { week: cal.week, day: first.day, hour: first.hour, autoWeek: true, ref: null, book: "psalter", sec: {}, today: true };
   var touched = false;   // once the monk taps anything, the page stops choosing for him
   var saved = weekOverride(now);
   if (saved !== null) { state.week = saved; state.autoWeek = false; }
@@ -295,8 +295,7 @@
     var h = o && o.n.filter(function (n) { return /^St\. Bernard Abbey: .*\b(Solemnity|Feast)\b/.test(n); })[0];
     return h ? h.match(/\b(Solemnity|Feast)\b/)[1] : o && o.r;
   }
-  var autoDone = false;
-  // The Office of the Dead (the Saints book's All Souls, 2 November): on All Souls, every hour it prints, its own Compline
+    // The Office of the Dead (the Saints book's All Souls, 2 November): on All Souls, every hour it prints, its own Compline
   // too (the abbey uses it; the necrology still follows); on
   // 14 November, the Commemoration of all the Departed of our Order ("All as in the Office of All Souls Day", p. 707),
   // Matins to Sext, Vespers being I Vespers of Sunday (Master of Ceremonies, 2026). Not on a Sunday (the 14th moves).
@@ -314,30 +313,49 @@
     autoJump = String(j); render();
     return true;
   }
-  function autoOpen() {
-    if (autoDone || touched || !books || (state.hour === 4 && !deadOffice(dayDate(), "Compline"))) return;
+  // "Today" (the default, Br. Augustine, Nov 2026): every choice of day and hour is put together from the ordo, from
+  // whichever book the hour comes from: the psalter, or on a feast or solemnity its section in the Saints or seasonal
+  // book (I Vespers the evening before), the Office of the Dead on its days. The book buttons leave Today to browse.
+  function todayTarget() {
+    if (!books || (state.hour === 4 && !deadOffice(dayDate(), "Compline"))) return null;
     var d = dayDate(), o = ordoDay(d);
-    if (o === null || o === undefined) return;
-    autoDone = true;
+    if (!o) return null;
+    if (deadOffice(d, HOURS[state.hour])) {
+      var dk = books.Sanctoral.sections.findIndex(function (s) { return s.tag === "d:11-02"; }), ds = books.Sanctoral.sections[dk];
+      var dj = ds ? ds.jumps.findIndex(function (x) { return x[0] === HOURS[state.hour]; }) : -1;
+      if (dj >= 0) return { book: "Sanctoral", k: dk, j: dj, note: "The Office of the Dead (" + ds.title + ", Saints), " + ds.jumps[dj][0] + (ymd(d).slice(5) === "11-14" ? ", as the book directs for the Departed of our Order." : ".") };
+    }
     var eve = state.hour === 3 && (/^1st Vespers of following/.test(o.v) || o.n.some(function (n) { return /^St\. Bernard Abbey: 1st Vespers of following/.test(n); }));
     var t = eve ? addDays(d, 1) : d, ot = ordoDay(t);
-    if (!eve && deadOffice(d, HOURS[state.hour]) && openDead(d)) return;
-    if (!ot || !/Solemnity|Feast/.test(rankOf(ot) || "")) return;
+    if (!ot || !/Solemnity|Feast/.test(rankOf(ot) || "")) return null;
     var want = eve ? ["I Vespers", "Vespers"] : [["Matins"], ["Lauds"], ["Sext"], ["II Vespers", "Vespers"]][state.hour];
     var order = ["Sanctoral", "Advent-Christmas", "Lent"];
     for (var b = 0; b < order.length; b++) {
       var k = todayIn(order[b], t);
       if (k < 0) continue;
       var sec = books[order[b]].sections[k];
-      for (var w = 0; w < want.length; w++) for (var j = 0; j < sec.jumps.length; j++) {
-        if (sec.jumps[j][0].replace(/ \(\d\)$/, "") !== want[w]) continue;
-        state.book = order[b]; state.sec[order[b]] = k; pendingJump = sec.jumps[j]; bookHour = sec.jumps[j][0];
-        autoNote = "Opened for you from the ordo: " + sec.title + " (" + books[order[b]].label + "), " + want[w] + ".";
-        autoJump = String(j); render();
-        return;
-      }
+      for (var w = 0; w < want.length; w++) for (var j = 0; j < sec.jumps.length; j++)
+        if (sec.jumps[j][0].replace(/ \(\d\)$/, "") === want[w]) return { book: order[b], k: k, j: j, note: "From the ordo: " + sec.title + " (" + books[order[b]].label + "), " + want[w] + "." };
     }
+    return null;
   }
+  var todayKey = null;
+  function applyToday() {
+    if (!state.today || state.ref) return;
+    var tg = todayTarget(), key = tg ? tg.book + ":" + tg.k + ":" + tg.j : "psalter:" + ymd(dayDate()) + ":" + state.hour;
+    autoNote = tg ? tg.note : easterNote();
+    if (key === todayKey) return;
+    todayKey = key;
+    if (!tg) { state.book = "psalter"; pendingJump = null; bookHour = null; return; }
+    var sec = books[tg.book].sections[tg.k];
+    state.book = tg.book; state.sec[tg.book] = tg.k; pendingJump = sec.jumps[tg.j]; bookHour = sec.jumps[tg.j][0];
+    autoJump = String(tg.j);
+  }
+  // Easter Sunday has no Matins (the Easter Vigil is kept as its Matins: the user, Nov 2026) and the Lent book prints
+  // no Matins or Lauds for it; so no weekly hour is put in their place, only this note
+  function easterDay() { return daysBetween(easter(dayDate().getFullYear()), dayDate()) === 0; }
+  function easterNote() { return state.today && easterDay() && state.hour <= 1 ? "Easter Sunday: no " + HOURS[state.hour] + " today. The Easter Vigil is kept as Matins, and the book has no Matins or Lauds for this day." : ""; }
+  function autoOpen() { applyToday(); }
   var autoNote = "", autoJump = null;   // what autoOpen chose, kept in the "Go to" list until the monk taps
   function ymd(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   function ordoDay(d) { var o = ordoYear(d.getFullYear()); return o ? o[ymd(d)] || null : undefined; }
@@ -1091,6 +1109,7 @@
     if (window.LECT) LECT.update();
     if (window.PROPER) PROPER.update();
     var inBook = state.book !== "psalter" && books;
+    if (!state.ref && easterNote()) { $("#pdf-view").hidden = true; $("#beta-view").hidden = true; msg(""); return; }   // Easter Sunday: no Matins or Lauds
     var path = state.ref || (inBook ? books[state.book].sections[state.sec[state.book]].path : ultima() ? ULTIMA : fileKey(state.week, state.day, state.hour));
     index().then(function (idx) {
       if (vault.token !== token) return;
@@ -1218,10 +1237,11 @@
   }
 
   function render() {
+    applyToday();
     var inBook = state.book !== "psalter" && books;
-    document.querySelector(".pickbar").classList.toggle("in-book", !!inBook);
-    $(".book-picks").hidden = !inBook;
-    document.querySelectorAll("[data-book]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.book === state.book)); });
+    document.querySelector(".pickbar").classList.toggle("in-book", !!inBook && !state.today);
+    $(".book-picks").hidden = !inBook || state.today;
+    document.querySelectorAll("[data-book]").forEach(function (b) { b.setAttribute("aria-pressed", String(state.today ? b.dataset.book === "today" : b.dataset.book === state.book)); });
     if (inBook) fillBook();
     if (!$("#pagebox").hidden && books) $("#page-book").textContent = books[bookKey()].label;
     if (viewing && !weekTouched) ordoWeek();
@@ -1287,6 +1307,8 @@
   document.querySelectorAll("[data-book]").forEach(function (b) {
     b.addEventListener("click", function () {
       var book = b.dataset.book;
+      if (book === "today") { state.ref = null; state.today = true; todayKey = null; scrollTo(0, 0); render(); return; }
+      state.today = false; autoNote = "";
       if (book === "psalter" || !books) { state.ref = null; state.book = "psalter"; render(); return; }
       if (state.sec[book] === undefined) {   // first time in this book: today's section, else the first one
         var t = todayIn(book, dayDate());
@@ -1357,7 +1379,7 @@
         { title: "Latin Magnificat and Benedictus, sung (not used)", group: "Reference", tag: "", recipe: "latin", jumps: [], pages: 0, start: 0 });
     });
   }).then(function () { todayNote(); autoOpen(); render(); }, function () {});
-  $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });
+  $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.today = false; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
   if (window.PTEXT) PTEXT.buttons(function () { $("#pdf-pages").dataset.done = ""; show(); });   // Book · Lectio · Cantus
   $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });

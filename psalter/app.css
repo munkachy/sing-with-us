@@ -427,8 +427,10 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 [data-theme="glass"] { --rubric: #a3191b; --tx-head: #1d1a16; --init-bg: #1c2758; --init-rule: #f0b429; --init-ink: #ffb199; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme]) { --rubric: #a3191b; --tx-head: #1d1a16; --init-bg: #1f1a12; --init-rule: #8c7240; --init-ink: #e0806a; } }
 
-.read-mode { display: flex; gap: 4px; max-width: 22rem; margin: 0 auto .9rem; }
-.read-mode button { flex: 1; min-height: 38px; font-family: "Cinzel", serif; font-size: .9rem; letter-spacing: .08em; }
+.read-mode { display: flex; align-items: center; justify-content: flex-end; gap: .5rem; max-width: 40rem; margin: 0 auto .9rem; font-size: .9rem; color: var(--muted, var(--text)); }
+.read-mode label { font-family: "Cinzel", serif; letter-spacing: .08em; }
+.read-mode select { font: inherit; font-size: .95rem; min-height: 36px; padding: 0 .5rem; border-radius: 7px; border: 1px solid var(--rule); background: var(--surface); color: var(--text); max-width: 100%; }
+.read-mode select:focus { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
 #text-note { text-align: center; margin: -.4rem 0 .9rem; }
 
 .tx-strip { font-family: "EB Garamond", Georgia, serif; font-size: 1.2rem; line-height: 1.6; color: var(--text);

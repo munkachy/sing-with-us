@@ -1,5 +1,5 @@
 /* Monastic Psalter: the book's pages as set text (Br. Augustine, Nov 2026).
-   Three ways to read an hour, chosen with the "How to read" buttons and kept on the phone ("psalter-read"):
+   Three ways to read an hour, chosen in the "Read as" menu and kept on the phone ("psalter-read"):
      book    the strips of the book's pages, as before
      lectio  everything as text, the chant too (its words)
      cantus  everything as text, but wherever there is music the book's own strip of notation is kept
@@ -129,15 +129,14 @@
   function begin() { last = null; lastAnt = null; antCtx = false; }
   function cut() { last = null; }        // something else (a heading, a reading) came between: start afresh
 
-  // ---- the "How to read" buttons ----
+  // ---- the "Read as" menu (Book pages / Text / Text with notation) ----
   function buttons(onChange) {
-    var box = document.getElementById("read-mode"); if (!box) return;
-    function sync() { box.querySelectorAll("[data-read]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.read === mode())); }); }
-    box.addEventListener("click", function (e) {
-      var b = e.target.closest("[data-read]"); if (!b || b.dataset.read === mode()) return;
-      store("psalter-read", b.dataset.read); sync(); onChange();
+    var sel = document.getElementById("read-sel"); if (!sel) return;
+    sel.value = mode();
+    sel.addEventListener("change", function () {
+      if (sel.value === mode()) return;
+      store("psalter-read", sel.value); onChange();
     });
-    sync();
   }
 
   window.PTEXT = { mode: mode, on: on, load: load, has: has, strip: strip, begin: begin, cut: cut, buttons: buttons };

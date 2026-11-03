@@ -12,10 +12,10 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="stylesheet" href="../assets/css/site.css?v=16">
-<link rel="stylesheet" href="app.css?v=39">
+<link rel="stylesheet" href="app.css?v=40">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=16" defer></script>
-<script src="text.js?v=5" defer></script>
+<script src="text.js?v=6" defer></script>
 <script src="app.js?v=48" defer></script>
 <script src="readings.js?v=5" defer></script>
 <script src="proper.js?v=4" defer></script>
@@ -86,7 +86,7 @@
     </section>
 
     <section id="pdf-view" class="beta-view pdf-view" aria-label="The pages for this hour" hidden>
-      <div id="read-mode" class="seg read-mode" role="group" aria-label="How to read this hour"><button type="button" data-read="book" aria-pressed="true" title="The book's own pages">Book</button><button type="button" data-read="lectio" aria-pressed="false" title="Everything as text, the chant's words too">Lectio</button><button type="button" data-read="cantus" aria-pressed="false" title="Text, keeping the book's music wherever there is chant">Cantus</button></div>
+      <div id="read-mode" class="read-mode"><label for="read-sel">Read as</label><select id="read-sel"><option value="book">Book pages</option><option value="lectio">Text (Lectio)</option><option value="cantus">Text with notation (Cantus)</option></select></div>
       <p id="text-note" class="slim-note" hidden></p>
       <div id="pdf-pages"></div>
     </section>
@@ -151,7 +151,7 @@
         </details>
         <details>
           <summary>Book, Lectio and Cantus</summary>
-          <p>Above the pages, choose how to read the hour. <b>Book</b> shows the book's own pages. <b>Lectio</b> sets everything as text, proofread from the book: rubrics in red, the psalms with their large capitals and their <span class="tx-mark">*</span> and <span class="tx-mark">†</span>, and the chant as its words. <b>Cantus</b> is the same text, but wherever the book has music its notation is kept. This phone remembers your choice.</p>
+          <p>Above the pages, the <b>Read as</b> menu chooses how to read the hour. <b>Book pages</b> shows the book's own pages. <b>Lectio</b> sets everything as text, proofread from the book: rubrics in red, the psalms with their large capitals and their <span class="tx-mark">*</span> and <span class="tx-mark">†</span>, and the chant as its words. <b>Cantus</b> is the same text, but wherever the book has music its notation is kept. This phone remembers your choice.</p>
           <p>Every page the psalter can show is now in text, proofread from the book: the four weeks, Vespers and Compline, the Ordinary and its chants, the Ultima, Advent and Christmas, Lent and Holy Week, and the feasts of the Sanctoral. A few lines cut off at the foot of the scanned pages are marked where they could not be read. Where the book has a slip (a missing full stop, a stanza misnumbered) and it has been put right, the correction carries a ⁎ and a red note saying what the book prints. Marks with ✎ are made on the book's pages.</p>
         </details>
         <details>

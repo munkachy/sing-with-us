@@ -12,11 +12,11 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="stylesheet" href="../assets/css/site.css?v=16">
-<link rel="stylesheet" href="app.css?v=42">
+<link rel="stylesheet" href="app.css?v=43">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=16" defer></script>
-<script src="text.js?v=6" defer></script>
-<script src="app.js?v=51" defer></script>
+<script src="text.js?v=7" defer></script>
+<script src="app.js?v=52" defer></script>
 <script src="readings.js?v=6" defer></script>
 <script src="proper.js?v=4" defer></script>
 <script src="picker.js?v=2" defer></script>
@@ -65,6 +65,7 @@
 
   <div class="wrap">
     <h1 id="now-title" class="visually-hidden">Monastic Psalter</h1>
+    <div id="day-bar" class="day-bar"><span id="day-what" class="day-what"></span><button type="button" id="ordo-btn" class="day-btn" aria-expanded="false" aria-controls="ordo-note" hidden>Ordo</button><label class="day-read" for="read-sel"><span class="visually-hidden">Read as</span><select id="read-sel"><option value="book">Book pages</option><option value="lectio">Text</option><option value="cantus">Text with notation</option></select></label></div>
     <p id="season-note" class="slim-note" hidden></p>
     <p id="view-note" class="slim-note view-note" hidden>Showing the hours for <b id="view-date"></b>. <a href="./" id="view-back">Back to today →</a></p>
     <div id="ordo-note" class="slim-note ordo-note" hidden></div>
@@ -88,7 +89,6 @@
     </section>
 
     <section id="pdf-view" class="beta-view pdf-view" aria-label="The pages for this hour" hidden>
-      <div id="read-mode" class="read-mode"><label for="read-sel">Read as</label><select id="read-sel"><option value="book">Book pages</option><option value="lectio">Text (Lectio)</option><option value="cantus">Text with notation (Cantus)</option></select></div>
       <p id="text-note" class="slim-note" hidden></p>
       <div id="pdf-pages"></div>
     </section>
@@ -141,8 +141,8 @@
           <p>The calendar button by the themes shows the whole ordo; tap a day there to see its hours here.</p>
         </details>
         <details>
-          <summary>The ordo line</summary>
-          <p>Under the bar is the American-Cassinese Congregation's ordo for the day you've picked, with the lines for Saint Bernard Abbey and our diocese in bold, the day's Mass readings (read them at USCCB), and, on the anniversary of a brother of our house, the <b>Necrology</b>: tap it to read his notice.</p>
+          <summary>The day bar and the ordo</summary>
+          <p>Under the picker, one line says what the day is: <b>Memorial</b>, <b>Feast</b> or <b>Solemnity</b> and whom it honours, with <b>✠ relic</b> when that saint's relic is in our reliquary. Tap <b>Ordo</b> for the full entry (a dot on it means a notice from the Master of Ceremonies or a brother's anniversary): the American-Cassinese Congregation's ordo for the day you've picked, with the lines for Saint Bernard Abbey and our diocese in bold, the day's Mass readings (read them at USCCB), and, on the anniversary of a brother of our house, the <b>Necrology</b>: tap it to read his notice.</p>
         </details>
         <details>
           <summary>How each hour is put together</summary>
@@ -153,8 +153,8 @@
           <p><b>Compline:</b> only tonight's hymn and the antiphon of Our Lady for the season (solemn tone on Sundays, solemnities and feasts). On Wednesday and Sunday, the haustus days, the Ultima instead; on a feast it is Compline, with a link to the Ultima if the Abbot keeps the haustus.</p>
         </details>
         <details>
-          <summary>Book, Lectio and Cantus</summary>
-          <p>Above the pages, the <b>Read as</b> menu chooses how to read the hour. <b>Book pages</b> shows the book's own pages. <b>Lectio</b> sets everything as text, proofread from the book: rubrics in red, the psalms with their large capitals and their <span class="tx-mark">*</span> and <span class="tx-mark">†</span>, and the chant as its words. <b>Cantus</b> is the same text, but wherever the book has music its notation is kept. This phone remembers your choice.</p>
+          <summary>Book pages, Text, Text with notation</summary>
+          <p>The menu at the end of the day bar chooses how to read the hour. <b>Book pages</b> (the usual) shows the book's own pages. <b>Text</b> sets everything as text, proofread from the book: rubrics in red, the psalms with their large capitals and their <span class="tx-mark">*</span> and <span class="tx-mark">†</span>, and the chant as its words. <b>Text with notation</b> is the same text, but wherever the book has music its notation is kept. This phone remembers your choice.</p>
           <p>In text so far: every hour of the four weeks, Vespers and Compline, the Ordinary and its chants, the Ultima, and every feast and season as the hours are put together. Some pages of the seasonal books, opened whole to browse, are still shown as the book's pages while they are proofread. A few lines cut off at the foot of the scanned pages are marked where they could not be read. Where the book has a slip (a missing full stop, a stanza misnumbered) and it has been put right, the correction carries a ⁎ and a red note saying what the book prints. Marks with ✎ are made on the book's pages.</p>
         </details>
         <details>

@@ -505,3 +505,37 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
   }
   .pickbar[data-open] .seg button { min-height: 44px; }
 }
+
+/* The day bar: what the day is (rank, whom it honours, ✠ relic), the Ordo button, the Read as menu: one line */
+.day-bar { display: flex; align-items: center; gap: .45rem; margin: .5rem 0 .6rem; min-height: 38px; }
+.day-what { flex: 1; min-width: 0; display: flex; align-items: center; gap: .4rem; white-space: nowrap; overflow: hidden; font-size: .95rem; }
+.day-what .ordo-rank { flex: none; margin: 0; }
+.day-what .day-name { overflow: hidden; text-overflow: ellipsis; }
+.day-relic { flex: none; font-size: .82rem; color: var(--accent); font-weight: 600; letter-spacing: .02em; }
+.day-btn { flex: none; font: inherit; font-size: .9rem; min-height: 36px; padding: 0 .7rem; border-radius: 7px; cursor: pointer; position: relative;
+  background: var(--surface); color: var(--text); border: 1px solid var(--rule); }
+.day-btn[aria-expanded="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.day-btn.has-news::after { content: ""; position: absolute; top: 4px; right: 4px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.day-btn.has-news[aria-expanded="true"]::after { background: var(--accent-ink); }
+.day-read { flex: none; }
+.day-read select { font: inherit; font-size: .9rem; min-height: 36px; max-width: 9.5rem; padding: 0 .3rem; border-radius: 7px; border: 1px solid var(--rule); background: var(--surface); color: var(--text); }
+.day-read select:focus { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+/* The Ordo button in the day's liturgical colour (from the ordo) */
+.day-btn[data-color] { border-width: 2px; }
+.day-btn[data-color="green"]  { background: #2f6b3a; color: #fff; border-color: #24552d; }
+.day-btn[data-color="white"]  { background: #fbf8ef; color: #3a3326; border-color: #c9b98f; }
+.day-btn[data-color="red"]    { background: #a3201c; color: #fff; border-color: #7f1714; }
+.day-btn[data-color="violet"] { background: #5b3a7a; color: #fff; border-color: #452b5e; }
+.day-btn[data-color="rose"]   { background: #d98aa0; color: #3a1d27; border-color: #c06f86; }
+.day-btn[data-color="black"]  { background: #222; color: #fff; border-color: #000; }
+.day-btn[data-color][aria-expanded="true"] { box-shadow: inset 0 0 0 2px rgba(255,255,255,.55), 0 0 0 2px var(--accent); }
+.day-btn[data-color="white"].has-news::after, .day-btn[data-color="rose"].has-news::after { background: var(--accent); }
+.day-btn[data-color]:not([data-color="white"]):not([data-color="rose"]):not([data-color=""]).has-news::after { background: #fff; }
+.day-btn[data-color=""] { border-width: 1px; }
+.day-what .r-short { display: none; }
+@media (max-width: 30rem) {
+  .day-what .r-long { display: none; } .day-what .r-short { display: inline; }
+  .day-what { gap: .3rem; font-size: .9rem; } .day-relic { font-size: 1rem; }
+  .day-btn { padding: 0 .5rem; font-size: .85rem; }
+  .day-read select { max-width: 6.6rem; font-size: .85rem; }
+}

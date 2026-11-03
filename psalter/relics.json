@@ -1,0 +1,237 @@
+{
+ "_source": "munkachy/newmonksite relics/README.md (photographs of 1 Nov 2026). Each saint: \"re\" is matched (ignoring case) against the ordo's title for the day; \"likely\" where the label is only probably read.",
+ "saints": [
+  {
+   "name": "St. Bernard of Clairvaux",
+   "re": "\\bBERNARD\\b"
+  },
+  {
+   "name": "St. Benedict",
+   "re": "\\bBENEDICT, (ABBOT|PATRIARCH)|FATHER BENEDICT"
+  },
+  {
+   "name": "Our Lady (her tomb, her garment)",
+   "re": "MARY, MOTHER OF GOD|MOTHER OF GOD\\b(?!.*JOSEPH)|ASSUMPTION|IMMACULATE|VISITATION|Queenship|Rosary|Mother of the Church|Presentation of the Blessed|NATIVITY OF THE BLESSED|Our Lady|Sorrows|Guadalupe|Lourdes|Mount Carmel|St\\. Mary Major|Holy Name of Mary|Saturday Commemoration|NATIVITY OF THE (BLESSED )?VIRGIN|PRESENTATION OF THE (BLESSED )?VIRGIN"
+  },
+  {
+   "name": "St. Joseph",
+   "re": "\\bJOSEPH\\b(?! (Calasanz|of Cupertino|Vaz|Freinademetz))"
+  },
+  {
+   "name": "Sts. Joachim and Anne",
+   "re": "\\bJOACHIM\\b|\\bANNE\\b"
+  },
+  {
+   "name": "St. John the Baptist",
+   "re": "JOHN THE BAPTIST|BAPTIST"
+  },
+  {
+   "name": "St. Peter",
+   "re": "\\bPETER\\b(?! (Chrysologus|Claver|Damian|Canisius|Julian|Chanel|To Rot|the Venerable))"
+  },
+  {
+   "name": "St. Paul",
+   "re": "\\bPAUL\\b(?! (Miki|of the Cross|VI|Chong))|CONVERSION OF SAINT PAUL"
+  },
+  {
+   "name": "St. Andrew",
+   "re": "\\bANDREW\\b(?! (Kim|D[uũ]ng|Bobola))"
+  },
+  {
+   "name": "St. Philip the Apostle",
+   "re": "PHILIP AND JAMES"
+  },
+  {
+   "name": "St. Jude Thaddeus",
+   "re": "SIMON AND JUDE|\\bJUDE\\b"
+  },
+  {
+   "name": "St. Matthew",
+   "re": "\\bMATTHEW\\b"
+  },
+  {
+   "name": "St. Luke",
+   "re": "\\bLUKE\\b"
+  },
+  {
+   "name": "St. Lawrence",
+   "re": "\\bLAWRENCE\\b(?! (of Brindisi|Ruiz))|\\bLAURENCE\\b"
+  },
+  {
+   "name": "St. Sebastian",
+   "re": "\\bSEBASTIAN\\b"
+  },
+  {
+   "name": "St. Agnes",
+   "re": "\\bAGNES\\b"
+  },
+  {
+   "name": "St. Agatha",
+   "re": "\\bAGATHA\\b"
+  },
+  {
+   "name": "St. Lucy",
+   "re": "\\bLUCY\\b"
+  },
+  {
+   "name": "St. Blaise",
+   "re": "\\bBLAISE\\b"
+  },
+  {
+   "name": "St. Valentine",
+   "re": "\\bVALENTINE\\b",
+   "likely": true
+  },
+  {
+   "name": "St. Helena",
+   "re": "\\bHELENA\\b"
+  },
+  {
+   "name": "St. Augustine",
+   "re": "\\bAUGUSTINE\\b(?! of Canterbury| Zhao)"
+  },
+  {
+   "name": "St. Martin of Tours",
+   "re": "MARTIN OF TOURS"
+  },
+  {
+   "name": "St. Martin de Porres",
+   "re": "MARTIN DE PORRES"
+  },
+  {
+   "name": "St. Nicholas",
+   "re": "\\bNICHOLAS\\b"
+  },
+  {
+   "name": "St. Patrick",
+   "re": "\\bPATRICK\\b",
+   "likely": true
+  },
+  {
+   "name": "St. Anselm",
+   "re": "\\bANSELM\\b"
+  },
+  {
+   "name": "St. Dominic",
+   "re": "\\bDOMINIC\\b(?! Savio)"
+  },
+  {
+   "name": "St. Francis of Assisi",
+   "re": "FRANCIS OF ASSISI"
+  },
+  {
+   "name": "St. Clare",
+   "re": "\\bCLARE\\b"
+  },
+  {
+   "name": "St. Anthony of Padua",
+   "re": "ANTHONY OF PADUA"
+  },
+  {
+   "name": "St. Bonaventure",
+   "re": "\\bBONAVENTURE\\b"
+  },
+  {
+   "name": "St. Thomas Aquinas",
+   "re": "THOMAS AQUINAS"
+  },
+  {
+   "name": "St. Catherine of Siena",
+   "re": "CATHERINE OF SIENA"
+  },
+  {
+   "name": "St. Teresa of Ávila",
+   "re": "TERESA OF JESUS|TERESA OF [AÁ]VILA"
+  },
+  {
+   "name": "St. Francis Xavier",
+   "re": "FRANCIS XAVIER\\b(?! Cabrini)"
+  },
+  {
+   "name": "St. Francis de Sales",
+   "re": "FRANCIS DE SALES",
+   "likely": true
+  },
+  {
+   "name": "St. Philip Neri",
+   "re": "PHILIP NERI"
+  },
+  {
+   "name": "St. Aloysius Gonzaga",
+   "re": "\\bALOYSIUS\\b"
+  },
+  {
+   "name": "St. Camillus de Lellis",
+   "re": "\\bCAMILLUS\\b"
+  },
+  {
+   "name": "St. Alphonsus Liguori",
+   "re": "\\bALPHONSUS\\b"
+  },
+  {
+   "name": "St. Paul of the Cross",
+   "re": "PAUL OF THE CROSS"
+  },
+  {
+   "name": "St. John Vianney",
+   "re": "JOHN VIANNEY|JOHN MARY VIANNEY"
+  },
+  {
+   "name": "St. John Neumann",
+   "re": "JOHN NEUMANN"
+  },
+  {
+   "name": "St. John Bosco",
+   "re": "JOHN BOSCO"
+  },
+  {
+   "name": "St. Pius X",
+   "re": "PIUS X\\b"
+  },
+  {
+   "name": "St. Elizabeth Ann Seton",
+   "re": "ELIZABETH ANN SETON"
+  },
+  {
+   "name": "St. Elizabeth of Hungary",
+   "re": "ELIZABETH OF HUNGARY"
+  },
+  {
+   "name": "St. Elizabeth (queen)",
+   "re": "ELIZABETH OF PORTUGAL",
+   "likely": true
+  },
+  {
+   "name": "St. Frances Xavier Cabrini",
+   "re": "CABRINI"
+  },
+  {
+   "name": "St. Maria Goretti",
+   "re": "MARIA GORETTI"
+  },
+  {
+   "name": "St. Charbel",
+   "re": "CHARBEL|SHARBEL"
+  },
+  {
+   "name": "St. Charles Lwanga and the Uganda Martyrs",
+   "re": "LWANGA"
+  },
+  {
+   "name": "St. Norbert",
+   "re": "\\bNORBERT\\b"
+  },
+  {
+   "name": "St. Henry II",
+   "re": "\\bHENRY\\b"
+  },
+  {
+   "name": "St. Raymond Nonnatus",
+   "re": "RAYMOND NONNATUS"
+  },
+  {
+   "name": "St. Gabriel of Our Lady of Sorrows",
+   "re": "GABRIEL OF OUR LADY"
+  }
+ ]
+}

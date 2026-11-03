@@ -273,7 +273,7 @@
   // first alternate tone the antiphon names, then the antiphon again and the psalter's Conclusion.
   var asm = null, plain = false;
   var extrasData = {};   // the necrology and the Benedictine collects, for the ordo line
-  ["necrology", "collects", "house"].forEach(function (k) {
+  ["necrology", "collects", "house", "relics"].forEach(function (k) {
     fetch(k + ".json").then(function (r) { return r.json(); }).then(function (j) { extrasData[k] = j; ordoNote(); dayEnd(); if (k === "house") render(); }, function () {});
   });
   // ---- The Congregation's ordo (ordo-YEAR.json, read from amcass.org's PDF by books/ordo.py) ----
@@ -316,19 +316,20 @@
   // "Today" (the default, Br. Augustine, Nov 2026): every choice of day and hour is put together from the ordo, from
   // whichever book the hour comes from: the psalter, or on a feast or solemnity its section in the Saints or seasonal
   // book (I Vespers the evening before), the Office of the Dead on its days. The book buttons leave Today to browse.
-  function todayTarget() {
-    if (!books || (state.hour === 4 && !deadOffice(dayDate(), "Compline"))) return null;
-    var d = dayDate(), o = ordoDay(d);
+  function todayTarget(d, hour) {
+    if (d === undefined) { d = dayDate(); hour = state.hour; }
+    if (!books || (hour === 4 && !deadOffice(d, "Compline"))) return null;
+    var o = ordoDay(d);
     if (!o) return null;
-    if (deadOffice(d, HOURS[state.hour])) {
+    if (deadOffice(d, HOURS[hour])) {
       var dk = books.Sanctoral.sections.findIndex(function (s) { return s.tag === "d:11-02"; }), ds = books.Sanctoral.sections[dk];
-      var dj = ds ? ds.jumps.findIndex(function (x) { return x[0] === HOURS[state.hour]; }) : -1;
+      var dj = ds ? ds.jumps.findIndex(function (x) { return x[0] === HOURS[hour]; }) : -1;
       if (dj >= 0) return { book: "Sanctoral", k: dk, j: dj, note: "The Office of the Dead (" + ds.title + ", Saints), " + ds.jumps[dj][0] + (ymd(d).slice(5) === "11-14" ? ", as the book directs for the Departed of our Order." : ".") };
     }
-    var eve = state.hour === 3 && (/^1st Vespers of following/.test(o.v) || o.n.some(function (n) { return /^St\. Bernard Abbey: 1st Vespers of following/.test(n); }));
+    var eve = hour === 3 && (/^1st Vespers of following/.test(o.v) || o.n.some(function (n) { return /^St\. Bernard Abbey: 1st Vespers of following/.test(n); }));
     var t = eve ? addDays(d, 1) : d, ot = ordoDay(t);
     if (!ot || !/Solemnity|Feast/.test(rankOf(ot) || "")) return null;
-    var want = eve ? ["I Vespers", "Vespers"] : [["Matins"], ["Lauds"], ["Sext"], ["II Vespers", "Vespers"]][state.hour];
+    var want = eve ? ["I Vespers", "Vespers"] : [["Matins"], ["Lauds"], ["Sext"], ["II Vespers", "Vespers"]][hour];
     var order = ["Sanctoral", "Advent-Christmas", "Lent"];
     for (var b = 0; b < order.length; b++) {
       var k = todayIn(order[b], t);
@@ -379,9 +380,48 @@
     var a = document.createElement("a"); a.href = usccbUrl(d); a.target = "_blank"; a.rel = "noopener"; a.textContent = "Read them at USCCB ↗";
     p.appendChild(a); return p;
   }
+  // The day bar (Br. Augustine, Nov 2026): one line saying what the day is (its rank: Memorial, Feast or Solemnity, and
+  // whom it honours), with ✠ where that saint's relic is in our reliquary (relics.json, from the abbey site's relics
+  // page), the Ordo button that opens the full ordo entry (#ordo-note), and the Read as menu (text.js)
+  var ordoOpen = false;
+  function relicsFor(t) {
+    var R = extrasData.relics && extrasData.relics.saints || [];
+    return R.filter(function (r) { try { return new RegExp(r.re, "i").test(t); } catch (e) { return false; } });
+  }
+  // The ordo prints solemnities and feasts in capitals; the bar sets them as ordinary words ("Bernard, Titular")
+  var SMALL = /^(of|the|and|in|on|at|to|for|a|an|with|from|by|de|da|del|di|la|le|du|d'|y|e|von|van)$/i;
+  function soft(t) {
+    if (t.replace(/[^A-Za-z]/g, "").length < 4 || t !== t.toUpperCase()) return t;
+    return t.toLowerCase().replace(/[\p{L}'’]+/gu, function (w, i) { return i && SMALL.test(w) ? w : w.charAt(0).toUpperCase() + w.slice(1); })
+      .replace(/\b(Ii|Iii|Iv|Vi|Vii|Viii|Ix|Xi|Xii|Xiii|Xxiii)\b/g, function (r) { return r.toUpperCase(); });
+  }
+  function dayBar(o, name, d, extra) {
+    var w = $("#day-what"), btn = $("#ordo-btn"); if (!w) return;
+    w.innerHTML = ""; btn.hidden = !o; btn.classList.toggle("has-news", !!extra);
+    if (!o) return;
+    var col = (o.c || "").toLowerCase().match(/white|red|green|violet|rose|black|gold/);   // the ordo's colour for the day
+    btn.dataset.color = col ? col[0] : ""; btn.title = (col ? o.c + " · " : "") + "the full ordo for the day";
+    var bvm = !o.r && d.getDay() === 6 && bvmSaturday(d), title = bvm ? "Saturday of Our Lady" : soft(name);
+    if (bvm) btn.dataset.color = "white";
+    if (o.r) {
+      var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase();
+      r.innerHTML = '<span class="r-long"></span><span class="r-short"></span>';
+      r.firstChild.textContent = o.r; r.lastChild.textContent = { Solemnity: "Sol.", Memorial: "Mem." }[o.r] || o.r;
+      w.appendChild(r);
+    }
+    var n = document.createElement("span"); n.className = "day-name"; n.textContent = title; w.appendChild(n);
+    var rel = o.r || bvm ? relicsFor(bvm ? "Saturday Commemoration" : o.t) : [];
+    if (rel.length) {
+      var m = document.createElement("span"); m.className = "day-relic"; m.innerHTML = '✠<span class="r-long"> relic</span>';
+      m.title = "In our reliquary: " + rel.map(function (x) { return x.name + (x.likely ? " (label likely)" : ""); }).join("; ");
+      w.appendChild(m);
+    }
+    w.title = (o.r ? o.r + ": " : "") + title + (rel.length ? " · " + m.title : "");
+    return rel;
+  }
   function ordoNote() {
     var el = $("#ordo-note"), d = dayDate(), o = !state.ref ? ordoDay(d) : null;
-    if (!o) { el.hidden = true; return; }
+    if (!o) { el.hidden = true; dayBar(null); return; }
     var ours = o.n.filter(function (n) { return OURS.test(n); }), rest = o.n.filter(function (n) { return !OURS.test(n); });
     el.innerHTML = "";
     var b = document.createElement("b"); b.textContent = "Ordo, " + d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) + ": ";
@@ -390,15 +430,20 @@
     el.appendChild(b);
     // A memorial, feast or solemnity (never an optional memorial: those are only in the "Or" notes) gets its rank in front
     var hn = o.n.filter(function (n) { return /^St\. Bernard Abbey: .*\b(Solemnity|Feast)\b/.test(n); })[0];
-    if (hn) o = { t: hn.replace(/^St\. Bernard Abbey:\s*(?:(?:White|Red|Green|Violet|Rose)\s+)?/, "").replace(/\s*–.*$/, ""), r: rankOf(o), v: (hn.match(/–\s*(.+)$/) || [])[1] || o.v, n: o.n, w: o.w };   // what the house keeps
+    if (hn) o = { t: hn.replace(/^St\. Bernard Abbey:\s*(?:(?:White|Red|Green|Violet|Rose)\s+)?/, "").replace(/\s*–.*$/, ""), r: rankOf(o), v: (hn.match(/–\s*(.+)$/) || [])[1] || o.v, n: o.n, w: o.w,
+      c: (hn.match(/^St\. Bernard Abbey:\s*(White|Red|Green|Violet|Rose)\b/) || [])[1] || o.c };   // what the house keeps
     if (hn) v = o.v;
     if (o.n.some(function (n) { return /^St\. Bernard Abbey: 1st Vespers of following/.test(n); })) {   // the house's own eve
       var nx = ordoDay(addDays(d, 1)), nh = nx && nx.n.filter(function (n) { return /^St\. Bernard Abbey: .*\b(Solemnity|Feast)\b/.test(n); })[0];
       if (nh) v = "1st Vespers of " + clean(nh.replace(/^St\. Bernard Abbey:\s*(?:(?:White|Red|Green|Violet|Rose)\s+)?/, "").replace(/\s*–.*$/, "")).replace(/\.\s*(Solemnity|Feast).*$/, "");
     }
     var name = clean(o.t).replace(/\s*\*\s*/g, " ").replace(/ ,/g, ",").replace(/\.?\s*(Solemnity( with an Octave:?)?|Feast|Memorial)\.?$/, "");
+    var mdx = ymd(d).slice(5), news = !!(extrasData.house && extrasData.house.notices && extrasData.house.notices[ymd(d)]) ||
+      !!((extrasData.necrology && extrasData.necrology.days[mdx] || []).some(function (n) { return n[3] === extrasData.necrology.ours; }) || notices(mdx).length);
+    var relics = dayBar(o, name, d, news) || [];
     if (o.r) { var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase(); r.textContent = o.r; el.appendChild(r); }
     el.appendChild(document.createTextNode(name + (v ? " – " + v : "") + (o.w ? " · Psalter Week " + ROMAN[o.w - 1] : "")));
+    if (relics.length) { var rp = document.createElement("span"); rp.className = "ordo-ours"; rp.textContent = "✠ In our reliquary: " + relics.map(function (x) { return x.name + (x.likely ? " (label likely)" : ""); }).join("; "); el.appendChild(rp); }
     ours.forEach(function (n) { var p = document.createElement("span"); p.className = "ordo-ours"; p.textContent = n; el.appendChild(p); });
     var mc = extrasData.house && extrasData.house.notices && extrasData.house.notices[ymd(d)];
     if (mc) {   // the Master of Ceremonies' notice of upcoming celebrations (house.json "notices")
@@ -434,7 +479,7 @@
       det.appendChild(sm); rest.forEach(function (n) { var p = document.createElement("p"); p.textContent = n; det.appendChild(p); });
       el.appendChild(det);
     }
-    el.hidden = false;
+    el.hidden = !ordoOpen;
   }
   function dayDate() { return addDays(base, state.day - base.getDay()); }
   // The moment to choose hours by: now, or (another day) the start of the hour picked, by the horarium
@@ -1380,6 +1425,9 @@
     });
   }).then(function () { todayNote(); autoOpen(); render(); }, function () {});
   $("#auto-back").addEventListener("click", function (e) { e.preventDefault(); autoNote = ""; state.today = false; state.book = "psalter"; pendingJump = null; render(); scrollTo(0, 0); });
+  $("#ordo-btn").addEventListener("click", function () {
+    ordoOpen = !ordoOpen; this.setAttribute("aria-expanded", String(ordoOpen)); ordoNote();
+  });
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
   if (window.PTEXT) PTEXT.buttons(function () { $("#pdf-pages").dataset.done = ""; show(); });   // Book · Lectio · Cantus
   $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });
@@ -1394,6 +1442,29 @@
       var m = (bookHour || "").match(/Matins|Lauds|Sext|Vespers/); return m ? m[0] : null;
     },
     inBook: function () { return state.book !== "psalter" || plain; },
+    today: function (d, hour) { return todayTarget(d, hour); },
+    recipeFor: function (d, hour) {   // the psalter's recipe for a day and hour (the files it pastes from), state untouched
+      var keep = { base: base, day: state.day, hour: state.hour, book: state.book, week: state.week, ref: state.ref };
+      base = midnight(d); state.day = d.getDay(); state.hour = hour; state.book = "psalter"; state.ref = null;
+      var w = weekOf(d); if (w !== null) state.week = w;
+      var r = null;
+      try { r = withReadings(withProper(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()))); } catch (e) { r = null; }
+      base = keep.base; state.day = keep.day; state.hour = keep.hour; state.book = keep.book; state.week = keep.week; state.ref = keep.ref;
+      return r ? { key: r.key, files: Array.from(new Set(r.items.filter(Array.isArray).map(function (x) { return x[0]; }))) } : null;
+    },   // for the season audit (munkachy/psalter books/tools/today_audit.js)
+    offers: function (d, hour) {   // the sections of the seasonal and Saints books tagged for d with a jump for that hour
+      var name = HOURS[hour], day = tagsFor(d).day, out = [];
+      ["Advent-Christmas", "Lent", "Sanctoral"].forEach(function (bk) {
+        var k = todayIn(bk, d); if (k < 0) return;
+        var sec = books[bk].sections[k];
+        sec.jumps.forEach(function (j, i) {
+          var lab = j[0].replace(/ \(\d\)$/, ""), m = lab.match(/^(.*) · (.*)$/), who = m ? m[1] : null, h = m ? m[2] : lab;
+          if (who && who !== day && who !== DAYS[d.getDay()]) return;
+          if (h === name || name === "Vespers" && /^(I|II) Vespers$/.test(h)) out.push({ book: bk, k: k, j: i, title: sec.title, hour: j[0], path: sec.path });
+        });
+      });
+      return out;
+    },
     bvmSaturday: function (d) { return bvmSaturday(d); }, deadOffice: function (d, hour) { return deadOffice(d, hour); }, redraw: function () { render(); },
     matins: function () { return !state.ref && (state.book === "psalter" ? state.hour === 0 && !ultima() : /Matins/.test(bookHour || "")); },
     printed: function (src, pg) {   // the page number printed in the book, for a page of a file

@@ -129,7 +129,7 @@
   function begin() { last = null; lastAnt = null; antCtx = false; }
   function cut() { last = null; }        // something else (a heading, a reading) came between: start afresh
 
-  // ---- the "Read as" menu (Book pages / Text / Text with notation) ----
+  // ---- the "Read as" menu in the day bar (Book pages / Text / Text with notation) ----
   function buttons(onChange) {
     var sel = document.getElementById("read-sel"); if (!sel) return;
     sel.value = mode();

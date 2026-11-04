@@ -419,8 +419,16 @@
     w.title = (o.r ? o.r + ": " : "") + title + (rel.length ? " · " + m.title : "");
     return rel;
   }
+  function nameDay(d) {   // a brother's name day (house.json "namedays", from the abbey site's monk cards), under the day bar
+    var p = $("#nameday"); if (!p) return;
+    var h = extrasData.house, l = !state.ref && h && h.namedays && h.namedays[ymd(d).slice(5)] || [];
+    p.hidden = !l.length; if (!l.length) return;
+    var who = l.map(function (x) { return x[0] + " (" + x[1] + ")"; });
+    p.textContent = "✠ The name day of " + (who.length > 1 ? who.slice(0, -1).join(", ") + " and " + who[who.length - 1] : who[0]) + " · Ad multos annos!";
+  }
   function ordoNote() {
     var el = $("#ordo-note"), d = dayDate(), o = !state.ref ? ordoDay(d) : null;
+    nameDay(d);
     if (!o) { el.hidden = true; dayBar(null); return; }
     var ours = o.n.filter(function (n) { return OURS.test(n); }), rest = o.n.filter(function (n) { return !OURS.test(n); });
     el.innerHTML = "";

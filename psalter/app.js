@@ -395,6 +395,42 @@
     return t.toLowerCase().replace(/[\p{L}'’]+/gu, function (w, i) { return i && SMALL.test(w) ? w : w.charAt(0).toUpperCase() + w.slice(1); })
       .replace(/\b(Ii|Iii|Iv|Vi|Vii|Viii|Ix|Xi|Xii|Xiii|Xxiii)\b/g, function (r) { return r.toUpperCase(); });
   }
+  // The saints of our reliquary (saints.json, from the abbey site's write-ups; munkachy/psalter books/saints.py): the ✠ relic
+  // button, or the day's name, opens each saint's life, patronage, why they matter here, and what relic we keep
+  var saintsP = null;
+  function saintSheet(rel) {
+    if (!saintsP) saintsP = fetch("saints.json?v=1").then(function (r) { return r.json(); }).catch(function () { saintsP = null; return { saints: {} }; });
+    var back = document.createElement("div"); back.className = "nt-back saint-back";
+    back.innerHTML = '<div class="nt-sheet saint-sheet" role="dialog" aria-modal="true" aria-label="The saint of the day"><p class="saint-wait">Opening…</p></div>';
+    var close = function () { back.remove(); document.removeEventListener("keydown", key); };
+    var key = function (e) { if (e.key === "Escape") close(); };
+    back.addEventListener("click", function (e) { if (e.target === back || e.target.closest(".saint-x")) close(); });
+    document.addEventListener("keydown", key);
+    document.body.appendChild(back);
+    saintsP.then(function (j) {
+      var e = function (t) { return String(t || "").replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }).replace(/&lt;(\/?)em&gt;/g, "<$1em>"); };
+      var html = '<button type="button" class="saint-x" aria-label="Close">✕</button>';
+      rel.forEach(function (r) {
+        var ids = r.ids && r.ids.length ? r.ids : [];
+        if (!ids.length) html += '<section class="saint"><h2>' + e(r.name) + '</h2><p class="saint-relic">✠ In our reliquary</p></section>';
+        ids.forEach(function (id) {
+          var x = j.saints[id]; if (!x) return;
+          html += '<section class="saint">' +
+            (x.img ? '<img class="saint-img" src="' + e(x.img) + '" alt="' + e(x.name) + '" width="160" height="160">' : "") +
+            '<h2>' + e(x.name) + '</h2>' +
+            '<p class="saint-meta">' + [x.dates, x.title, x.feast ? "Feast: " + x.feast : ""].filter(Boolean).map(e).join(" · ") + '</p>' +
+            '<p class="saint-relic">✠ In our reliquary' + (r.likely ? " (the label is only probably read)" : "") + (x.relic ? ": " + e(x.relic) : "") + '</p>' +
+            '<p class="saint-sum">' + e(x.summary) + '</p>' +
+            '<h3>His life</h3>'.replace("His ", /^(St\. (Agatha|Agnes|Lucy|Clare|Catherine|Teresa|Helena|Anne|Elizabeth|Frances|Maria|Matilda|Bernadette|Gemma|Dymphna|Radegund|Justina|Ursula)|Bl\. Beatrice)/.test(x.name) ? "Her " : /^(Sts\.|The )/.test(x.name) ? "The " : "His ") +
+            (x.life || []).map(function (p) { return "<p>" + e(p) + "</p>"; }).join("") +
+            (x.patronage && x.patronage.length ? '<h3>Patronage</h3><ul>' + x.patronage.map(function (p) { return "<li>" + e(p) + "</li>"; }).join("") + "</ul>" : "") +
+            (x.why_here && x.why_here.length ? '<h3>For us at St. Bernard</h3>' + x.why_here.map(function (p) { return "<p>" + e(p) + "</p>"; }).join("") : "") +
+            (x.credit ? '<p class="saint-credit">Image: ' + e(x.credit) + '</p>' : "") + '</section>';
+        });
+      });
+      back.querySelector(".saint-sheet").innerHTML = html;
+    });
+  }
   function dayBar(o, name, d, extra) {
     var w = $("#day-what"), btn = $("#ordo-btn"); if (!w) return;
     w.innerHTML = ""; btn.hidden = !o; btn.classList.toggle("has-news", !!extra);
@@ -411,9 +447,15 @@
     }
     var n = document.createElement("span"); n.className = "day-name"; n.textContent = title; w.appendChild(n);
     var rel = o.r || bvm ? relicsFor(bvm ? "Saturday Commemoration" : o.t) : [];
+    (o.n || []).forEach(function (t) {   // the optional memorials of the day ("Or Elizabeth of Hungary, …"), too
+      if (/^(Or |U\.S\.A\.:)/.test(t)) relicsFor(t.replace(/^U\.S\.A\.:\s*(As supra or\s*)?/, "")).forEach(function (x) { if (rel.indexOf(x) < 0) rel.push(x); });
+    });
     if (rel.length) {
-      var m = document.createElement("span"); m.className = "day-relic"; m.innerHTML = '✠<span class="r-long"> relic</span>';
-      m.title = "In our reliquary: " + rel.map(function (x) { return x.name + (x.likely ? " (label likely)" : ""); }).join("; ");
+      var m = document.createElement("button"); m.type = "button"; m.className = "day-relic"; m.innerHTML = '✠<span class="r-long"> relic</span>';
+      m.title = "In our reliquary: " + rel.map(function (x) { return x.name + (x.likely ? " (label likely)" : ""); }).join("; ") + ". Tap for the saint's life";
+      m.addEventListener("click", function () { saintSheet(rel); });
+      n.classList.add("has-relic"); n.setAttribute("role", "button"); n.tabIndex = 0;
+      n.addEventListener("click", function () { saintSheet(rel); });
       w.appendChild(m);
     }
     w.title = (o.r ? o.r + ": " : "") + title + (rel.length ? " · " + m.title : "");

@@ -1,237 +1,438 @@
 {
- "_source": "munkachy/newmonksite relics/README.md (photographs of 1 Nov 2026). Each saint: \"re\" is matched (ignoring case) against the ordo's title for the day; \"likely\" where the label is only probably read.",
+ "_source": "munkachy/newmonksite relics/README.md (photographs of 1 Nov 2026). Each saint: \"re\" is matched (ignoring case) against the ordo's title for the day; \"likely\" where the label is only probably read. \"ids\": the write-ups in saints.json (munkachy/psalter books/saints.py) that the ✠ relic button opens. Matched against the title and the optional memorials (\"Or …\") of the day.",
  "saints": [
   {
    "name": "St. Bernard of Clairvaux",
-   "re": "\\bBERNARD\\b"
+   "re": "\\bBERNARD\\b",
+   "ids": [
+    "bernard-of-clairvaux"
+   ]
   },
   {
    "name": "St. Benedict",
-   "re": "\\bBENEDICT, (ABBOT|PATRIARCH)|FATHER BENEDICT"
+   "re": "\\bBENEDICT, (ABBOT|PATRIARCH)|FATHER BENEDICT",
+   "ids": [
+    "benedict"
+   ]
   },
   {
    "name": "Our Lady (her tomb, her garment)",
-   "re": "MARY, MOTHER OF GOD|MOTHER OF GOD\\b(?!.*JOSEPH)|ASSUMPTION|IMMACULATE|VISITATION|Queenship|Rosary|Mother of the Church|Presentation of the Blessed|NATIVITY OF THE BLESSED|Our Lady|Sorrows|Guadalupe|Lourdes|Mount Carmel|St\\. Mary Major|Holy Name of Mary|Saturday Commemoration|NATIVITY OF THE (BLESSED )?VIRGIN|PRESENTATION OF THE (BLESSED )?VIRGIN"
+   "re": "MARY, MOTHER OF GOD|MOTHER OF GOD\\b(?!.*JOSEPH)|ASSUMPTION|IMMACULATE|VISITATION|Queenship|Rosary|Mother of the Church|Presentation of the Blessed|NATIVITY OF THE BLESSED|Our Lady|Sorrows|Guadalupe|Lourdes|Mount Carmel|St\\. Mary Major|Holy Name of Mary|Saturday Commemoration|NATIVITY OF THE (BLESSED )?VIRGIN|PRESENTATION OF THE (BLESSED )?VIRGIN",
+   "ids": [
+    "the-tomb-of-our-lady",
+    "our-ladys-garment"
+   ]
   },
   {
    "name": "St. Joseph",
-   "re": "\\bJOSEPH\\b(?! (Calasanz|of Cupertino|Vaz|Freinademetz))"
+   "re": "\\bJOSEPH\\b(?! (Calasanz|of Cupertino|Vaz|Freinademetz))",
+   "ids": [
+    "joseph"
+   ]
   },
   {
    "name": "Sts. Joachim and Anne",
-   "re": "\\bJOACHIM\\b|\\bANNE\\b"
+   "re": "\\bJOACHIM\\b|\\bANNE\\b",
+   "ids": [
+    "joachim",
+    "anne"
+   ]
   },
   {
    "name": "St. John the Baptist",
-   "re": "JOHN THE BAPTIST|BAPTIST"
+   "re": "JOHN THE BAPTIST|BAPTIST",
+   "ids": [
+    "john-the-baptist"
+   ]
   },
   {
    "name": "St. Peter",
-   "re": "\\bPETER\\b(?! (Chrysologus|Claver|Damian|Canisius|Julian|Chanel|To Rot|the Venerable))"
+   "re": "\\bPETER\\b(?! (Chrysologus|Claver|Damian|Canisius|Julian|Chanel|To Rot|the Venerable))",
+   "ids": [
+    "peter"
+   ]
   },
   {
    "name": "St. Paul",
-   "re": "\\bPAUL\\b(?! (Miki|of the Cross|VI|Chong))|CONVERSION OF SAINT PAUL"
+   "re": "\\bPAUL\\b(?! (Miki|of the Cross|VI|Chong))|CONVERSION OF SAINT PAUL",
+   "ids": [
+    "paul"
+   ]
   },
   {
    "name": "St. Andrew",
-   "re": "\\bANDREW\\b(?! (Kim|D[uũ]ng|Bobola))"
+   "re": "\\bANDREW\\b(?! (Kim|D[uũ]ng|Bobola))",
+   "ids": [
+    "andrew"
+   ]
   },
   {
    "name": "St. Philip the Apostle",
-   "re": "PHILIP AND JAMES"
+   "re": "PHILIP AND JAMES",
+   "ids": [
+    "philip-the-apostle"
+   ]
   },
   {
    "name": "St. Jude Thaddeus",
-   "re": "SIMON AND JUDE|\\bJUDE\\b"
+   "re": "SIMON AND JUDE|\\bJUDE\\b",
+   "ids": [
+    "jude"
+   ]
   },
   {
    "name": "St. Matthew",
-   "re": "\\bMATTHEW\\b"
+   "re": "\\bMATTHEW\\b",
+   "ids": [
+    "matthew"
+   ]
   },
   {
    "name": "St. Luke",
-   "re": "\\bLUKE\\b"
+   "re": "\\bLUKE\\b",
+   "ids": [
+    "luke"
+   ]
   },
   {
    "name": "St. Lawrence",
-   "re": "\\bLAWRENCE\\b(?! (of Brindisi|Ruiz))|\\bLAURENCE\\b"
+   "re": "\\bLAWRENCE\\b(?! (of Brindisi|Ruiz))|\\bLAURENCE\\b",
+   "ids": [
+    "lawrence"
+   ]
   },
   {
    "name": "St. Sebastian",
-   "re": "\\bSEBASTIAN\\b"
+   "re": "\\bSEBASTIAN\\b",
+   "ids": [
+    "sebastian"
+   ]
   },
   {
    "name": "St. Agnes",
-   "re": "\\bAGNES\\b"
+   "re": "\\bAGNES\\b",
+   "ids": [
+    "agnes"
+   ]
   },
   {
    "name": "St. Agatha",
-   "re": "\\bAGATHA\\b"
+   "re": "\\bAGATHA\\b",
+   "ids": [
+    "agatha"
+   ]
   },
   {
    "name": "St. Lucy",
-   "re": "\\bLUCY\\b"
+   "re": "\\bLUCY\\b",
+   "ids": [
+    "lucy"
+   ]
   },
   {
    "name": "St. Blaise",
-   "re": "\\bBLAISE\\b"
+   "re": "\\bBLAISE\\b",
+   "ids": [
+    "blaise"
+   ]
   },
   {
    "name": "St. Valentine",
    "re": "\\bVALENTINE\\b",
-   "likely": true
+   "likely": true,
+   "ids": [
+    "valentine"
+   ]
   },
   {
    "name": "St. Helena",
-   "re": "\\bHELENA\\b"
+   "re": "\\bHELENA\\b",
+   "ids": [
+    "helena"
+   ]
   },
   {
    "name": "St. Augustine",
-   "re": "\\bAUGUSTINE\\b(?! of Canterbury| Zhao)"
+   "re": "\\bAUGUSTINE\\b(?! of Canterbury| Zhao)",
+   "ids": [
+    "augustine"
+   ]
   },
   {
    "name": "St. Martin of Tours",
-   "re": "MARTIN OF TOURS"
+   "re": "MARTIN OF TOURS",
+   "ids": [
+    "martin-of-tours"
+   ]
   },
   {
    "name": "St. Martin de Porres",
-   "re": "MARTIN DE PORRES"
+   "re": "MARTIN DE PORRES",
+   "ids": [
+    "martin-de-porres"
+   ]
   },
   {
    "name": "St. Nicholas",
-   "re": "\\bNICHOLAS\\b"
+   "re": "\\bNICHOLAS\\b",
+   "ids": [
+    "nicholas-of-bari"
+   ]
   },
   {
    "name": "St. Patrick",
    "re": "\\bPATRICK\\b",
-   "likely": true
+   "likely": true,
+   "ids": [
+    "patrick"
+   ]
   },
   {
    "name": "St. Anselm",
-   "re": "\\bANSELM\\b"
+   "re": "\\bANSELM\\b",
+   "ids": [
+    "anselm"
+   ]
   },
   {
    "name": "St. Dominic",
-   "re": "\\bDOMINIC\\b(?! Savio)"
+   "re": "\\bDOMINIC\\b(?! Savio)",
+   "ids": [
+    "dominic"
+   ]
   },
   {
    "name": "St. Francis of Assisi",
-   "re": "FRANCIS OF ASSISI"
+   "re": "FRANCIS OF ASSISI",
+   "ids": [
+    "francis-of-assisi"
+   ]
   },
   {
    "name": "St. Clare",
-   "re": "\\bCLARE\\b"
+   "re": "\\bCLARE\\b",
+   "ids": [
+    "clare"
+   ]
   },
   {
    "name": "St. Anthony of Padua",
-   "re": "ANTHONY OF PADUA"
+   "re": "ANTHONY OF PADUA",
+   "ids": [
+    "anthony-of-padua"
+   ]
   },
   {
    "name": "St. Bonaventure",
-   "re": "\\bBONAVENTURE\\b"
+   "re": "\\bBONAVENTURE\\b",
+   "ids": [
+    "bonaventure"
+   ]
   },
   {
    "name": "St. Thomas Aquinas",
-   "re": "THOMAS AQUINAS"
+   "re": "THOMAS AQUINAS",
+   "ids": [
+    "thomas-aquinas"
+   ]
   },
   {
    "name": "St. Catherine of Siena",
-   "re": "CATHERINE OF SIENA"
+   "re": "CATHERINE OF SIENA",
+   "ids": [
+    "catherine-of-siena"
+   ]
   },
   {
    "name": "St. Teresa of Ávila",
-   "re": "TERESA OF JESUS|TERESA OF [AÁ]VILA"
+   "re": "TERESA OF JESUS|TERESA OF [AÁ]VILA",
+   "ids": [
+    "teresa-of-avila"
+   ]
   },
   {
    "name": "St. Francis Xavier",
-   "re": "FRANCIS XAVIER\\b(?! Cabrini)"
+   "re": "FRANCIS XAVIER\\b(?! Cabrini)",
+   "ids": [
+    "francis-xavier"
+   ]
   },
   {
    "name": "St. Francis de Sales",
    "re": "FRANCIS DE SALES",
-   "likely": true
+   "likely": true,
+   "ids": [
+    "francis-de-sales"
+   ]
   },
   {
    "name": "St. Philip Neri",
-   "re": "PHILIP NERI"
+   "re": "PHILIP NERI",
+   "ids": [
+    "philip-neri"
+   ]
   },
   {
    "name": "St. Aloysius Gonzaga",
-   "re": "\\bALOYSIUS\\b"
+   "re": "\\bALOYSIUS\\b",
+   "ids": [
+    "aloysius-gonzaga"
+   ]
   },
   {
    "name": "St. Camillus de Lellis",
-   "re": "\\bCAMILLUS\\b"
+   "re": "\\bCAMILLUS\\b",
+   "ids": [
+    "camillus-de-lellis"
+   ]
   },
   {
    "name": "St. Alphonsus Liguori",
-   "re": "\\bALPHONSUS\\b"
+   "re": "\\bALPHONSUS\\b",
+   "ids": [
+    "alphonsus-liguori"
+   ]
   },
   {
    "name": "St. Paul of the Cross",
-   "re": "PAUL OF THE CROSS"
+   "re": "PAUL OF THE CROSS",
+   "ids": [
+    "paul-of-the-cross"
+   ]
   },
   {
    "name": "St. John Vianney",
-   "re": "JOHN VIANNEY|JOHN MARY VIANNEY"
+   "re": "JOHN VIANNEY|JOHN MARY VIANNEY",
+   "ids": [
+    "john-vianney"
+   ]
   },
   {
    "name": "St. John Neumann",
-   "re": "JOHN NEUMANN"
+   "re": "JOHN NEUMANN",
+   "ids": [
+    "john-neumann"
+   ]
   },
   {
    "name": "St. John Bosco",
-   "re": "JOHN BOSCO"
+   "re": "JOHN BOSCO",
+   "ids": [
+    "john-bosco"
+   ]
   },
   {
    "name": "St. Pius X",
-   "re": "PIUS X\\b"
+   "re": "PIUS X\\b",
+   "ids": [
+    "pius-x"
+   ]
   },
   {
    "name": "St. Elizabeth Ann Seton",
-   "re": "ELIZABETH ANN SETON"
+   "re": "ELIZABETH ANN SETON",
+   "ids": [
+    "elizabeth-ann-seton"
+   ]
   },
   {
    "name": "St. Elizabeth of Hungary",
-   "re": "ELIZABETH OF HUNGARY"
+   "re": "ELIZABETH OF HUNGARY",
+   "ids": [
+    "elizabeth-of-hungary"
+   ]
   },
   {
    "name": "St. Elizabeth (queen)",
    "re": "ELIZABETH OF PORTUGAL",
-   "likely": true
+   "likely": true,
+   "ids": [
+    "elizabeth-queen"
+   ]
   },
   {
    "name": "St. Frances Xavier Cabrini",
-   "re": "CABRINI"
+   "re": "CABRINI",
+   "ids": [
+    "frances-xavier-cabrini"
+   ]
   },
   {
    "name": "St. Maria Goretti",
-   "re": "MARIA GORETTI"
+   "re": "MARIA GORETTI",
+   "ids": [
+    "maria-goretti"
+   ]
   },
   {
    "name": "St. Charbel",
-   "re": "CHARBEL|SHARBEL"
+   "re": "CHARBEL|SHARBEL",
+   "ids": [
+    "charbel"
+   ]
   },
   {
    "name": "St. Charles Lwanga and the Uganda Martyrs",
-   "re": "LWANGA"
+   "re": "LWANGA",
+   "ids": [
+    "uganda-martyrs"
+   ]
   },
   {
    "name": "St. Norbert",
-   "re": "\\bNORBERT\\b"
+   "re": "\\bNORBERT\\b",
+   "ids": [
+    "norbert"
+   ]
   },
   {
    "name": "St. Henry II",
-   "re": "\\bHENRY\\b"
+   "re": "\\bHENRY\\b",
+   "ids": [
+    "henry-ii"
+   ]
   },
   {
    "name": "St. Raymond Nonnatus",
-   "re": "RAYMOND NONNATUS"
+   "re": "RAYMOND NONNATUS",
+   "ids": [
+    "raymond-nonnatus"
+   ]
   },
   {
    "name": "St. Gabriel of Our Lady of Sorrows",
-   "re": "GABRIEL OF OUR LADY"
+   "re": "GABRIEL OF OUR LADY",
+   "ids": [
+    "gabriel-of-our-lady-of-sorrows"
+   ]
+  },
+  {
+   "name": "The tomb of Our Lord",
+   "re": "RESURRECTION OF THE LORD",
+   "ids": [
+    "the-tomb-of-our-lord"
+   ]
+  },
+  {
+   "name": "The Holy Nail",
+   "re": "PASSION OF THE LORD \\(GOOD FRIDAY\\)|EXALTATION OF THE HOLY CROSS",
+   "ids": [
+    "the-holy-nail"
+   ]
+  },
+  {
+   "name": "The Holy House of Loreto",
+   "re": "Our Lady of Loreto",
+   "ids": [
+    "the-holy-house-of-loreto"
+   ]
+  },
+  {
+   "name": "Bl. Columba Marmion",
+   "re": "MARMION",
+   "ids": [
+    "columba-marmion"
+   ]
   }
  ]
 }

@@ -512,7 +512,21 @@ body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
 .day-what { flex: 1; min-width: 0; display: flex; align-items: center; gap: .4rem; white-space: nowrap; overflow: hidden; font-size: .95rem; }
 .day-what .ordo-rank { flex: none; margin: 0; }
 .day-what .day-name { overflow: hidden; text-overflow: ellipsis; }
-.day-relic { flex: none; font-size: .82rem; color: var(--accent); font-weight: 600; letter-spacing: .02em; }
+.day-relic { flex: none; font: inherit; font-size: .82rem; color: var(--accent); font-weight: 600; letter-spacing: .02em; background: none; border: 1px solid currentColor; border-radius: 6px; padding: .05rem .35rem; cursor: pointer; }
+.day-name.has-relic { cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
+/* the saint of the day (✠ relic): life, patronage, why here, from saints.json */
+.saint-sheet { position: relative; width: min(38rem, 100%); padding: 1.1rem 1.2rem 1.3rem; line-height: 1.55; }
+.saint-x { position: absolute; top: .4rem; right: .5rem; border: 0; background: none; font-size: 1.2rem; color: #6a5f52; cursor: pointer; padding: .3rem; }
+.saint + .saint { border-top: 1px solid #d6cab4; margin-top: 1rem; padding-top: 1rem; }
+.saint-img { display: block; width: 7.5rem; height: 7.5rem; object-fit: cover; border-radius: 50%; margin: .2rem auto .6rem; border: 2px solid #d6cab4; }
+.saint-sheet h2 { margin: .2rem 1.6rem .2rem; }
+.saint-sheet h3 { font-family: "Cinzel", serif; font-size: .9rem; letter-spacing: .08em; color: #9b1c1c; margin: 1rem 0 .3rem; }
+.saint-meta { text-align: center; font-size: .85rem; color: #6a5f52; }
+.saint-relic { text-align: center; font-weight: 600; color: #9b1c1c; font-size: .9rem; }
+.saint-sum { font-style: italic; }
+.saint-sheet ul { margin: .2rem 0 .4rem 1.1rem; padding: 0; font-size: .95rem; }
+.saint-credit { font-size: .75rem; color: #8a7f72; text-align: center; margin-top: .8rem; }
+.saint-wait { text-align: center; font-style: italic; }
 .day-btn { flex: none; font: inherit; font-size: .9rem; min-height: 36px; padding: 0 .7rem; border-radius: 7px; cursor: pointer; position: relative;
   background: var(--surface); color: var(--text); border: 1px solid var(--rule); }
 .day-btn[aria-expanded="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }

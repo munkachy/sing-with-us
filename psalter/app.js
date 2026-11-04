@@ -1360,6 +1360,7 @@
   document.querySelectorAll("[data-book]").forEach(function (b) {
     b.addEventListener("click", function () {
       var book = b.dataset.book;
+      if (book === "today" && viewing) { location.replace(location.pathname + location.search); return; }   // another day was open: back to today's date
       if (book === "today") { state.ref = null; state.today = true; todayKey = null; scrollTo(0, 0); render(); return; }
       state.today = false; autoNote = "";
       if (book === "psalter" || !books) { state.ref = null; state.book = "psalter"; render(); return; }

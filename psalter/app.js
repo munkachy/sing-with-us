@@ -437,6 +437,7 @@
   // (or the house a feast), nor in Lent, Holy Week, 17 Dec - 1 Jan, the Easter octave; Our Lady's Saturdays stay hers.
   function keptSaint(d) {
     var S = extrasData.sanctoral && extrasData.sanctoral.days, o = ordoDay(d), md = ymd(d).slice(5), s = S && S[md];
+    if (S && same(d, addDays(easter(d.getFullYear()), 69))) s = S["immaculate-heart"];   // the Saturday after the Sacred Heart (proper.js named())
     if (!s || !o || rankOf(o) || d.getDay() === 0 || /^\s*†/.test(o.t) || civicDay(d)) return null;
     var se = seasonOf(d), e = easter(d.getFullYear());
     if (se === "Lent" || se === "Passiontide" || (d >= e && d <= addDays(e, 7)) || (d.getMonth() === 11 && d.getDate() >= 17) || md === "01-01") return null;

@@ -272,8 +272,8 @@
   // Magnificat antiphon is the Sunday's own (Year I/II at I Vespers, Year A/B/C at II Vespers), sung in the
   // first alternate tone the antiphon names, then the antiphon again and the psalter's Conclusion.
   var asm = null, plain = false;
-  var extrasData = {};   // the necrology and the Benedictine collects, for the ordo line
-  ["necrology", "collects", "house", "relics"].forEach(function (k) {
+  var extrasData = {};   // the necrology, the house, the reliquary and the Liber's saints, for the ordo line
+  ["necrology", "house", "relics", "sanctoral"].forEach(function (k) {
     fetch(k + ".json").then(function (r) { return r.json(); }).then(function (j) { extrasData[k] = j; ordoNote(); dayEnd(); if (k === "house") render(); }, function () {});
   });
   // ---- The Congregation's ordo (ordo-YEAR.json, read from amcass.org's PDF by books/ordo.py) ----
@@ -431,22 +431,35 @@
       back.querySelector(".saint-sheet").innerHTML = html;
     });
   }
+  // The saint the abbey keeps on a weekday the ordo leaves free ("Or Willibrord, Bishop. Optional Mem."): a day the
+  // Liber Hebdomadarii has a collect for is kept (the user, 8 Nov 2026; sanctoral.json, from munkachy/psalter
+  // books/proper.py --days). As proper.js resolve(): not on a Sunday, nor where the ordo gives a rank of its own
+  // (or the house a feast), nor in Lent, Holy Week, 17 Dec - 1 Jan, the Easter octave; Our Lady's Saturdays stay hers.
+  function keptSaint(d) {
+    var S = extrasData.sanctoral && extrasData.sanctoral.days, o = ordoDay(d), md = ymd(d).slice(5), s = S && S[md];
+    if (!s || !o || rankOf(o) || d.getDay() === 0 || /^\s*†/.test(o.t) || civicDay(d)) return null;
+    var se = seasonOf(d), e = easter(d.getFullYear());
+    if (se === "Lent" || se === "Passiontide" || (d >= e && d <= addDays(e, 7)) || (d.getMonth() === 11 && d.getDate() >= 17) || md === "01-01") return null;
+    if (d.getDay() === 6 && bvmSaturday(d)) return null;
+    return { t: s[0], r: /Memorial/.test(s[1]) ? s[1] : "" };   // a feast the ordo doesn't rank (14 Nov: the Departed of our Order) gets no rank
+  }
   function dayBar(o, name, d, extra) {
     var w = $("#day-what"), btn = $("#ordo-btn"); if (!w) return;
     w.innerHTML = ""; btn.hidden = !o; btn.classList.toggle("has-news", !!extra);
     if (!o) return;
     var col = (o.c || "").toLowerCase().match(/white|red|green|violet|rose|black|gold/);   // the ordo's colour for the day
     btn.dataset.color = col ? col[0] : ""; btn.title = (col ? o.c + " · " : "") + "the full ordo for the day";
-    var bvm = !o.r && d.getDay() === 6 && bvmSaturday(d), title = bvm ? "Saturday of Our Lady" : soft(name);
+    var bvm = !o.r && d.getDay() === 6 && bvmSaturday(d), ks = !o.r && keptSaint(d), title = bvm ? "Saturday of Our Lady" : ks ? soft(ks.t) : soft(name);
     if (bvm) btn.dataset.color = "white";
-    if (o.r) {
-      var r = document.createElement("span"); r.className = "ordo-rank rank-" + o.r.toLowerCase();
+    var rk = o.r || ks && ks.r;
+    if (rk) {
+      var r = document.createElement("span"); r.className = "ordo-rank rank-" + (rk === "Optional Memorial" ? "memorial" : rk.toLowerCase());
       r.innerHTML = '<span class="r-long"></span><span class="r-short"></span>';
-      r.firstChild.textContent = o.r; r.lastChild.textContent = { Solemnity: "Sol.", Memorial: "Mem." }[o.r] || o.r;
+      r.firstChild.textContent = rk; r.lastChild.textContent = { Solemnity: "Sol.", Memorial: "Mem.", "Optional Memorial": "Opt. Mem." }[rk] || rk;
       w.appendChild(r);
     }
     var n = document.createElement("span"); n.className = "day-name"; n.textContent = title; w.appendChild(n);
-    var rel = o.r || bvm ? relicsFor(bvm ? "Saturday Commemoration" : o.t) : [];
+    var rel = o.r || bvm || ks ? relicsFor(bvm ? "Saturday Commemoration" : ks ? ks.t : o.t) : [];
     (o.n || []).forEach(function (t) {   // the optional memorials of the day ("Or Elizabeth of Hungary, …"), too
       if (/^(Or |U\.S\.A\.:)/.test(t)) relicsFor(t.replace(/^U\.S\.A\.:\s*(As supra or\s*)?/, "")).forEach(function (x) { if (rel.indexOf(x) < 0) rel.push(x); });
     });
@@ -458,7 +471,7 @@
       n.addEventListener("click", function () { saintSheet(rel); });
       w.appendChild(m);
     }
-    w.title = (o.r ? o.r + ": " : "") + title + (rel.length ? " · " + m.title : "");
+    w.title = (rk ? rk + ": " : "") + title + (ks ? " (" + soft(name) + ")" : "") + (rel.length ? " · " + m.title : "");
     return rel;
   }
   function nameDay(d) {   // a brother's name day (house.json "namedays", from the abbey site's monk cards), under the day bar
@@ -520,6 +533,8 @@
     }
     var cv = !o.r && civicDay(d);
     if (cv) { var cp = document.createElement("span"); cp.className = "ordo-ours"; cp.textContent = "Optional Memorial: " + cv; el.appendChild(cp); }
+    var ks = !o.r && keptSaint(d);
+    if (ks) { var kp = document.createElement("span"); kp.className = "ordo-ours"; kp.textContent = "✦ Saint Bernard Abbey: " + (ks.r ? ks.r + " of " : "") + ks.t + " (the Liber's collect)"; el.appendChild(kp); }
     if (d.getDay() === 6 && bvmSaturday(d)) { var bs = document.createElement("span"); bs.className = "ordo-ours"; bs.textContent = "✦ Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary"; el.appendChild(bs); }
     el.appendChild(massReadings(o, d));
     var cal = document.createElement("a"); cal.className = "ordo-cal"; cal.href = "calendar.html#" + ymd(d); cal.textContent = "This day in the calendar →";
@@ -761,6 +776,8 @@
     if (!recipe || !asm || !asm.readings || state.book !== "psalter" || state.hour !== 0 || state.ref) return recipe;
     var path = fileKey(state.week, state.day, 0), at = asm.readings[path];
     if (!at) return recipe;
+    // Saturday prints the readings twice: the ferial place ("I.") and Our Lady's ("II.", "two"): her Saturdays take hers
+    if (at.two && state.day === 6 && bvmSaturday(dayDate())) at = at.two;
     var items = recipe.items;
     ["Patristic", "Biblical"].forEach(function (k) { if (at[k]) items = pasteAt(items, path, at[k], [{ lect: k, swapped: !!at.swapped }]); });
     return { key: recipe.key + ":lect", items: items, hymns: recipe.hymns, note: recipe.note, magnificat: recipe.magnificat };
@@ -1031,8 +1048,7 @@
   function complineTonight() { return wantCompline === null ? feastNight() : wantCompline; }
   function ultima() { return state.hour === 4 && haustus() && !complineTonight() && !state.ref && state.book === "psalter"; }
   // After Compline or the Ultima: the brothers of our house who died on this day (read at dinner, remembered at the
-  // end of the day). After Matins, Lauds and Vespers: the collect for a Benedictine saint of the day, from the
-  // Benedictine Supplement (osb.org), until the community's own Sanctorale is here.
+  // end of the day).
   // The abbey's own necrology (vault "necro", made by books/necrology_text.py in the private repo): each brother's notice,
   // the text read the evening before his anniversary. Sealed, so it opens only once this phone has the password.
   var necroText = null, necroP = null;
@@ -1068,7 +1084,7 @@
     var box = $("#day-end"), d = dayDate(), md = ymd(d).slice(5);
     box.innerHTML = "";
     if (state.ref) { box.hidden = true; return; }
-    var nec = extrasData.necrology, col = extrasData.collects && extrasData.collects[md];
+    var nec = extrasData.necrology;
     if (state.book === "psalter" ? state.hour === 4 : /^Compline/.test(bookHour || "")) {   // also after a Compline in the Saints book (All Souls)
       var h = document.createElement("h2"); h.textContent = "Necrology"; box.appendChild(h);
       var when = document.createElement("p"); when.className = "de-when";
@@ -1116,16 +1132,9 @@
       }
       box.hidden = false; return;
     }
-    if (col && (state.hour === 0 || state.hour === 1 || state.hour === 3)) {
-      col.forEach(function (k) {
-        var h2 = document.createElement("h2"); h2.textContent = "Collect: " + k.name; box.appendChild(h2);
-        var t = document.createElement("p"); t.className = "de-collect"; t.textContent = k.prayer.replace(/\.\.\.\.?$/, "…"); box.appendChild(t);
-      });
-      var src = document.createElement("p"); src.className = "de-src";
-      src.textContent = "From the Benedictine Supplement to the Roman Missal (osb.org), for use until our own Proper of the Saints is here.";
-      box.appendChild(src);
-      box.hidden = false; return;
-    }
+    // (The Benedictine Supplement's collect used to follow Matins, Lauds and Vespers here, "until our own Proper of the
+    // Saints is here". The Liber's Oration is now in the hour itself (proper.js); a second collect, for a saint the
+    // abbey may not keep (Meinrad, Gall, Ottilia …), read as if the day were his: dropped 8 Nov 2026.)
     box.hidden = true;
   }
 

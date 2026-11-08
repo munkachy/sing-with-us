@@ -282,7 +282,7 @@
     if (!(y in ordos)) {
       ordos[y] = null;
       fetch("ordo-" + y + ".json").then(function (r) { if (!r.ok) throw 0; return r.json(); })
-        .then(function (o) { ordos[y] = o; ordoWeek(); autoOpen(); render(); }, function () {});
+        .then(function (o) { Object.keys(o).forEach(function (k) { if (/^\d{4}-\d\d-\d\d$/.test(k) && o[k]) o[k]._k = k; }); ordos[y] = o; ordoWeek(); autoOpen(); render(); }, function () {});
     }
     return ordos[y];
   }
@@ -291,9 +291,14 @@
   function ordoWeek() { var w = weekOf(dayDate()); if ((state.autoWeek || viewing && !weekTouched) && w !== null) state.week = w; }
   // On a feast or solemnity the ordo names, open its section in the seasonal or Saints book at the hour
   // (I Vespers the evening before). Memorials and Sundays stay in the psalter for now.
-  function rankOf(o) {
+  function ordoRank(o) {   // the ordo's rank, or the house's own feast or solemnity
     var h = o && o.n.filter(function (n) { return /^St\. Bernard Abbey: .*\b(Solemnity|Feast)\b/.test(n); })[0];
     return h ? h.match(/\b(Solemnity|Feast)\b/)[1] : o && o.r;
+  }
+  // The day's rank as the abbey keeps it: the Liber's, where the Liber has the day (keptSaint), else the ordo's
+  function rankOf(o) {
+    var ks = o && o._k && keptSaint(new Date(+o._k.slice(0, 4), +o._k.slice(5, 7) - 1, +o._k.slice(8, 10)));
+    return ks ? ks.r : ordoRank(o);
   }
     // The Office of the Dead (the Saints book's All Souls, 2 November): on All Souls, every hour it prints, its own Compline
   // too (the abbey uses it; the necrology still follows); on
@@ -431,18 +436,21 @@
       back.querySelector(".saint-sheet").innerHTML = html;
     });
   }
-  // The saint the abbey keeps on a weekday the ordo leaves free ("Or Willibrord, Bishop. Optional Mem."): a day the
-  // Liber Hebdomadarii has a collect for is kept (the user, 8 Nov 2026; sanctoral.json, from munkachy/psalter
-  // books/proper.py --days). As proper.js resolve(): not on a Sunday, nor where the ordo gives a rank of its own
-  // (or the house a feast), nor in Lent, Holy Week, 17 Dec - 1 Jan, the Easter octave; Our Lady's Saturdays stay hers.
+  // The saint the abbey keeps on a weekday: a day the Liber Hebdomadarii has a collect for is kept, with the Liber's
+  // title and rank, which outrank the ordo's ("Or Willibrord, Bishop. Optional Mem."; 14 Nov, the Departed of our Order,
+  // and 1 Dec, the Cathedral's dedication: feasts): "the Liber defines what we do" (the user, 8 Nov 2026; sanctoral.json,
+  // from munkachy/psalter books/proper.py --days). As proper.js resolve(): not on a Sunday, nor where the ordo (or the
+  // house) has a feast or solemnity of its own, nor in Lent, Holy Week, 17 Dec - 1 Jan, the Easter octave; Our Lady's
+  // Saturdays stay hers. rankOf() gives this rank to the whole page (Sext's hymn, Compline, the feast's books).
   function keptSaint(d) {
     var S = extrasData.sanctoral && extrasData.sanctoral.days, o = ordoDay(d), md = ymd(d).slice(5), s = S && S[md];
     if (S && same(d, addDays(easter(d.getFullYear()), 69))) s = S["immaculate-heart"];   // the Saturday after the Sacred Heart (proper.js named())
-    if (!s || !o || rankOf(o) || d.getDay() === 0 || /^\s*†/.test(o.t) || civicDay(d)) return null;
+    var or = o && ordoRank(o) || "";
+    if (!s || !o || (/Solemnity|Feast/.test(or) && !/Solemnity|Feast/.test(s[1])) || d.getDay() === 0 || /^\s*†/.test(o.t) || civicDay(d)) return null;
     var se = seasonOf(d), e = easter(d.getFullYear());
     if (se === "Lent" || se === "Passiontide" || (d >= e && d <= addDays(e, 7)) || (d.getMonth() === 11 && d.getDate() >= 17) || md === "01-01") return null;
     if (d.getDay() === 6 && bvmSaturday(d)) return null;
-    return { t: s[0], r: /Memorial/.test(s[1]) ? s[1] : "" };   // a feast the ordo doesn't rank (14 Nov: the Departed of our Order) gets no rank
+    return { t: s[0], r: s[1] };
   }
   function dayBar(o, name, d, extra) {
     var w = $("#day-what"), btn = $("#ordo-btn"); if (!w) return;
@@ -450,9 +458,9 @@
     if (!o) return;
     var col = (o.c || "").toLowerCase().match(/white|red|green|violet|rose|black|gold/);   // the ordo's colour for the day
     btn.dataset.color = col ? col[0] : ""; btn.title = (col ? o.c + " · " : "") + "the full ordo for the day";
-    var bvm = !o.r && d.getDay() === 6 && bvmSaturday(d), ks = !o.r && keptSaint(d), title = bvm ? "Saturday of Our Lady" : ks ? soft(ks.t) : soft(name);
+    var ks = !/Solemnity|Feast/.test(o.r || "") && keptSaint(d), bvm = !o.r && !ks && d.getDay() === 6 && bvmSaturday(d), title = bvm ? "Saturday of Our Lady" : ks ? soft(ks.t) : soft(name);
     if (bvm) btn.dataset.color = "white";
-    var rk = o.r || ks && ks.r;
+    var rk = ks ? ks.r : o.r;
     if (rk) {
       var r = document.createElement("span"); r.className = "ordo-rank rank-" + (rk === "Optional Memorial" ? "memorial" : rk.toLowerCase());
       r.innerHTML = '<span class="r-long"></span><span class="r-short"></span>';
@@ -534,7 +542,7 @@
     }
     var cv = !o.r && civicDay(d);
     if (cv) { var cp = document.createElement("span"); cp.className = "ordo-ours"; cp.textContent = "Optional Memorial: " + cv; el.appendChild(cp); }
-    var ks = !o.r && keptSaint(d);
+    var ks = !/Solemnity|Feast/.test(o.r || "") && keptSaint(d);
     if (ks) { var kp = document.createElement("span"); kp.className = "ordo-ours"; kp.textContent = "✦ Saint Bernard Abbey: " + (ks.r ? ks.r + " of " : "") + ks.t + " (the Liber's collect)"; el.appendChild(kp); }
     if (d.getDay() === 6 && bvmSaturday(d)) { var bs = document.createElement("span"); bs.className = "ordo-ours"; bs.textContent = "✦ Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary"; el.appendChild(bs); }
     el.appendChild(massReadings(o, d));
@@ -704,7 +712,7 @@
     if (["advent", "lent", "easterA", "ascA"].indexOf(base) >= 0) return base;
     if (base === "baptism") return "feast";
     if (base === "pentecost" || base === "heart") return "solemnity";
-    if (rank === "Memorial" && d.getDay() !== 0) return "memorial";
+    if (/Memorial/.test(rank) && d.getDay() !== 0) return "memorial";   // an optional memorial the Liber keeps, too (the user, 8 Nov 2026)
     return d.getDay() === 0 ? "sunday" : "ferial";
   }
   function seasonWords(season) { return season === "year" ? "through the year" : season === "Ascension to Pentecost" ? "from the Ascension to Pentecost" : "of " + season; }

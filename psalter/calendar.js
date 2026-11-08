@@ -81,9 +81,11 @@
   // days (the ordo's †), 17 Dec - 1 Jan, the Easter octave, Our Lady's Saturdays.
   function kept(key, x) {
     var s = liber && liber.days[key.slice(5)], y = +key.slice(0, 4), m = +key.slice(5, 7) - 1, d = +key.slice(8, 10);
-    if (!s || x.r || new Date(y, m, d).getDay() === 0 || /^\s*†/.test(x.t) || /OCTAVE OF EASTER/i.test(x.t) || civic(key) || ladySat(key)) return null;
+    var F = /Solemnity|Feast/;
+    if (s && F.test(x.r || "") && !F.test(s[1])) return null;   // the ordo's (or the house's) own feast stands
+    if (!s || new Date(y, m, d).getDay() === 0 || /^\s*†/.test(x.t) || /OCTAVE OF EASTER/i.test(x.t) || civic(key) || ladySat(key)) return null;
     if ((m === 11 && d >= 17) || (m === 0 && d === 1)) return null;
-    return { t: s[0], r: /Memorial/.test(s[1]) ? s[1] : "" };
+    return { t: s[0], r: s[1] };   // the Liber's rank outranks the ordo's (the user, 8 Nov 2026)
   }
   function ourDead(key) {   // [title, name, year]: the Congregation's list for our house, and anyone only in our necrology
     var md = key.slice(5), l = necro && (necro.days[md] || []).filter(function (n) { return n[3] === necro.ours; }) || [];
@@ -125,16 +127,16 @@
         c.appendChild(el("span", "num", d));
         if (x) {
           var cv = !x.r && civic(key), ks = kept(key, x);
-          if (x.r) { var r = el("span", "rk rk-" + RANK[x.r], RANK[x.r].toUpperCase()); r.title = x.r; c.appendChild(r); }
-          else if (cv) { var ro = el("span", "rk rk-om", "OM"); ro.title = "Optional Memorial"; c.appendChild(ro); c.appendChild(el("span", "lbl", cv)); }
-          else if (ks) {
-            if (ks.r) { var rkk = RANK[ks.r], rs = el("span", "rk rk-" + rkk, rkk.toUpperCase()); rs.title = ks.r; c.appendChild(rs); }
-            c.appendChild(el("span", "lbl", ks.t.replace(/^(Saints?|Blessed) /, "").replace(/, (Bishop|Priest|Virgin|Martyr|Abbot|Religious|Doctor|Apostle|Pope|Deacon|Hermit|Married)s?.*$/, "")));
+          if (ks) {
+            var rkk = RANK[ks.r] || "om", rs = el("span", "rk rk-" + rkk, rkk.toUpperCase()); rs.title = ks.r; c.appendChild(rs);
+            c.appendChild(el("span", "lbl", ks.t.replace(/^(Saints?|Blessed|The) /, "").replace(/, (Bishop|Priest|Virgin|Martyr|Abbot|Religious|Doctor|Apostle|Pope|Deacon|Hermit|Married)s?.*$/, "")));
           }
+          else if (x.r) { var r = el("span", "rk rk-" + RANK[x.r], RANK[x.r].toUpperCase()); r.title = x.r; c.appendChild(r); }
+          else if (cv) { var ro = el("span", "rk rk-om", "OM"); ro.title = "Optional Memorial"; c.appendChild(ro); c.appendChild(el("span", "lbl", cv)); }
           if (ours(x).length || ladySat(key)) c.appendChild(el("span", "ours-star" + (x.r ? "" : " solo"), "✦"));
           if (ladySat(key) && !x.r) c.appendChild(el("span", "lbl", "Our Lady"));
           if (ourDead(key).length) { var nd = el("span", "necro-mark", "†"); nd.title = "In our necrology"; c.appendChild(nd); }
-          var s = short(x); if (s) c.appendChild(el("span", "lbl", s));
+          var s = !ks && short(x); if (s) c.appendChild(el("span", "lbl", s));
           c.setAttribute("aria-label", d + " " + MONTHS[m] + ": " + title(clean(x.t)) + (x.r ? ", " + x.r : ""));
           c.addEventListener("click", pick);
         }
@@ -164,7 +166,7 @@
     var cv = !x.r && civic(key);
     if (cv) { var pc = el("p", "day-civic"); pc.appendChild(el("span", "ordo-rank rank-memorial", "Optional Memorial")); pc.appendChild(document.createTextNode(cv)); body.appendChild(pc); }
     var ks = kept(key, x);
-    if (ks) { var pk = el("p", "day-civic"); if (ks.r) pk.appendChild(el("span", "ordo-rank rank-memorial", ks.r)); pk.appendChild(document.createTextNode(ks.t + " (kept here: the Liber has its collect)")); body.appendChild(pk); }
+    if (ks) { var pk = el("p", "day-civic"); pk.appendChild(el("span", "ordo-rank rank-" + (/Memorial/.test(ks.r) ? "memorial" : ks.r.toLowerCase()), ks.r)); pk.appendChild(document.createTextNode(ks.t + " (as we keep it: the Liber)")); body.appendChild(pk); }
     var meta = el("p", "day-meta");
     meta.appendChild(el("span", "swatch lc-" + color(x.c)));
     meta.appendChild(document.createTextNode((x.c || "") + (v ? " · " + v : "") + (x.w ? " · Psalter Week " + ["I", "II", "III", "IV"][x.w - 1] : "")));

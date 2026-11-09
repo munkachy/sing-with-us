@@ -211,7 +211,7 @@
     return (TX ? TX.load([path], vault.idx, vault.key, open) : Promise.resolve()).then(function () {
       return pdfjs();
     }).then(function (lib) { return lib.getDocument({ data: new Uint8Array(data.slice(0)) }).promise; }).then(function (doc) {
-      var width = box.clientWidth || window.innerWidth;
+      var width = (box.clientWidth || window.innerWidth) * bookZoom();
       var ratio = Math.min(window.devicePixelRatio || 1, 2.5, 2000 / width);
       var pages = [];
       for (var n = 1; n <= doc.numPages; n++) pages.push(doc.getPage(n));
@@ -1005,7 +1005,7 @@
   function drawRecipe(items, idx, key, token) {
     var box = $("#pdf-pages"); box.innerHTML = "";
     if (pager) pager.stop();
-    var width = box.clientWidth || window.innerWidth;
+    var width = (box.clientWidth || window.innerWidth) * bookZoom();
     var ratio = Math.min(window.devicePixelRatio || 1, 2.5, 2000 / width);
     var paths = []; items.forEach(function (it) { if (Array.isArray(it) && paths.indexOf(it[0]) < 0) paths.push(it[0]); });
     var TX = window.PTEXT;
@@ -1462,6 +1462,33 @@
     a.addEventListener("click", function (e) { e.preventDefault(); state.ref = a.dataset.ref; render(); scrollTo(0, 0); });
   });
   $("#ref-back").addEventListener("click", function (e) { e.preventDefault(); state.ref = null; render(); });
+  // ---- Text size (A− A+ in the day bar; Nov 2026) ----
+  // One ladder, the same as Lumina's (munkachy/lumina, index.html SIZES): 0.7 to 2.6, 1 the usual size. Text modes scale
+  // the words with CSS zoom (--psz); the book's pages are drawn wider (and the box scrolls sideways) or narrower.
+  var SIZES = [0.7, 0.8, 0.9, 1, 1.15, 1.3, 1.5, 1.7, 1.95, 2.25, 2.6], sizeNow = 1;
+  try { var sv = parseFloat(localStorage.getItem("psalter-size")); if (sv >= SIZES[0] && sv <= SIZES[SIZES.length - 1]) sizeNow = sv; } catch (x) {}
+  function bookZoom() { return window.PTEXT && PTEXT.on() ? 1 : sizeNow; }
+  function applySize() {
+    document.documentElement.style.setProperty("--psz", sizeNow);
+    var book = !(window.PTEXT && PTEXT.on());
+    document.body.classList.toggle("pz-book", book && sizeNow !== 1);
+    document.body.classList.toggle("pz-wide", book && sizeNow > 1);
+    var lo = sizeNow <= SIZES[0] + 0.001, hi = sizeNow >= SIZES[SIZES.length - 1] - 0.001;
+    $("#sz-minus").disabled = lo; $("#sz-plus").disabled = hi;
+  }
+  function stepSize(dir) {
+    var v = sizeNow, n = dir > 0 ? SIZES.filter(function (x) { return x > v + 0.001; })[0] : SIZES.filter(function (x) { return x < v - 0.001; }).pop();
+    if (n === undefined) return;
+    sizeNow = n; try { localStorage.setItem("psalter-size", String(n)); } catch (x) {}
+    var box = $("#pdf-pages"), r = box.getBoundingClientRect(), frac = r.height ? Math.max(0, -r.top) / r.height : 0;
+    applySize();
+    if (!(window.PTEXT && PTEXT.on())) {   // the book's pages are drawn again at the new width, where we were reading
+      box.dataset.file = box.dataset.done = ""; box.dataset.restore = frac; show();
+    }
+  }
+  $("#sz-minus").addEventListener("click", function () { stepSize(-1); });
+  $("#sz-plus").addEventListener("click", function () { stepSize(1); });
+  applySize();
   // Redraw the PDF at the new width when the phone turns
   var lastW = window.innerWidth, turnT = null, readFrac = 0;
   window.addEventListener("scroll", function () {
@@ -1498,7 +1525,7 @@
     ordoOpen = !ordoOpen; this.setAttribute("aria-expanded", String(ordoOpen)); ordoNote();
   });
   $("#asm-plain").addEventListener("click", function (e) { e.preventDefault(); plain = true; render(); });
-  if (window.PTEXT) PTEXT.buttons(function () { $("#pdf-pages").dataset.done = ""; show(); });   // Book · Lectio · Cantus
+  if (window.PTEXT) PTEXT.buttons(function () { applySize(); $("#pdf-pages").dataset.done = ""; show(); });   // Book · Lectio · Cantus
   $("#asm-back").addEventListener("click", function (e) { e.preventDefault(); plain = false; render(); });
   // For readings.js: the day on screen, the ordo, the vault and the books
   window.PSALTER_IN = { dayDate: dayDate, ordoDay: ordoDay, rankOf: rankOf, ymd: ymd, addDays: addDays, daysBetween: daysBetween, same: same,

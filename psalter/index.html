@@ -12,11 +12,11 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="stylesheet" href="../assets/css/site.css?v=16">
-<link rel="stylesheet" href="app.css?v=45">
+<link rel="stylesheet" href="app.css?v=46">
 <script>(function(d){d.className=d.className.replace("no-js","js");try{var t=localStorage.getItem("swu-theme");if(t)d.setAttribute("data-theme",t)}catch(e){}})(document.documentElement);</script>
 <script src="../assets/js/site.js?v=16" defer></script>
-<script src="text.js?v=7" defer></script>
-<script src="app.js?v=58" defer></script>
+<script src="text.js?v=8" defer></script>
+<script src="app.js?v=59" defer></script>
 <script src="readings.js?v=6" defer></script>
 <script src="proper.js?v=4" defer></script>
 <script src="picker.js?v=2" defer></script>
@@ -65,7 +65,7 @@
 
   <div class="wrap">
     <h1 id="now-title" class="visually-hidden">Monastic Psalter</h1>
-    <div id="day-bar" class="day-bar"><span id="day-what" class="day-what"></span><button type="button" id="ordo-btn" class="day-btn" aria-expanded="false" aria-controls="ordo-note" hidden>Ordo</button><label class="day-read" for="read-sel"><span class="visually-hidden">Read as</span><select id="read-sel"><option value="book">Book pages</option><option value="lectio">Text</option><option value="cantus">Text with notation</option></select></label></div>
+    <div id="day-bar" class="day-bar"><span id="day-what" class="day-what"></span><button type="button" id="ordo-btn" class="day-btn" aria-expanded="false" aria-controls="ordo-note" hidden>Ordo</button><span class="day-size" role="group" aria-label="Text size"><button type="button" id="sz-minus" class="day-btn" title="Smaller text" aria-label="Smaller text">A−</button><button type="button" id="sz-plus" class="day-btn" title="Larger text" aria-label="Larger text">A+</button></span><label class="day-read" for="read-sel"><span class="visually-hidden">Read as</span><select id="read-sel"><option value="book">Book pages</option><option value="lectio">Text</option><option value="cantus">Text with notation</option></select></label></div>
     <p id="nameday" class="nameday" hidden></p>
     <p id="season-note" class="slim-note" hidden></p>
     <p id="view-note" class="slim-note view-note" hidden>Showing the hours for <b id="view-date"></b>. <a href="./" id="view-back">Back to today →</a></p>
@@ -157,6 +157,7 @@
           <summary>Book pages, Text, Text with notation</summary>
           <p>The menu at the end of the day bar chooses how to read the hour. <b>Book pages</b> (the usual) shows the book's own pages. <b>Text</b> sets everything as text, proofread from the book: rubrics in red, the psalms with their large capitals and their <span class="tx-mark">*</span> and <span class="tx-mark">†</span>, and the chant as its words. <b>Text with notation</b> is the same text, but wherever the book has music its notation is kept. This phone remembers your choice.</p>
           <p>In text so far: every hour of the four weeks, Vespers and Compline, the Ordinary and its chants, the Ultima, and every feast and season as the hours are put together. Some pages of the seasonal books, opened whole to browse, are still shown as the book's pages while they are proofread. A few lines cut off at the foot of the scanned pages are marked where they could not be read. Where the book has a slip (a missing full stop, a stanza misnumbered) and it has been put right, the correction carries a ⁎ and a red note saying what the book prints. Marks with ✎ are made on the book's pages.</p>
+          <p><b>A− A+</b> (in the day bar, before the menu) make the words smaller or bigger, in eleven steps from a little smaller than usual to very large. In Text and Text with notation the words (and the readings and the Proper) grow; on Book pages the pages are drawn wider, and you slide the page sideways to see all of a line. This phone remembers the size.</p>
         </details>
         <details>
           <summary>The hebdomadarian's Proper</summary>

@@ -328,7 +328,7 @@ p.then { margin: .2rem 0 1.4rem; }
 .lect-msg { margin: 0; color: #6a5f52; font-style: italic; }
 
 /* Highlights and notes (kept only in this browser), as in Lumina: four colours */
-:root { --hl-gold: #f0dc9a; --hl-rose: #f0c3bd; --hl-sage: #cfdcb4; --hl-sky: #c2d7e8; }
+:root { --hl-gold: #fbe66d; --hl-rose: #f0c3bd; --hl-sage: #cfdcb4; --hl-sky: #c2d7e8; }
 mark.hl { color: inherit; border-radius: .2em; padding: .02em 0; cursor: pointer; }
 mark.hl.gold { background: var(--hl-gold); } mark.hl.rose { background: var(--hl-rose); }
 mark.hl.sage { background: var(--hl-sage); } mark.hl.sky { background: var(--hl-sky); }
@@ -358,19 +358,6 @@ mark.hl.noted { border-bottom: 2px dotted #8a6d1e; }
 .nt-toast { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 70; padding: .45rem .9rem; border-radius: 8px; background: #2b241d; color: #fbf8f2; font-size: .92rem; max-width: calc(100vw - 32px); }
 
 /* Marks over the book's pages: a translucent box, placed by the page itself (so it stays put at any width) */
-#pdf-pages .mk { position: absolute; border-radius: 3px; opacity: .45; mix-blend-mode: multiply; cursor: pointer; }
-#pdf-pages .mk.gold { background: #e8c547; } #pdf-pages .mk.rose { background: #e8968b; }
-#pdf-pages .mk.sage { background: #a9c47f; } #pdf-pages .mk.sky { background: #86b2d8; }
-#pdf-pages .mk.noted { outline: 2px dotted rgba(43, 36, 29, .7); outline-offset: -2px; }
-#pdf-pages .mk.draft { background: #e8c547; outline: 2px dashed #9b1c1c; outline-offset: -2px; cursor: crosshair; }
-body.marking #pdf-pages .pg { touch-action: none; cursor: crosshair; }
-body.marking #pdf-pages .mk:not(.draft) { pointer-events: none; }
-.mk-bar { position: fixed; left: 50%; top: 10px; transform: translateX(-50%); z-index: 55; display: flex; align-items: center; gap: .7rem; padding: .45rem .5rem .45rem .9rem; border-radius: 10px; background: #2b241d; color: #fbf8f2; font-size: .95rem; box-shadow: 0 6px 20px rgba(0, 0, 0, .3); max-width: calc(100vw - 20px); }
-.mk-bar button { font: inherit; font-size: .9rem; min-height: 34px; padding: 0 .8rem; border-radius: 7px; border: 0; background: #fbf8f2; color: #2b241d; cursor: pointer; }
-.mk-fab { position: fixed; right: 12px; bottom: 12px; z-index: 50; width: 46px; height: 46px; border-radius: 50%; border: 1px solid #d6cab4; background: #fbf8f2; color: #9b1c1c; font-size: 1.3rem; line-height: 1; cursor: pointer; box-shadow: 0 4px 14px rgba(40, 28, 12, .25); }
-.mk-menu { position: fixed; right: 12px; bottom: 66px; z-index: 51; display: grid; gap: 4px; padding: 6px; border-radius: 10px; background: #fbf8f2; border: 1px solid #d6cab4; box-shadow: 0 8px 24px rgba(40, 28, 12, .25); }
-.mk-menu button { font: inherit; font-size: .95rem; min-height: 40px; padding: 0 .9rem; border-radius: 7px; border: 0; background: none; color: #2b241d; text-align: left; cursor: pointer; }
-.mk-menu button:hover, .mk-menu button:focus-visible { background: #f3ede1; }
 
 /* The Matins readings in their places among the pages (under "First Reading", "Second Reading") */
 #pdf-pages .lect-slot { margin: 10px 0 14px; }

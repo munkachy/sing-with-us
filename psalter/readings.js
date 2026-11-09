@@ -2,8 +2,8 @@
    The readings are the Two-Year Lectionary the abbey reads at Matins (a Biblical and a Patristic reading for
    each day, Year I and Year II, and the feasts), sealed in the vault like the book (vault/index.json "lect":
    one file per day key, built by the private psalter repo's lectionary/tools/vault.py).
-   Highlights, notes and marks are kept only in this browser (localStorage): nobody else sees them. The sheet
-   under the ✎ button backs them up to a file, reads a backup back in, and makes a readable copy. */
+   Highlights (select words: they turn yellow; tap one to remove it) are kept only in this browser (localStorage): nobody
+   else sees them, and there is no backup. In the readings and in the set text of the hours. */
 (function () {
   var IN = window.PSALTER_IN;
   if (!IN) return;
@@ -186,7 +186,6 @@
       host.appendChild(art);
     });
     box.hidden = inSlots;
-    fab();
   }
   // A paragraph: Word's runs (italic kept: the Scripture a Father quotes), LORD set small, highlights marked
   function hlsIn(e, kind, i) {
@@ -220,8 +219,11 @@
     });
   }
 
-  // ---- Selecting words in a reading: they are highlighted in gold; tap one for its note, colour, or to remove it ----
-  function offsetsWithin(el, range) {   // the selection's characters within one paragraph (as Lumina does it)
+  // ---- Highlights: select words and they turn yellow, kept on this phone (Nov 2026: simplified) ----
+  // In a reading (kept by reading and paragraph) and in the set text of the hours (Text and Text with notation: kept by
+  // book file and page, as a quotation with the words around it, so it is found again wherever the page is shown).
+  // Tap a highlight to remove it. Nothing is sent anywhere, and there is no backup.
+  function offsetsWithin(el, range) {   // the selection's characters within one element (as Lumina does it)
     var start = -1, end = -1, pos = 0, w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n;
     while ((n = w.nextNode())) {
       var len = n.textContent.length, cs = 1, ce = -1;
@@ -232,321 +234,122 @@
     }
     return start >= 0 && end > start ? { s: start, e: end } : null;
   }
-  // As in Lumina: a selection becomes a gold highlight by itself once the finger or mouse lets go and the selection has
-  // stopped moving (no box to compete with the phone's own menu). Tap a highlight to add a note, change its colour or
-  // remove it. Words already highlighted are left as they are.
+  var HL_KEY = "psalter-hl", txhl = [];
+  try { var hj = JSON.parse(localStorage.getItem(HL_KEY) || "[]"); if (Array.isArray(hj)) txhl = hj; } catch (x) {}
+  function saveTx() { try { localStorage.setItem(HL_KEY, JSON.stringify(txhl)); return true; } catch (x) { toast("This browser would not keep it (private window, or storage full)."); return false; } }
+  function stripKey(el) { return el.dataset.src + "#" + el.dataset.pg; }
+  // where a saved quotation is in a strip's text: the occurrence with the most of its surrounding words matching
+  function locate(text, h) {
+    var best = -1, score = -1, at = text.indexOf(h.t);
+    while (at >= 0) {
+      var sc = 0, i = 0;
+      while (i < h.pre.length && text[at - 1 - i] === h.pre[h.pre.length - 1 - i]) i++;
+      sc += i; i = 0;
+      while (i < h.post.length && text[at + h.t.length + i] === h.post[i]) i++;
+      sc += i;
+      if (sc > score) { score = sc; best = at; }
+      at = text.indexOf(h.t, at + 1);
+    }
+    return best;
+  }
+  function unwrap(strip) {
+    strip.querySelectorAll("mark.tx-hl").forEach(function (m) { var par = m.parentNode; while (m.firstChild) par.insertBefore(m.firstChild, m); par.removeChild(m); });
+    strip.normalize();
+  }
+  function wrap(strip, s, e, id) {
+    var parts = [], pos = 0, w = document.createTreeWalker(strip, NodeFilter.SHOW_TEXT), n;
+    while ((n = w.nextNode())) {
+      var len = n.textContent.length, a = Math.max(s, pos), z = Math.min(e, pos + len);
+      if (z > a && n.textContent.slice(a - pos, z - pos).trim()) parts.push([n, a - pos, z - pos]);
+      pos += len;
+    }
+    parts.forEach(function (x) {
+      var node = x[0], mid = x[1] > 0 ? node.splitText(x[1]) : node;
+      if (x[2] - x[1] < mid.textContent.length) mid.splitText(x[2] - x[1]);
+      var m = document.createElement("mark"); m.className = "hl gold tx-hl"; m.dataset.tx = id;
+      mid.parentNode.insertBefore(m, mid); m.appendChild(mid);
+    });
+  }
+  function paintStrip(strip) {
+    unwrap(strip);
+    var key = stripKey(strip), text = strip.textContent;
+    txhl.forEach(function (h) { if (h.k !== key) return; var at = locate(text, h); if (at >= 0) wrap(strip, at, at + h.t.length, h.id); });
+  }
+  function paintAll() { document.querySelectorAll("#pdf-pages .tx-strip").forEach(paintStrip); }
+  var paintT = null;
+  var pdfBox = $("#pdf-pages");
+  if (pdfBox && window.MutationObserver) new MutationObserver(function () { cancelAnimationFrame(paintT); paintT = requestAnimationFrame(paintAll); }).observe(pdfBox, { childList: true });
+
+  // A selection becomes a yellow highlight by itself once the finger or mouse lets go and the selection has stopped
+  // moving (no box to compete with the phone's own menu). Words already highlighted are left as they are.
   var touching = false, selT = null;
   addEventListener("touchstart", function () { touching = true; }, { passive: true });
   addEventListener("touchend", function () { touching = false; armSel(); }, { passive: true });
   addEventListener("mouseup", function () { armSel(); });
   document.addEventListener("selectionchange", function () { armSel(); });
   function armSel() { clearTimeout(selT); selT = setTimeout(autoHighlight, 900); }
-  function hidePop() {}
   function autoHighlight() {
-    if (touching || !shown) return;
+    if (touching) return;
     var sel = getSelection();
     if (!sel || sel.isCollapsed || !sel.rangeCount) return;
-    var range = sel.getRangeAt(0), anc = range.commonAncestorContainer;
-    if (!(anc.nodeType === 1 ? anc : anc.parentNode).closest(".lect, .lect-r")) return;
-    var touched = [];
-    document.querySelectorAll(".lect-r").forEach(function (art) {
-      var kind = art.dataset.kind, e = entriesOf(kind)[chosen(kind)];
-      art.querySelectorAll(".lect-text p").forEach(function (p) {
-        if (!range.intersectsNode(p)) return;
-        var off = offsetsWithin(p, range);
-        if (off) touched.push({ kind: kind, e: e, i: +p.dataset.i, s: off.s, e2: off.e, t: p.textContent.slice(off.s, off.e) });
+    var range = sel.getRangeAt(0), did = false;
+    // the readings
+    if (shown) {
+      var touched = [];
+      document.querySelectorAll(".lect-r").forEach(function (art) {
+        var kind = art.dataset.kind, e = entriesOf(kind)[chosen(kind)];
+        art.querySelectorAll(".lect-text p").forEach(function (p) {
+          if (!range.intersectsNode(p)) return;
+          var off = offsetsWithin(p, range);
+          if (off) touched.push({ kind: kind, e: e, i: +p.dataset.i, s: off.s, e2: off.e, t: p.textContent.slice(off.s, off.e) });
+        });
       });
+      var fresh = touched.filter(function (t) { return t.t.trim() && !hlsIn(t.e, t.kind, t.i).some(function (r) { return t.s < r.e && t.e2 > r.s; }); });
+      if (fresh.length) {
+        var g = uid();
+        fresh.forEach(function (t) {
+          notes.hls.push({ id: uid(), g: g, k: shown.k, year: shown.year, kind: t.kind, rid: rid(t.e), i: t.i, s: t.s, e: t.e2, t: t.t,
+            color: "gold", note: "", day: IN.ymd(shown.d), name: dayName(t.e.title), heading: t.e.heading, added: Date.now() });
+        });
+        saveNotes(); draw(); did = true;
+      }
+    }
+    // the set text of the hours
+    var added = false;
+    document.querySelectorAll("#pdf-pages .tx-strip").forEach(function (strip) {
+      if (!range.intersectsNode(strip)) return;
+      var off = offsetsWithin(strip, range); if (!off) return;
+      var text = strip.textContent, t = text.slice(off.s, off.e), key = stripKey(strip);
+      if (!t.trim()) return;
+      var over = txhl.some(function (h) { if (h.k !== key) return false; var at = locate(text, h); return at >= 0 && off.s < at + h.t.length && off.e > at; });
+      if (over) return;
+      txhl.push({ id: uid(), k: key, t: t, pre: text.slice(Math.max(0, off.s - 30), off.s), post: text.slice(off.e, off.e + 30), added: Date.now() });
+      added = true;
     });
-    var fresh = touched.filter(function (t) { return t.t.trim() && !hlsIn(t.e, t.kind, t.i).some(function (r) { return t.s < r.e && t.e2 > r.s; }); });
-    if (!fresh.length) return;
-    var g = uid();
-    fresh.forEach(function (t) {
-      notes.hls.push({ id: uid(), g: g, k: shown.k, year: shown.year, kind: t.kind, rid: rid(t.e), i: t.i, s: t.s, e: t.e2, t: t.t,
-        color: "gold", note: "", day: IN.ymd(shown.d), name: dayName(t.e.title), heading: t.e.heading, added: Date.now() });
-    });
-    saveNotes(); sel.removeAllRanges(); draw(); toast("Highlighted — tap it to add a note, change the colour or remove it.");
+    if (added && saveTx()) { paintAll(); did = true; }
+    if (did) { sel.removeAllRanges(); toast("Highlighted. Tap it to remove it."); }
   }
-  // Tap a highlight: read its note, change its colour or note, or remove it
+  // Tap a highlight to remove it
+  function askRemove(remove) {
+    var back = sheet("<h2>Highlight</h2><p>Remove this highlight?</p>" +
+      '<div class="nt-btns"><button type="button" data-x="cancel">Keep</button><button type="button" class="primary" data-x="del">Remove</button></div>');
+    back.querySelector('[data-x="cancel"]').addEventListener("click", function () { back.remove(); });
+    back.querySelector('[data-x="del"]').addEventListener("click", function () { remove(); back.remove(); toast("Highlight removed"); });
+  }
   document.addEventListener("click", function (e) {
-    var m = e.target.closest && e.target.closest(".lect-r mark.hl");
+    var m = e.target.closest && e.target.closest("mark.hl");
     if (!m) return;
     var sel = getSelection(); if (sel && !sel.isCollapsed) return;
-    var h = notes.hls.filter(function (x) { return x.id === m.dataset.hl; })[0];
-    if (h) editHl(h);
-  });
-  function editHl(h) {
-    var group = notes.hls.filter(function (x) { return h.g ? x.g === h.g : x.id === h.id; }), color = h.color;
-    var words = group.map(function (x) { return x.t; }).join(" ");
-    var back = sheet("<h2>Highlight</h2>" + '<p class="nt-quote">“' + esc(words.length > 220 ? words.slice(0, 219) + "…" : words) + "”</p>" + dotsHtml(color) +
-      '<textarea aria-label="Note" placeholder="Note">' + esc(h.note || "") + "</textarea>" +
-      '<div class="nt-btns"><button type="button" class="danger" data-x="del">Remove</button><button type="button" data-x="cancel">Cancel</button><button type="button" class="primary" data-x="save">Save</button></div>');
-    wireDots(back, function (c) { color = c; });
-    back.querySelector('[data-x="cancel"]').addEventListener("click", function () { back.remove(); });
-    back.querySelector('[data-x="del"]').addEventListener("click", function () {
-      var ids = group.map(function (x) { return x.id; });
-      notes.hls = notes.hls.filter(function (x) { return ids.indexOf(x.id) < 0; });
-      saveNotes(); back.remove(); draw(); toast("Highlight removed");
-    });
-    back.querySelector('[data-x="save"]').addEventListener("click", function () {
-      var note = back.querySelector("textarea").value.trim();
-      group.forEach(function (x) { x.color = color; x.note = note; });
-      saveNotes(); back.remove(); draw();
-    });
-  }
-
-  // ---- Marks over the book's pages: drag a box over part of a page ----
-  // Kept by file, page and place on the page (fractions of its width and height), so a mark stays where it was
-  // at any width, and shows wherever that page is shown again (whole, or cut into an hour).
-  function paintMarks() {
-    document.querySelectorAll("#pdf-pages .pg").forEach(function (pg) {
-      pg.querySelectorAll(".mk:not(.draft)").forEach(function (x) { x.remove(); });
-      var src = pg.dataset.src, n = +pg.dataset.pg, f0 = +pg.dataset.f0, f1 = +pg.dataset.f1;
-      notes.marks.forEach(function (mk) {
-        if (mk.src !== src || mk.pg !== n) return;
-        var a = Math.max(mk.y, f0), z = Math.min(mk.y + mk.h, f1);
-        if (z - a <= 0.001) return;
-        var el = document.createElement("div"); el.className = "mk " + mk.color + (mk.note ? " noted" : ""); el.dataset.mk = mk.id;
-        el.style.left = mk.x * 100 + "%"; el.style.width = mk.w * 100 + "%";
-        el.style.top = (a - f0) / (f1 - f0) * 100 + "%"; el.style.height = (z - a) / (f1 - f0) * 100 + "%";
-        el.title = mk.note || "Marked"; el.setAttribute("role", "button"); el.setAttribute("aria-label", "Mark" + (mk.note ? ": " + mk.note : ""));
-        el.tabIndex = 0;
-        pg.appendChild(el);
-      });
-    });
-    fab();
-  }
-  var marking = false, drag = null, bar = null;
-  function startMarking() {
-    marking = true; document.body.classList.add("marking"); menu(false);
-    bar = document.createElement("div"); bar.className = "mk-bar";
-    bar.innerHTML = "<span>Drag over the part of the page to mark.</span>";
-    var b = document.createElement("button"); b.type = "button"; b.textContent = "Cancel"; b.addEventListener("click", stopMarking);
-    bar.appendChild(b); document.body.appendChild(bar);
-  }
-  function stopMarking() {
-    marking = false; document.body.classList.remove("marking");
-    if (bar) { bar.remove(); bar = null; }
-    if (drag) { drag.el.remove(); drag = null; }
-  }
-  function placeIn(pg, ev) {   // a point on the page (fractions of the whole page, not of this strip)
-    var r = pg.getBoundingClientRect(), f0 = +pg.dataset.f0, f1 = +pg.dataset.f1;
-    var fx = Math.min(1, Math.max(0, (ev.clientX - r.left) / r.width)), fy = Math.min(1, Math.max(0, (ev.clientY - r.top) / r.height));
-    return { x: fx, y: f0 + fy * (f1 - f0), sy: fy };
-  }
-  var pages = $("#pdf-pages");
-  pages.addEventListener("pointerdown", function (ev) {
-    if (!marking) return;
-    var pg = ev.target.closest(".pg"); if (!pg) return;
-    ev.preventDefault();
-    var p = placeIn(pg, ev), el = document.createElement("div"); el.className = "mk draft"; pg.appendChild(el);
-    drag = { pg: pg, a: p, b: p, el: el, id: ev.pointerId };
-    try { pg.setPointerCapture(ev.pointerId); } catch (x) {}
-    sizeDraft();
-  });
-  pages.addEventListener("pointermove", function (ev) { if (drag && ev.pointerId === drag.id) { drag.b = placeIn(drag.pg, ev); sizeDraft(); } });
-  function sizeDraft() {
-    var d = drag, f0 = +d.pg.dataset.f0, f1 = +d.pg.dataset.f1;
-    var x = Math.min(d.a.x, d.b.x), y = Math.min(d.a.sy, d.b.sy);
-    d.el.style.left = x * 100 + "%"; d.el.style.width = Math.abs(d.a.x - d.b.x) * 100 + "%";
-    d.el.style.top = y * 100 + "%"; d.el.style.height = Math.abs(d.a.sy - d.b.sy) * 100 + "%";
-  }
-  function endDrag(ev) {
-    if (!drag || ev.pointerId !== drag.id) return;
-    var d = drag; drag = null; d.el.remove();
-    var x = Math.min(d.a.x, d.b.x), y = Math.min(d.a.y, d.b.y), w = Math.abs(d.a.x - d.b.x), h = Math.abs(d.a.y - d.b.y);
-    var r = d.pg.getBoundingClientRect(), f = (+d.pg.dataset.f1 - +d.pg.dataset.f0);
-    if (w * r.width < 12 || h / f * r.height < 8) return;   // a tap, not a drag: keep waiting for one
-    stopMarking();
-    var src = d.pg.dataset.src, n = +d.pg.dataset.pg;
-    editMark({ id: uid(), src: src, pg: n, x: x, y: y, w: w, h: h, color: "gold", note: "", p: IN.printed(src, n), where: whereLabel(src), added: Date.now() }, true);
-  }
-  pages.addEventListener("pointerup", endDrag);
-  pages.addEventListener("pointercancel", function (ev) { if (drag && ev.pointerId === drag.id) { drag.el.remove(); drag = null; } });
-  pages.addEventListener("click", function (ev) {
-    var el = !marking && ev.target.closest(".mk"); if (!el) return;
-    var mk = notes.marks.filter(function (x) { return x.id === el.dataset.mk; })[0];
-    if (mk) editMark(mk, false);
-  });
-  pages.addEventListener("keydown", function (ev) { var el = ev.target.closest && ev.target.closest(".mk"); if (el && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); el.click(); } });
-  function whereLabel(src) {
-    var books = IN.books();
-    if (books) for (var b in books) {
-      var secs = books[b].sections;
-      for (var i = 0; i < secs.length; i++) if (secs[i].path === src) return b === "Psalter" ? "Psalter · " + IN.label(src) : books[b].label + " · " + secs[i].title;
+    if (m.dataset.tx) askRemove(function () { txhl = txhl.filter(function (x) { return x.id !== m.dataset.tx; }); saveTx(); paintAll(); });
+    else {
+      var h = notes.hls.filter(function (x) { return x.id === m.dataset.hl; })[0];
+      if (!h) return;
+      var ids = notes.hls.filter(function (x) { return h.g ? x.g === h.g : x.id === h.id; }).map(function (x) { return x.id; });
+      askRemove(function () { notes.hls = notes.hls.filter(function (x) { return ids.indexOf(x.id) < 0; }); saveNotes(); draw(); });
     }
-    return IN.label(src);
-  }
-  function editMark(mk, isNew) {
-    var color = mk.color;
-    var back = sheet("<h2>" + (isNew ? "Mark this part of the page" : "Mark") + "</h2>" +
-      '<p class="nt-quote">' + esc(mk.where) + ", p. " + mk.p + "</p>" + dotsHtml(color) +
-      '<textarea aria-label="Note" placeholder="Add a note (optional)">' + esc(mk.note || "") + "</textarea>" +
-      '<div class="nt-btns">' + (isNew ? "" : '<button type="button" class="danger" data-x="del">Remove</button>') +
-      '<button type="button" data-x="cancel">Cancel</button><button type="button" class="primary" data-x="save">' + (isNew ? "Mark" : "Save") + "</button></div>");
-    wireDots(back, function (c) { color = c; });
-    back.querySelector('[data-x="cancel"]').addEventListener("click", function () { back.remove(); });
-    var del = back.querySelector('[data-x="del"]');
-    if (del) del.addEventListener("click", function () {
-      notes.marks = notes.marks.filter(function (x) { return x.id !== mk.id; }); saveNotes(); back.remove(); paintMarks(); toast("Mark removed");
-    });
-    back.querySelector('[data-x="save"]').addEventListener("click", function () {
-      mk.color = color; mk.note = back.querySelector("textarea").value.trim();
-      if (isNew) notes.marks.push(mk);
-      saveNotes(); back.remove(); paintMarks(); if (isNew) toast("Marked. Tap the mark to change or remove it.");
-    });
-  }
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { var b = $(".nt-back"); if (b) b.remove(); } });
 
-  // ---- The ✎ button: mark a page, or the sheet for backing up and exporting ----
-  var fabEl = document.createElement("button"), menuEl = null;
-  fabEl.type = "button"; fabEl.className = "mk-fab"; fabEl.textContent = "✎"; fabEl.title = "Highlights, notes and marks";
-  fabEl.setAttribute("aria-label", "Highlights, notes and marks"); fabEl.setAttribute("aria-expanded", "false"); fabEl.hidden = true;
-  document.body.appendChild(fabEl);
-  fabEl.addEventListener("click", function () { menu(!menuEl); });
-  function fab() { fabEl.hidden = $("#pdf-view").hidden && !document.querySelector(".lect-r") && !notes.hls.length && !notes.marks.length; }
-  function menu(open) {
-    if (menuEl) { menuEl.remove(); menuEl = null; }
-    fabEl.setAttribute("aria-expanded", String(!!open));
-    if (!open) return;
-    menuEl = document.createElement("div"); menuEl.className = "mk-menu";
-    var items = [];
-    if (!$("#pdf-view").hidden && document.querySelector("#pdf-pages .pg")) items.push(["Mark part of a page", startMarking]);
-    if (document.querySelector(".lect-r")) items.push(["Highlight in a reading: select the words", function () { menu(false); toast("Select some words in a reading: they are highlighted in gold. Tap a highlight to change it."); }]);
-    items.push(["Back up and export…", function () { menu(false); backupSheet(); }]);
-    items.forEach(function (it) { var b = document.createElement("button"); b.type = "button"; b.textContent = it[0]; b.addEventListener("click", it[1]); menuEl.appendChild(b); });
-    document.body.appendChild(menuEl);
-    menuEl.querySelector("button").focus();
-  }
-  document.addEventListener("pointerdown", function (e) { if (menuEl && !menuEl.contains(e.target) && e.target !== fabEl) menu(false); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { menu(false); hidePop(); if (marking) stopMarking(); var b = $(".nt-back"); if (b) b.remove(); } });
-
-  // ---- Back up, restore, and a readable copy ----
-  function fileDate() { return IN.ymd(new Date()); }
-  function giveFile(name, type, text) {
-    var file = new File([text], name, { type: type });
-    var download = function () {
-      var a = document.createElement("a"); a.href = URL.createObjectURL(file); a.download = name;
-      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
-    };
-    if (navigator.canShare && navigator.canShare({ files: [file] }))
-      return navigator.share({ files: [file], title: name }).catch(function (e) { if (e.name !== "AbortError") download(); });
-    download();
-  }
-  function backupText() {
-    return JSON.stringify({ app: "psalter", kind: "notes", version: 1, saved: new Date().toISOString(), data: { hls: notes.hls, marks: notes.marks } }, null, 1);
-  }
-  function mergeBackup(d) {   // adds what the file has and this browser lacks; nothing here is changed or removed
-    var n = { hls: 0, marks: 0 };
-    ["hls", "marks"].forEach(function (k) {
-      if (!Array.isArray(d[k])) return;
-      var have = {}; notes[k].forEach(function (x) { have[x.id] = 1; });
-      d[k].forEach(function (x) { if (x && x.id && !have[x.id] && (k === "hls" ? typeof x.t === "string" : typeof x.src === "string")) { notes[k].push(x); n[k]++; } });
-    });
-    saveNotes();
-    return n;
-  }
-  function backupSheet() {
-    var nh = notes.hls.length, nm = notes.marks.length;
-    var back = sheet("<h2>Highlights, notes and marks</h2>" +
-      "<p>They are kept only in this browser: nobody else sees them, and they are lost if this browser's data is cleared. Keep a copy somewhere safe (on a phone, choose Save to Files).</p>" +
-      "<p>Here now: " + nh + " highlight" + (nh === 1 ? "" : "s") + " in the readings, " + nm + " mark" + (nm === 1 ? "" : "s") + " on the pages.</p>" +
-      '<div class="nt-row"><button type="button" data-x="save">Back up</button><span>a file this page can read back in, here or in another browser</span></div>' +
-      '<div class="nt-row"><button type="button" data-x="restore">Restore…</button><span>adds what a backup holds; nothing here is removed</span></div>' +
-      '<div class="nt-row"><button type="button" data-x="export" disabled>Readable copy</button><span>a page to read or print: the highlighted words with their notes, and each mark with its part of the page</span></div>' +
-      '<p class="nt-msg" hidden></p><div class="nt-btns"><button type="button" data-x="close">Close</button></div>' +
-      '<input type="file" accept=".json,application/json" hidden>');
-    var q = function (s) { return back.querySelector(s); }, say = function (t) { var m = q(".nt-msg"); m.textContent = t; m.hidden = false; };
-    q('[data-x="close"]').addEventListener("click", function () { back.remove(); });
-    q('[data-x="save"]').addEventListener("click", function () { giveFile("psalter-notes-" + fileDate() + ".json", "application/json", backupText()); });
-    q('[data-x="restore"]').addEventListener("click", function () { var f = q("input[type=file]"); f.value = ""; f.click(); });
-    q("input[type=file]").addEventListener("change", function () {
-      var f = this.files[0]; if (!f) return;
-      var rd = new FileReader();
-      rd.onerror = function () { say("Couldn't read that file."); };
-      rd.onload = function () {
-        var p; try { p = JSON.parse(rd.result); } catch (x) { return say("That isn't a backup of the psalter's notes."); }
-        if (!p || p.app !== "psalter" || p.kind !== "notes" || !p.data) return say("That isn't a backup of the psalter's notes.");
-        var n = mergeBackup(p.data);
-        back.remove(); toast("Added " + n.hls + " highlight" + (n.hls === 1 ? "" : "s") + " and " + n.marks + " mark" + (n.marks === 1 ? "" : "s"));
-        if (shown) draw(); paintMarks();
-      };
-      rd.readAsText(f);
-    });
-    // The readable copy needs the readings and the pages the notes point into: get them first, so the file can be
-    // handed over straight from the tap (phones require that)
-    readableExport().then(function (html) {
-      var b = q('[data-x="export"]'); if (!b) return;
-      b.disabled = false;
-      b.addEventListener("click", function () { giveFile("psalter-notes-" + fileDate() + ".html", "text/html", html); });
-    }, function () { say("The readable copy needs the password and a connection. The backup works without them."); });
-  }
-  function cropOf(mk, idx, key) {   // the marked part of the page, as a small picture
-    if (!idx.pdfs[mk.src]) return Promise.resolve(null);
-    return IN.getDoc(mk.src, idx, key).then(function (doc) { return doc.getPage(mk.pg + 1); }).then(function (page) {
-      var v1 = page.getViewport({ scale: 1 }), scale = Math.min(3, Math.max(.6, 700 / (mk.w * v1.width))), vp = page.getViewport({ scale: scale });
-      var cv = document.createElement("canvas"); cv.width = Math.max(1, Math.round(mk.w * vp.width)); cv.height = Math.max(1, Math.round(mk.h * vp.height));
-      var ctx = cv.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, cv.width, cv.height);
-      return page.render({ canvasContext: ctx, viewport: vp, transform: [1, 0, 0, 1, -mk.x * vp.width, -mk.y * vp.height] }).promise.then(function () { return cv.toDataURL("image/jpeg", .82); });
-    }).catch(function () { return null; });
-  }
-  function readableExport() {
-    return IN.index().then(function (idx) {
-      var keyP = IN.key(); if (!keyP) throw new Error("locked");
-      return keyP.then(function (key) {
-        var ks = []; notes.hls.forEach(function (h) { if (ks.indexOf(h.k) < 0 && idx.lect && idx.lect[h.k]) ks.push(h.k); });
-        var marks = notes.marks.slice().sort(function (a, b) { return a.where < b.where ? -1 : a.where > b.where ? 1 : a.p - b.p || a.y - b.y; });
-        var dayP = Promise.all(ks.map(function (k) { return loadDay(idx, key, k).catch(function () { return null; }); }));
-        var cropP = marks.reduce(function (c, mk) { return c.then(function (out) { return cropOf(mk, idx, key).then(function (u) { out.push(u); return out; }); }); }, Promise.resolve([]));
-        return Promise.all([dayP, cropP]).then(function (r) { var byK = {}; ks.forEach(function (k, i) { byK[k] = r[0][i]; }); return page(byK, marks, r[1]); });
-      });
-    });
-  }
-  function context(h, data) {   // the sentence(s) the highlight touches, the words marked
-    var es = data && data.years[h.year] && data.years[h.year][h.kind] || [], e = es.filter(function (x) { return rid(x) === h.rid; })[0];
-    var text = e && e.paras[h.i] ? plain(e.paras[h.i]) : "";
-    var a = text.slice(h.s, h.e) === h.t ? h.s : text.indexOf(h.t), z = a + h.t.length;
-    if (!text || a < 0) return '<mark class="' + h.color + '">' + esc(h.t) + "</mark>";
-    var from = Math.max(0, text.lastIndexOf(". ", a - 1) + 2 * (text.lastIndexOf(". ", a - 1) >= 0)), stop = text.indexOf(". ", z - 1), to = stop >= 0 ? stop + 1 : text.length;
-    return (from > 0 ? "… " : "") + esc(text.slice(from, a)) + '<mark class="' + h.color + '">' + esc(text.slice(a, z)) + "</mark>" + esc(text.slice(z, to)) + (to < text.length ? " …" : "");
-  }
-  function page(byK, marks, crops) {
-    var groups = [], byG = {};
-    notes.hls.slice().sort(function (a, b) { return a.day < b.day ? -1 : a.day > b.day ? 1 : (a.kind < b.kind ? -1 : a.kind > b.kind ? 1 : a.i - b.i || a.s - b.s); })
-      .forEach(function (h) { var g = h.g || h.id; if (!byG[g]) { byG[g] = { h: h, items: [] }; groups.push(byG[g]); } byG[g].items.push(h); });
-    var body = "";
-    if (groups.length) {
-      body += "<h2>In the readings</h2>";
-      groups.forEach(function (g) {
-        var h = g.h;
-        body += '<div class="item"><div class="cite">' + esc(h.name + " · Year " + h.year + " · " + h.kind + " reading") + '</div><div class="head">' + esc(h.heading || "") + "</div>" +
-          '<p class="text">' + g.items.map(function (x) { return context(x, byK[x.k]); }).join(" ") + "</p>" +
-          (h.note ? '<p class="note"><span>Note</span>' + esc(h.note) + "</p>" : "") + "</div>";
-      });
-    }
-    if (marks.length) {
-      body += "<h2>On the book's pages</h2>";
-      marks.forEach(function (mk, i) {
-        body += '<div class="item"><div class="cite">' + esc(mk.where + ", p. " + mk.p) + "</div>" +
-          (crops[i] ? '<img class="crop ' + mk.color + '" alt="The marked part of p. ' + mk.p + '" src="' + crops[i] + '">' : '<p class="text"><i>(the picture of this part of the page could not be made)</i></p>') +
-          (mk.note ? '<p class="note"><span>Note</span>' + esc(mk.note) + "</p>" : "") + "</div>";
-      });
-    }
-    if (!body) body = "<p><i>No highlights or marks yet.</i></p>";
-    var when = new Date().toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" });
-    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">' +
-      "<title>Monastic Psalter · Highlights, notes and marks</title><style>" +
-      'body{font-family:"EB Garamond",Georgia,"Times New Roman",serif;max-width:40rem;margin:2rem auto;padding:0 1.2rem;color:#2b241d;background:#fbf8f2;line-height:1.6}' +
-      "h1{font-weight:normal;letter-spacing:.06em;text-align:center;margin-bottom:.2rem}.sub{text-align:center;color:#6a5f52;font-style:italic;margin-top:0}" +
-      "h2{font-weight:normal;font-variant:small-caps;letter-spacing:.1em;color:#9b1c1c;border-bottom:1px solid #d6cab4;padding-bottom:.2rem;margin-top:2.2rem}" +
-      ".item{margin:0 0 1.4rem;page-break-inside:avoid}.cite{font-variant:small-caps;letter-spacing:.06em;color:#8a6d1e}.head{font-size:.9rem;letter-spacing:.04em;color:#6a5f52}" +
-      ".text{margin:.25rem 0}.note{margin:.35rem 0 0 .9rem;padding-left:.7rem;border-left:3px solid #d6cab4;font-style:italic;color:#4a3f2e;white-space:pre-wrap}" +
-      ".note span{font-style:normal;font-variant:small-caps;letter-spacing:.1em;color:#6a5f52;margin-right:.5rem}" +
-      "mark{padding:0 .1em;border-radius:.15em;color:inherit}mark.gold{background:#f0dc9a}mark.rose{background:#f0c3bd}mark.sage{background:#cfdcb4}mark.sky{background:#c2d7e8}" +
-      "img.crop{display:block;max-width:100%;margin:.4rem 0;border:4px solid #f0dc9a;border-radius:4px}img.crop.rose{border-color:#f0c3bd}img.crop.sage{border-color:#cfdcb4}img.crop.sky{border-color:#c2d7e8}" +
-      ".foot{margin-top:2.5rem;font-size:.85rem;color:#6a5f52;font-style:italic;text-align:center}" +
-      '</style></head><body><h1>✠ Monastic Psalter</h1><p class="sub">Highlights, notes and marks · ' + esc(when) + "</p>" + body +
-      '<p class="foot">From the community\'s psalter and lectionary at Saint Bernard Abbey: for your own use; please don\'t share it outside the community.</p></body></html>';
-  }
-
-  window.LECT = { update: function () { update(); fab(); }, pages: function () { paintMarks(); if (shown && IN.matins()) draw(); }, _test: { seasonKey: seasonKey, dayKey: dayKey, cycleYear: cycleYear, sundayCycle: sundayCycle, notes: function () { return notes; } } };
-  update(); fab();
+  window.LECT = { update: function () { update(); }, pages: function () { paintAll(); if (shown && IN.matins()) draw(); }, _test: { seasonKey: seasonKey, dayKey: dayKey, cycleYear: cycleYear, sundayCycle: sundayCycle, notes: function () { return notes; } } };
+  update();
 })();

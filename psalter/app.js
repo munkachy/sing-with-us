@@ -1489,6 +1489,36 @@
   $("#sz-minus").addEventListener("click", function () { stepSize(-1); });
   $("#sz-plus").addEventListener("click", function () { stepSize(1); });
   applySize();
+  // ---- Version and updates (Nov 2026): the button shows the version and fetches the newest files when there are any ----
+  // The version is the ?v= of app.js in index.html (bumped with every change). Checking reads index.html afresh; updating
+  // fetches every file again past the phone's cache, then reloads.
+  (function () {
+    var FILES = ["text.js", "app.js", "readings.js", "proper.js", "picker.js", "app.css"], here = {}, btn = $("#ver-btn"), msg = $("#ver-msg"), newest = null;
+    function vOf(u, f) { var m = new RegExp("(^|/)" + f.replace(".", "\\.") + "\\?v=(\\d+)").exec(u || ""); return m ? +m[2] : 0; }
+    document.querySelectorAll("script[src], link[rel=stylesheet]").forEach(function (el) {
+      var u = el.getAttribute("src") || el.getAttribute("href"); FILES.forEach(function (f) { if (vOf(u, f)) here[f] = vOf(u, f); });
+    });
+    var DATA = ["assembly.json", "books.json", "sanctoral.json", "ordo-2026.json", "house.json", "necrology.json", "collects.json", "relics.json", "saints.json?v=1", "vault/index.json"];
+    function label() { btn.textContent = newest ? "Update to version " + newest["app.js"] : "Version " + (here["app.js"] || "?"); }
+    function check(say) {
+      return fetch("index.html", { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (t) {
+        var latest = {}; FILES.forEach(function (f) { var m = new RegExp(f.replace(".", "\\.") + "\\?v=(\\d+)").exec(t); latest[f] = m ? +m[1] : here[f]; });
+        newest = FILES.some(function (f) { return latest[f] !== here[f]; }) ? latest : null;
+        label();
+        msg.textContent = newest ? "A newer version is ready. Tap to update." : (say ? "You have the latest version. " : "");
+        if (!newest && say) { var a = document.createElement("a"); a.href = "#"; a.textContent = "Refresh anyway"; a.addEventListener("click", function (e) { e.preventDefault(); update(); }); msg.appendChild(a); }
+      }, function () { if (say) msg.textContent = "Couldn't check: no connection?"; });
+    }
+    function update() {
+      msg.textContent = "Updating…";
+      var urls = ["index.html"].concat(DATA);
+      document.querySelectorAll("script[src], link[rel=stylesheet]").forEach(function (el) { urls.push(el.getAttribute("src") || el.getAttribute("href")); });
+      if (newest) FILES.forEach(function (f) { urls.push(f + "?v=" + newest[f]); });
+      return Promise.all(urls.map(function (u) { return fetch(u, { cache: "reload" }).catch(function () {}); })).then(function () { location.reload(); });
+    }
+    btn.addEventListener("click", function () { if (newest) update(); else check(true); });
+    label(); check(false);
+  })();
   // Redraw the PDF at the new width when the phone turns
   var lastW = window.innerWidth, turnT = null, readFrac = 0;
   window.addEventListener("scroll", function () {

@@ -552,3 +552,6 @@ body.pz-book #pdf-pages .pg { width: calc(100% * var(--psz, 1)); margin: 0 auto 
 body.pz-wide #pdf-pages { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 body.pz-wide #pdf-pages .pg { margin: 0 0 10px; }
 @media (max-width: 30rem) { .day-size .day-btn { min-width: 34px; padding: 0 .3rem; } }
+
+.ver { margin: 1.2rem 0 1.6rem; text-align: center; font-size: .88rem; color: var(--muted); }
+.ver .day-btn { min-height: 34px; }

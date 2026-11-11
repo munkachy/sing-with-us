@@ -163,7 +163,7 @@
       var at = chosen(kind), e = es[at];
       var art = document.createElement("article"); art.className = "lect-r"; art.dataset.kind = kind; art.dataset.rid = rid(e);
       var lab = document.createElement("p"); lab.className = "lect-kind"; lab.textContent = kind === "Biblical" ? "Biblical reading" : "Patristic reading";
-      if (!inSlots) art.appendChild(lab);   // among the pages the book's own heading says which reading it is
+      if (!inSlots || host.dataset.label) art.appendChild(lab);   // among the weekly pages the book's own heading says which reading it is (not in a feast)
       if (es.length > 1) {   // an alternative, or an older version: the reader chooses
         var alts = document.createElement("div"); alts.className = "lect-alts"; alts.setAttribute("role", "group"); alts.setAttribute("aria-label", "Choose the " + kind + " reading");
         es.forEach(function (x, i) {

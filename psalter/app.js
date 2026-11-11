@@ -955,6 +955,10 @@
       if (x.ins === "psalm94" && asm.weekly && asm.weekly.psalm94[x.mode]) { items.push({ h: "Psalm 94 · Mode " + x.label + " (sung by the cantors)" }); items = items.concat(asm.weekly.psalm94[x.mode]); }
       if (x.ins === "tedeum" && v) { items.push({ h: "Te Deum · " + v.label }); items = items.concat(v.te, [{ h: "Holy Gospel (from the lectionary)" }, { h: "Te decet laus" }], v.decet); }
     });
+    // Matins: each reading in its place, just above its nocturn's Responsory (Fr. Bede, Nov 2026; assembly.json
+    // feasts.readings, from munkachy/psalter books/tools/feast_readings.py); the book prints no reading heading here
+    var fr = /^Matins/.test(hour) && F.readings && F.readings[sec.path] && F.readings[sec.path][hour];
+    if (fr) ["Patristic", "Biblical"].forEach(function (k) { if (fr[k]) items = pasteAt(items, sec.path, fr[k], [{ lect: k, label: true }]); });
     if (hour === "Sext" && asm.sext) {
       var hk = sextHymn(dayDate(), false), S = asm.sext;
       items = [S.opening, { h: "Hymn: " + SEXT_HYMN[hk] }, S.hymns[hk], { h: sec.title.replace(/ \(.*/, "") + " · Sext" }].concat(items, [{ h: "Conclusion" }, S.conclusion]);
@@ -1077,7 +1081,7 @@
         }
         if (Array.isArray(it) && text) { missing++; TX.cut(); }
         if (it.proper) { var ps = document.createElement("section"); ps.className = "proper proper-slot"; ps.dataset.part = it.proper; box.appendChild(ps); return; }   // proper.js
-        if (it.lect) { var sl = document.createElement("section"); sl.className = "lect lect-slot"; sl.dataset.kind = it.lect; if (it.swapped) sl.dataset.swapped = "1"; box.appendChild(sl); return; }   // a reading (readings.js)
+        if (it.lect) { var sl = document.createElement("section"); sl.className = "lect lect-slot"; sl.dataset.kind = it.lect; if (it.swapped) sl.dataset.swapped = "1"; if (it.label) sl.dataset.label = "1"; box.appendChild(sl); return; }   // a reading (readings.js)
         if (!Array.isArray(it)) { var h = document.createElement("p"); h.className = "asm-head"; h.textContent = it.h; box.appendChild(h); return; }
         var page = pages[i], vp = page.getViewport({ scale: width * ratio / page.getViewport({ scale: 1 }).width });
         var top = it[2] * vp.height, hgt = Math.max(1, (it[3] - it[2]) * vp.height);
@@ -1512,9 +1516,10 @@
   });
   $("#ref-back").addEventListener("click", function (e) { e.preventDefault(); state.ref = null; render(); });
   // ---- Text size (A− A+ in the day bar; Nov 2026) ----
-  // One ladder, the same as Lumina's (munkachy/lumina, index.html SIZES): 0.7 to 2.6, 1 the usual size. Text modes scale
+  // Lumina's ladder (munkachy/lumina, index.html SIZES: 0.7 to 2.6), widened both ways at the user's asking (Nov 2026):
+  // 0.5 to 4, 1 the usual size. Text modes scale
   // the words with CSS zoom (--psz); the book's pages are drawn wider (and the box scrolls sideways) or narrower.
-  var SIZES = [0.7, 0.8, 0.9, 1, 1.15, 1.3, 1.5, 1.7, 1.95, 2.25, 2.6], sizeNow = 1;
+  var SIZES = [0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.15, 1.3, 1.5, 1.7, 1.95, 2.25, 2.6, 3, 3.5, 4], sizeNow = 1;
   try { var sv = parseFloat(localStorage.getItem("psalter-size")); if (sv >= SIZES[0] && sv <= SIZES[SIZES.length - 1]) sizeNow = sv; } catch (x) {}
   function bookZoom() { return window.PTEXT && PTEXT.on() ? 1 : sizeNow; }
   function applySize() {

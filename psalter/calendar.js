@@ -5,15 +5,36 @@
   var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var WD = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   var OURS = /^(St\. Bernard Abbey|Diocese of Birmingham|Province of Mobile)/;
-  var RANK = { Solemnity: "s", Feast: "f", Memorial: "m" };
+  var RANK = { Solemnity: "s", Feast: "f", Memorial: "m", "Optional Memorial": "om" };
+  // The U.S. civic days the abbey keeps as optional memorials (the user, 30 Oct 2026; their Orations are in the Liber)
+  function civic(key) {
+    var y = +key.slice(0, 4), m = +key.slice(5, 7) - 1, d = +key.slice(8, 10), wd = new Date(y, m, d).getDay();
+    if (m === 6 && d === 4) return "Independence Day";
+    if (m === 8 && wd === 1 && d <= 7) return "Labor Day";
+    if (m === 10 && wd === 4 && d >= 22 && d <= 28) return "Thanksgiving Day";
+    return null;
+  }
   var $ = function (s) { return document.querySelector(s); };
   var now = new Date();
   var view = { y: now.getFullYear(), m: now.getMonth() }, ordos = {};
   // The Congregation's necrology and the collects for Benedictine saints (books/extras.py)
-  var extras = Promise.all(["necrology.json", "collects.json", "house.json"].map(function (f) {
+  var extras = Promise.all(["necrology.json", "collects.json", "house.json", "sanctoral.json"].map(function (f) {
     return fetch(f).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   }));
-  var necro = null, collects = null, houseData = null;
+  var necro = null, collects = null, houseData = null, liber = null;
+  // The abbey's own necrology notices, sealed in the vault (vault/index.json "necro"). They open with the key this phone
+  // kept when the psalter page was unlocked (the same site, so the same storage); without it, only the names show.
+  var notices = fetch("vault/index.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (idx) {
+    var k = null; try { k = JSON.parse(localStorage.getItem("psalter-key")); } catch (e) {}
+    if (!idx.necro || !k || k.salt !== idx.salt) return null;
+    var raw = Uint8Array.from(atob(k.raw), function (c) { return c.charCodeAt(0); });
+    return crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["decrypt"]).then(function (key) {
+      return fetch("vault/" + idx.necro).then(function (r) { return r.arrayBuffer(); }).then(function (buf) {
+        return crypto.subtle.decrypt({ name: "AES-GCM", iv: new Uint8Array(buf, 0, 12) }, key, new Uint8Array(buf, 12));
+      });
+    }).then(function (b) { return JSON.parse(new TextDecoder().decode(b)); });
+  }).catch(function () { return null; });
+  var noticeText = null;
   function ladySat(key) { var l = houseData && houseData.bvmSaturdays && houseData.bvmSaturdays[key.slice(0, 4)]; return !!l && l.indexOf(key.slice(5)) >= 0; }
   var want = location.hash.match(/^#(\d{4})-(\d{2})(?:-(\d{2}))?/);
   if (want) { view.y = +want[1]; view.m = +want[2] - 1; }
@@ -52,9 +73,28 @@
     var r = n.match(/\b(Solemnity|Feast)\b/)[1];
     var t = n.replace(/^St\. Bernard Abbey:\s*(?:(?:White|Red|Green|Violet|Rose)\s+)?/, "").replace(/\s*–.*$/, "");
     var v = (n.match(/–\s*(.+)$/) || [])[1] || x.v;
-    return { c: x.c, t: t, r: r, v: v, n: x.n, m: x.m, a: x.a };
+    var c = (n.match(/^St\. Bernard Abbey:\s*(White|Red|Green|Violet|Rose)\s/) || [])[1] || x.c;   // the house feast's own colour
+    return { c: c, t: t, r: r, v: v, n: x.n, m: x.m, a: x.a };
   }
-  function ourDead(key) { return necro && (necro.days[key.slice(5)] || []).filter(function (n) { return n[3] === necro.ours; }) || []; }
+  // The saint the abbey keeps on a weekday the ordo leaves free: a day the Liber Hebdomadarii has a collect for
+  // (sanctoral.json; the user, 8 Nov 2026). As app.js keptSaint(): not Sundays, ranked days, Lent and Advent's last
+  // days (the ordo's †), 17 Dec - 1 Jan, the Easter octave, Our Lady's Saturdays.
+  function kept(key, x) {
+    var s = liber && liber.days[key.slice(5)], y = +key.slice(0, 4), m = +key.slice(5, 7) - 1, d = +key.slice(8, 10);
+    var F = /Solemnity|Feast/;
+    if (s && F.test(x.r || "") && !F.test(s[1])) return null;   // the ordo's (or the house's) own feast stands
+    if (!s || new Date(y, m, d).getDay() === 0 || /^\s*†/.test(x.t) || /OCTAVE OF EASTER/i.test(x.t) || civic(key) || ladySat(key)) return null;
+    if ((m === 11 && d >= 17) || (m === 0 && d === 1)) return null;
+    return { t: s[0], r: s[1] };   // the Liber's rank outranks the ordo's (the user, 8 Nov 2026)
+  }
+  function ourDead(key) {   // [title, name, year]: the Congregation's list for our house, and anyone only in our necrology
+    var md = key.slice(5), l = necro && (necro.days[md] || []).filter(function (n) { return n[3] === necro.ours; }) || [];
+    (noticeText && noticeText[md] || []).forEach(function (e) {
+      if (!l.some(function (n) { return n[0] + " " + n[1] === e.name; }) && !(necro && (necro.days[md] || []).some(function (n) { return n[0] + " " + n[1] === e.name; })))
+        l = l.concat([["", e.name, e.year, "Ala"]]);
+    });
+    return l;
+  }
   function ours(x, key) { return x.n.filter(function (n) { return OURS.test(n); }); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
@@ -69,8 +109,8 @@
       b.setAttribute("aria-label", name); b.addEventListener("click", function () { view.m = i; go(); });
       chips.appendChild(b);
     });
-    Promise.all([load(y), extras]).then(function (got) {
-      var o = got[0]; necro = got[1][0]; collects = got[1][1]; houseData = got[1][2];
+    Promise.all([load(y), extras, notices]).then(function (got) {
+      var o = got[0]; necro = got[1][0]; collects = got[1][1]; houseData = got[1][2]; liber = got[1][3]; noticeText = got[2];
       if (view.y !== y || view.m !== m) return;
       var grid = $("#grid"), agenda = $("#agenda"), msg = $("#ordo-msg");
       grid.innerHTML = ""; agenda.innerHTML = "";
@@ -86,11 +126,17 @@
         if (new Date(y, m, d).getDay() === 0) c.classList.add("is-sun");
         c.appendChild(el("span", "num", d));
         if (x) {
-          if (x.r) { var r = el("span", "rk rk-" + RANK[x.r], RANK[x.r].toUpperCase()); r.title = x.r; c.appendChild(r); }
+          var cv = !x.r && civic(key), ks = kept(key, x);
+          if (ks) {
+            var rkk = RANK[ks.r] || "om", rs = el("span", "rk rk-" + rkk, rkk.toUpperCase()); rs.title = ks.r; c.appendChild(rs);
+            c.appendChild(el("span", "lbl", ks.t.replace(/^(Saints?|Blessed|The) /, "").replace(/, (Bishop|Priest|Virgin|Martyr|Abbot|Religious|Doctor|Apostle|Pope|Deacon|Hermit|Married)s?.*$/, "")));
+          }
+          else if (x.r) { var r = el("span", "rk rk-" + RANK[x.r], RANK[x.r].toUpperCase()); r.title = x.r; c.appendChild(r); }
+          else if (cv) { var ro = el("span", "rk rk-om", "OM"); ro.title = "Optional Memorial"; c.appendChild(ro); c.appendChild(el("span", "lbl", cv)); }
           if (ours(x).length || ladySat(key)) c.appendChild(el("span", "ours-star" + (x.r ? "" : " solo"), "✦"));
           if (ladySat(key) && !x.r) c.appendChild(el("span", "lbl", "Our Lady"));
           if (ourDead(key).length) { var nd = el("span", "necro-mark", "†"); nd.title = "In our necrology"; c.appendChild(nd); }
-          var s = short(x); if (s) c.appendChild(el("span", "lbl", s));
+          var s = !ks && short(x); if (s) c.appendChild(el("span", "lbl", s));
           c.setAttribute("aria-label", d + " " + MONTHS[m] + ": " + title(clean(x.t)) + (x.r ? ", " + x.r : ""));
           c.addEventListener("click", pick);
         }
@@ -117,22 +163,46 @@
     if (x.r) top.appendChild(el("span", "ordo-rank rank-" + x.r.toLowerCase(), x.r));
     top.appendChild(document.createTextNode(title(clean(x.t))));
     body.appendChild(top);
+    var cv = !x.r && civic(key);
+    if (cv) { var pc = el("p", "day-civic"); pc.appendChild(el("span", "ordo-rank rank-memorial", "Optional Memorial")); pc.appendChild(document.createTextNode(cv)); body.appendChild(pc); }
+    var ks = kept(key, x);
+    if (ks) { var pk = el("p", "day-civic"); pk.appendChild(el("span", "ordo-rank rank-" + (/Memorial/.test(ks.r) ? "memorial" : ks.r.toLowerCase()), ks.r)); pk.appendChild(document.createTextNode(ks.t + " (as we keep it: the Liber)")); body.appendChild(pk); }
     var meta = el("p", "day-meta");
     meta.appendChild(el("span", "swatch lc-" + color(x.c)));
     meta.appendChild(document.createTextNode((x.c || "") + (v ? " · " + v : "") + (x.w ? " · Psalter Week " + ["I", "II", "III", "IV"][x.w - 1] : "")));
     body.appendChild(meta);
     if (ladySat(key)) { var pl = el("p", "day-ours"); pl.appendChild(el("span", "ours-star", "✦ ")); pl.appendChild(document.createTextNode("Saint Bernard Abbey: Saturday Commemoration of the Blessed Virgin Mary")); body.appendChild(pl); }
+    var mc = houseData && houseData.notices && houseData.notices[key];
+    if (mc) {   // the Master of Ceremonies' notice of upcoming celebrations
+      var mb = el("div", "day-mc"); mb.appendChild(el("p", "day-mc-h", "From the Master of Ceremonies:"));
+      var ul = el("ul"); mc.forEach(function (t) { ul.appendChild(el("li", null, t)); }); mb.appendChild(ul); body.appendChild(mb);
+    }
     ours(x).forEach(function (n) { var p = el("p", "day-ours"); p.appendChild(el("span", "ours-star", "✦ ")); p.appendChild(document.createTextNode(n)); body.appendChild(p); });
-    var md = key.slice(5), cl = collects && collects[md];
-    (cl || []).forEach(function (k) {
+    // the Benedictine Supplement's collect, only for the saint the Liber keeps that day (8 Nov 2026: a collect read as
+    // the day's saint; Meinrad, Gall, Ottilia … are not in the Liber)
+    var md = key.slice(5), lb = liber && liber.days[md], cl = (collects && collects[md] || []).filter(function (k) {
+      return lb && k.name.split(/[^A-Za-z\u00c0-\u024f]+/).some(function (w) { return w.length > 3 && !/^(Saint|Saints|Blessed|Abbot|Abbots|Bishop)$/.test(w) && lb[0].indexOf(w) >= 0; });
+    });
+    cl.forEach(function (k) {
       var dc = el("details", "fold collect"); dc.appendChild(el("summary", null, "Collect: " + k.name + (k.supplement ? " (Benedictine Supplement)" : "")));
       dc.appendChild(el("p", null, k.prayer)); body.appendChild(dc);
     });
     var mine = ourDead(key), all = necro && necro.days[md] || [];
-    if (mine.length) {
-      var pn = el("p", "day-necro"); pn.appendChild(el("span", "necro-mark", "† "));
-      pn.appendChild(document.createTextNode("Our necrology: " + mine.map(function (n) { return n[0] + " " + n[1] + " (" + n[2] + ")"; }).join("; ")));
-      body.appendChild(pn);
+    if (mine.length) {   // our brothers who died on this day, each with his notice to read
+      var nf = el("details", "fold day-necro"), ns = el("summary");
+      ns.appendChild(el("span", "necro-mark", "† "));
+      ns.appendChild(document.createTextNode("Our necrology: " + mine.map(function (n) { return (n[0] + " " + n[1]).trim() + " (" + n[2] + ")"; }).join("; ")));
+      nf.appendChild(ns);
+      mine.forEach(function (n) {
+        var name = (n[0] + " " + n[1]).trim(), e = (noticeText && noticeText[md] || []).filter(function (x) { return x.name === name; })[0];
+        if (!e) { nf.appendChild(el("p", null, name + ", " + n[2] + (noticeText ? ": no notice in our necrology yet." : ""))); return; }
+        var one = el("details", "notice"); one.appendChild(el("summary", null, name + ", " + n[2]));
+        one.appendChild(el("p", "notice-read", "Read on the evening of " + e.read + "."));
+        e.paras.forEach(function (t) { one.appendChild(el("p", null, t)); });
+        nf.appendChild(one);
+      });
+      if (!noticeText) nf.appendChild(el("p", "notice-read", "To read their notices here, open the psalter page once on this phone with the community password."));
+      body.appendChild(nf);
     }
     if (all.length) {
       var dnc = el("details", "fold"); dnc.appendChild(el("summary", null, "Necrology of the Congregation (" + all.length + ")"));

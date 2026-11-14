@@ -934,8 +934,23 @@
   }
   function feastHours() {
     if (!asm || !asm.feasts || plain || state.ref || state.book !== "Sanctoral" || !books || !bookHour) return null;
-    var h = asm.feasts.hours[books.Sanctoral.sections[state.sec.Sanctoral].path];
-    return h && h[bookHour] ? h[bookHour] : null;
+    var sec = books.Sanctoral.sections[state.sec.Sanctoral], h = asm.feasts.hours[sec.path];
+    return h && h[bookHour] ? h[bookHour] : hourPages(sec, bookHour);
+  }
+  // An hour with nothing to paste in (the Office of the Dead prints its own psalms): just its own pages, from its
+  // heading to the next hour's, so the hour doesn't run on into the next one (Sext of the Departed of our Order showed
+  // Lauds and Vespers with it, 14 Nov 2026)
+  function hourPages(sec, hour) {
+    var js = sec.jumps || [], k = -1;
+    for (var n = 0; n < js.length; n++) if (js[n][0] === hour) { k = n; break; }
+    if (k < 0) return null;
+    var a = js[k], b = js[k + 1], off = books.Sanctoral.offset, out = [];
+    var last = b ? b[1] : sec.pages - 1;
+    for (var p = a[1]; p <= last; p++) {
+      var f0 = p === a[1] ? a[2] : 0, f1 = b && p === b[1] ? b[2] : 1;
+      if (f1 - f0 > 0.012) out.push([sec.path, p, f0, f1, sec.start + p - off]);
+    }
+    return out.length ? out : null;
   }
   function feastRecipe() {
     var hs = feastHours(); if (!hs) return null;
@@ -959,7 +974,7 @@
     // feasts.readings, from munkachy/psalter books/tools/feast_readings.py); the book prints no reading heading here
     var fr = /^Matins/.test(hour) && F.readings && F.readings[sec.path] && F.readings[sec.path][hour];
     if (fr) ["Patristic", "Biblical"].forEach(function (k) { if (fr[k]) items = pasteAt(items, sec.path, fr[k], [{ lect: k, label: true }]); });
-    if (hour === "Sext" && asm.sext) {
+    if (hour === "Sext" && asm.sext && !/Faithful Departed/.test(sec.title)) {   // the Office of the Dead starts straight with its psalms, no hymn
       var hk = sextHymn(dayDate(), false), S = asm.sext;
       items = [S.opening, { h: "Hymn: " + SEXT_HYMN[hk] }, S.hymns[hk], { h: sec.title.replace(/ \(.*/, "") + " · Sext" }].concat(items, [{ h: "Conclusion" }, S.conclusion]);
     }

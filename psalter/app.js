@@ -935,11 +935,26 @@
   function feastHours() {
     if (!asm || !asm.feasts || plain || state.ref || state.book !== "Sanctoral" || !books || !bookHour) return null;
     var sec = books.Sanctoral.sections[state.sec.Sanctoral], h = asm.feasts.hours[sec.path];
-    return h && h[bookHour] ? h[bookHour] : hourPages(sec, bookHour);
+    return h && h[bookHour] ? deadCollects(h[bookHour].slice(), sec, bookHour) : hourPages(sec, bookHour);
   }
   // An hour with nothing to paste in (the Office of the Dead prints its own psalms): just its own pages, from its
   // heading to the next hour's, so the hour doesn't run on into the next one (Sext of the Departed of our Order showed
   // Lauds and Vespers with it, 14 Nov 2026)
+  // The Office of the Dead ends Lauds, Sext, Vespers and Compline with "the appropriate Collect": the book prints them
+  // all (All Souls; the Commemoration of All the Departed of Our Order; the day of burial; deceased brethren). Only the
+  // day's stays: All Souls on 2 Nov, our Order's on 14 Nov (the user, 14 Nov 2026). [who, from, to] in page fractions.
+  var DEAD_COLLECTS = {
+    Lauds: [["allsouls", [17, 0.4528], [17, 0.6634]], ["order", [17, 0.6634], [18, 0.0578]], ["other", [18, 0.0578], [18, 0.5384]]],
+    Sext: [["allsouls", [21, 0.4495], [21, 0.6601]], ["order", [21, 0.6601], [21, 0.9177]], ["other", [21, 0.9177], [22, 0.0619]]],
+    Vespers: [["allsouls", [29, 0.0546], [29, 0.2652]], ["order", [29, 0.2652], [29, 0.5194]], ["other", [29, 0.5194], [30, 0.057]]],
+    Compline: [["allsouls", [32, 0.1161], [32, 0.2779]], ["order", [32, 0.2779], [32, 0.4817]]]
+  };
+  function deadCollects(items, sec, hour) {
+    var cs = DEAD_COLLECTS[hour], keepWho = ymd(dayDate()).slice(5) === "11-14" ? "order" : "allsouls";
+    if (!cs || !/Faithful Departed/.test(sec.title)) return items;
+    cs.forEach(function (c) { if (c[0] !== keepWho) items = leaveOut(items, sec.path, c[1], c[2]); });
+    return items;
+  }
   function hourPages(sec, hour) {
     var js = sec.jumps || [], k = -1;
     for (var n = 0; n < js.length; n++) if (js[n][0] === hour) { k = n; break; }
@@ -950,7 +965,7 @@
       var f0 = p === a[1] ? a[2] : 0, f1 = b && p === b[1] ? b[2] : 1;
       if (f1 - f0 > 0.012) out.push([sec.path, p, f0, f1, sec.start + p - off]);
     }
-    return out.length ? out : null;
+    return out.length ? deadCollects(out, sec, hour) : null;
   }
   function feastRecipe() {
     var hs = feastHours(); if (!hs) return null;

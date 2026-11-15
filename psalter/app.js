@@ -74,12 +74,6 @@
       if (val === null) localStorage.removeItem(key); else localStorage.setItem(key, JSON.stringify(val));
     } catch (e) { return null; }
   }
-  function weekOverride(now) {
-    var o = store("psalter-anchor");
-    if (!o || typeof o.week !== "number" || !o.sunday) return null;
-    var weeks = Math.floor(daysBetween(new Date(o.sunday), sundayOf(now)) / 7);
-    return (((o.week + weeks) % 4) + 4) % 4;
-  }
 
   // ---- The seasonal books (Advent-Christmas, Lent, Sanctoral): sections and their calendar tags (books.json) ----
   var ROMANS = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII",
@@ -151,8 +145,8 @@
   var first = viewing ? { day: base.getDay(), hour: 0 } : nextHour(now);
   var state = { week: cal.week, day: first.day, hour: first.hour, autoWeek: true, ref: null, book: "psalter", sec: {}, today: true };
   var touched = false;   // once the monk taps anything, the page stops choosing for him
-  var saved = weekOverride(now);
-  if (saved !== null) { state.week = saved; state.autoWeek = false; }
+  // The psalter week is always the ordo's (the user, 15 Nov 2026): a week tapped is only for looking, and is not kept.
+  store("psalter-anchor", null);   // a week this phone used to remember
 
   var $ = function (s) { return document.querySelector(s); };
 
@@ -1462,7 +1456,7 @@
     document.querySelectorAll("[data-book]").forEach(function (b) { b.setAttribute("aria-pressed", String(state.today ? b.dataset.book === "today" : b.dataset.book === state.book)); });
     if (inBook) fillBook();
     if (!$("#pagebox").hidden && books) $("#page-book").textContent = books[bookKey()].label;
-    if (viewing && !weekTouched) ordoWeek();
+    if (state.autoWeek || viewing && !weekTouched) ordoWeek();
     todayNote(); ordoNote(); dayEnd();
     var vn = $("#view-note");
     vn.hidden = !viewing;
@@ -1554,10 +1548,7 @@
   document.querySelectorAll("[data-week]").forEach(function (b) {
     b.addEventListener("click", pick(function (b) {
       state.week = +b.dataset.week; weekTouched = true;
-      if (viewing) return;   // another day: just look, don't change this phone's week
-      if (state.week === weekOf(now)) { state.autoWeek = true; store("psalter-anchor", null); return; }   // the ordo's week: follow the ordo again
-      state.autoWeek = false;
-      store("psalter-anchor", { week: state.week, sunday: sundayOf(now).toISOString() });
+      state.autoWeek = state.week === weekOf(dayDate());   // another week: just to look; the ordo's week: follow the ordo again
     }));
   });
   document.querySelectorAll("[data-day]").forEach(function (b) { b.addEventListener("click", pick(function (b) { state.day = +b.dataset.day; wantCompline = null; magnChoice = null; })); });

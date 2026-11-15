@@ -1037,6 +1037,28 @@
   // Both are one-line choices here if the community sings them otherwise.
   var MODE_NAME = { "IID": "II D", "VIId": "VII d", "I": "I", "II*VIII*": "II* and VIII*", "IVA": "IV A", "VI": "VI" };
   var BENEDICTUS_TONE = function () { return asm.feasts && asm.feasts.tones && asm.feasts.tones.benedictus.simple; };
+  // Sunday Matins, Weeks II and IV: the book prints the third antiphon of the first nocturn in every season's form, each
+  // with its versicle (and "First Reading, 154/440."), above the psalm. Sung, the versicle comes after the psalm, just
+  // before the reading (the user, 15 Nov 2026), so the versicle of whichever season is kept is moved below the psalm.
+  // move: [page, from, to] of each season's versicle; after: where it goes (end of the psalm).
+  var MOVE_VERSE = {
+    "Week II/1 Sunday/1 Matins.pdf": { move: [[8, 0.1987, 0.2792], [8, 0.3654, 0.4207], [8, 0.5062, 0.5623], [8, 0.6469, 0.7089], [8, 0.7717, 0.8337], [8, 0.9493, 1], [9, 0.1686, 0.2281]], after: [9, 0.8295] },
+    "Week IV/1 Sunday/1 Matins.pdf": { move: [[8, 0.205, 0.2933], [8, 0.3862, 0.4472], [8, 0.5401, 0.6002], [8, 0.6685, 0.7396], [8, 0.8361, 0.8944]], after: [10, 0] }
+  };
+  function moveVersicles(recipe) {
+    if (!recipe || plain || state.ref || state.book !== "psalter" || state.hour !== 0) return recipe;
+    var path = fileKey(state.week, state.day, 0), mv = MOVE_VERSE[path];
+    if (!mv) return recipe;
+    var items = recipe.items;
+    mv.move.forEach(function (r) { items = cutAt(cutAt(items, path, [r[0], r[1]]), path, [r[0], r[2]]); });
+    var inside = function (it) {
+      return Array.isArray(it) && it[0] === path && mv.move.some(function (r) { return it[1] === r[0] && it[2] >= r[1] - 1e-6 && it[3] <= r[2] + 1e-6; });
+    };
+    var moved = items.filter(inside);
+    if (!moved.length) return recipe;
+    items = pasteAt(items.filter(function (it) { return !inside(it); }), path, mv.after, moved);
+    return Object.assign({}, recipe, { items: items, key: recipe.key + ":verse-moved" });
+  }
   function weeklyExtras(recipe) {
     if (!asm || !asm.weekly || plain || state.ref || state.book !== "psalter" || state.hour > 1) return recipe;
     if (recipe && /^ptbvm/.test(recipe.key)) return recipe;
@@ -1315,7 +1337,7 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : withReadings(withProper(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe())));
+      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : withReadings(withProper(moveVersicles(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()))));
       window.PSALTER_IN.recipe = recipe;   // what was pasted together (for checking it)
       hymnNote(recipe); tedeumNote(); toneNote(recipe);
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
@@ -1658,7 +1680,7 @@
       base = midnight(d); state.day = d.getDay(); state.hour = hour; state.book = "psalter"; state.ref = null;
       var w = weekOf(d); if (w !== null) state.week = w;
       var r = null;
-      try { r = withReadings(withProper(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()))); } catch (e) { r = null; }
+      try { r = withReadings(withProper(moveVersicles(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe())))); } catch (e) { r = null; }
       base = keep.base; state.day = keep.day; state.hour = keep.hour; state.book = keep.book; state.week = keep.week; state.ref = keep.ref;
       return r ? { key: r.key, files: Array.from(new Set(r.items.filter(Array.isArray).map(function (x) { return x[0]; }))) } : null;
     },   // for the season audit (munkachy/psalter books/tools/today_audit.js)

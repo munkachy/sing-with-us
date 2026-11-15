@@ -1031,14 +1031,15 @@
   // Both are one-line choices here if the community sings them otherwise.
   var MODE_NAME = { "IID": "II D", "VIId": "VII d", "I": "I", "II*VIII*": "II* and VIII*", "IVA": "IV A", "VI": "VI" };
   var BENEDICTUS_TONE = function () { return asm.feasts && asm.feasts.tones && asm.feasts.tones.benedictus.simple; };
-  // Sunday Matins, Weeks II and IV: the book prints the third antiphon of the first nocturn in every season's form, each
-  // with its versicle (and "First Reading, 154/440."), above the psalm. Sung, the versicle comes after the psalm, just
-  // before the reading (the user, 15 Nov 2026), so the versicle of whichever season is kept is moved below the psalm.
-  // move: [page, from, to] of each season's versicle; after: where it goes (end of the psalm).
+  // Sunday Matins, Weeks I, II and IV: the book prints the third antiphon of the first nocturn in every season's form,
+  // each with its versicle (and "First Reading, 16/154/440."), above the psalm: a misprint. Sung, it goes: the antiphon,
+  // the psalm, the antiphon again, the versicle, the first reading (the user, 15 Nov 2026; Week III prints it so).
+  // move: [page, from, to] of each season's versicle, moved below the psalm; ant: each season's antiphon, repeated there;
+  // after: the end of the psalm; drop: the rubric "The Antiphon is repeated." where the book prints it (I, II).
   var MOVE_VERSE = {
-    "Week II/1 Sunday/1 Matins.pdf": { move: [[8, 0.1987, 0.2792], [8, 0.3654, 0.4207], [8, 0.5062, 0.5623], [8, 0.6469, 0.7089], [8, 0.7717, 0.8337], [8, 0.9493, 1], [9, 0.1686, 0.2281]], after: [9, 0.8295] },
-    "Week IV/1 Sunday/1 Matins.pdf": { move: [[8, 0.205, 0.2933], [8, 0.3862, 0.4472], [8, 0.5401, 0.6002], [8, 0.6685, 0.7396], [8, 0.8361, 0.8944]], after: [10, 0] }
-  };
+    "Week I/1 Sunday/1 Matins.pdf": {"move": [[8, 0.2071, 0.2952], [8, 0.4093, 0.4689], [8, 0.5612, 0.6208], [8, 0.734, 0.7936], [8, 0.8876, 0.9455]], "ant": [[8, 0.1459, 0.1744], [8, 0.3305, 0.4093], [8, 0.5041, 0.5612], [8, 0.6526, 0.734], [8, 0.8297, 0.8876]], "after": [9, 0.5755], "drop": [9, 0.5755, 0.6057]},
+    "Week II/1 Sunday/1 Matins.pdf": {"move": [[8, 0.1987, 0.2792], [8, 0.3654, 0.4207], [8, 0.5062, 0.5623], [8, 0.6469, 0.7089], [8, 0.7717, 0.8337], [8, 0.9493, 1], [9, 0.1686, 0.2281]], "ant": [[8, 0.1401, 0.1987], [8, 0.306, 0.3654], [8, 0.4475, 0.5062], [8, 0.5891, 0.6469], [8, 0.7357, 0.7717], [8, 0.8605, 0.9493], [9, 0.1007, 0.1686]], "after": [9, 0.7994], "drop": [9, 0.7994, 0.8295]},
+    "Week IV/1 Sunday/1 Matins.pdf": {"move": [[8, 0.205, 0.2933], [8, 0.3862, 0.4472], [8, 0.5401, 0.6002], [8, 0.6685, 0.7396], [8, 0.8361, 0.8944]], "ant": [[8, 0.1413, 0.205], [8, 0.3225, 0.3862], [8, 0.4764, 0.5401], [8, 0.6294, 0.6685], [8, 0.7687, 0.8361]], "after": [10, 0]}};
   function moveVersicles(recipe) {
     if (!recipe || plain || state.ref || state.book !== "psalter" || state.hour !== 0) return recipe;
     var path = fileKey(state.week, state.day, 0), mv = MOVE_VERSE[path];
@@ -1050,7 +1051,12 @@
     };
     var moved = items.filter(inside);
     if (!moved.length) return recipe;
-    items = pasteAt(items.filter(function (it) { return !inside(it); }), path, mv.after, moved);
+    mv.ant.forEach(function (r) { items = cutAt(cutAt(items, path, [r[0], r[1]]), path, [r[0], r[2]]); });
+    var again = items.filter(function (it) {   // the day's antiphon, said again after the psalm
+      return Array.isArray(it) && it[0] === path && mv.ant.some(function (r) { return it[1] === r[0] && it[2] >= r[1] - 1e-6 && it[3] <= r[2] + 1e-6; });
+    }).map(function (it) { return it.slice(); });
+    items = pasteAt(items.filter(function (it) { return !inside(it); }), path, mv.after, again.concat(moved));
+    if (mv.drop) items = leaveOut(items, path, [mv.drop[0], mv.drop[1]], [mv.drop[0], mv.drop[2]]);   // "The Antiphon is repeated.": it now is
     return Object.assign({}, recipe, { items: items, key: recipe.key + ":verse-moved" });
   }
   function weeklyExtras(recipe) {

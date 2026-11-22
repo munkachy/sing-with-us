@@ -329,7 +329,14 @@
     var t = eve ? addDays(d, 1) : d, ot = ordoDay(t);
     if (!ot || !/Solemnity|Feast/.test(rankOf(ot) || "")) return null;
     var want = eve ? ["I Vespers", "Vespers"] : [["Matins"], ["Lauds"], ["Sext"], ["II Vespers", "Vespers"]][hour];
-    var order = ["Sanctoral", "Advent-Christmas", "Lent"];
+    // Where the Saints book and a seasonal book both have the day (31 May 2026: the Visitation, and Trinity Sunday),
+    // the ordo's title decides: the section sharing most of its words with it
+    var order = ["Sanctoral", "Advent-Christmas", "Lent"], words = (ot.t || "").toUpperCase();
+    var score = function (b) {
+      var k = todayIn(b, t); if (k < 0) return -1;
+      return books[b].sections[k].title.toUpperCase().split(/[^A-Z]+/).filter(function (w) { return w.length > 3 && words.indexOf(w) >= 0; }).length;
+    };
+    order = order.map(function (b, i) { return [b, score(b), i]; }).sort(function (x, y) { return y[1] - x[1] || x[2] - y[2]; }).map(function (x) { return x[0]; });
     for (var b = 0; b < order.length; b++) {
       var k = todayIn(order[b], t);
       if (k < 0) continue;
@@ -1092,6 +1099,46 @@
   // Matins; sext: the psalter's opening and conclusion around the book's own Sext (its own hymn); drop: the simpler
   // "Or:" settings with the same words (the user's rule), [[page, from], [page, to]].
   var SEASON_FIX = {
+    "Advent-Christmas/18 The Nativity of Our Lord.pdf": {   // the book prints "Te Deum", then the Gospel sung, then "Te Decet laus"
+      "Matins": { drop: [[[10, 0.546], [10, 0.625]], [[11, 0.442], [11, 0.521]], [[11, 0.768], [11, 0.832]], [[12, 0.5], [12, 0.562]], [[12, 0.815], [12, 0.896]], [[14, 0.162], [14, 0.244]], [[14, 0.436], [14, 0.655]], [[15, 0.631], [15, 0.712]], [[16, 0.413], [16, 0.494]], [[16, 0.81], [17, 0.166]]],
+        ps94: { at: [8, 0.818], mode: "IVg", label: "IV g" }, readings: { Biblical: [14, 0.656], Patristic: [17, 0.168] }, tedeum: [17, 0.843] }
+    },
+    "Advent-Christmas/19 Saint Stephen, Protomartyr (26 Dec).pdf": {
+      "Matins": { ps94: { at: [0, 0.498], mode: "V", label: "V" }, readings: { Biblical: [4, 0.339], Patristic: [5, 0.618] }, tedeum: true }
+    },
+    "Advent-Christmas/20 Saint John, Apostle and Evangelist (27 Dec).pdf": {
+      "Matins": { ps94: { at: [0, 0.73], mode: "V", label: "V" }, readings: { Biblical: [4, 0.493], Patristic: [6, 0.06] }, tedeum: true }
+    },
+    "Advent-Christmas/21 The Holy Innocents (28 Dec).pdf": {
+      "Matins": { readings: { Biblical: [4, 0.603], Patristic: [6, 0.269] }, tedeum: true }
+    },
+    "Advent-Christmas/22 The Holy Family.pdf": {
+      "Matins": { ps94: { at: [6, 0.078], mode: "IVg", label: "IV g" }, readings: { Biblical: [9, 0.276], Patristic: [10, 0.817] }, tedeum: true }
+    },
+    "Advent-Christmas/26 1 January - Octave Day of the Nativity.pdf": {
+      "Matins": { ps94: { at: [6, 0.43], mode: "VI", label: "VI" }, readings: { Biblical: [10, 0.156], Patristic: [11, 0.573] }, tedeum: true }
+    },
+    "Advent-Christmas/30 The Epiphany of the Lord.pdf": {
+      "Matins": { ps94: { at: [5, 0.373], mode: "II*VIII*", label: "II*" }, readings: { Biblical: [9, 0.421], Patristic: [11, 0.072] }, tedeum: true }
+    },
+    "Advent-Christmas/33 The Baptism of the Lord.pdf": {
+      "Matins": { ps94: { at: [4, 0.825], mode: "IID*", label: "II D*" }, readings: { Biblical: [8, 0.85], Patristic: [10, 0.522] }, tedeum: true }
+    },
+    "Lent/36 The Ascension of the Lord.pdf": {
+      "Matins": { ps94: { at: [5, 0.956], mode: "VI", label: "VI F" }, paste: [[[5, 0.985], [{ h: "Hymn (A), 307 (Ordinary from the Ascension to Pentecost)" }, ["Lent/35 Ordinary from the Ascension to Pentecost.pdf", 10, 0.595, 1, 307], ["Lent/35 Ordinary from the Ascension to Pentecost.pdf", 11, 0.045, 1, 308], ["Lent/35 Ordinary from the Ascension to Pentecost.pdf", 12, 0.045, 0.37, 309], { h: "Continued: The Ascension of the Lord" }]]], readings: { Biblical: [8, 0.264], Patristic: [9, 0.856] }, tedeum: true }
+    },
+    "Lent/40 Pentecost.pdf": {
+      "Matins": { ps94: { at: [7, 0.576], mode: "VI", label: "VI" }, readings: { Biblical: [11, 0.683], Patristic: [13, 0.053] }, tedeum: true }
+    },
+    "Lent/41 Trinity Sunday.pdf": {
+      "Matins": { ps94: { at: [4, 0.816], mode: "VI", label: "VI" }, readings: { Biblical: [7, 0.88], Patristic: [9, 0.344] }, tedeum: true }
+    },
+    "Lent/42 Corpus Christi.pdf": {
+      "Matins": { ps94: { at: [11, 0.965], mode: "VI", label: "VI" }, readings: { Biblical: [17, 0.51], Patristic: [19, 0.055] }, tedeum: true }
+    },
+    "Lent/43 The Most Sacred Heart of Jesus.pdf": {
+      "Matins": { ps94: { at: [8, 0.726], mode: "II*VIII*", label: "II*" }, readings: { Biblical: [12, 0.152], Patristic: [13, 0.532] }, tedeum: true }
+    },
     "Lent/45 Christ the King.pdf": {
       "I Vespers": { drop: [[[2, 0.06], [2, 0.505]], [[4, 0.772], [5, 0]]], canticle: true },
       "Matins": { ps94: { at: [6, 0.332], mode: "V", label: "V a" }, readings: { Biblical: [9, 0.574], Patristic: [10, 0.864] }, tedeum: true },
@@ -1101,14 +1148,19 @@
       "II Vespers": { drop: [[[0, 0.12], [0, 0.37]], [[2, 0.06], [2, 0.505]], [[4, 0.555], [5, 0.0605]], [[18, 0.728], [19, 0]], [[19, 0.45], [20, 0]]], canticle: true }
     }
   };
+  // The feasts' Lauds and Vespers end with the antiphon at the Benedictus or Magnificat: the canticle follows it
+  var SEASON_FEASTS = /\/(18 The Nativity|19 Saint Stephen|20 Saint John|21 The Holy Innocents|22 The Holy Family|26 1 January|28 Second Sunday after|30 The Epiphany|33 The Baptism|17 Palm Sunday|23 Easter Sunday|36 The Ascension|40 Pentecost|41 Trinity|42 Corpus|43 The Most Sacred|45 Christ the King)/;
   function seasonFix(sec, recipe) {
     var fx = SEASON_FIX[sec.path] && SEASON_FIX[sec.path][bookHour];
+    if (!fx && recipe && /^season:/.test(recipe.key) && SEASON_FEASTS.test(sec.path) && /(^| )(Lauds|Vespers)$/.test(bookHour)) fx = { canticle: true };
     if (!fx || !recipe) return recipe;
     var items = recipe.items, path = sec.path, extra = [], te = fx.tedeum && asm.tedeum && (asm.tedeum.versions[teChoice] || asm.tedeum.versions.mode4);
     (fx.drop || []).forEach(function (d) { items = leaveOut(items, path, d[0], d[1]); });
+    (fx.paste || []).forEach(function (x) { items = pasteAt(items, path, x[0], x[1]); });   // what it points to elsewhere ("Hymn, 307-10.")
     if (fx.readings) ["Patristic", "Biblical"].forEach(function (k) { if (fx.readings[k]) items = pasteAt(items, path, fx.readings[k], [{ lect: k, label: true }]); });
     if (fx.ps94 && asm.weekly && asm.weekly.psalm94[fx.ps94.mode]) items = pasteAt(items, path, fx.ps94.at, [{ h: "Psalm 94 · Mode " + fx.ps94.label + " (sung by the cantors)" }].concat(asm.weekly.psalm94[fx.ps94.mode]));
-    if (te) items = items.concat([{ h: "Te Deum · " + te.label }], te.te, [{ h: "Holy Gospel (from the lectionary)" }, { h: "Te decet laus" }], te.decet);
+    if (te && Array.isArray(fx.tedeum)) items = pasteAt(items, path, fx.tedeum, [{ h: "Te Deum · " + te.label }].concat(te.te)).concat([{ h: "Te decet laus" }], te.decet);
+    else if (te) items = items.concat([{ h: "Te Deum · " + te.label }], te.te, [{ h: "Holy Gospel (from the lectionary)" }, { h: "Te decet laus" }], te.decet);
     var F = asm.feasts, lauds = /Lauds/.test(bookHour);
     if (fx.canticle && F && F.benedictus) {   // the Gospel canticle after its antiphon, words then notes, as on the Saints' feasts
       items = items.concat([{ h: lauds ? "Benedictus" : "Magnificat" }], lauds ? F.benedictus : F.magnificat);

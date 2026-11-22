@@ -1077,6 +1077,15 @@
     return { key: (recipe ? recipe.key : "whole:" + path) + tag, items: items, hymns: recipe && recipe.hymns,
       note: recipe && recipe.note ? recipe.note.replace(/\.$/, "") + "; with " + add + "." : "Pasted together: with " + add + "." };
   }
+  // The Advent-Christmas and Lent-Easter books print an hour's antiphons and point to the psalms elsewhere ("Psalms
+  // of Sunday, 633."): assembly.json "seasonal" (munkachy/psalter books/tools/season_psalms.py) has those hours with
+  // each antiphon, its psalm and the antiphon again, as the Saints book's feasts (Christ the King, the user, 22 Nov 2026)
+  function seasonRecipe(sec) {
+    var h = asm && asm.seasonal && asm.seasonal[sec.path], items = h && bookHour && h[bookHour];
+    if (!items || plain || state.ref) return null;
+    return { key: "season:" + sec.path + ":" + bookHour, items: items.slice(), magnificat: /Vespers/.test(bookHour),
+      note: "Pasted together: " + sec.title + ", " + bookHour + ", with the psalms it points to put in their places." };
+  }
   function lentRecipe(sec) {
     if (!asm || sec.recipe !== "lent") return null;
     var items = [];
@@ -1337,7 +1346,7 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? feastRecipe() || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : withReadings(withProper(moveVersicles(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()))));
+      var recipe = inBook ? feastRecipe() || seasonRecipe(books[state.book].sections[state.sec[state.book]]) || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : withReadings(withProper(moveVersicles(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()))));
       window.PSALTER_IN.recipe = recipe;   // what was pasted together (for checking it)
       hymnNote(recipe); tedeumNote(); toneNote(recipe);
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;

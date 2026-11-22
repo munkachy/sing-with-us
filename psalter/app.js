@@ -949,11 +949,11 @@
     cs.forEach(function (c) { if (c[0] !== keepWho) items = leaveOut(items, sec.path, c[1], c[2]); });
     return items;
   }
-  function hourPages(sec, hour) {
+  function hourPages(sec, hour, book) {
     var js = sec.jumps || [], k = -1;
     for (var n = 0; n < js.length; n++) if (js[n][0] === hour) { k = n; break; }
     if (k < 0) return null;
-    var a = js[k], b = js[k + 1], off = books.Sanctoral.offset, out = [];
+    var a = js[k], b = js[k + 1], off = books[book || "Sanctoral"].offset, out = [];
     var last = b ? b[1] : sec.pages - 1;
     for (var p = a[1]; p <= last; p++) {
       var f0 = p === a[1] ? a[2] : 0, f1 = b && p === b[1] ? b[2] : 1;
@@ -1085,6 +1085,15 @@
     if (!items || plain || state.ref) return null;
     return { key: "season:" + sec.path + ":" + bookHour, items: items.slice(), magnificat: /Vespers/.test(bookHour),
       note: "Pasted together: " + sec.title + ", " + bookHour + ", with the psalms it points to put in their places." };
+  }
+  // An hour of the Advent-Christmas or Lent-Easter books with nothing pasted in (Christ the King's Matins and Sext):
+  // only its own pages, from its heading to the next hour's, not the whole feast with Compline above it (the user,
+  // 22 Nov 2026: "When I click Matins, everything is all jumbled together")
+  function seasonHourPages(sec) {
+    if (!asm || plain || state.ref || !bookHour || state.book === "Sanctoral" || state.book === "psalter") return null;
+    var items = hourPages(sec, bookHour, state.book);
+    return items && { key: "hour:" + sec.path + ":" + bookHour, items: items,
+      note: sec.title + ", " + bookHour + ": only this hour's own pages." };
   }
   function lentRecipe(sec) {
     if (!asm || sec.recipe !== "lent") return null;
@@ -1346,7 +1355,7 @@
       $("#beta-note").textContent = note; $("#beta-note").hidden = !note;
       var file = hourFile || idx.pdfs[path];
       current = whereIs(path);
-      var recipe = inBook ? feastRecipe() || seasonRecipe(books[state.book].sections[state.sec[state.book]]) || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) : withReadings(withProper(moveVersicles(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()))));
+      var recipe = inBook ? feastRecipe() || seasonRecipe(books[state.book].sections[state.sec[state.book]]) || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) || seasonHourPages(books[state.book].sections[state.sec[state.book]]) : withReadings(withProper(moveVersicles(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()))));
       window.PSALTER_IN.recipe = recipe;   // what was pasted together (for checking it)
       hymnNote(recipe); tedeumNote(); toneNote(recipe);
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;

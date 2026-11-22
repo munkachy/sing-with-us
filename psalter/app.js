@@ -893,8 +893,8 @@
     }
     return { key: "tedeum:" + path + ":" + teChoice, items: items, note: "Pasted together: Sunday Matins with the Te Deum " + v.label.replace(/^English, /, "in English, ") + "." };
   }
-  function tedeumNote() {
-    var el = $("#tedeum-note"), f = tedeumFile(), fh = feastHours(), feast = !!fh && fh.some(function (x) { return x.ins === "tedeum"; });
+  function tedeumNote(recipe) {
+    var el = $("#tedeum-note"), f = tedeumFile(), fh = feastHours(), feast = !!fh && fh.some(function (x) { return x.ins === "tedeum"; }) || !!(recipe && recipe.seasonTe);
     el.hidden = !f && !feast;
     if (!f && !feast) return;
     el.textContent = "Te Deum: ";
@@ -1083,8 +1083,45 @@
   function seasonRecipe(sec) {
     var h = asm && asm.seasonal && asm.seasonal[sec.path], items = h && bookHour && h[bookHour];
     if (!items || plain || state.ref) return null;
-    return { key: "season:" + sec.path + ":" + bookHour, items: items.slice(), magnificat: /Vespers/.test(bookHour),
-      note: "Pasted together: " + sec.title + ", " + bookHour + ", with the psalms it points to put in their places." };
+    return seasonFix(sec, { key: "season:" + sec.path + ":" + bookHour, items: items.slice(), magnificat: /Vespers/.test(bookHour),
+      note: "Pasted together: " + sec.title + ", " + bookHour + ", with the psalms it points to put in their places." });
+  }
+  // What the seasonal books' feasts point to, put in by hand from the pages (the user, 22 Nov 2026: Christ the King).
+  // Per file and hour: ps94 [page, fraction] just after the invitatory, with its mode; readings: where the Biblical and
+  // Patristic readings go, just above each nocturn's Responsory (as in the Saints book, Fr. Bede); tedeum: at the end of
+  // Matins; sext: the psalter's opening and conclusion around the book's own Sext (its own hymn); drop: the simpler
+  // "Or:" settings with the same words (the user's rule), [[page, from], [page, to]].
+  var SEASON_FIX = {
+    "Lent/45 Christ the King.pdf": {
+      "I Vespers": { drop: [[[2, 0.06], [2, 0.505]], [[4, 0.772], [5, 0]]], canticle: true },
+      "Matins": { ps94: { at: [6, 0.332], mode: "V", label: "V a" }, readings: { Biblical: [9, 0.574], Patristic: [10, 0.864] }, tedeum: true },
+      "Lauds": { drop: [[[11, 0.955], [12, 0]], [[12, 0.585], [12, 0.82]], [[15, 0.365], [15, 0.605]], [[16, 0], [16, 0.03]]], canticle: true },
+      "Sext": { sext: true, drop: [[[16, 0.6855], [16, 0.768]], [[18, 0.152], [18, 0.234]]] },
+      // II Vespers: "all as at I Vespers" up to the hymn; then its own versicle (not I Vespers') and Magnificat antiphon
+      "II Vespers": { drop: [[[0, 0.12], [0, 0.37]], [[2, 0.06], [2, 0.505]], [[4, 0.555], [5, 0.0605]], [[18, 0.728], [19, 0]], [[19, 0.45], [20, 0]]], canticle: true }
+    }
+  };
+  function seasonFix(sec, recipe) {
+    var fx = SEASON_FIX[sec.path] && SEASON_FIX[sec.path][bookHour];
+    if (!fx || !recipe) return recipe;
+    var items = recipe.items, path = sec.path, extra = [], te = fx.tedeum && asm.tedeum && (asm.tedeum.versions[teChoice] || asm.tedeum.versions.mode4);
+    (fx.drop || []).forEach(function (d) { items = leaveOut(items, path, d[0], d[1]); });
+    if (fx.readings) ["Patristic", "Biblical"].forEach(function (k) { if (fx.readings[k]) items = pasteAt(items, path, fx.readings[k], [{ lect: k, label: true }]); });
+    if (fx.ps94 && asm.weekly && asm.weekly.psalm94[fx.ps94.mode]) items = pasteAt(items, path, fx.ps94.at, [{ h: "Psalm 94 · Mode " + fx.ps94.label + " (sung by the cantors)" }].concat(asm.weekly.psalm94[fx.ps94.mode]));
+    if (te) items = items.concat([{ h: "Te Deum · " + te.label }], te.te, [{ h: "Holy Gospel (from the lectionary)" }, { h: "Te decet laus" }], te.decet);
+    var F = asm.feasts, lauds = /Lauds/.test(bookHour);
+    if (fx.canticle && F && F.benedictus) {   // the Gospel canticle after its antiphon, words then notes, as on the Saints' feasts
+      items = items.concat([{ h: lauds ? "Benedictus" : "Magnificat" }], lauds ? F.benedictus : F.magnificat);
+      if (F.tones) {
+        var solemn = !lauds && magnificatSolemn(bookHour);
+        items = items.concat([{ h: lauds ? "Benedictus · English, Simple Tone, Mode 1" : "Magnificat · English, " + (solemn ? "Solemn" : "Simple") + " Tone, Mode II D" }], lauds ? F.tones.benedictus.simple : F.tones.magnificat[solemn ? "solemn" : "simple"]);
+      }
+      extra.push(lauds ? "the Benedictus" : "the Magnificat");
+    }
+    if (fx.sext && asm.sext) items = [asm.sext.opening, { h: sec.title + " · Sext" }].concat(items, [{ h: "Conclusion" }, asm.sext.conclusion]);
+    if (fx.ps94) extra.push("Psalm 94"); if (fx.readings) extra.push("the readings"); if (te) extra.push("the Te Deum");
+    return Object.assign({}, recipe, { key: recipe.key + ":fix:" + (te ? teChoice : "") + (fx.canticle && !lauds ? magnificatSolemn(bookHour) : ""), items: items, seasonTe: !!te,
+      note: "Pasted together: " + sec.title + ", " + bookHour + (extra.length ? ", with " + extra.join(", ").replace(/, ([^,]*)$/, " and $1") + " put in." : ".") });
   }
   // An hour of the Advent-Christmas or Lent-Easter books with nothing pasted in (Christ the King's Matins and Sext):
   // only its own pages, from its heading to the next hour's, not the whole feast with Compline above it (the user,
@@ -1092,8 +1129,8 @@
   function seasonHourPages(sec) {
     if (!asm || plain || state.ref || !bookHour || state.book === "Sanctoral" || state.book === "psalter") return null;
     var items = hourPages(sec, bookHour, state.book);
-    return items && { key: "hour:" + sec.path + ":" + bookHour, items: items,
-      note: sec.title + ", " + bookHour + ": only this hour's own pages." };
+    return items && seasonFix(sec, { key: "hour:" + sec.path + ":" + bookHour, items: items,
+      note: sec.title + ", " + bookHour + ": only this hour's own pages." });
   }
   function lentRecipe(sec) {
     if (!asm || sec.recipe !== "lent") return null;
@@ -1357,7 +1394,7 @@
       current = whereIs(path);
       var recipe = inBook ? feastRecipe() || seasonRecipe(books[state.book].sections[state.sec[state.book]]) || lentRecipe(books[state.book].sections[state.sec[state.book]]) || simpleRecipe(books[state.book].sections[state.sec[state.book]]) || seasonHourPages(books[state.book].sections[state.sec[state.book]]) : withReadings(withProper(moveVersicles(weeklyExtras(sundayRecipe() || complineRecipe() || sextRecipe() || saturdayRecipe() || weekRecipe() || matinsRecipe() || tedeumRecipe()))));
       window.PSALTER_IN.recipe = recipe;   // what was pasted together (for checking it)
-      hymnNote(recipe); tedeumNote(); toneNote(recipe);
+      hymnNote(recipe); tedeumNote(recipe); toneNote(recipe);
       $("#asm-note-text").textContent = recipe ? recipe.note : ""; $("#asm-note").hidden = !recipe || !recipe.note;
       $("#plain-note").hidden = !plain || !!state.ref || !(state.hour === 4 && !ultima() || state.hour === 2 || state.day === 6 && state.hour <= 1 || state.hour <= 1 || state.book === "Sanctoral" && !!bookHour || state.hour === 3);
       var keyP = vault.key ? Promise.resolve(vault.key) : savedKey();
